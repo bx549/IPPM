@@ -1,0 +1,28 @@
+An Introduction to Prescriptive and Predictive Modeling
+
+Prescriptive Modeling 
+- Linear Programming  (GAMS)  (Hannah)
+- Integer Programming (GAMS)  (Hannah)
+- Dynamic Programming 
+- Inventory Models  (Emily)
+
+Probabilistic Modeling
+- Stochastic Processes (R) (Hannah)
+- Queueing Models (Hannah)
+
+Decision Problems
+- Games against Nature (Emily)
+- Games against an Opponent (Emily)
+
+Data Analysis and Statistics
+- Summarizing Data (R) (Braeden)
+- Visualizing Data (R) (Braeden)
+
+Predictive Modeling 
+- Linear Regression (R) (Braeden)
+- Time Series  (R) 
+
+Learn to use LaTeX/Overleaf (Everyone)
+
+Learn to use Jupyter Notebook (Braeden)
+
