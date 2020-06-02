@@ -1,0 +1,113 @@
+\chapter{Decision Problems}
+
+\section{Games Against Nature}
+
+\section{Games Against an Opponent}
+
+\section{Exercises}
+\begin{enumerate}
+
+% This exercise is OK
+\item Rules for decision--making under ignorance (that is to
+  say, decision--making without probabilities). You have the opportunity to go on a
+  blind date, but you are hesitant.  You are lonely and would like to
+  find the love of your life; however, you dislike awkward
+  situations. Furthermore, you find it difficult to estimate the
+  probability that this particular blind date will turn out to be the
+  love of your life, but you know this probability is
+  non-negligible. To be a little more precise, you have the following
+  values: finding the love of your life is worth 1000, being in an
+  awkward date situation (i.e. being on a date and knowing that you
+  will not see the person again) is worth -10, and staying home
+  watching Netflix is worth zero.
+
+\begin{enumerate}
+\item Formulate a decision problem for deciding whether to go on the
+blind date or to stay home.
+\item Use the maximin rule to solve the problem.
+\item Use the minimax regret rule to solve the problem.
+\end{enumerate}
+
+\begin{solution}
+\bs The decision problem can be represented with the following table.
+\\[.2in]
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{decision matrix} \\
+ & find love & lots of awkward moments \\ \hline
+go on date & 1000 & -10 \\
+decline date & 0 & 0 
+\end{tabular}
+\\[.2in] 
+The maximin rule tells you to decline the date because it has
+the best of all the worst possible outcomes. To use minimax regret, we
+form the regret matrix.  \\[.2in]
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{regret matrix} \\
+ & find love & lots of awkward moments \\ \hline
+go on date & 0 & -10 \\
+decline date & -1000 & 0
+\end{tabular}
+\\[.2in] Minimax regret tells you to go on the date because the
+possibility of not finding love has the most regret.
+\end{solution}
+
+
+% this problem needs to be re-written. It is IMS chapter 13 problem 21.
+\item A real estate investor has the opportunity to purchase land currently
+zoned residential. If the county board approves a request to rezone the property
+as commercial within the next year, the investor will be able to lease the
+land to a large discount firm that wants to open a new store on the property.
+However, if the zoning change is not approved, the investor will have to sell
+the property at a loss. Profits (in thousands of dollars) are shown in the 
+following payoff table.
+
+\begin{tabular}{rcc}
+& \multicolumn{2}{c}{State of Nature} \\
+& rezoning approved & rezoning not approved \\
+Decision Alternative & $s_1$ & $s_2$ \\
+purchase & 600 & -200\\
+do not purchase & 0 & 0
+\end{tabular}
+
+\begin{enumerate}
+    \item If the probability that rezoning will be approved is 0.5, what
+    decision is recommended? What is the expected payoff?
+    \item The investor can purchase an option to buy the land. Under the option,
+    the investor maintains the right to purchase the land anytime during the next
+    three months while learning more about possible resistance from area residents.
+    Probabilities are as follows:
+    
+    \begin{tabular}{rrr}
+    \multicolumn{3}{c}{Let $H$ = high resistance to zoning}\\
+    \multicolumn{3}{c}{Let $L$ = low resistance to zoning}\\
+    $P(H)=0.55$ & $P(s_1 \mid H)=0.18$ & $P(s_2 \mid H)=0.82$ \\
+    $P(L)=0.45$ & $P(s_1 \mid L)=0.89$ & $P(s_2 \mid L)=0.11$ 
+    \end{tabular}
+    
+    What is the optimal decision strategy if the investor uses the option
+    period to learn more about the resistance from area residents before making
+    the purchase decision?
+    \item If the option will cost the investor an additional \$\num{10000}, 
+    should the investor purchase the option? Why or why not? What is the maximum
+    that the investor should be willing to pay for the option?
+\end{enumerate}
+\begin{solution}
+\bs For part a), the best decision (according to expected monetary value)
+is to purchase the land. The expected profit is \$200.
+
+For part b), If there is high resistance to rezoning (H) then
+purchasing the land would yield an expected profit of -\$56 (in \$1000s).
+Not purchasing the land would yield zero. If there is low
+resistance to rezoning (L) then purchasing the land would yield
+an expected profit of \$512 (in \$1000s). Not purchasing the
+land would yield zero. So the optimal decision strategy is to
+not purchase the land if H and to purchase the land if L.
+
+For part c), the expected profit from purchasing the option
+(but before actually purchasing the option) is
+\[ 0 \times P(H) + 512 \times P(L) = \$230.4 \]
+The maximum amount that the investor should be willing to pay is
+\[ \$230.4 - \$200 = \$30.4 ~\text{(in \$1000s)} \]
+\end{solution}
+
+\end{enumerate}

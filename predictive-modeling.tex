@@ -1,0 +1,77 @@
+\chapter{Predictive Modeling}
+
+\section{Linear Regression}
+
+\section{Time Series}
+
+\section{Exercises}
+
+\begin{enumerate}
+
+% this problem needs to be re-written
+\item \emph{Using Linear regression to summarize a dataset.}
+  Download the wine data set \texttt{Wine.csv} from Canvas. Fit a
+  linear regression model using \texttt{lm()} with a price index
+  (\texttt{Price}) as the response variable and the following
+  predictor variables:
+  \begin{compactitem}
+  \item growing season temperature in $^{\circ}$C (\texttt{AGST}),
+  \item winter rain amount in ml (\texttt{WinterRain}),
+  \item harvest rain amount in ml (\texttt{HarvestRain}), and
+    \item age of vintage in years (\texttt{Age}).
+    \end{compactitem}
+    So the model is
+    \[ Price_i = \beta_0 + \beta_1 AGST_i + \beta_2 WinterRain_i +
+      \beta_3 HarvestRain_i + \beta_4 Age_i + \epsilon_i \]
+    Now do the following.
+    \begin{enumerate}
+    \item Looking at the summary of the fitted model, the intercept
+      $\beta_0 \approx -3.43$. What is the interpretation of $\beta_0$?
+      In other words, I don't think that the price of wine can be negative,
+      so how should we interpret the intercept?
+  \item Plot \texttt{Price} as a function of
+    \texttt{HarvestRain}. Overlay a fitted regression line from the
+    full model onto the plot.  When plotting the regression line you
+    should show \texttt{Price} at the average \texttt{AGST}, average
+    \texttt{WinterRain}, and average \texttt{Age}.
+    In other words, it's a two-dimensional plot, but for the other
+    variables that are not shown, we compute \texttt{Price} at their
+    average values. So you want to overlay
+    \[ Price_i = \beta_0 + \beta_1 \overline{AGST} +
+      \beta_2 \overline{WinterRain} +
+      \beta_3 HarvestRain_i +
+      \beta_4 \overline{Age} \]
+    onto the data. You can use \texttt{coef()} to extract the
+    coefficients from the fitted model object.
+
+  \item If you are a wine-maker, when would you like to see
+    rain?
+
+  \item Plot the actual \texttt{Price} vs. the predicted (fitted)
+    price. If your fitted model is stored in an object named
+    \texttt{fm}, then you can get the predicted price as follows.
+    \begin{Verbatim}
+      wine$pred <- fitted(fm)
+    \end{Verbatim}
+    % $
+    or
+    \begin{Verbatim}
+      wine$pred <- predict(fm)
+    \end{Verbatim}
+    % $
+
+  \item In the summary output of the fitted model, the estimated residual
+    standard error is reported to be
+    $\hat{\sigma}_{\epsilon}=0.295$. Independently compute this quantity. In
+    other words, use the actual values from the data and the fitted
+    values from the model to compute the residual standard error
+    yourself.  The formula is
+    \[ \hat{\sigma}_{\epsilon} = \sqrt{ \frac{\sum_{i=1}^n \left(y_i - \hat{y_i}\right)^2}{n-k}} \]
+    where $y_i$ and $\hat{y_i}$ are the actual and fitted values of observation
+    $i$, respectively, $n$ is the total number of observations, and $k$ is the
+    number of fitted parameters in the model. $n-k$ is the degrees of freedom.
+
+  \item Do you think that a linear model is appropriate for this data?
+  \end{enumerate}
+    
+\end{enumerate}
