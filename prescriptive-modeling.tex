@@ -1,71 +1,3 @@
-\documentclass[12pt]{book}
-%\usepackage[width=4.375in, height=7.0in, top=1.0in, papersize={5.5in,8.5in}]{geometry}
-\usepackage[a4paper]{geometry}
-\usepackage[pdftex]{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{tipa}
-\usepackage{textcomp}
-\usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{paralist}
-\usepackage{comment}
-\usepackage{fancyvrb}
-\usepackage{multirow}
-\usepackage{url}
-\usepackage[group-separator={,}]{siunitx}
-\usepackage{pgfplots}
-
-\usetikzlibrary{arrows.meta} \pagestyle{plain}
-\pgfplotsset{compat=1.12}
-
-\pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
-\fancyhf{}
-\fancyhead[LE,RO]{\bfseries\thepage}
-\fancyhead[LO]{\bfseries\rightmark}
-\fancyhead[RE]{\bfseries\leftmark}
-\renewcommand{\headrulewidth}{0.5pt}
-\renewcommand{\footrulewidth}{0pt}
-\addtolength{\headheight}{0.5pt}
-\setlength{\footskip}{0in}
-\renewcommand{\footruleskip}{0pt}
-\fancypagestyle{plain}{%
-\fancyhead{}
-\renewcommand{\headrulewidth}{0pt}
-}
-%
-%\parindent 0in
-\parskip 0.05in
-%
-
-\includecomment{solution}
-%\excludecomment{solution} % comment this out to create the solutions
-\newcommand{\bs}{\textbf{Solution.}~}
-\newcommand{\es}{\hfill  $\square$}
-
-\setcounter{secnumdepth}{2}
-
-\begin{document}
-\frontmatter
-%
-\chapter*{\Huge \center An Introduction to Prescriptive and Predictive Modeling }
-\thispagestyle{empty}
-%{\hspace{0.25in} \includegraphics{./ru_sun.jpg} }
-%\section*{\large \center Darin England}
-\newpage
-\subsection*{\center \normalsize Copyright \copyright 2020 by Darin England}
-\subsection*{\center \normalsize All rights reserved.}
-\subsection*{\center \normalsize ISBN \dots}
-\subsection*{\center \normalsize \dots Publications}
-%
-%\chapter*{\center \normalsize To my Son}
-%
-\tableofcontents
-%
-\mainmatter
-%
 \chapter{Prescriptive Modeling}
 \section{Linear Programming}
 
@@ -317,8 +249,88 @@ current basis remains optimal. We will not use these suffixes.
 \section{Exercises}
 \begin{enumerate}
 
+% This problem needs to be re-written, but we can simply change the
+% numbers slightly
+\item \emph{Feasible region for an LP.} Indicate graphically whether each of the following
+  linear programs has a feasible solution. Graphically determine the
+  optimal solution, if one exists, or show that no optimal solution
+  exists.
+
+\begin{enumerate}
+\item
+\[
+  \begin{array}{lrrrrr}
+    \textrm{maximize}   & x_1& +& 2x_2&  & \\
+    \textrm{subject to} & x_1& -&2x_2& \leq & 3  \\
+                        & x_1& +& x_2& \leq & 3 \\
+    \multicolumn{3}{r}{x_1,x_2}&       \geq & 0 
+  \end{array}
+\]
+
+\item
+\[
+  \begin{array}{lrrrrr}
+    \textrm{minimize}   & x_1& +& x_2&  & \\
+    \textrm{subject to} & x_1& -&x_2& \leq & 2  \\
+                        & x_1& -& x_2& \geq & -2 \\
+    \multicolumn{3}{r}{x_1,x_2}&       \geq & 0 
+  \end{array}
+\]
+
+\end{enumerate}
+
+\begin{solution}
+\bs The feasible region for the linear program in part a) is shown
+below. The objective function is plotted as a dashed line. The
+optimal solution occurs at $x_1=0$, $x_2=3$, and value of the
+objective function at the optimal solution is $z=6$.
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[ width=12cm, grid=both, axis x line=middle, axis y
+    line=middle, title=, clip=false, ymin=-2, ymax=4, xmin=-2,
+    xmax=4 ]
+
+    \addplot[domain=-1:4] {-3/2 + 1/2*x}; \addplot[domain=-1:4] {3
+      - x}; \addplot[domain=-1:4,dashed] {3 - 1/2*x};
+    \addplot[fill=gray, fill opacity=.25] coordinates { (0,0)
+      (3,0) (0,3) }\closedcycle;
+
+    % to get axis labels at the end of the axis
+    \node at (axis description cs:1.04,.333) {$x_1$}; \node at
+    (axis description cs:.333,1.04) {$x_2$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+The feasible region for the linear program in part b) is unbounded;
+however, since it is a minimization problem, it has an optimal
+solution at $x_1=0$, $x_2=0$. The value of the objective function at
+the optimal solution is $z=0$.
+
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[ width=12cm, grid=both, axis x line=middle, axis y
+    line=middle, title=, clip=false, ymin=-3, ymax=3, xmin=-3,
+    xmax=3 ]
+
+    \addplot[domain=-1:3] {-2+x}; \addplot[domain=-3:1] {2+x};
+    \addplot[domain=-3:3,dashed] {-x}; \addplot[fill=gray, fill
+    opacity=.25] coordinates { (0,0) (2,0) (3,1) (3,3) (1,3) (0,2)
+    }\closedcycle;
+
+    % to get axis labels at the end of the axis
+    \node at (axis description cs:1.04,.5) {$x_1$}; \node at (axis
+    description cs:.5,1.04) {$x_2$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+\end{solution}
+
 % this exercise needs to be re-written
-\item In the Ma-and-Pa grocery store, shelf space is limited
+\item \emph{Resource allocation to maximize profit.} 
+At the Ma-and-Pa grocery store, shelf space is limited
   and must be used effectively to increase profit. Two cereal items,
   Grano and Wheatie, compete for a total shelf space of 60 ft$^2$. A
   box of Grano occupies .2 ft$^2$ and a box of Wheatie requires .4
@@ -330,6 +342,7 @@ current basis remains optimal. We will not use these suffixes.
   about 57\% to Wheatie and 43\% to Grano. What do you think?
   (You can solve this problem however you like, but you must provide
   the allocation of shelf space that maximizes profit.)
+  
 
 \begin{solution}
 \bs My AMPL model and output follow. The solution indicates that more
@@ -353,225 +366,5 @@ x1 = 200
 x2 = 50
 \end{Verbatim}
 \end{solution}
-\end{enumerate}
-
-%  
-\chapter{Probabilistic Modeling}
-
-\section{Stochastic Processes}
-
-\section{Queueing Models}
-
-\section{Exercises}
-
-\chapter{Decision Problems}
-
-\section{Games Against Nature}
-
-\section{Games Against an Opponent}
-
-\section{Exercises}
-\begin{enumerate}
-
-% This exercise is OK
-\item Rules for decision--making under ignorance (that is to
-  say, decision--making without probabilities). You have the opportunity to go on a
-  blind date, but you are hesitant.  You are lonely and would like to
-  find the love of your life; however, you dislike awkward
-  situations. Furthermore, you find it difficult to estimate the
-  probability that this particular blind date will turn out to be the
-  love of your life, but you know this probability is
-  non-negligible. To be a little more precise, you have the following
-  values: finding the love of your life is worth 1000, being in an
-  awkward date situation (i.e. being on a date and knowing that you
-  will not see the person again) is worth -10, and staying home
-  watching Netflix is worth zero.
-
-\begin{enumerate}
-\item Formulate a decision problem for deciding whether to go on the
-blind date or to stay home.
-\item Use the maximin rule to solve the problem.
-\item Use the minimax regret rule to solve the problem.
-\end{enumerate}
-
-\begin{solution}
-\bs The decision problem can be represented with the following table.
-\\[.2in]
-\begin{tabular}{ccc}
-\multicolumn{3}{c}{decision matrix} \\
- & find love & lots of awkward moments \\ \hline
-go on date & 1000 & -10 \\
-decline date & 0 & 0 
-\end{tabular}
-\\[.2in] 
-The maximin rule tells you to decline the date because it has
-the best of all the worst possible outcomes. To use minimax regret, we
-form the regret matrix.  \\[.2in]
-\begin{tabular}{ccc}
-\multicolumn{3}{c}{regret matrix} \\
- & find love & lots of awkward moments \\ \hline
-go on date & 0 & -10 \\
-decline date & -1000 & 0
-\end{tabular}
-\\[.2in] Minimax regret tells you to go on the date because the
-possibility of not finding love has the most regret.
-\end{solution}
-
-
-% this problem needs to be re-written. It is IMS chapter 13 problem 21.
-\item A real estate investor has the opportunity to purchase land currently
-zoned residential. If the county board approves a request to rezone the property
-as commercial within the next year, the investor will be able to lease the
-land to a large discount firm that wants to open a new store on the property.
-However, if the zoning change is not approved, the investor will have to sell
-the property at a loss. Profits (in thousands of dollars) are shown in the 
-following payoff table.
-
-\begin{tabular}{rcc}
-& \multicolumn{2}{c}{State of Nature} \\
-& rezoning approved & rezoning not approved \\
-Decision Alternative & $s_1$ & $s_2$ \\
-purchase & 600 & -200\\
-do not purchase & 0 & 0
-\end{tabular}
-
-\begin{enumerate}
-    \item If the probability that rezoning will be approved is 0.5, what
-    decision is recommended? What is the expected payoff?
-    \item The investor can purchase an option to buy the land. Under the option,
-    the investor maintains the right to purchase the land anytime during the next
-    three months while learning more about possible resistance from area residents.
-    Probabilities are as follows:
-    
-    \begin{tabular}{rrr}
-    \multicolumn{3}{c}{Let $H$ = high resistance to zoning}\\
-    \multicolumn{3}{c}{Let $L$ = low resistance to zoning}\\
-    $P(H)=0.55$ & $P(s_1 \mid H)=0.18$ & $P(s_2 \mid H)=0.82$ \\
-    $P(L)=0.45$ & $P(s_1 \mid L)=0.89$ & $P(s_2 \mid L)=0.11$ 
-    \end{tabular}
-    
-    What is the optimal decision strategy if the investor uses the option
-    period to learn more about the resistance from area residents before making
-    the purchase decision?
-    \item If the option will cost the investor an additional \$\num{10000}, 
-    should the investor purchase the option? Why or why not? What is the maximum
-    that the investor should be willing to pay for the option?
-\end{enumerate}
-\begin{solution}
-\bs For part a), the best decision (according to expected monetary value)
-is to purchase the land. The expected profit is \$200.
-
-For part b), If there is high resistance to rezoning (H) then
-purchasing the land would yield an expected profit of -\$56 (in \$1000s).
-Not purchasing the land would yield zero. If there is low
-resistance to rezoning (L) then purchasing the land would yield
-an expected profit of \$512 (in \$1000s). Not purchasing the
-land would yield zero. So the optimal decision strategy is to
-not purchase the land if H and to purchase the land if L.
-
-For part c), the expected profit from purchasing the option
-(but before actually purchasing the option) is
-\[ 0 \times P(H) + 512 \times P(L) = \$230.4 \]
-The maximum amount that the investor should be willing to pay is
-\[ \$230.4 - \$200 = \$30.4 ~\text{(in \$1000s)} \]
-\end{solution}
-
 
 \end{enumerate}
-
-%
-\chapter{Data Analysis and Statistics}
-
-\section{Summarizing Data}
-
-\section{Visualizing Data}
-
-\section{Exercises}
-
-%
-\chapter{Predictive Modeling}
-
-\section{Linear Regression}
-
-\section{Time Series}
-
-\section{Exercises}
-
-\begin{enumerate}
-
-% this problem needs to be re-written
-\item \emph{Using Linear regression to summarize a dataset.}
-  Download the wine data set \texttt{Wine.csv} from Canvas. Fit a
-  linear regression model using \texttt{lm()} with a price index
-  (\texttt{Price}) as the response variable and the following
-  predictor variables:
-  \begin{compactitem}
-  \item growing season temperature in $^{\circ}$C (\texttt{AGST}),
-  \item winter rain amount in ml (\texttt{WinterRain}),
-  \item harvest rain amount in ml (\texttt{HarvestRain}), and
-    \item age of vintage in years (\texttt{Age}).
-    \end{compactitem}
-    So the model is
-    \[ Price_i = \beta_0 + \beta_1 AGST_i + \beta_2 WinterRain_i +
-      \beta_3 HarvestRain_i + \beta_4 Age_i + \epsilon_i \]
-    Now do the following.
-    \begin{enumerate}
-    \item Looking at the summary of the fitted model, the intercept
-      $\beta_0 \approx -3.43$. What is the interpretation of $\beta_0$?
-      In other words, I don't think that the price of wine can be negative,
-      so how should we interpret the intercept?
-  \item Plot \texttt{Price} as a function of
-    \texttt{HarvestRain}. Overlay a fitted regression line from the
-    full model onto the plot.  When plotting the regression line you
-    should show \texttt{Price} at the average \texttt{AGST}, average
-    \texttt{WinterRain}, and average \texttt{Age}.
-    In other words, it's a two-dimensional plot, but for the other
-    variables that are not shown, we compute \texttt{Price} at their
-    average values. So you want to overlay
-    \[ Price_i = \beta_0 + \beta_1 \overline{AGST} +
-      \beta_2 \overline{WinterRain} +
-      \beta_3 HarvestRain_i +
-      \beta_4 \overline{Age} \]
-    onto the data. You can use \texttt{coef()} to extract the
-    coefficients from the fitted model object.
-
-  \item If you are a wine-maker, when would you like to see
-    rain?
-
-  \item Plot the actual \texttt{Price} vs. the predicted (fitted)
-    price. If your fitted model is stored in an object named
-    \texttt{fm}, then you can get the predicted price as follows.
-    \begin{Verbatim}
-      wine$pred <- fitted(fm)
-    \end{Verbatim}
-    % $
-    or
-    \begin{Verbatim}
-      wine$pred <- predict(fm)
-    \end{Verbatim}
-    % $
-
-  \item In the summary output of the fitted model, the estimated residual
-    standard error is reported to be
-    $\hat{\sigma}_{\epsilon}=0.295$. Independently compute this quantity. In
-    other words, use the actual values from the data and the fitted
-    values from the model to compute the residual standard error
-    yourself.  The formula is
-    \[ \hat{\sigma}_{\epsilon} = \sqrt{ \frac{\sum_{i=1}^n \left(y_i - \hat{y_i}\right)^2}{n-k}} \]
-    where $y_i$ and $\hat{y_i}$ are the actual and fitted values of observation
-    $i$, respectively, $n$ is the total number of observations, and $k$ is the
-    number of fitted parameters in the model. $n-k$ is the degrees of freedom.
-
-  \item Do you think that a linear model is appropriate for this data?
-  \end{enumerate}
-    
-\end{enumerate}
-
-%
-\backmatter
-%
-\nocite{Anderson:2015pnas} % example
-
-\bibliographystyle{plain} % We choose the "plain" reference style
-\bibliography{bibdata}    % Entries are in the "bibdata.bib" file
-\end{document}

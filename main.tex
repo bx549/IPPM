@@ -1,0 +1,84 @@
+\documentclass[12pt]{book}
+%\usepackage[width=4.375in, height=7.0in, top=1.0in, papersize={5.5in,8.5in}]{geometry}
+\usepackage[letterpaper]{geometry}
+\usepackage[pdftex]{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{biblatex}
+\usepackage{tipa}
+\usepackage{textcomp}
+\usepackage{fancyhdr}
+\usepackage{latexsym}
+\usepackage{paralist}
+\usepackage{comment}
+\usepackage{fancyvrb}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[group-separator={,}]{siunitx}
+\usepackage{pgfplots}
+
+\usetikzlibrary{arrows.meta} \pagestyle{plain}
+\pgfplotsset{compat=1.12}
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{2.5pt}
+\setlength{\footskip}{0in}
+\renewcommand{\footruleskip}{0pt}
+\fancypagestyle{plain}{%
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+}
+%
+%\parindent 0in
+\parskip 0.05in
+%
+
+\includecomment{solution}
+%\excludecomment{solution} % comment this out to create the solutions
+\newcommand{\bs}{\textbf{Solution.}~}
+\newcommand{\es}{\hfill  $\square$}
+
+\setcounter{secnumdepth}{2}
+
+%\bibliographystyle{plain} % the "plain" reference style
+\bibliography{bibdata}    % entries are in the "bibdata.bib" file
+
+\begin{document}
+\frontmatter
+%
+\chapter*{\Huge \center An Introduction to Prescriptive and Predictive Modeling }
+\thispagestyle{empty}
+%{\hspace{0.25in} \includegraphics{./ru_sun.jpg} }
+%\section*{\large \center Darin England}
+\newpage
+\subsection*{\center \normalsize Copyright \copyright 2020 by Darin England}
+\subsection*{\center \normalsize All rights reserved.}
+\subsection*{\center \normalsize ISBN \dots}
+\subsection*{\center \normalsize \dots Publications}
+%
+%\chapter*{\center \normalsize To my Son}
+%
+\tableofcontents
+
+\mainmatter
+
+\include{prescriptive-modeling}
+\include{probabilistic-modeling}
+\include{decision-problems}
+\include{data-analysis-and-statistics}
+\include{predictive-modeling}
+
+\backmatter
+
+\nocite{Anderson:2015pnas} % example
+
+\printbibliography
+\end{document}
