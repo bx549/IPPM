@@ -1,21 +1,15 @@
-\documentclass[12pt]{book}
-%\usepackage[width=4.375in, height=7.0in, top=1.0in, papersize={5.5in,8.5in}]{geometry}
+\documentclass[11pt]{book}
 \usepackage[letterpaper]{geometry}
 \usepackage[pdftex]{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{biblatex}
-\usepackage{tipa}
-\usepackage{textcomp}
+\usepackage{amsmath,amssymb,latexsym}
+\usepackage{biblatex,tipa,textcomp}
 \usepackage{fancyhdr}
-\usepackage{latexsym}
-\usepackage{paralist}
-\usepackage{comment}
-\usepackage{fancyvrb}
-\usepackage{multirow}
-\usepackage{url}
+\usepackage{paralist,comment,fancyvrb}
+\usepackage{multirow,url}
 \usepackage[group-separator={,}]{siunitx}
 \usepackage{pgfplots}
+\usepackage{xmpincl}
+\usepackage{epstopdf}
 
 \usetikzlibrary{arrows.meta} \pagestyle{plain}
 \pgfplotsset{compat=1.12}
@@ -36,36 +30,45 @@
 \fancyhead{}
 \renewcommand{\headrulewidth}{0pt}
 }
-%
-%\parindent 0in
+
 \parskip 0.05in
-%
+
+\graphicspath{ {images/} }
+\includexmp{CC_Attribution_4.0_International}
 
 \includecomment{solution}
 %\excludecomment{solution} % comment this out to create the solutions
 \newcommand{\bs}{\textbf{Solution.}~}
-\newcommand{\es}{\hfill  $\square$}
 
 \setcounter{secnumdepth}{2}
-
-%\bibliographystyle{plain} % the "plain" reference style
 \bibliography{bibdata}    % entries are in the "bibdata.bib" file
 
 \begin{document}
 \frontmatter
 %
-\chapter*{\Huge \center An Introduction to Prescriptive and Predictive Modeling }
+\chapter*{\Huge \center An Introduction to Prescriptive and Predictive Modeling}
 \thispagestyle{empty}
 %{\hspace{0.25in} \includegraphics{./ru_sun.jpg} }
 %\section*{\large \center Darin England}
 \newpage
-\subsection*{\center \normalsize Copyright \copyright 2020 by Darin England}
-\subsection*{\center \normalsize All rights reserved.}
-\subsection*{\center \normalsize ISBN \dots}
-\subsection*{\center \normalsize \dots Publications}
-%
-%\chapter*{\center \normalsize To my Son}
-%
+\noindent
+An Introduction to Prescriptive and Predictive Modeling\\
+Copyright \copyright 2020 by Darin England\\
+\includegraphics[scale=0.8]{by-nc.eps}\\
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit \url{http://creativecommons.org/licenses/by-nc/4.0/}.
+You are free to:\\
+Share – copy and redistribute the material in any medium or format\\
+Adapt – remix, transform, and build upon the material\\
+The licensor cannot revoke these freedoms as long as you follow the license terms.
+Under the following terms:\\
+Attribution – You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests 
+the licensor endorses you or your use.\\
+NonCommercial – You may not use the material for commercial purposes.\\
+Although every precaution has been taken to verify the accuracy of the information
+contained herein, the author and publisher assume no responsibility for any errors or
+omissions. No liability is assumed for damages that may result from the use of information
+contained within.
+
 \tableofcontents
 
 \mainmatter
