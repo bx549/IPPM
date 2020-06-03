@@ -3,7 +3,7 @@
 \usepackage[pdftex]{graphicx}
 \usepackage{amsmath,amssymb,latexsym}
 \usepackage{biblatex,tipa,textcomp}
-\usepackage{fancyhdr}
+\usepackage{fancyhdr,tabularx}
 \usepackage{paralist,comment,fancyvrb}
 \usepackage{multirow,url}
 \usepackage[group-separator={,}]{siunitx}
@@ -35,6 +35,12 @@
 
 \graphicspath{ {images/} }
 \includexmp{metadata/CC_Attribution_4.0_International}
+
+% to create matrices that represent games in normal form
+% with better spacing for readability and with vertical lines
+% that do not extend over all rows.
+\newcommand{\gtcol}[1]{\multicolumn{1}{c|}{#1}}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
 
 \includecomment{solution}
 %\excludecomment{solution} % comment this out to create the solutions

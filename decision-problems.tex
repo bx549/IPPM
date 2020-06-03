@@ -4,6 +4,63 @@
 
 \section{Games Against an Opponent}
 
+% this will be the last portion of this section, where we bring together
+% several concepts. Need to re-write this section: change the context
+% of the problem and explain the methodology.
+\emph{Nature as an adversary: a two-person zero-sum game.}
+Merrill has a concession stand at Target Field for the sale of
+sunglasses and umbrellas. This entrepreneur likes to make sales
+regardless of the weather.  When it rains can sell about 500
+umbrellas.  On a sunny day he can sell about 100 umbrellas and about
+1000 sunglasses. Umbrellas cost him 50 cents and sell for \$1.
+Sunglasses cost him 20 cents each and sell for 50 cents. Merrill is
+willing to invest \$250 in the concession stand business.  All unsold
+items represent a loss; there is no salvage value. 
+
+Formulate Merrill's problem as a two-person zero--sum game. Merrill is
+the row player and Nature is the column player. Merrill's strategy set
+is \{buy inventory for rain, buy inventory for sun\}. Nature's strategy
+set is \{rain, sun\}. The payoff entries represent the profit/loss.
+Find an equilibrium strategy for Merrill. That is
+to say, Merrill treats Nature as a strategic opponent and wants to
+find an optimal inventory strategy that will yield a maximum expected
+profit \emph{regardless} of the weather.
+
+Would Merrill necessarily need to invest all \$250 into buying inventory
+exclusively for rain or sun? In other words, does it seem possible that
+Merrill could truly mix his two pure strategies and invest a portion
+of the \$250 into each? The game is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{4in}{YYYY}
+& & \multicolumn{2}{c}{Nature} \\
+& & Rain & Sun \\ \cline{3-4}
+\multirow{2}{.5in}{Merrill} & \gtcol{Rain} & \gtcol{250} & \gtcol{-150} \\ \cline{3-4}
+& \gtcol{Sun} & \gtcol{-150} & \gtcol{350} \\ \cline{3-4}
+\end{tabularx}
+\endgroup
+
+The best strategy for Merrill is to mix buying for rain and buying
+for sun in the ratio 5 to 4. These are the odds. To compute 
+Merrill's expected profit (i.e. the value of the game) we use
+Merrill's  equilibrium strategy against either of Nature's
+pure strategies. Here is the payoff for Merrill against
+Nature's strategy of Rain.
+
+\[ \frac{5 \times (250) + 4 \times (-150)}{9} = \$72.22 \]
+
+Merrill could play the odds and choose a pure strategy, but 
+note that in this game it is possible for Merrill to physically
+mix the strategies. He could invest 5/9 of his \$250 in
+rainy--day inventory and invest 4/9 in sunny--day inventory.
+So he buys
+\[ \frac{5}{9} \left(500 \times .50\right) + \frac{4}{9} \left(100 \times .50\right) = \$161.11 \]
+worth of umbrellas and
+\[ \frac{4}{9} \left(1000 \times .20\right) = \$88.89 \]
+worth of sunglasses so that he enjoys a steady profit of \$72.22.
+
 \section{Exercises}
 \begin{enumerate}
 
@@ -33,7 +90,7 @@ blind date or to stay home.
 \\[.2in]
 \begin{tabular}{ccc}
 \multicolumn{3}{c}{decision matrix} \\
- & find love & lots of awkward moments \\ \hline
+ & find love & lots of awkward moments \\ \cline{2-3}
 go on date & 1000 & -10 \\
 decline date & 0 & 0 
 \end{tabular}
@@ -43,7 +100,7 @@ the best of all the worst possible outcomes. To use minimax regret, we
 form the regret matrix.  \\[.2in]
 \begin{tabular}{ccc}
 \multicolumn{3}{c}{regret matrix} \\
- & find love & lots of awkward moments \\ \hline
+ & find love & lots of awkward moments \\ \cline{2-3}
 go on date & 0 & -10 \\
 decline date & -1000 & 0
 \end{tabular}
@@ -51,63 +108,109 @@ decline date & -1000 & 0
 possibility of not finding love has the most regret.
 \end{solution}
 
-
-% this problem needs to be re-written. It is IMS chapter 13 problem 21.
-\item A real estate investor has the opportunity to purchase land currently
-zoned residential. If the county board approves a request to rezone the property
-as commercial within the next year, the investor will be able to lease the
-land to a large discount firm that wants to open a new store on the property.
-However, if the zoning change is not approved, the investor will have to sell
-the property at a loss. Profits (in thousands of dollars) are shown in the 
-following payoff table.
+% written by Emily
+\item \emph{Gardening against nature.} A family is considering growing their own garden to save money on fresh vegetables. They have space in their yard for the garden but would need to purchase seeds and gardening supplies. The family is excited to grow a garden, but they know there are a lot of hungry rabbits in their neighborhood that might eat their plants before the family can harvest any vegetables from them. Money saved by the garden is shown in the following table.
 
 \begin{tabular}{rcc}
 & \multicolumn{2}{c}{State of Nature} \\
-& rezoning approved & rezoning not approved \\
-Decision Alternative & $s_1$ & $s_2$ \\
-purchase & 600 & -200\\
-do not purchase & 0 & 0
+& $s_1$ & $s_2$ \\
+& rabbits leave garden alone & rabbits eat garden \\ \cline{2-3}
+plant garden & \$400 & -\$100\\
+buy vegetables from store & 0 & 0
 \end{tabular}
 
 \begin{enumerate}
-    \item If the probability that rezoning will be approved is 0.5, what
-    decision is recommended? What is the expected payoff?
-    \item The investor can purchase an option to buy the land. Under the option,
-    the investor maintains the right to purchase the land anytime during the next
-    three months while learning more about possible resistance from area residents.
-    Probabilities are as follows:
+    \item If the probability that the rabbits leave the garden alone is 0.3, what decision is recommended for the family? What are the expected savings?
     
-    \begin{tabular}{rrr}
-    \multicolumn{3}{c}{Let $H$ = high resistance to zoning}\\
-    \multicolumn{3}{c}{Let $L$ = low resistance to zoning}\\
-    $P(H)=0.55$ & $P(s_1 \mid H)=0.18$ & $P(s_2 \mid H)=0.82$ \\
-    $P(L)=0.45$ & $P(s_1 \mid L)=0.89$ & $P(s_2 \mid L)=0.11$ 
-    \end{tabular}
+    \item The family has the option to purchase fast-growing plant seeds (the fast-growing seeds are the same price as regular seeds but they must buy the fast-growing seeds now if they want them because they are in high demand).  With these fast-growing seeds, the family can wait three more weeks to plant their garden. During that time, some scientists will finish their study on the appetites of the local rabbits, and the family will have a better idea about the probability that their garden is eaten by rabbits. They can return the seeds later for a partial refund if they do not use them.
+    Let $L$ represent the event the rabbits have large appetites and let $S$ represent
+    the event that rabbits have small appetites. Then
+    \[
+    \begin{matrix}
+    P(L)=0.60, & P(s_1 \mid L)=0.15, & P(s_2 \mid L)=0.85,\\
+    P(S)=0.40, & P(s_1 \mid S)=0.79, & P(s_2 \mid S)=0.21.
+    \end{matrix}
+    \]
+    What is the optimal decision strategy if the family purchases the fast-growing seeds so they can wait and learn more about the rabbit appetites before making a decision?
     
-    What is the optimal decision strategy if the investor uses the option
-    period to learn more about the resistance from area residents before making
-    the purchase decision?
-    \item If the option will cost the investor an additional \$\num{10000}, 
-    should the investor purchase the option? Why or why not? What is the maximum
-    that the investor should be willing to pay for the option?
+    \item If \$40\ of the fast-growing seed purchase is non-refundable, should the family purchase the fast-growing seeds? Why or why not? What is the maximum non-refundable amount the family should pay to get the fast-growing seeds?
 \end{enumerate}
+
 \begin{solution}
-\bs For part a), the best decision (according to expected monetary value)
-is to purchase the land. The expected profit is \$200.
+\bs For part a), the expected savings when planting the garden are
+\[ 400 \times 0.3  - 100 \times 0.7 = \$50. \]
+The savings from not planting the garden are \$0, so based on expected value,
+the best decision is to plant the garden.
 
-For part b), If there is high resistance to rezoning (H) then
-purchasing the land would yield an expected profit of -\$56 (in \$1000s).
-Not purchasing the land would yield zero. If there is low
-resistance to rezoning (L) then purchasing the land would yield
-an expected profit of \$512 (in \$1000s). Not purchasing the
-land would yield zero. So the optimal decision strategy is to
-not purchase the land if H and to purchase the land if L.
+For part b), if the rabbits have large appetites ($L$), then planting 
+the garden would result in -\$25 of expected savings.
+If the rabbits have small appetites ($S$), then planting the garden will result in \$295 
+of expected savings. 
 
-For part c), the expected profit from purchasing the option
-(but before actually purchasing the option) is
-\[ 0 \times P(H) + 512 \times P(L) = \$230.4 \]
-The maximum amount that the investor should be willing to pay is
-\[ \$230.4 - \$200 = \$30.4 ~\text{(in \$1000s)} \]
+If L, \[ \$100 \times 0.15 - \$100 \times 0.85 = -\$25 \]
+If S, \[ \$400 \times 0.79 - \$100 \times 0.21 = \$295 \]
+
+Not planting will always result in \$0 of savings. 
+The optimal decision strategy is to plant the garden if $S$ and buy vegetables 
+from the store if $L$.
+
+For part c), we use the optimal decision for each possible event $L$ and $S$. 
+The expected savings from purchasing the fast-growing seeds
+(but before actually purchasing the seeds) are
+\[ \$0 \times 0.60 + \$295 \times 0.40 = \$118 \]
+The maximum non-refundable amount that the family should be willing 
+to pay for the fast-growing seeds is
+\[ \$118 - \$50 = \$68 \]
 \end{solution}
+
+% this problem is OK
+\item \emph{Using Baye's formula to update a prior belief.}
+Curling is a sport in which players slide a stone over ice toward a
+target. The association governing the sport has implemented drug
+testing. It is believed that 15\% of all curlers use banned drugs to
+enhance performance. If a player uses banned drugs, the association
+may take away any prizes that the player has won; however, it
+undesirable to falsely accuse someone of using banned substances.  The
+utilities for each decision and state of nature are
+
+\begin{center}
+\begin{tabular}{rrrr}
+& drug use & no drug use \\ \cline{2-3}
+take away prizes & -100 & -1000 \\
+do not & -600 & 0 
+\end{tabular}
+\end{center}
+
+Notice that there is a small dis-utility for taking prizes away from a drug user
+due to bad publicity for the sport. The test to detect drug use is
+less than 100\% reliable. In particular, if $D$ indicates that a 
+player uses banned drugs, and $+$/$-$ indicate a positive/negative
+test result, then the true positive rate and the true negative rate
+are
+\[
+P(+ \mid D) = .97 \quad \text{and} \quad P(- \mid \overline{D}) = .97,
+\]
+respectively, Given the utilities and the accuracy of the test, what is the best
+decision if a player has a positive test result? (The association
+wants to maximize expected utility.)
+
+\begin{solution}
+\bs First we update the probability of drug use via Baye's formula.
+\begin{align*}
+P(D \mid +) &= \frac{P(D \cap +)}{P(+)} \\
+&= \frac{P(+ \mid D)P(D)}{P(+ \mid D)P(D) + P(+ \mid \overline{D})P(\overline{D})} \\
+&= \frac{.97 \times .15}{.97 \times .15 + .03 \times .85} \\
+&= .851
+\end{align*}
+and then we can compute $P(\overline{D} \mid +) = 1 - P(D \mid +) = .149$.
+Using these posterior probabilities, the expected utilities are
+\begin{align*}
+E(\text{take away}) &= (-100)(.851) + (-1000)(.149) = -234 \\
+E(\text{do not}) &= (-600)(.851) = -511
+\end{align*}
+The best decision is to take away prizes when a player tests positive.
+\end{solution}
+
+\item 
 
 \end{enumerate}
