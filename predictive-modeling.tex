@@ -8,8 +8,54 @@
 
 \begin{enumerate}
 
+% this problem is OK
+\item \emph{Linear regression with a single predictor variable.}
+In the \texttt{datasets} package in R there is a data set named
+\text{faithful} that
+contains data on the Old Faithful geyser in Yellowstone National Park,
+Wyoming, USA.  The variables in the data set are
+\begin{compactitem}[$\circ$]
+\item \texttt{eruptions} the eruption time in minutes
+\item \texttt{waiting} the time in minutes until the next eruption
+\end{compactitem}
+
+To view information about the data set, type
+\begin{Verbatim}
+> ?faithful
+\end{Verbatim}
+at the R prompt. Use this data to perform the following exercises.
+
+\begin{enumerate}
+\item Create histograms of \texttt{eruptions} and \texttt{waiting}
+  (separately). \label{hist}
+
+\item Create a scatter plot (i.e. an x--y plot) with \texttt{eruptions}
+  on the x axis and \texttt{waiting} on the y axis. \label{scat}
+
+\item From the histograms and the scatter plot that you created, what
+  can you say about the behavior of the Old Faithful geyser? \label{interp}
+  
+\item Fit a linear regression model (using the \texttt{lm()} function
+  with \texttt{waiting} as the response variable and \texttt{eruptions}
+  as the only predictor variable. Print a summary of the results.
+  \begin{enumerate}
+  \item What is the interpretation of the intercept? \label{int}
+  \item What is your interpretation of the fitted coefficient
+    on \texttt{eruptions}? \label{dur}
+
+  \item You just observed an eruption of duration 4 minutes.
+    Make a prediction on how long you will have to wait until
+    the next eruption. Can you make any statement about the
+    uncertainty in your prediction? In other words, can
+    you give a range for the time until the next eruption?
+    Don't worry about being exact with your range, just
+    give something reasonable. \label{pred}.
+  \end{enumerate}
+\end{enumerate}
+
+
 % this problem needs to be re-written
-\item \emph{Using Linear regression to summarize a dataset.}
+\item \emph{Using linear regression to summarize a dataset.}
   Download the wine data set \texttt{Wine.csv} from Canvas. Fit a
   linear regression model using \texttt{lm()} with a price index
   (\texttt{Price}) as the response variable and the following
