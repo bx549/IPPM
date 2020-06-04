@@ -1,4 +1,5 @@
 \documentclass[11pt]{book}
+\usepackage{etex}
 \usepackage[letterpaper]{geometry}
 \usepackage[pdftex]{graphicx}
 \usepackage{amsmath,amssymb,latexsym}
@@ -10,8 +11,14 @@
 \usepackage{pgfplots}
 \usepackage{xmpincl}
 \usepackage{epstopdf}
+\usepackage[nottoc,numbib]{tocbibind}
+%\usepackage{appendix}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{color,colortbl}
+\usepackage{calc}
+%\usepackage{layouts}
 
-\usetikzlibrary{arrows.meta} \pagestyle{plain}
+\usetikzlibrary{arrows.meta}
 \pgfplotsset{compat=1.12}
 
 \pagestyle{fancy}
@@ -84,10 +91,12 @@ contained within.
 \include{decision-problems}
 \include{data-analysis-and-statistics}
 \include{predictive-modeling}
+\include{appendix}
 
 \backmatter
 
 \nocite{Anderson:2015pnas} % example
 
+\chapter{References}
 \printbibliography
 \end{document}
