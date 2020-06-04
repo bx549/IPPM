@@ -366,6 +366,155 @@ x2 = 50
 \end{Verbatim}
 \end{solution}
 
+% this problem needs to be re-written, but I think we can just
+% change the context and leave the numbers as they are (or very close
+% anyway). the idea is to extract a shadow price and use it
+% to answer questions.
+\item \emph{The marginal value of a resource (i.e. shadow price).}
+This problem appears in Bradley et. al. \emph{Applied Mathematical
+  Programming}.
+After paying its monthly bills, a family has \$100
+left over to spend on leisure. The family enjoys two types of
+activities: (i) eating out; and (ii) other entertainment, such as
+seeing movies and sporting events. The family has determined the
+relative value (utility) of these two activities. Each dollar spent on
+eating out provides 1.2 units of value for each dollar spent on other
+entertainment. Suppose that the family wishes to determine how to
+spend this money to maximize the value of its expenditures, but that
+no more than \$70 can be spent on eating out and no more than \$50 on
+other entertainment (if desired, part of the money can be saved). The
+family also would like to know:
+\begin{enumerate}
+\item How the total value of its expenditures for leisure would change
+  if there were only \$99 to spend. \label{a}
+\item How the total value would change if \$75 could be spent on
+  eating out.\label{b}
+\item Whether it would save any money if each dollar of savings would
+  provide 1.1 units of value for each dollar spent on other
+  entertainment.\label{c}
+\end{enumerate}
+Formulate the family's spending decision as a linear program. Sketch
+the feasible region and determine the optimal solution using the
+graphical method.  Then solve the linear program using optimization
+software and obtain post-optimality output (i.e. a sensitivity
+report).  Use this output to answer each of the questions \ref{a},
+\ref{b}, \ref{c}.
+
+\begin{solution}
+\bs
+In the problem formulation to maximize total value, let
+\[
+  \begin{array}{lcl}
+    x_1 &=& \textrm{\$ to spend on eating out} \\
+    x_2 &=& \textrm{\$ to spend on other entertainment}
+  \end{array}
+\]
+Then the family wants to solve the following problem.
+\[
+\begin{array}{lrrrrr}
+\textrm{maximize}   & 1.2x_1& +& x_2&      &   \\
+\textrm{subject to} & x_1& +&x_2& \leq & 100 \\
+                    & x_1& & & \leq & 70 \\
+                    & & & x_2& \leq & 50 \\
+\multicolumn{4}{r}{x_1,x_2}&       \geq & 0
+\end{array}
+\]
+
+The feasible region is given below. The optimal solution is $x_1=70$ and $x_2=30$
+for a total value of 114.
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[ width=12cm, grid=both,
+    axis x line=middle,
+    axis y line=middle,
+    title=, clip=false,
+    ymin=-10, ymax=110, xmin=-10, xmax=110 ]
+
+    \addplot[domain=-10:110] {-x + 100};
+    \addplot[mark=none] coordinates {(70,-10) (70,110)};
+    \addplot[domain=-10:110] {50};
+    \addplot[fill=gray, fill opacity=.25] coordinates {
+      (0,0) (70,0) (70,30) (50,50) (0,50) }\closedcycle;
+    \addplot[domain=20:100,dashed] {-1.2*x + 114};
+
+    % to get axis labels at the end of the axis
+    \node at (axis description cs:1.04,.09) {$x_1$};
+    \node at (axis description cs:.09,1.04) {$x_2$};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+In order to answer parts a), b), and c), I solved the problem using AMPL
+and displayed post-optimality information. The model as implemented in AMPL follows.
+\begin{Verbatim}[samepage=true]
+var x1 >= 0;   # amount to spend on eating out
+var x2 >= 0;   # other entertainment
+
+maximize z: 1.2*x1 + x2;
+
+s.t. budget: x1 + x2 <= 100;
+s.t. eatout: x1 <= 70;
+s.t. other : x2 <= 50;
+\end{Verbatim}
+and the output from the AMPL session:
+\begin{Verbatim}[samepage=true]
+ampl: include '/home/darin/mega/isye/ie1101/ampl/options.run';
+ampl: model '/home/darin/mega/isye/ie1101/ampl/familyspending.mod';
+ampl: solve;
+Gurobi 8.1.0: solnsens 1
+Gurobi 8.1.0: optimal solution; objective 114
+1 simplex iterations
+
+suffix sensublo OUT;
+suffix sensubhi OUT;
+suffix sensobjlo OUT;
+suffix sensobjhi OUT;
+suffix senslblo OUT;
+suffix senslbhi OUT;
+suffix sensrhslo OUT;
+suffix sensrhshi OUT;
+ampl: display x1, x2;
+x1 = 70
+x2 = 30
+
+ampl: display budget, eatout, other;
+budget = 1
+eatout = 0.2
+other = 0
+
+ampl: display budget.sensrhslo, budget.sensrhshi;
+budget.sensrhslo = 70
+budget.sensrhshi = 120
+
+ampl: display eatout.sensrhslo, eatout.sensrhshi;
+eatout.sensrhslo = 50
+eatout.sensrhshi = 100
+\end{Verbatim}
+
+part a) The shadow price on the \texttt{budget} constraint tells us
+that if we decrease the RHS from 100 to 99, the value of the objective
+function will decrease to 113. Since eating out provides more value
+than other entertainment, the new solution will be $x_1=70$ and
+$x_2=29$.
+
+part b) Notice that \$75 is within the range for the shadow price on
+the \texttt{eatout} constraint. So, increasing the RHS to 75 will
+increase the total value by
+\[ \$5 \times 0.2~\text{units of value per dollar} = 1 \]
+for a total value of 115.
+
+part c) Saving one dollar requires \$1; however, the family gets 1.1
+units of value for each dollar saved. Yes, the family would save
+\emph{some} amount of money and spend less on other entertainment. To
+use the shadow price to answer this question, notice that the shadow
+price on the \texttt{budget} constraint is 1. If we ``price-out'' the
+new activity of saving money, we see that it cost \$1 per unit, but it
+returns \$1.1 per unit in total value. So the family would save some
+amount of money. The question did not ask us to determine the new
+solution. It only asked whether \emph{any} money would be allocated to
+savings.
+\end{solution}
+
 % this problem needs to be re-written and GAMS code needs to be added.
 \item \emph{A network flow problem.}
 The U.S. government is auctioning oil leases at two sites, A and B. At
