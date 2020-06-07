@@ -1,12 +1,41 @@
 \chapter{Prescriptive Modeling}
+
 \section{Linear Programming}
 
-% this section needs to be re-written
-\emph{A Resource Allocation Problem.} This example is taken 
-from~\cite{chvatal:1983}.  A forester has 100
-acres of hardwood timber. She also has \$4000 cash on-hand to use for
-the forestry business. There are two possible courses of action to 
-take with the 100 acres of available hardwood:
+The best way to learn the art of mathematical modeling is through practice.
+We begin with a simple two-variable Linear Programming model whose solution
+will inform the owner of a business how to allocate scarce resources to achieve
+maximum profit. Additional information returned with the solution will be used
+to gain insight on obtaining additional resources and an idea of the robustness
+of the solution to small changes in the data.
+Along the way we will
+illustrate various features of the GAMS algebraic modeling language. 
+\footnote{We do not provide a complete introduction to GAMS.
+Excellent tutorials already exist. \cite{Rosenthal,GAMS}.}
+
+Why use GAMS? Well, it's not GAMS in particular, but rather
+algebraic modeling languages in general that are extremely useful
+when \emph{formulating} mathematical programming problems
+\footnote{AMPL is another popular algebraic modeling language with a 
+clear and expressive syntax \cite{fourer:2003}.} An
+algebraic modeling language allows one to easily specify and
+understand objective functions, constraints, and logical relationships
+among variables. The syntax of the GAMS language is simple,
+yet expressive enough to enable many different types of problems to be
+directly modeled. We should note that GAMS is not a general-purpose
+programming language, although it does contain constructs for
+conditional execution of statements and for iterative looping.
+Rather, GAMS is an example of a \emph{domain-specific} language.  Its
+purpose is to facilitate translation from a problem description into a
+form that is suitable for a solver to process.
+
+\emph{A Resource Allocation Problem.}
+A local farmer maintains 500 acres. She can grow feed corn for animals
+and/or organic corn for local millers. As the planting season approaches,
+she must decide how many acres to allocate to each type of corn.
+Her operating budget is \$\num{50000}.
+
+% in-progress
 \begin{enumerate}
 \item Harvest the hardwood and let the area naturally regenerate. This
   would cost \$10 per acre now and return \$50 per acre later,
@@ -76,31 +105,28 @@ s.t. budget: 10*x1 + 50*x2 <= 4000;
 \end{axis}
 \end{tikzpicture}
 \end{center}
-\caption{Feasible Region for the Forestry Problem}
+\caption{Feasible region for the forestry problem}
 \label{feasibleregion}
 \end{figure}
 
-The constraints labeled \texttt{acres} and \texttt{budget} represent
-the limitations on available resources.  It's unnecessary to
-explicitly name constraints in AMPL; however, providing short,
-descriptive names aids interpretation of the model. Moreover, in a
-resource allocation problem such as this, the constraint names refer
-to the values of the associated dual variables, which have an economic
-interpretation as the marginal value of an additional unit of the
-resource.
+The constraints labeled \texttt{acres} and \texttt{budget} represent the limitations
+on resource availabilities.
+It's unnecessary to explicitly name constraints in AMPL; however, providing
+short, descriptive names aids interpretation of the model. Moreover, in a resource
+allocation problem such as this, the constraint names refer to the values 
+of the associated dual variables, which have an economic interpretation as 
+the marginal value of an additional unit of the resource. 
 
-This problem is small enough that we can include all data parameters
-directly in the model specification. Although we will not cover it in
-this quick start guide, it is good practice to separate the data from
-the model, and AMPL encourages this separation by providing
-\texttt{param} declarations and the ability to have a separate
-\texttt{data} section. Indeed, it's hard to understand the benefit of
-an algebraic modeling language unless you are working on a large
-problem.  It's worth noting that AMPL doesn't actually solve the
-mathematical programming problem, but rather passes a description of
-the problem to a solver, which returns information about the solution
-(if any solution was found) to AMPL. An AMPL session for the forestry
-problem follows:
+Since this problem is small, we include all data parameters directly
+in the model specification. However, it is usually good practice to
+separate the data from the model, and AMPL encourages this separation
+by providing \texttt{param} declarations and the ability to have a
+separate \texttt{data} section. We will illustrate these features of
+AMPL in the other problem formulations in this article.  AMPL doesn't
+actually solve the mathematical programing problem, but rather passes
+a description of the problem to a solver, which returns information
+about the solution (if any solution was found) to AMPL. An AMPL
+session for the forestry problem follows:
 
 \begin{Verbatim}[samepage=true]
 ampl: model forester.mod;
@@ -112,10 +138,10 @@ x1 = 25
 x2 = 75
 \end{Verbatim}
 
-The optimal solution indicates that the forester should let 25 acres
-of the hardwood regenerate naturally and plant 75 acres with pine, for
-a total profit of \$6250. Notice that the entire budget of \$4000 is
-exhausted because $10 \times 25 + 50 \times 75 = 4000$. When a
+The optimal solution indicates that the forester should harvest 100
+acres, but let 25 acres regenerate naturally and plant 75 acres with
+pine, for a profit of \$6250. Notice that the entire budget of \$4000
+is exhausted because $10 \times 25 + 50 \times 75 = 4000$. When a
 resource capacity constraint such as \texttt{acres} or \texttt{budget}
 holds with equality in the optimal solution (as in this example), then
 the constraint is \emph{binding}; all of the resource associated with
@@ -131,12 +157,10 @@ acres = 32.5
 budget = 0.75
 \end{Verbatim}
 
-In AMPL the name of a constraint is used to refer to the associated
-dual variable. Displaying the shadow prices for the forester problem
-indicates that an additional acre of hardwood timber would increase
-profit by \$32.50, given the same budget of \$4000.  Modifying the
-right-hand side of \texttt{acres} to 101 and re-solving shows that
-this is indeed the case.
+Displaying the shadow prices in AMPL indicates that an additional acre
+of hardwood timber would increase profit by \$32.50, given the same
+budget of \$4000.  Modifying the right-hand side of \texttt{acres} to
+101 and re-solving shows that this is indeed the case.
 
 \begin{Verbatim}[samepage=true]
 ampl: reset;
@@ -171,81 +195,660 @@ right-hand sides of the constraints. The ranges over which the these
 values are valid is a topic of sensitivity analysis. Here, we will
 show how to extract this information from AMPL. First we need to tell
 AMPL to use a solver that is able to return sensitivity information
-along with the optimal solution. We will instruct AMPL to use the solver
-\texttt{gurobi}. Then we set a solver-specific option to make the
+along with the optimal solution. We will use the solver
+\texttt{cplex}. Then we set a solver-specific option to make the
 sensitivity range information available.
 
 \begin{Verbatim}[samepage=true]
-ampl: reset;
-ampl: model forester.mod;
-ampl: option solver gurobi;
-ampl: option gurobi_options 'solnsens 1'; 
+ampl: option solver cplex;
+ampl: option cplex_options 'sensitivity';
 ampl: solve;
-Gurobi 8.1.0: solnsens 1
-Gurobi 8.1.0: optimal solution; objective 6250
+CPLEX 11.2.0: sensitivity
+CPLEX 11.2.0: optimal solution; objective 6250
+2 dual simplex iterations (1 in phase I)
 
-suffix sensublo OUT;
-suffix sensubhi OUT;
-suffix sensobjlo OUT;
-suffix sensobjhi OUT;
-suffix senslblo OUT;
-suffix senslbhi OUT;
-suffix sensrhslo OUT;
-suffix sensrhshi OUT;
+suffix up OUT;
+suffix down OUT;
+suffix current OUT;
 \end{Verbatim}
 
 We are now able to display the ranges over which the current shadow
 prices of \$32.5 per acre and \$0.75 per dollar of budget are
 valid. To do this we simply add a suffix to the name of the
 constraint, separated by a ``\texttt{.}''. The suffix
-\texttt{.sensrhslo} displays the lower limit of a constraint's
-right-hand side, while \texttt{.sensrhshi} displays the upper limit.
-In the AMPL session follows, the
+\texttt{.current} displays the current value of a constraint's
+right-hand side, while \texttt{.down} and \texttt{.up} display the
+lower and upper limits, respectively. In the AMPL session follows, the
 upper limit of 5000 on the right-hand side of \texttt{budget}
 indicates the forester should only consider loans of \$1000 or less to
 be valued at an incremental marginal value of 0.75.
 
 \begin{Verbatim}[samepage=true]
-ampl: display acres.sensrhslo, acres.sensrhshi;
-acres.sensrhslo = 80
-acres.sensrhshi = 400
+ampl: display acres.down, acres.current, acres.up;
+acres.down = 80
+acres.current = 100
+acres.up = 400
 
-ampl: display budget.sensrhslo, budget.sensrhshi;
-budget.sensrhslo = 1000
-budget.sensrhshi = 5000
+ampl: display budget.down, budget.current, budget.up;
+budget.down = 1000
+budget.current = 4000
+budget.up = 5000
 \end{Verbatim}
 
 Sensitivity ranges may also be obtained for the decision variables. In
 this case the lower and upper limits represent the valid ranges on the
 objective function coefficients over which the current solution
-remains optimal.  The suffixes \texttt{.sensobjlo} and
-\texttt{.sensobjhi} are used to refer to these lower and upper limits.
-Displaying this information for the forestry problem reveals that the
-current solution value of \texttt{x1 = 25} remains optimal as long as
-its coefficient in the objective function is in the range 14 to 70,
-holding all other parameters at their current values.
+remains optimal.  The suffix \texttt{.current} refers to the current
+value of the coefficient.  Displaying this information for the
+forestry problem reveals that the current solution value of \texttt{x1
+  = 25} remains optimal as long as its coefficient in the objective
+function is in the range 14 to 70, holding all other parameters at
+their current values.
 
 \begin{Verbatim}[samepage=true]
-ampl: display x1.sensobjlo, x1.sensobjhi;
-x1.sensobjlo = 14
-x1.sensobjhi = 70
+ampl: display x1.down, x1.current, x1.up;
+x1.down = 14
+x1.current = 40
+x1.up = 70
 
-ampl: display x2.sensobjlo, x2.sensobjhi;
-x2.sensobjlo = 40
-x2.sensobjhi = 200
+ampl: display x2.down, x2.current, x2.up;
+x2.down = 40
+x2.current = 70
+x2.up = 200
 \end{Verbatim}
 
-The other suffixes, \texttt{.senslblo}, \texttt{.senslbhi},
-\texttt{.sensublo}, and \texttt{.sensubhi}, refer to ranges on the
-values (not the coefficients) of the decision variables over which the
-current basis remains optimal. We will not use these suffixes.
+\emph{A Diet Problem.}
+Dwight is an elementary school teacher who also raises pigs for
+supplemental income. He is trying to decide what to feed his pigs.
+Considering a combination of pig feeds available from local suppliers,
+he would like to feed the pigs at minimum cost while also making sure
+each pig receives an adequate supply of calories and vitamins.  The
+cost, calorie content, and vitamin content of each feed are given in
+the table below.
+
+\vspace{.1in}
+\begin{center}
+\begin{tabular}{ccc}
+\textbf{Contents}   &  \textbf{Stark County Coop Pig Feed }   & \textbf{Pioneer Pig Feed} \\   \hline
+Calories (per pound)  &  800    &  1000   \\
+Vitamins (per pound)  &  140 units  &  70 units  \\
+Cost (per pound)   &  \$0.40    & \$0.80  \\
+\end{tabular}
+\end{center}
+\vspace{.1in}
+
+Each pig requires at least 8,000 calories per day and at least 700
+units of vitamins. A further constraint is that no more than one-third
+of the diet (by weight) can consist of Stark County Coop Pig Feed,
+since it contains an ingredient which is toxic if consumed in too
+large a quantity.  First, let's write down the mathematical
+programming formulation without regard to AMPL. Let $x_1$ be the
+pounds per day of Stark County Coop feed to purchase. Similarly, let
+$x_2$ be the pounds per day of Pioneer feed to purchase. Then the
+problem is to 
+
+\[
+\begin{array}{lrrrrrl}
+\textrm{minimize}   & .4x_1 & + & .8x_2 &  &  &  \\
+\textrm{subject to} & 800x_1 & + & 1000x_2 & \geq & 8000 & \textrm{(calories)} \\
+                    & 140x_1 & + & 70x_2   & \geq & 700  & \textrm{(vitamins)} \\
+					& 2x_1   & - & x_2     & \leq & 0    & \textrm{(toxicity)} \\
+\multicolumn{4}{r}{x_1,x_2}& \geq & 0 &
+\end{array}.
+\]
+
+To get the toxicity restriction on the amount of Stark County Coop
+feed, begin with the relation
+\[
+x_1 \leq \frac{1}{3}(x_1 + x_2).
+\]
+Then collect terms and simplify.  Since this problem has only two
+variables, we can easily specify the model in AMPL by creating each
+variable, the objective function, and the three constraints as shown
+in Figure~\ref{p1}. This model should be saved in a text file with a
+\texttt{.mod} extension.
+
+\begin{SaveVerbatim}{pigs}
+var x1 >= 0;  # stark
+var x2 >= 0;  # pioneer
+
+minimize total_cost: .4*x1 + .8*x2;
+
+subject to cal: 800*x1 + 1000*x2 >= 8000;
+subject to vit: 140*x1 + 70*x2 >= 700;
+subject to tox: x1 <= (1/3)*(x1 + x2);
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{pigs}
+\caption{AMPL model (\texttt{pigs.mod})}
+\label{p1}
+\end{minipage}
+}
+\end{figure}
+
+The following AMPL session shows how to read the problem into AMPL,
+invoke the default solver, and print the solution. The minimum cost
+feed mixture is 2.86 pounds of Stark County feed and 5.71 pounds of
+Pioneer feed per pig per day, for a total cost of \$5.71 per pig per
+day.
+\begin{Verbatim}[samepage=true]
+ampl: model pigs.mod;
+ampl: solve;
+MINOS 5.51: optimal solution found.
+2 iterations, objective 5.714285714
+ampl: display x1, x2;
+x1 = 2.85714
+x2 = 5.71429
+\end{Verbatim}
+
+For problems of any reasonable size it is necessary (and desirable) to separate
+the model and data. This will allow us to solve different problem instances
+(i.e. different sets of data) without changing the model. Figure~\ref{p2} shows
+the complete problem formulation and data with separate \texttt{model} and
+\texttt{data} sections in the same text file (\texttt{pigs2.mod}). It is also
+possible (and you will usually want to do this) to put the data section
+in its own text file. In that case we would name the data file with a
+\texttt{.dat} extension, e.g. \texttt{pigs2.dat}.
+
+\begin{SaveVerbatim}{pigs2}
+model;
+set Supplier;
+
+param calories {Supplier};  # per pound
+param vitamins {Supplier};  # units per pound
+param cost {Supplier};      # dollars per pound
+
+var x {Supplier} >= 0;  # pounds to purchase from each supplier (per pig)
+
+minimize total_cost: sum {i in Supplier} cost[i]*x[i];
+
+s.t. cal: sum {i in Supplier} calories[i]*x[i] >= 8000;
+s.t. vit: sum {i in Supplier} vitamins[i]*x[i] >= 700;
+s.t. tox: x['stark'] <= (1/3)* sum {i in Supplier} x[i];
+
+data;
+set Supplier := stark pioneer;
+
+param : vitamins cost calories:=
+stark   140      .4    800
+pioneer  70      .8   1000;
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{pigs2}
+\caption{Separation of model and data (\texttt{pigs2.mod})}
+\label{p2}
+\end{minipage}
+}
+\end{figure}
+
+Most AMPL models are specified by declaring sets, parameters, and
+variables, and then by writing the objective function and the
+constraints that make use of the sets, parameters, and
+variables. Parameters are typically numeric values, although they can
+also be logical or symbolic values. They can be thought of as ``data''
+values, e.g. the cost per pound of feed. Variables represent the
+decisions, e.g. the amount of feed to purchase. Sets specify the
+objects with which parameters and variables are associated. We
+declared the feed suppliers to be a set because the decisions for how
+much feed to purchase as well as cost and nutritional attributes of
+the feed are logically associated with each supplier. We say that the
+parameters and the variables are \emph{indexed} over the set of
+suppliers.
+
+Giving short, meaningful names to sets, parameters, and variables
+makes a model readable.  I like to capitalize the first letter of set
+names so that they are easily distinguished from parameters.  In the
+AMPL book, you will see that set names are in all upper-case
+letters. This is just a convention, and the language does not require
+it; however, good programming habits will make your code easier to
+maintain.
+
+Here is the output from an AMPL session using the model and data in
+\texttt{pigs2.mod}.  When working with AMPL, if you read in a model
+and subsequently make changes, or if you read in a new model after
+having worked with an initial model, you will need to use the
+\texttt{reset} command before reading in the new model. Note that when
+the decision variables are indexed over a set, we display all of them
+at once by typing the variable symbol.
+\begin{Verbatim}[samepage=true]
+ampl: reset;
+ampl: include pigs2.mod;
+ampl: solve;
+MINOS 5.51: optimal solution found.
+2 iterations, objective 5.714285714
+ampl: display x;
+x [*] :=
+pioneer  5.71429
+  stark  2.85714
+;
+\end{Verbatim}
+
+\emph{Factory Planning.}
+This example is taken from~\cite{williams:1999}. 
+A factory makes seven products that require various amounts of time on four different
+types of machines. The factory owns four grinders, two vertical drills, three 
+horizontal drills, one boring machine, and one planing machine. 
+For each product manufactured, the company can either sell the
+product (subject to market limitations) or hold the product in inventory at a cost of
+.5 per unit per month. We would like to develop a production and inventory plan for
+each of the next six months.
+We will not consider the sequence of machine operations; however, there
+is a fixed maintenance schedule that specifies when and how many of each machine type
+will be unavailable. The factory operates two eight-hour shifts each working day.
+There are 24 working days each month.
+
+Refer to the data in figure~\ref{fdat} as well as the model in
+figure~\ref{fmod} while reading this description.
+Notice that the set \texttt{Month} is declared to be of type \texttt{ordered},
+indicating a defined ordering among its (symbolic) members.
+This means that we can refer to the members of \texttt{Month} by their relative position.
+For example, in our data the expression \texttt{first(Month)} refers
+to the member \texttt{'jan'}. One common reason for declaring a set to be \texttt{ordered}
+is the need to refer to the previous and/or the next member in an indexed expression.
+A typical example of this use of an \texttt{ordered} set is illustrated by the 
+\texttt{balance} constraints.
+
+\begin{SaveVerbatim}{vrbfmod}
+set Product;
+set Machine;
+set Month ordered;
+
+param profit {Product} >= 0;
+param time_required {Product,Machine} >= 0;
+param num_available {Machine} integer, >= 0;
+param downtime {Month,Machine} integer, >=0;
+param market_limit {Month,Product} integer, >= 0;
+param work_hours := 2*8*24;
+# number of working hours in a month: 2 shifts of 8 hours each, 24 days/month
+
+var make {Month,Product} >=0;  # how much of each product to make in each month
+var sell {Month,Product} >=0;  # how much to sell
+var hold {Month,Product} >=0, <=100;  # how much to hold
+
+maximize total_profit:
+  sum {t in Month, i in Product} (profit[i]*sell[t,i] - 0.5*hold[t,i]);
+
+s.t. capacity {t in Month, m in Machine}:
+sum {i in Product} time_required[i,m]*make[t,i] 
+  <= work_hours*(num_available[m]-downtime[t,m]);
+
+s.t. marketing {t in Month, i in Product}: sell[t,i] <= market_limit[t,i];
+
+s.t. balance {t in Month, i in Product : ord(t) > 1}:
+  hold[prev(t),i] + make[t,i] = sell[t,i] + hold[t,i];
+# on-hand inventory plus number produced must equal number
+# sold plus number held in inventory for the next period
+
+s.t. balance0 {i in Product}:
+  make[first(Month),i] = sell[first(Month),i] + hold[first(Month),i];
+# there is no inventory held over from december
+
+s.t. end_inventory {i in Product}: hold[last(Month),i] = 50;
+# stipulate that 50 of each product are to be held over from june
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{vrbfmod}
+\caption{Model for factory planning problem (\texttt{factory\_planning1.mod})}
+\label{fmod}
+\end{minipage}
+}
+\end{figure}
+
+A defining feature of this model is use of three different variables to represent
+the quantities and timing for making, selling, and holding each product.
+The relationship among these
+variables is stated in the \texttt{balance} constraints.
+An upper bound of 100 units on the \texttt{hold} variable represents a storage limitation 
+for each product in each month.
+
+Our objective is to maximize the total profit of the factory over a period of six months.
+A unit profit is accrued for each item sold and a unit cost of .5 is incurred for each item
+held in inventory in a given month.
+Note that the parentheses surrounding the subtraction
+are necessary because the \texttt{sum} operator has higher precedence than \texttt{-}.
+As a side note, if we were to remove the holding cost from consideration in 
+the objective then no parentheses would be required around the
+\texttt{profit[i]*sell[t,i]} term because the \texttt{sum} operator has lower precedence
+than \texttt{*}~\cite{fourer:2003}. 
+
+Each product requires a certain amount of processing time (possibly zero) on each type
+of machine. These requirements are specified in the data by the parameter 
+\texttt{time\_required} that is indexed over \texttt{Product} and \texttt{Machine}
+We need to specify constraints on the amount of machine time
+available each month. There are \texttt{work\_hours} production hours available each month
+on each machine unless a machine is down for maintenance. Because the maintenance
+schedule is specific to each machine and month, the machine capacity constraints 
+are indexed over \texttt{Month} and \texttt{Machine}. The total number of machine
+hours for all products must not exceed the time available in any particular month
+(respecting the \texttt{downtime} schedule.)
+There is an upper bound on the amount of each product that the market will absorb
+(i.e. that can be sold) each month.
+
+We have three different variables to represent the decisions to make, sell,
+and hold product.  The logical relationship among these variables is that
+in any particular month the amount sold plus the amount held in inventory
+must equal the amount produced plus any inventory from the previous month.
+When specifying these product balance constraints we must pay attention to the
+boundary conditions when indexing over \texttt{Month}. In our problem, we
+cannot refer to the previous month when the dummy index evaluates to \texttt{'jan'}.
+We can handle this in the main \texttt{balance} equations by placing a condition
+on the indexed set such that the order of the member is greater than 1
+(and so \texttt{'jan'} is omitted.)
+This is possible because we declared the set \texttt{Month} to be of type
+\texttt{ordered}. We then need to specify a separate set of constraints for
+the first month (\texttt{balance0}). There is no beginning inventory and 
+so the amount produced in \texttt{'jan'} equals the amount sold plus the amount
+held.
+
+Instead of using the expression \texttt{make[first(Month),i]},
+it would have been legitimate to refer to \texttt{make['jan',i]}; however,
+it's better practice to separate the model from the data. The model may then
+be applied to other problem instances with the same structure, but perhaps with
+a different starting month. Finally, we would like to end June with 50 of
+each product type in inventory. This is specified by the equality constraints
+named \texttt{end\_inventory}.
+
+\begin{SaveVerbatim}{vrbfdata}
+data;
+set Product := 1 2 3 4 5 6 7;
+set Machine := grinder vdrill hdrill borer planer;
+set Month := jan feb mar apr may jun;
+
+param profit := 1 10 2 6 3 8 4 4 5 11 6 9 7 3;
+
+param num_available :=	
+grinder 4 vdrill 2 hdrill 3 borer 1 planer 1;
+
+param time_required (tr) :
+         1   2   3   4   5   6   7 :=
+grinder .5  .7   0   0  .3  .2  .5
+vdrill  .1  .2   0  .3   0  .6   0
+hdrill  .2   0  .8   0   0   0  .6
+borer  .05 .03   0 .07  .1   0 .08
+planer   0   0 .01   0 .05   0 .05;
+
+param downtime :
+     grinder vdrill hdrill borer planer :=
+jan    1       0     0      0     0
+feb    0       0     2      0     0
+mar    0       0     0      1     0
+apr    0       1     0      0     0
+may    1       1     0      0     0
+jun    0       0     1      0     1;
+
+param market_limit :
+       1     2     3     4     5     6     7 :=
+jan  500  1000   300   300   800   200   100
+feb  600   500   200     0   400   300   150
+mar  300   600     0     0   500   400   100
+apr  200   300   400   500   200     0   100
+may    0   100   500   100  1000   300     0
+jun  500   500   100   300  1100   500    60;
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{vrbfdata}
+\caption{Data for factory planning problem (\texttt{factory\_planning1.mod})}
+\label{fdat}
+\end{minipage}
+}
+\end{figure}
 
 \section{Integer Programming}
+
+\emph{Perfect Matching.}
+There are 10 students to be assigned to 5 dorm rooms. Each room holds exactly
+two students. For each pair of students, a value that indicates the desirability
+of placing that pair in the same room has been determined. Higher values 
+correspond to better pairings.
+We would like to pair the students in such a way that the
+sum total of the values of each assigned pair is maximized. More generally,
+the perfect matching problem is to assign $n$ pairs for $2n$ objects (with or without
+an objective function). The model and data are presented in figure~\ref{perfect}.
+
+\begin{SaveVerbatim}{vrbperfect}
+set Student; 
+set Pair within Student cross Student;
+
+param value {Pair};
+
+var x {Pair} binary;
+
+maximize total_value: sum {(i,j) in Pair} value[i,j] * x[i,j];
+
+s.t. perfect_match {i in Student}:
+	sum {(i,j) in Pair} x[i,j] + sum {(j,i) in Pair} x[j,i] = 1;
+
+data;
+set Student := 1 2 3 4 5 6 7 8 9 10;
+
+param: Pair: value:
+   1  2  3  4  5  6  7  8  9 10 :=
+1  .  .  .  .  .  .  .  .  .  .
+2  3  .  .  .  .  .  .  .  .  .
+3  5  8  .  .  .  .  .  .  .  .
+4  1 -4  7  .  .  .  .  .  .  .
+5  2 -1  9  2  .  .  .  .  .  .
+6  2  5  3  2  9  .  .  .  .  .
+7  8  2  1  1  3 -2  .  .  .  .
+8  2  3  3  4  5  1  1  .  .  .
+9 13 -1  3  4  4 -5  2  2  .  .
+10 1  2  6  6  7 -4  5  6  1  .;
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{vrbperfect}
+\caption{Model and data for perfect matching problem (\texttt{roommates.mod})}
+\label{perfect}
+\end{minipage}
+}
+\end{figure}
+
+\texttt{Pair} is a compound set with dimension two. Each member of this set is
+an ordered pair of students. We use the term ``ordered'' because the member
+(3,7) is distinct from the member (7,3). The \texttt{within} phrase tells
+us that the only allowed members in \texttt{Pair} are ordered pairs from the set
+\texttt{Student}. Such restrictions in the declaration of sets are encouraged in order to
+help detect errors in the data. For example, the following alternative declaration is 
+perfectly acceptable, but using it would not allow the AMPL translator to recognize
+invalid pairs of students in the data section.
+\begin{Verbatim}
+set Pair dimen 2;
+\end{Verbatim}
+
+The declaration of \texttt{Pair} is not strictly necessary. We could formulate the problem
+using only the set \texttt{Student}. However, using the compound set \texttt{Pair}
+makes the model easier to read and to maintain, particularly the indexing expressions.
+We specify a parameter \texttt{value} that is indexed over \texttt{Pair} to represent the
+desirability of matching up a particular pair of students. Our decision variables
+\texttt{x} are binary variables that are also indexed over \texttt{Pair}. 
+\texttt{x[i,j]} will equal one if student \texttt{i} is matched with student \texttt{j},
+and will equal zero otherwise. Notice the \texttt{binary} modifier in the declaration
+of \texttt{x}. This means that our decision variables may \emph{only} take on the values zero
+or one and turns our formulation into one of pure integer programming~\cite{nemhauser:1988}.
+
+The problem formulation itself consists of the objective function and a single set
+of constraints, one for each student. Our objective is to maximize the overall
+value of the assignments. It provides a good example of how to iterate over a 
+compound set in AMPL. Notice that we must provide a pair of dummy variables
+\texttt{(i,j)} to index into \texttt{Pair}. 
+
+The constraints \texttt{perfect\_match} state that each student must be
+matched with exactly one other student. To understand how this is 
+accomplished note that the scope of the index \texttt{i} extends from 
+its introduction in \texttt{i in Student} until the end of the statement
+marked by the semi-colon. In the expression \texttt{sum \{(i,j) in Pair\} x[i,j]},
+\texttt{i} is held constant for a particular student (row of \texttt{value}) 
+and the summation is over all room mates such that the pair of students
+represented by \texttt{(i,j)} exist in the set \texttt{Pair}, i.e. the
+summation is over columns.
+In the second expression with \texttt{i} and \texttt{j} interchanged, the
+summation is over rows. This is necessary
+due to the way that the data for \texttt{Pair} are structured. Notice that
+only the lower left portion of \texttt{value} is filled in.
+
+This example demonstrates how to simultaneously define a set (\texttt{Pair}) and a parameter
+(\texttt{value}) that is indexed over that set. The ``\texttt{.}'' symbols indicate
+missing values, e.g. there exists no member \texttt{(1,1)} in the set \texttt{Pair}.
+An AMPL session for solving this problem follows. Although not strictly necessary
+for this particular problem, we will instruct AMPL to use
+a solver that can handle integer programming problems, such as the solver
+\texttt{gurobi}. 
+
+\begin{Verbatim}[samepage=true]
+ampl: option solver gurobi;
+ampl: model roommates.mod;
+ampl: solve;
+Gurobi 3.0.0: optimal solution; objective 39
+14 simplex iterations
+ampl: display x;
+x [*,*]
+:    1   2   3   4   5   6   7   8   9    :=
+2    0   .   .   .   .   .   .   .   .
+3    0   1   .   .   .   .   .   .   .
+4    0   0   0   .   .   .   .   .   .
+5    0   0   0   0   .   .   .   .   .
+6    0   0   0   0   1   .   .   .   .
+7    0   0   0   0   0   0   .   .   .
+8    0   0   0   1   0   0   0   .   .
+9    1   0   0   0   0   0   0   0   .
+10   0   0   0   0   0   0   1   0   0
+;
+\end{Verbatim}
+
+The large number of zeros makes the solution difficult to read. A useful
+option is to only display the decision variables with nonzero values. Then
+we can easily see that the pairs are (3,2),(6,5),(8,4),(9,1), and (10,7).
+
+\begin{Verbatim}[samepage=true]
+ampl: option omit_zero_rows 1;
+ampl: display x;
+x :=
+3  2   1
+6  5   1
+8  4   1
+9  1   1
+10 7   1
+;
+\end{Verbatim}
+
+\emph{Map Coloring.}
+The map coloring problem is to assign a color to each area on a map
+(e.g. state or county) in such a way that adjacent areas (i.e. those
+areas that share a border) are assigned different colors. Moreover, we 
+would like to use as few colors as possible. The formulation for this
+problem was adapted from code written in GNU MathProg by Andrew
+Makhorin~\cite{glpk}.
+
+We may create a representation of the adjacency information by constructing a
+graph wherein each area on the map is represented by a node. An 
+edge is drawn between two nodes if the respective areas on the map share a border.
+As an example, figure ? shows the map and the corresponding
+adjacency graph for the western United States. The graph representation
+will better facilitate the requirement that adjacent areas must be assigned 
+different colors.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.7]{westernusa.pdf}
+\caption{Western states and adjacency graph}
+\label{westernusa}
+\end{center}
+\end{figure}
+
+Both the model and the data are presented in figure~\ref{kcolor}. In this model
+we must make the cardinality of the set \texttt{Color} large enough to effect
+a feasible solution. For a large problem the minimum number of colors needed will not
+be obvious (otherwise there is no need to solve the problem.) However, if the 
+solver finds that the problem is infeasible we can always add more members to the
+set \texttt{Color}. See Andrew Makhorin's code~\cite{glpk} for an implementation
+of a heuristic to obtain an upper bound on the required number of colors.
+
+\begin{SaveVerbatim}{vrbkcolor}
+set Node;
+set Edge within (Node cross Node);
+set Color;   
+# the cardinality of the set Color needs to be large enough
+# to find a feasible solution
+
+var x {Node,Color} binary; # x[i,c] = 1 means that node i is assigned color c
+var u {Color} binary;      # u[c] = 1 means that color c is used
+
+minimize num_colors: sum {c in Color} u[c];
+
+s.t. assignment {i in Node}: sum {c in Color} x[i,c] = 1;
+# each node is assigned exactly one color
+
+s.t. different {(i,j) in Edge, c in Color}: x[i,c] + x[j,c] <= u[c];
+# adjacent nodes must be assigned different colors
+
+data;
+set Color := red blue green yellow orange;
+
+set Node := ca or wa mt id nv wy ut az;
+
+set Edge:
+   ca or wa mt id nv wy ut az :=
+ca -  +  -  -  -  +  -  -  +
+or -  -  +  -  +  +  -  -  -
+wa -  -  -  -  +  -  -  -  -
+mt -  -  -  -  +  -  +  -  -
+id -  -  -  -  -  +  +  +  -
+nv -  -  -  -  -  -  -  +  +
+wy -  -  -  -  -  -  -  +  -
+ut -  -  -  -  -  -  -  -  +
+az -  -  -  -  -  -  -  -  -;
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{vrbkcolor}
+\caption{Model and data for map coloring problem (\texttt{kcolor.mod})}
+\label{kcolor}
+\end{minipage}
+}
+\end{figure}
+
+Our binary decision variables \texttt{x} will indicate the particular color 
+assigned to each node (area on the map). We also create binary modeling variables
+\texttt{u} to indicate that a color has been used in the solution. Now the
+objective is a simple summation over \texttt{u}. There are three dummy variables
+in the indexing expression for the \texttt{different} constraint. Notice
+that even though \texttt{x} is indexed over \texttt{\{Node,Color\}} the
+indexing expression for \texttt{different} will only create one constraint for
+each existing \texttt{Edge} and \texttt{Color} combination. Since \texttt{Edge}
+is declared to be \texttt{within (Node cross Node)} we may safely use the
+dummy indices \texttt{i} and \texttt{j} when indexing into \texttt{x}.
+
+In the \texttt{data} section we see one way to specify the members of a 
+two-dimensional set: the ``\texttt{+}'' symbols indicate membership while the
+``\texttt{-}'' symbols indicate non-membership. Alternatively, we could have
+specified \texttt{Edge} by providing only the ordered pairs.
+\begin{Verbatim}[samepage=true]
+set Edge :=
+(ca,or)   (ca,az)   (or,id)   (wa,id)   (mt,wy)   (id,wy)   (nv,ut)   (wy,ut)
+(ca,nv)   (or,wa)   (or,nv)   (mt,id)   (id,nv)   (id,ut)   (nv,az)   (ut,az);
+\end{Verbatim}
 
 \section{Dynamic Programming}
 
 \section{Inventory Models}
 
+\clearpage
 \section{Exercises}
 \begin{enumerate}
 
@@ -327,50 +930,77 @@ the optimal solution is $z=0$.
 
 \end{solution}
 
-% this exercise needs to be re-written
+% re-written by Hannah
 \item \emph{Resource allocation to maximize profit.} 
-At the Ma-and-Pa grocery store, shelf space is limited
-  and must be used effectively to increase profit. Two cereal items,
-  Grano and Wheatie, compete for a total shelf space of 60 ft$^2$. A
-  box of Grano occupies .2 ft$^2$ and a box of Wheatie requires .4
-  ft$^2$. The maximum daily demands for Grano and Wheatie are 200 and 120
-  boxes, respectively. A box of Grano nets \$1.00 in profit, while a
-  box of Wheatie nets \$1.35. Ma and Pa think that because the unit
-  profit of Wheatie is 35\% higher than that of Grano, Wheatie should
-  be allocated 35\% more space than Grano, which amounts to allocating
-  about 57\% to Wheatie and 43\% to Grano. What do you think?
-  (You can solve this problem however you like, but you must provide
-  the allocation of shelf space that maximizes profit.)
-  
+Karl is a local gardener who grows lettuce, broccoli, and carrots. His garden is 
+400 ft$^2$, and each individual plant of lettuce, broccoli, and carrots occupies 
+0.5 ft$^2$, 1.2 ft$^2$, and 0.25 ft$^2$, respectively. Karl recently learned that 
+many of his neighbors are interested in purchasing his vegetables. After polling the 
+neighborhood, he learned that he has demand for 350 lettuce plants, 350 broccoli plants, 
+and 250 carrot plants. Karl estimates that he will earn a profit of \$9.50 per 
+lettuce plant, \$12.80 per broccoli plant, and \$8.25 per carrot plant. How many 
+plants of each type of vegetable should Karl grow to maximize profit? Solve this 
+problem using optimization software.
 
 \begin{solution}
-\bs My AMPL model and output follow. The solution indicates that more
-space should be allocated to Grano than Wheatie. This is because
-the profit per square foot is larger. The solution indicates that
-Ma and Pa should stock 200 boxes of Grano and 50 boxes of Wheatie.
+\bs A GAMS model and solution follow. The solution indicates that Karl should grow 
+350 lettuce plants, 135 broccoli plants, and 250 carrot plants for a total profit of
+about \$\num{7120}. Note that we are ignoring any fractional values of the 
+decision variables.
 
-\begin{Verbatim}[samepage=true]
-var x1 >=0, <= 200;   # boxes of grano
-var x2 >= 0, <= 120;  # boxes of wheatie
+\begin{Verbatim}
+sets
+i 'vegetable' / lettuce, broccoli, carrots /;
 
-maximize profit: x1 + 1.35*x2;
-s.t. space: .2*x1 + .4*x2 <= 60;
+parameters
+a(i) 'space required by vegetable in sq. ft.'
+/ lettuce 0.5
+  broccoli 1.2
+  carrots 0.25 /
+c(i) 'profit of each vegetable in dollars'
+/ lettuce 9.5
+  broccoli 12.8
+  carrots 8.25 /
+  d(i) 'demand for each vegetable'
+/ lettuce 350
+  broccoli 350
+  carrots 250 /;
 
-ampl: model '/home/darin/Dropbox/isye/ie1101/hw/ma-and-pa-store.mod';
-ampl: solve;
-MINOS 5.51: optimal solution found.
-2 iterations, objective 267.5
-ampl: display x1, x2;
-x1 = 200
-x2 = 50
+variables
+x(i) 'number of plants of type i'
+z    'total profit of garden';
+positive variables x;
+
+equations
+profit 'objective function',
+space  'limit on available garden space',
+demand ' limit on demand for vegetables';
+
+profit.. z =e= sum(i, c(i)*x(i));
+space.. sum(i, a(i)*x(i)) =l= 400;
+demand(i).. x(i) =l= d(i);
+
+model garden /all/;
+solve garden using lp maximizing z;
+
+file results /results.dat/;
+put results;
+loop(i, put i.tl, @12, x.l(i) /);
+put 'profit', @12, z.l /;
+
+lettuce          350.00
+broccoli         135.42
+carrots          250.00
+profit          7120.83
 \end{Verbatim}
 \end{solution}
+
 
 % this problem needs to be re-written, but I think we can just
 % change the context and leave the numbers as they are (or very close
 % anyway). the idea is to extract a shadow price and use it
 % to answer questions.
-\item \emph{The marginal value of a resource (i.e. shadow price).}
+\item \emph{The marginal value of a resource.}
 This problem appears in Bradley et. al. \emph{Applied Mathematical
   Programming}.
 After paying its monthly bills, a family has \$100
@@ -515,32 +1145,64 @@ solution. It only asked whether \emph{any} money would be allocated to
 savings.
 \end{solution}
 
-% this problem needs to be re-written and GAMS code needs to be added.
-\item \emph{A network flow problem.}
-The U.S. government is auctioning oil leases at two sites, A and B. At
-each site, 100,000 acres are to be auctioned. Three people are bidding
-as follows.
+% this problem needs to be re-written and GAMS code added.
+\item \emph{A blending problem.}
+A manufacturer of soft drinks wishes to blend
+three sugars to ensure uniformity of taste in a product. Suppliers
+only provide blends of the sugars, at varying costs per ton.
 
-\begin{tabular}{crr}
-Bidder & site A & site B \\ \hline
-Marshall & \$1000/acre & \$2000/acre \\
-Ewing     & \$900/acre & \$2200/acre \\
-Pickens  & \$1100/acre & \$1900/acre
+\begin{center}
+\begin{tabular}{lccccccc} \centering
+ & \multicolumn{7}{c}{Supplier}\\
+Sugar  &   A &  B &  C &  D &  E &  F &  G \\ \hline
+Cane   &  10\% & 10\% & 20\% & 30\% & 40\% & 20\% & 60\% \\
+Corn   &  30\% & 40\% & 40\% & 20\% & 60\% & 70\% & 10\% \\
+Beet   &  60\% & 50\% & 40\% & 50\% &  0\% & 10\% & 30\% \\
+Cost/ton& \$10 & \$11 & \$12 & \$13 & \$14 & \$12 & \$15
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+\item Formulate an (algebraic) mathematical programming model to minimize 
+the cost of the sugar supplies while producing a blend that contains 52 tons
+of cane sugar, 56 tons of corn sugar, and 59 tons of beet sugar. \label{ex:blenda}
+
+\item The manufacturer feels that to maintain good relations with suppliers
+it is necessary to buy at least 10 tons from each. Modify the model in
+part~\ref{ex:blenda} to accommodate this requirement.
+
+\item Formulate an alternative to the model in part~\ref{ex:blenda} that finds the 
+lowest cost way to blend one ton of supplies so that the amount of each 
+sugar is between 30 and 37 percent of the total.
+\end{enumerate}
+
+% re-written by Hannah
+\item \emph{A network flow problem.}
+Amy and Brian are professional golfers who have each agreed to donate 10 hours 
+of private golf lessons to a charity auction. Three people have bid on the lessons, 
+and their bids are shown in the table below. For example, Emma has bid \$28 per hour
+to receive lessons from Amy.
+
+\begin{tabular}{lrr}
+Bidder & Amy & Brian \\ \hline
+Emma & \$28/hr & \$30/hr \\
+Dan     & \$26/hr & \$28/hr \\
+Sam  & \$30/hr & \$32/hr
 \end{tabular}
 
-The rules are that no bidder can receive more than 40\% of the land
-being auctioned (i.e. the total amount of land being auctioned at
-\emph{both} sites).
+In the spirit of fairness, the auction committee has decided that no bidder can win 
+more than 8 hours of total instruction. Given the bid amounts, the committee must now
+decide how to allocate the 20 hours of available instruction time.
 \begin{compactenum}
   \item Draw a diagram of the problem as a network flow model.
   \item Formulate a linear programming model to maximize the
-    government's revenue.
+    charity's revenue.
   \item Solve the problem using optimization software.
 \end{compactenum}
 
 \begin{solution}
   \bs A diagram of the network flow model is shown below. Bidders 1, 2,
-  and 3 correspond to Marshall, Ewing, and Pickens, respectively.
+  and 3 correspond to Emma, Dan, and Sam, respectively.
 \vspace{.2in}
 \begin{center}
 \begin{tikzpicture}[>=latex] % to get latex arrowheads
@@ -551,20 +1213,20 @@ being auctioned (i.e. the total amount of land being auctioned at
   \node[circle,draw](2) at (4,3) {2};
   \node[circle,draw](1) at (4,5) {1};
 
-  \draw[->] (A) -- (1) node[above,pos=.3]{1000};
-  \draw[->] (A) -- (2) node[above,pos=.3]{900};
-  \draw[->] (A) -- (3) node[below,pos=.1]{1100};
-  \draw[->] (B) -- (1) node[below,pos=.8]{2000};
-  \draw[->] (B) -- (2) node[below,pos=.8]{2200};
-  \draw[->] (B) -- (3) node[below,pos=.5]{1900};
+  \draw[->] (A) -- (1) node[above,pos=.3]{28};
+  \draw[->] (A) -- (2) node[above,pos=.3]{26};
+  \draw[->] (A) -- (3) node[below,pos=.1]{30};
+  \draw[->] (B) -- (1) node[below,pos=.8]{30};
+  \draw[->] (B) -- (2) node[below,pos=.8]{28};
+  \draw[->] (B) -- (3) node[below,pos=.5]{32};
 
-  \node[anchor=east] at (A) {100,000~~~~};
-  \node[anchor=east] at (B) {100,000~~~~};
+  \node[anchor=east] at (A) {10~~~~};
+  \node[anchor=east] at (B) {10~~~~};
 
 \end{tikzpicture}
 \end{center}
 
-Let $x_{ij}$ be the amount of land bidder $j$ receives for site $i$.
+Let $x_{ij}$ be the number of hours of instruction bidder $j$ receives from professional golfer $i$.
   \[
      i \in \{\text{A},\text{B}\} \qquad j \in \{1,2,3\}
   \]
@@ -572,23 +1234,99 @@ Let $x_{ij}$ be the amount of land bidder $j$ receives for site $i$.
 \[
   \begin{array}{lrrrrrrrrrr}
     \textrm{maximize} &&&&&&&&&&\\   
-    1000x_{\text{A}1}&+& 900x_{\text{A}2}&+&1100x_{\text{A}3}&+&2000x_{\text{B}1}&+&2200x_{\text{B}2}&+&1900x_{\text{B}3} \\ \\
+    28x_{\text{A}1}&+& 26x_{\text{A}2}&+&30x_{\text{A}3}&+&30x_{\text{B}1}&+&28x_{\text{B}2}&+&32x_{\text{B}3} \\ \\
     \textrm{subject to}  &&&&&&&&&&\\
-    & & & & x_{\text{A}1}&+ & x_{\text{A}2}&+ &x_{\text{A}3} & = & 100,000 \\
-    & & & & x_{\text{B}1}&+ & x_{\text{B}2}&+ &x_{\text{B}3} & = & 100,000 \\
-    & & & & & &  x_{\text{A}1} & + & x_{\text{B}1} & \leq & 80,000 \\
-    & & & & & &  x_{\text{A}2} & + & x_{\text{B}2} & \leq & 80,000 \\
-    & & & & & &  x_{\text{A}3} & + & x_{\text{B}3} & \leq & 80,000 \\
+    & & & & x_{\text{A}1}&+ & x_{\text{A}2}&+ &x_{\text{A}3} & = & 10 \\
+    & & & & x_{\text{B}1}&+ & x_{\text{B}2}&+ &x_{\text{B}3} & = & 10 \\
+    & & & & & &  x_{\text{A}1} & + & x_{\text{B}1} & \leq & 8 \\
+    & & & & & &  x_{\text{A}2} & + & x_{\text{B}2} & \leq & 8 \\
+    & & & & & &  x_{\text{A}3} & + & x_{\text{B}3} & \leq & 8 \\
     \multicolumn{11}{r}{x_{ij} \geq 0 \quad \text{for}~i \in \{\text{A},\text{B}\},~j \in \{1,2,3\} }
   \end{array}
 \]
 
-The optimal solution
-is: bidder 1 (Marshall) receives 20,000 acres at site A and 20,000
-acres at site B, bidder 2 (Ewing) receives 80,000 acres at site B, and
-bidder 3 (Pickens) receives 80,000 acres at site A. The government
-receives \$324 million in revenue.
-\end{solution}
+The optimal solution is: bidder 1 (Emma) receives 6 hours of instruction with Amy and
+2 hours of instruction with Brian, 
+bidder 2 (Dan) receives 4 hours of instruction with Amy, 
+and bidder 3 (Sam) receives 8 hours of instruction with Brian. The charity
+receives \$588 in revenue. A GAMS model and solution is presented below. 
+(There are multiple optimal solutions to this problem.)
+\begin{Verbatim}
+sets
+i "golfer" / amy, brian /
+j "bidder" / emma, dan, sam /;
 
+parameters
+a(i) "available hours"
+/ amy 10
+  brian 10 /;
+  
+table bid(i,j) "dollars per hour bid"
+       emma dan sam
+amy      28  26  30
+brian    30  28  32;
+
+scalar maxhours "max hours won per bidder" / 8 /;
+
+variables
+x(i,j) "hours bidder j spends with instructor i"
+z      "total revenue";
+positive variables x;
+
+equations
+revenue "objective function"
+hours   "available hours"
+limit   "8 hours per bidder max";
+
+revenue.. z =e= sum((i,j), bid(i,j)*x(i,j));
+hours(i).. sum(j, x(i,j)) =e= a(i);
+limit(j).. sum(i, x(i,j)) =l= maxhours;
+
+model auction /all/;
+solve auction using lp maximizing z;
+
+Optimal solution found.
+Objective :         588.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU revenue             .              .              .             1.0000      
+
+  revenue  objective function
+
+---- EQU hours  available hours
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+amy          10.0000        10.0000        10.0000        26.0000      
+brian        10.0000        10.0000        10.0000        28.0000      
+
+---- EQU limit  8 hours per bidder max
+
+            LOWER          LEVEL          UPPER         MARGINAL
+
+emma        -INF            8.0000         8.0000         2.0000      
+dan         -INF            4.0000         8.0000          .          
+sam         -INF            8.0000         8.0000         4.0000      
+
+---- VAR x  hours bidder j spends with instructor i
+
+                  LOWER          LEVEL          UPPER         MARGINAL
+
+amy  .emma          .             6.0000        +INF             .          
+amy  .dan           .             4.0000        +INF             .          
+amy  .sam           .              .            +INF            EPS         
+brian.emma          .             2.0000        +INF             .          
+brian.dan           .              .            +INF            EPS         
+brian.sam           .             8.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF          588.0000        +INF             .          
+
+  z  total revenue
+\end{Verbatim}
+\end{solution}
 
 \end{enumerate}
