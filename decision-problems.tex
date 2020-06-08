@@ -237,4 +237,66 @@ E(\text{do not}) &= (-600)(.851) = -511
 The best decision is to take away prizes when a player tests positive.
 \end{solution}
 
+% written by Emily
+\item \emph{Elimination of dominated strategies}
+Two street vendors, A and B, are located near a major tourist attraction. 
+The proportion of customers
+captured by each vendor depends on the merchandise sold by that vendor and by
+her competitor. A customer gained by one is lost to the other. Each vendor
+can stock one of the following: clothing, ice cream, or souvenirs.
+The possible strategies and proportion of customers captured are as follows.
+
+\begin{tabular}{l}
+If both shops sell souvenirs, A captures 75\% of the customers.\\
+If both shops sell clothing, A and B split the customers evenly.\\
+If both shops sell ice cream, A and B split the customers evenly.\\
+If B sells ice cream and A sells souvenirs, A captures 10\%.\\
+If B sells clothing and A sells ice cream, A captures 90\%.\\
+If B sells souvenirs and A sells clothing, A captures 10\%.\\
+If A sells clothing and B sells ice cream, A captures 100\%.\\
+If A sells souvenirs and B sells clothing, A captures 75\%.\\
+If A sells ice cream and B sells souvenirs, A captures 40\%.
+\end{tabular}
+
+\setlength{\parindent}{0cm}
+Model the decision of each vendor as two-person zero-sum game
+and find a solution by elimination of dominated strategies.
+
+\begin{solution}
+\bs The game is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{4.5in}{YYYYY}
+& & \multicolumn{3}{c}{B} \\
+& & clothing & ice cream & souvenirs \\ \cline{3-5}
+\multirow{3}{.25in}{A} & \gtcol{clothing} & \gtcol{.50} & \gtcol{1} & \gtcol{.10} \\ \cline{3-5}
+& \gtcol{ice cream} & \gtcol{.90} & \gtcol{.50} & \gtcol{.40} \\ \cline{3-5}
+& \gtcol{souvenirs} & \gtcol{.75} & \gtcol{.10} & \gtcol{.25} \\ \cline{3-5}
+\end{tabularx}
+\endgroup
+\vspace{.1in}
+
+For A, ice cream strictly dominates souvenirs and for B, souvenirs strictly dominates
+clothing, leaving a $2 \times 2$ game.
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{4in}{YYYY}
+& & \multicolumn{2}{c}{B} \\
+& & ice cream & souvenirs \\ \cline{3-4}
+\multirow{2}{.25in}{A} & \gtcol{clothing} & \gtcol{1} & \gtcol{.10} \\ \cline{3-4}
+& \gtcol{ice cream} & \gtcol{.50} & \gtcol{.40} \\ \cline{3-4}
+\end{tabularx}
+\endgroup
+\vspace{.1in}
+
+Now for B, souvenirs dominates ice cream. Then, A will choose to sell ice cream
+over clothing. So, the
+best strategies for A and B are to sell ice cream and souvenirs, respectively. 
+Using this pair of strategies, A will capture 40\% of the customers.
+\end{solution}
+
 \end{enumerate}
