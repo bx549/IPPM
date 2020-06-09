@@ -52,7 +52,7 @@ number of acres to allocate to feed corn and organic corn, respectively,
 then the farmer's decision problem is to
 \[
 \begin{array}{lrrrrrl}
-\textrm{maximize}   & 110x_1 & + & 150x_2 &  &  &  \textrm{(profit)} \\
+\textrm{maximize}   & 110x_1 & + & 150x_2 & = &  & z \textrm{(profit)} \\
 \textrm{subject to} & 90x_1 & + & 150x_2 & \leq & \num{50000} & \textrm{(budget)} \\
                     & x_1 & + & x_2   & \leq & 500  & \textrm{(acres)} \\
 \multicolumn{4}{r}{x_1,x_2}& \geq & 0 &
@@ -64,10 +64,40 @@ the sense that if the farmer could obtain a little more of either resource,
 then she could earn more profit. Later in the section, will make this 
 notion more precise. Since this problem has two decision variables, the 
 inequalities that describe the constraints can be shown graphically
-as in Figure\ref{fig:feasibleregion}. Any combination of $x_1$ (feed corn)
+as in Figure~\ref{fig:feasibleregion}. Any combination of $x_1$ (feed corn)
 and $x_2$ (organic corn) within the shaded area represents a feasible
-solution for the farmer. The combination that maximizes total profit
-is the optimal solution. 
+solution for the farmer. The optimal solution is the combination that 
+maximizes total profit.
+
+The constraints in Figure~\ref{fig:feasibleregion} were drawn by 
+\begin{inparaenum}[1)]
+\item representing the inequality as a line, and then 
+\item determining on which side of line the inequality is valid. 
+\end{inparaenum}
+The dashed line represents the objective function, but it is drawn at an
+arbitrary place in the figure. The important thing to note is the
+slope. Writing the objective as
+\[ x_2 = \frac{z}{150} - \frac{110}{150}x_1 \]
+lets us easily see that the slope is $-11/15$. Now, to find the
+values of the decision variables ($x_1$ and $x_2$) that maximize
+the expression
+\[ z = 110x_1 + 150x_2 \]
+while still satisfying the constraints, imagine sliding the dashed line
+up and to right until the point just before the dashed line leaves the
+feasible region. This will occur at the point where the two 
+lines representing the constraints intersect, i.e. $x_1 = 416.67$, $x_2 = 83.33$.
+The optimal solution to any linear programming problem will always
+occur at a "corner point". We can determine which corner point by comparing
+the slope of the objective function to the slopes of the lines representing the
+constraints that define the feasible region. In this case the slope of the objective
+function $-11/15$ is "steeper" that the slope of the budget constraint $=9/11$, but
+not as steep as the slope of the acres constraint $-1$. Typically, a
+linear programming problem will have many variables and constraints, but the same
+ideas apply. Indeed, the kernel of the idea behind the Simplex algorithm,
+the workhorse algorithm that is commonly used to solve linear programming problems, 
+is to move from corner
+point to corner point, each time increasing the value of the objective
+function until no further improvements can be made.
 
 \begin{figure}
 \begin{center}
@@ -99,44 +129,41 @@ is the optimal solution.
 \label{fig:feasibleregion}
 \end{figure}
 
+We now show how to model the farm problem in GAMS.
+The complete problem formulation is shown in
+figure~\ref{fig:farmer}.
 
-The complete problem formulation in AMPL is shown in
-figure~\ref{forest}.  Two decision variables, \texttt{x1} and
-\texttt{x2}, represent the number of acres that the forester should
-allocate to each of the two possible courses of action.  It would make
-no sense to allow these decision variables to take on negative
-values. The non-negativity requirements are more cleanly specified
-directly in the variable declarations as opposed to creating separate
-constraints. A graphical depiction of the feasible solution space is
-shown in figure~\ref{feasibleregion}.
+\begin{SaveVerbatim}{vrbfarmer}
+variables
+x1 'acres of feed corn'
+x2 'acres of organic corn'
+z;
+positive variables x1, x2;
 
-\begin{SaveVerbatim}{vrbforest}
-var x1 >= 0;  # acres to fell and let regenerate
-var x2 >= 0;  # acres to fell and plant with pine
+equations
+ profit  'objective function'
+ budget  'available cash'
+ acres   'available acres';
 
-maximize profit: 40*x1 + 70*x2;
+profit.. z =e= 110*x1 + 150*x2;
+budget.. 90*x1 + 150*x2 =l= 50000;
+acres.. x1 + x2 =l= 500;
 
-s.t. acres: x1 + x2 <= 100;
-s.t. budget: 10*x1 + 50*x2 <= 4000;
+model farmer / all /;
+
+solve farmer using LP maximizing z;
 \end{SaveVerbatim}
 
 \begin{figure}
 \fbox{
 \begin{minipage}{\textwidth}
-\BUseVerbatim{vrbforest}
-\caption{Forestry problem (\texttt{forester.mod})}
-\label{forest}
+\BUseVerbatim{vrbfarmer}
+\caption{Farm problem (\texttt{farmer.gms})}
+\label{fig:farmer}
 \end{minipage}
 }
 \end{figure}
 
-The constraints labeled \texttt{acres} and \texttt{budget} represent the limitations
-on resource availabilities.
-It's unnecessary to explicitly name constraints in AMPL; however, providing
-short, descriptive names aids interpretation of the model. Moreover, in a resource
-allocation problem such as this, the constraint names refer to the values 
-of the associated dual variables, which have an economic interpretation as 
-the marginal value of an additional unit of the resource. 
 
 Since this problem is small, we include all data parameters directly
 in the model specification. However, it is usually good practice to
