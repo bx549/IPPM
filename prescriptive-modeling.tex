@@ -1225,11 +1225,11 @@ sugar is between 30 and 37 percent of the total.
 \end{enumerate}
 
 % re-written by Hannah
-\item \emph{A network flow problem.}
-Amy and Brian are professional golfers who have each agreed to donate 10 hours 
-of private golf lessons to a charity auction. Three people have bid on the lessons, 
-and their bids are shown in the table below. For example, Emma has bid \$28 per hour
-to receive lessons from Amy.
+\item \emph{A network flow problem.}  Amy and Brian are professional
+  golfers who have each agreed to donate 10 hours of private golf
+  lessons to a charity auction. Three people have bid on the lessons,
+  and their bids are shown in the table below. For example, Emma has
+  bid \$28 per hour to receive lessons from Amy.
 
 \begin{tabular}{lrr}
 Bidder & Amy & Brian \\ \hline
@@ -1274,7 +1274,8 @@ decide how to allocate the 20 hours of available instruction time.
 \end{tikzpicture}
 \end{center}
 
-Let $x_{ij}$ be the number of hours of instruction bidder $j$ receives from professional golfer $i$.
+Let $x_{ij}$ be the number of hours of instruction bidder $j$ receives
+from professional golfer $i$.
   \[
      i \in \{\text{A},\text{B}\} \qquad j \in \{1,2,3\}
   \]
@@ -1375,6 +1376,123 @@ brian.sam           .             8.0000        +INF             .
 
   z  total revenue
 \end{Verbatim}
+\end{solution}
+
+% integer programming
+% this problem need to be re-written.
+% the idea is that it is a set covering problem.
+\item \emph{A set covering problem.}
+There are six cities in Kilroy County. The county must decide where to build fire
+stations. The county wants to build as few fire stations as possible
+while ensuring that there is at least one fire station within 15 minutes driving
+time of each city. Driving times between cities are shown in the table below.
+Formulate an integer programming problem that will determine how many fire
+stations are required and in which cities they should be located.
+
+\begin{center}
+\begin{tabular}{l|rrrrrr}
+ & \multicolumn{6}{c}{To} \\
+From & City 1 & City 2 & City 3 & City 4 & City 5 & City 6 \\ \hline
+City 1 & 0 & 10 & 20 & 30 & 30 & 20 \\
+City 2 & 10 & 0 & 25 & 35 & 20 & 10 \\
+City 3 & 20 & 25 & 0 & 15 & 30 & 20 \\
+City 4 & 30 & 35 & 15 & 0 & 15 & 25 \\
+City 5 & 30 & 20 & 30 & 15 & 0 & 14 \\
+City 6 & 20 & 10 & 20 & 25 & 14 & 0 \\
+\end{tabular}
+\end{center}
+
+\begin{solution}
+  \bs
+\begin{equation*}
+\text{Let $x_i$} = 
+\begin{cases}
+1 & \text{if a fire station is built in city $i$,}\\
+0 & \text{otherwise.}
+\end{cases}
+\end{equation*}
+
+To model the requirement that there is at least one fire station within
+15 minutes of city 1, we require that $x_1 + x_2 \geq 1$. The full
+problem formulation is
+\[
+\begin{array}{lrrrrrrl}
+\textrm{minimize} & \sum_{i=1}^{6} x_i & & & & & & \\
+\textrm{subject to} & & & x_1 & + & x_2 & \geq & 1 \\
+ & x_1 & + & x_2 & + & x_6 & \geq & 1 \\
+ &     &   & x_3 & + & x_4 & \geq & 1 \\
+ & x_3 & + & x_4 & + & x_5 & \geq & 1 \\
+ & x_4 & + & x_5 & + & x_6 & \geq & 1 \\
+ & x_2 & + & x_5 & + & x_6 & \geq & 1 \\
+ \multicolumn{8}{r}{x_i \in \{0,1\} \quad i = 1,\ldots,6}
+\end{array}
+\]
+\end{solution}
+
+% integer programming with a fixed charge
+% this problem needs to be re-written.
+% i like the idea of renting machinery if an activity is undertaken.
+% maybe an example of bicycle manufacturing ...
+% types are mountain bike, road bike, fat bike, each requires a different machine.
+% resources are labor and material (e.g. aluminum.)
+\item \emph{A problem with a fixed charge.}
+Subzero clothing company is capable of manufacturing three types of clothing:
+vests, jackets, and pants. Each type of clothing requires the appropriate
+machinery. This machinery can be rented at the following rates: vest machinery
+costs \$200 per week, jacket machinery costs \$150 per week, and pants
+machinery costs \$100 per week. Each type of clothing also requires the
+amounts of labor and material shown in the table below. Each week 150 hours
+of labor and 160 square yards of material are available. The per-unit variable
+cost and the per-unit selling price of each clothing type are shown in the table. 
+Assume that Subzero can sell all of the clothing that it manufactures.
+Also, note that the cost of renting machinery for a particular clothing
+type is only incurred if that clothing type is produced.
+Formulate an integer programming problem to determine the production levels
+of each clothing type so that overall profit is maximized.
+
+\vspace{.1in}
+\begin{tabulary}{4.5in}{LCCCC}
+Clothing type
+& Labor (hours) 
+& Material (sq. yds) 
+& Sale price 
+& Variable cost \\ \hline
+Vests   & 3 & 4 & \$12 & \$6 \\
+Jackets & 2 & 3 & \$8 & \$4 \\
+Pants   & 6 & 4 & \$15 & \$8
+\end{tabulary}
+\vspace{.1in}
+
+\begin{solution}
+  \bs
+Let the decision variables $x_1,x_2,x_3$ be the number of vests, jackets, and 
+pants, respectively, to produce. Because the machinery rental costs are only
+incurred if clothing of that particular type is produced, this is a fixed-charge
+problem. Introduce auxiliary binary variables to model the fixed charge.
+\[
+\text{Let $y_i$} = 
+\begin{cases}
+1 & \text{if $x_i > 0$} \\
+0 & \text{otherwise}
+\end{cases}
+\quad i = 1,2,3.
+\]
+The mathematical formulation of the Integer Programming problem is
+\[
+\begin{array}{lrrrrrrl}
+\textrm{maximize} &   & 12x_1 & + & 8x_2 & + & 15x_3 & \\
+                  & - & 6x_1  & - & 4x_2 & - & 8x_3  & \\
+                  & - & 200y_1& - & 150y_2&- & 100y_3& \\
+& & & & & & &\\
+\textrm{subject to} & 3x_1 & + & 2x_2 & + & 6x_3 & \leq & 150 \\
+                    & 4x_1 & + & 3x_2 & + & 4x_3 & \leq & 160 \\
+& & & & & x_1 & \leq & My_1 \\
+& & & & & x_2 & \leq & My_2 \\
+& & & & & x_3 & \leq & My_3 \\
+\end{array}
+\]
+where $M$ is a large number, $x_i \geq 0$, $x_i$ are integer-valued, 
+$y_i \in \{0,1\}$, and $i = 1,2,3$.
 \end{solution}
 
 \end{enumerate}
