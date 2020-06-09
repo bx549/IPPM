@@ -1,0 +1,204 @@
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  sets
+   2  i "golfer" / amy, brian /
+   3  j "bidder" / emma, dan, sam /;
+   4   
+   5  parameters
+   6  a(i) "available hours"
+   7  / amy 10
+   8    brian 10 /;
+   9   
+  10  table bid(i,j) "dollars per hour bid"
+  11         emma dan sam
+  12  amy      28  26  30
+  13  brian    30  28  32;
+  14   
+  15  scalar maxhours "max hours won per bidder" / 8 /;
+  16   
+  17  variables
+  18  x(i,j) "hours bidder j spends with instructor i"
+  19  z      "total revenue";
+  20  positive variables x;
+  21   
+  22  equations
+  23  revenue "objective function"
+  24  hours   "available hours"
+  25  limit   "8 hours per bidder max";
+  26   
+  27  revenue.. z =e= sum((i,j), bid(i,j)*x(i,j));
+  28  hours(i).. sum(j, x(i,j)) =e= a(i);
+  29  limit(j).. sum(i, x(i,j)) =l= maxhours;
+  30   
+  31  model auction /all/;
+  32  solve auction using lp maximizing z;
+  33   
+      file results /results.dat/;
+      put results;
+      loop(i, put i.tl, @12, x.l(i) /);
+      put "profit", @12, z.l /;
+
+
+COMPILATION TIME     =        0.001 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE auction Using LP From line 32
+
+
+---- revenue  =E=  objective function
+
+revenue..  - 28*x(amy,emma) - 26*x(amy,dan) - 30*x(amy,sam) - 30*x(brian,emma) - 28*x(brian,dan) - 32*x(brian,sam) + z =E= 0 ; (LHS = 0)
+     
+
+---- hours  =E=  available hours
+
+hours(amy)..  x(amy,emma) + x(amy,dan) + x(amy,sam) =E= 10 ; (LHS = 0, INFES = 10 ****)
+     
+hours(brian)..  x(brian,emma) + x(brian,dan) + x(brian,sam) =E= 10 ; (LHS = 0, INFES = 10 ****)
+     
+
+---- limit  =L=  8 hours per bidder max
+
+limit(emma)..  x(amy,emma) + x(brian,emma) =L= 8 ; (LHS = 0)
+     
+limit(dan)..  x(amy,dan) + x(brian,dan) =L= 8 ; (LHS = 0)
+     
+limit(sam)..  x(amy,sam) + x(brian,sam) =L= 8 ; (LHS = 0)
+     
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE auction Using LP From line 32
+
+
+---- x  hours bidder j spends with instructor i
+
+x(amy,emma)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -28       revenue
+        1       hours(amy)
+        1       limit(emma)
+
+x(amy,dan)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -26       revenue
+        1       hours(amy)
+        1       limit(dan)
+
+x(amy,sam)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -30       revenue
+        1       hours(amy)
+        1       limit(sam)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- z  total revenue
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       revenue
+
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE auction Using LP From line 32
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            6
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            7
+NON ZERO ELEMENTS            19
+
+
+GENERATION TIME      =        0.001 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+EXECUTION TIME       =        0.001 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE auction Using LP From line 32
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   auction             OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  32
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE              588.0000
+
+ RESOURCE USAGE, LIMIT          0.028      1000.000
+ ITERATION COUNT, LIMIT         3    2000000000
+
+IBM ILOG CPLEX   31.1.0 r55b6ce3 Released May 01, 2020 LEG x86 64bit/Linux    
+*** This solver runs with a demo license. No commercial use.
+Cplex 12.10.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.00sec (det. 0.01 ticks)
+Optimal solution found.
+Objective :         588.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU revenue             .              .              .             1.0000      
+
+  revenue  objective function
+
+---- EQU hours  available hours
+
+             LOWER          LEVEL          UPPER         MARGINAL
+
+amy          10.0000        10.0000        10.0000        26.0000      
+brian        10.0000        10.0000        10.0000        28.0000      
+
+---- EQU limit  8 hours per bidder max
+
+            LOWER          LEVEL          UPPER         MARGINAL
+
+emma        -INF            8.0000         8.0000         2.0000      
+dan         -INF            4.0000         8.0000          .          
+sam         -INF            8.0000         8.0000         4.0000      
+
+---- VAR x  hours bidder j spends with instructor i
+
+                  LOWER          LEVEL          UPPER         MARGINAL
+
+amy  .emma          .             6.0000        +INF             .          
+amy  .dan           .             4.0000        +INF             .          
+amy  .sam           .              .            +INF            EPS         
+brian.emma          .             2.0000        +INF             .          
+brian.dan           .              .            +INF            EPS         
+brian.sam           .             8.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF          588.0000        +INF             .          
+
+  z  total revenue
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.002 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
+      University of Minnesota Twin Cities, United States of AmeDL009821
+
+
+**** FILE SUMMARY
+
+Input      /home/darin/MEGA/isye/ie1101/gams/golf-lessons.gms
+Output     /home/darin/MEGA/isye/ie1101/gams/golf-lessons.lst

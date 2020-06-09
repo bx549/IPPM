@@ -1,0 +1,155 @@
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/05/20 10:01:48 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  * the forester problem described in class
+   2  * $onEolCom
+   3   
+   4  Variable
+   5  x1
+   6  x2
+   7  z;
+   8   
+   9  Positive Variable x1, x2;
+  10   
+  11  Equation
+  12   obj
+  13   budget
+  14   acres;
+  15   
+  16  obj.. z =e= 40*x1 + 70*x2;
+  17  budget.. 10*x1 + 50*x2 =l= 4000;
+  18  acres.. x1 + x2 =l= 100;
+  19   
+  20  Model forester / all /;
+  21  *forester.OptFile = 1;   !! this tells GAMS to read the CPLEX options file
+  22   
+  23  solve forester using LP maximizing z;
+  24   
+
+
+COMPILATION TIME     =        0.000 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/05/20 10:01:48 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE forester Using LP From line 23
+
+
+---- obj  =E=  
+
+obj..  - 40*x1 - 70*x2 + z =E= 0 ; (LHS = 0)
+     
+
+---- budget  =L=  
+
+budget..  10*x1 + 50*x2 =L= 4000 ; (LHS = 0)
+     
+
+---- acres  =L=  
+
+acres..  x1 + x2 =L= 100 ; (LHS = 0)
+     
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/05/20 10:01:48 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE forester Using LP From line 23
+
+
+---- x1  
+
+x1
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -40       obj
+       10       budget
+        1       acres
+
+
+---- x2  
+
+x2
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -70       obj
+       50       budget
+        1       acres
+
+
+---- z  
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       obj
+
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/05/20 10:01:48 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE forester Using LP From line 23
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES            3
+NON ZERO ELEMENTS             7
+
+
+GENERATION TIME      =        0.102 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+EXECUTION TIME       =        0.102 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/05/20 10:01:48 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE forester Using LP From line 23
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   forester            OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  23
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE             6250.0000
+
+ RESOURCE USAGE, LIMIT          0.590      1000.000
+ ITERATION COUNT, LIMIT         2    2000000000
+
+IBM ILOG CPLEX   31.1.0 r55b6ce3 Released May 01, 2020 LEG x86 64bit/Linux    
+*** This solver runs with a demo license. No commercial use.
+Cplex 12.10.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.06sec (det. 0.01 ticks)
+Optimal solution found.
+Objective :        6250.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU obj                 .              .              .             1.0000      
+---- EQU budget            -INF         4000.0000      4000.0000         0.7500      
+---- EQU acres             -INF          100.0000       100.0000        32.5000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR x1                  .            25.0000        +INF             .          
+---- VAR x2                  .            75.0000        +INF             .          
+---- VAR z                 -INF         6250.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.001 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
+      University of Minnesota Twin Cities, United States of AmeDL009821
+
+
+**** FILE SUMMARY
+
+Input      /home/darin/MEGA/isye/ie1101/gams/forester.gms
+Output     /home/darin/MEGA/isye/ie1101/gams/forester.lst

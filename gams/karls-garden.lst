@@ -1,0 +1,202 @@
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 10:00:02 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  sets
+   2  i 'vegetable' / lettuce, broccoli, carrots /;
+   3   
+   4  parameters
+   5  a(i) 'space required by vegetable in sq. ft.'
+   6  / lettuce 0.5
+   7    broccoli 1.2
+   8    carrots 0.25 /
+   9  c(i) 'profit of each vegetable in dollars'
+  10  / lettuce 9.5
+  11    broccoli 12.8
+  12    carrots 8.25 /
+  13    d(i) 'demand for each vegetable'
+  14  / lettuce 350
+  15    broccoli 350
+  16    carrots 250 /;
+  17   
+  18  variables
+  19  x(i) 'number of plants of type i'
+  20  z    'total profit of garden';
+  21  positive variables x;
+  22   
+  23  equations
+  24  profit 'objective function',
+  25  space  'limit on available garden space',
+  26  demand ' limit on demand for vegetables';
+  27   
+  28  profit.. z =e= sum(i, c(i)*x(i));
+  29  space.. sum(i, a(i)*x(i)) =l= 400;
+  30  demand(i).. x(i) =l= d(i);
+  31   
+  32  model garden /all/;
+  33  solve garden using lp maximizing z;
+  34   
+  35  file results /results.dat/;
+  36  put results;
+  37  loop(i, put i.tl, @12, x.l(i) /);
+  38  put 'profit', @12, z.l /;
+
+
+COMPILATION TIME     =        0.001 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 10:00:02 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE garden Using LP From line 33
+
+
+---- profit  =E=  objective function
+
+profit..  - 9.5*x(lettuce) - 12.8*x(broccoli) - 8.25*x(carrots) + z =E= 0 ; (LHS = 0)
+     
+
+---- space  =L=  limit on available garden space
+
+space..  0.5*x(lettuce) + 1.2*x(broccoli) + 0.25*x(carrots) =L= 400 ; (LHS = 0)
+     
+
+---- demand  =L=   limit on demand for vegetables
+
+demand(lettuce)..  x(lettuce) =L= 350 ; (LHS = 0)
+     
+demand(broccoli)..  x(broccoli) =L= 350 ; (LHS = 0)
+     
+demand(carrots)..  x(carrots) =L= 250 ; (LHS = 0)
+     
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 10:00:02 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE garden Using LP From line 33
+
+
+---- x  number of plants of type i
+
+x(lettuce)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -9.5     profit
+        0.5     space
+        1       demand(lettuce)
+
+x(broccoli)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+      -12.8     profit
+        1.2     space
+        1       demand(broccoli)
+
+x(carrots)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -8.25    profit
+        0.25    space
+        1       demand(carrots)
+
+
+---- z  total profit of garden
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       profit
+
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 10:00:02 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE garden Using LP From line 33
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            5
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            4
+NON ZERO ELEMENTS            10
+
+
+GENERATION TIME      =        0.002 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+EXECUTION TIME       =        0.002 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 10:00:02 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE garden Using LP From line 33
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   garden              OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  33
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE             7120.8333
+
+ RESOURCE USAGE, LIMIT          0.023      1000.000
+ ITERATION COUNT, LIMIT         0    2000000000
+
+IBM ILOG CPLEX   31.1.0 r55b6ce3 Released May 01, 2020 LEG x86 64bit/Linux    
+*** This solver runs with a demo license. No commercial use.
+Cplex 12.10.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.00sec (det. 0.00 ticks)
+Optimal solution found.
+Objective :        7120.833333
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU profit              .              .              .             1.0000      
+---- EQU space             -INF          400.0000       400.0000        10.6667      
+
+  profit  objective function
+  space  limit on available garden space
+
+---- EQU demand   limit on demand for vegetables
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+lettuce         -INF          350.0000       350.0000         4.1667      
+broccoli        -INF          135.4167       350.0000          .          
+carrots         -INF          250.0000       250.0000         5.5833      
+
+---- VAR x  number of plants of type i
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+lettuce           .           350.0000        +INF             .          
+broccoli          .           135.4167        +INF             .          
+carrots           .           250.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF         7120.8333        +INF             .          
+
+  z  total profit of garden
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 10:00:02 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+**** REPORT FILE SUMMARY
+
+results /home/darin/MEGA/isye/ie1101/gams/results.dat
+
+
+EXECUTION TIME       =        0.000 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
+      University of Minnesota Twin Cities, United States of AmeDL009821
+
+
+**** FILE SUMMARY
+
+Input      /home/darin/MEGA/isye/ie1101/gams/karls-garden.gms
+Output     /home/darin/MEGA/isye/ie1101/gams/karls-garden.lst

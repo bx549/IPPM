@@ -1,0 +1,156 @@
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  variables
+   2  x1 'acres of feed corn'
+   3  x2 'acres of organic corn'
+   4  z;
+   5  positive variables x1, x2;
+   6   
+   7  equations
+   8   profit  'objective function'
+   9   budget  'available cash'
+  10   acres   'available acres';
+  11   
+  12  profit.. z =e= 110*x1 + 150*x2;
+  13  budget.. 90*x1 + 150*x2 =l= 50000;
+  14  acres.. x1 + x2 =l= 500;
+  15   
+  16  model farmer / all /;
+  17   
+  18  solve farmer using LP maximizing z;
+
+
+COMPILATION TIME     =        0.000 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE farmer Using LP From line 18
+
+
+---- profit  =E=  objective function
+
+profit..  - 110*x1 - 150*x2 + z =E= 0 ; (LHS = 0)
+     
+
+---- budget  =L=  available cash
+
+budget..  90*x1 + 150*x2 =L= 50000 ; (LHS = 0)
+     
+
+---- acres  =L=  available acres
+
+acres..  x1 + x2 =L= 500 ; (LHS = 0)
+     
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE farmer Using LP From line 18
+
+
+---- x1  acres of feed corn
+
+x1
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -110       profit
+       90       budget
+        1       acres
+
+
+---- x2  acres of organic corn
+
+x2
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+     -150       profit
+      150       budget
+        1       acres
+
+
+---- z  
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       profit
+
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE farmer Using LP From line 18
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           3     SINGLE EQUATIONS            3
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES            3
+NON ZERO ELEMENTS             7
+
+
+GENERATION TIME      =        0.002 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+EXECUTION TIME       =        0.002 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE farmer Using LP From line 18
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   farmer              OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  18
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE            58333.3333
+
+ RESOURCE USAGE, LIMIT          0.025      1000.000
+ ITERATION COUNT, LIMIT         2    2000000000
+
+IBM ILOG CPLEX   31.1.0 r55b6ce3 Released May 01, 2020 LEG x86 64bit/Linux    
+*** This solver runs with a demo license. No commercial use.
+Cplex 12.10.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.00sec (det. 0.01 ticks)
+Optimal solution found.
+Objective :       58333.333333
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU profit              .              .              .             1.0000      
+---- EQU budget            -INF        50000.0000     50000.0000         0.6667      
+---- EQU acres             -INF          500.0000       500.0000        50.0000      
+
+  profit  objective function
+  budget  available cash
+  acres  available acres
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR x1                  .           416.6667        +INF             .          
+---- VAR x2                  .            83.3333        +INF             .          
+---- VAR z                 -INF        58333.3333        +INF             .          
+
+  x1  acres of feed corn
+  x2  acres of organic corn
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.001 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
+      University of Minnesota Twin Cities, United States of AmeDL009821
+
+
+**** FILE SUMMARY
+
+Input      /home/darin/MEGA/isye/ippm/gams/farmer.gms
+Output     /home/darin/MEGA/isye/ippm/gams/farmer.lst
