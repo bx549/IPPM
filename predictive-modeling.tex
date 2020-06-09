@@ -53,62 +53,60 @@ at the R prompt. Use this data to perform the following exercises.
   \end{enumerate}
 \end{enumerate}
 
-
-% this problem needs to be re-written
-\item \emph{Using linear regression to summarize a dataset.}
-  Download the wine data set \texttt{Wine.csv} from Canvas. Fit a
-  linear regression model using \texttt{lm()} with a price index
-  (\texttt{Price}) as the response variable and the following
-  predictor variables:
+% written by braeden
+\item \emph{Using multiple linear regression to summarize a dataset.}
+  For this problem we will be using a dataset called \texttt{mtcars}
+  from the \texttt{datasets} package in R. This dataset contains data
+  about different types of cars.  Fit a linear regression model using
+  \texttt{lm()} with miles per gallon (\texttt{mpg}) as the response
+  variable and the following predictor variables:
   \begin{compactitem}
-  \item growing season temperature in $^{\circ}$C (\texttt{AGST}),
-  \item winter rain amount in ml (\texttt{WinterRain}),
-  \item harvest rain amount in ml (\texttt{HarvestRain}), and
-    \item age of vintage in years (\texttt{Age}).
+  \item number of cylinders (\texttt{cyl})
+  \item horsepower (\texttt{hp})
+  \item weight in thousands of lbs (\texttt{wt})
     \end{compactitem}
     So the model is
-    \[ Price_i = \beta_0 + \beta_1 AGST_i + \beta_2 WinterRain_i +
-      \beta_3 HarvestRain_i + \beta_4 Age_i + \epsilon_i \]
+    \[ mpg_i = \beta_0 + \beta_1 cyl_i + \beta_2 hp_i +
+      \beta_3 wt_i + \epsilon_i \]
     Now do the following.
     \begin{enumerate}
-    \item Looking at the summary of the fitted model, the intercept
-      $\beta_0 \approx -3.43$. What is the interpretation of $\beta_0$?
-      In other words, I don't think that the price of wine can be negative,
-      so how should we interpret the intercept?
-  \item Plot \texttt{Price} as a function of
-    \texttt{HarvestRain}. Overlay a fitted regression line from the
+    \item Looking at the summary of the fitted model, the coefficient for weight 
+      $\beta_3 \approx -3.17$. What is the interpretation of $\beta_3$?
+      
+    \item If you are an engineer designing a car and you want to
+      increase its fuel efficiency (\texttt{mpg}), would you want to
+      increase or decrease the weight of the vehicle? What about
+      number of cylinders and horsepower?
+     
+    \item Plot \texttt{mpg} as a function of
+    \texttt{wt}. Overlay a fitted regression line from the
     full model onto the plot.  When plotting the regression line you
-    should show \texttt{Price} at the average \texttt{AGST}, average
-    \texttt{WinterRain}, and average \texttt{Age}.
+    should show \texttt{mpg} at the average \texttt{cyl} and average \texttt{hp}.
     In other words, it's a two-dimensional plot, but for the other
-    variables that are not shown, we compute \texttt{Price} at their
+    variables that are not shown, we compute \texttt{mpg} at their
     average values. So you want to overlay
-    \[ Price_i = \beta_0 + \beta_1 \overline{AGST} +
-      \beta_2 \overline{WinterRain} +
-      \beta_3 HarvestRain_i +
-      \beta_4 \overline{Age} \]
+    \[ mpg_i = \beta_0 + \beta_1 \overline{cyl} +
+      \beta_2 \overline{hp} +
+      \beta_3 wt_i \]
     onto the data. You can use \texttt{coef()} to extract the
     coefficients from the fitted model object.
 
-  \item If you are a wine-maker, when would you like to see
-    rain?
-
-  \item Plot the actual \texttt{Price} vs. the predicted (fitted)
-    price. If your fitted model is stored in an object named
+  \item Plot the actual \texttt{mpg} vs. the predicted (fitted)
+    mpg. If your fitted model is stored in an object named
     \texttt{fm}, then you can get the predicted price as follows.
     \begin{Verbatim}
-      wine$pred <- fitted(fm)
+      mtcars$pred <- fitted(fm)
     \end{Verbatim}
     % $
     or
     \begin{Verbatim}
-      wine$pred <- predict(fm)
+      mtcars$pred <- predict(fm)
     \end{Verbatim}
     % $
 
   \item In the summary output of the fitted model, the estimated residual
     standard error is reported to be
-    $\hat{\sigma}_{\epsilon}=0.295$. Independently compute this quantity. In
+    $\hat{\sigma}_{\epsilon}=2.512$. Independently compute this quantity. In
     other words, use the actual values from the data and the fitted
     values from the model to compute the residual standard error
     yourself.  The formula is
