@@ -1,3 +1,10 @@
 *.log
 *.lxi
-
+*.aux
+*.cut
+*.pdf
+*.bbl
+*.bcf
+*.blg
+*.xml
+*.toc
