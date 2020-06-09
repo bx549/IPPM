@@ -33,7 +33,9 @@ Finance
 Sports
 Healthcare
 Energy
-Project Management
 Retail
 Transportation
+Computing
+Education
+
 
