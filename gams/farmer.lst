@@ -1,4 +1,4 @@
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 1
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/09/20 13:11:42 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -24,7 +24,7 @@ C o m p i l a t i o n
 
 
 COMPILATION TIME     =        0.000 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 2
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/09/20 13:11:42 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE farmer Using LP From line 18
 
@@ -43,7 +43,7 @@ budget..  90*x1 + 150*x2 =L= 50000 ; (LHS = 0)
 
 acres..  x1 + x2 =L= 500 ; (LHS = 0)
      
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 3
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/09/20 13:11:42 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE farmer Using LP From line 18
 
@@ -72,7 +72,7 @@ z
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       profit
 
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 4
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/09/20 13:11:42 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE farmer Using LP From line 18
 
@@ -88,7 +88,7 @@ GENERATION TIME      =        0.002 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
 
 
 EXECUTION TIME       =        0.002 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/08/20 15:36:11 Page 5
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/09/20 13:11:42 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE farmer Using LP From line 18
 
@@ -103,7 +103,7 @@ Solution Report     SOLVE farmer Using LP From line 18
 **** MODEL STATUS      1 Optimal                   
 **** OBJECTIVE VALUE            58333.3333
 
- RESOURCE USAGE, LIMIT          0.025      1000.000
+ RESOURCE USAGE, LIMIT          0.024      1000.000
  ITERATION COUNT, LIMIT         2    2000000000
 
 IBM ILOG CPLEX   31.1.0 r55b6ce3 Released May 01, 2020 LEG x86 64bit/Linux    
@@ -143,7 +143,7 @@ Objective :       58333.333333
                              0  UNBOUNDED
 
 
-EXECUTION TIME       =        0.001 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+EXECUTION TIME       =        0.000 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
 
 
 USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
@@ -152,5 +152,5 @@ USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
 
 **** FILE SUMMARY
 
-Input      /home/darin/MEGA/isye/ippm/gams/farmer.gms
-Output     /home/darin/MEGA/isye/ippm/gams/farmer.lst
+Input      /home/darin/MEGA/IPPM/gams/farmer.gms
+Output     /home/darin/MEGA/IPPM/gams/farmer.lst
