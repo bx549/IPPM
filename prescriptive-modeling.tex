@@ -29,25 +29,76 @@ Rather, GAMS is an example of a \emph{domain-specific} language.  Its
 purpose is to facilitate translation from a problem description into a
 form that is suitable for a solver to process.
 
-\emph{A Resource Allocation Problem.}
-A local farmer maintains 500 acres. She can grow feed corn for animals
+\emph{A resource allocation problem.}
+A local farmer maintains 500 acres on which she can grow feed corn for animals
 and/or organic corn for local millers. As the planting season approaches,
 she must decide how many acres to allocate to each type of corn.
-Her operating budget is \$\num{50000}.
+Her operating budget is \$\num{50000}. The costs and returns for each
+type of corn are as follows.
 
-% in-progress
-\begin{enumerate}
-\item Harvest the hardwood and let the area naturally regenerate. This
-  would cost \$10 per acre now and return \$50 per acre later,
-  yielding a profit of \$40 per acre.
-\item Harvest the hardwood and plant the area with pine. This would
-  cost \$50 per acre now and return \$120 per acre later, yielding a
-  profit of \$70 per acre. \label{d2}
-\end{enumerate}
-Option \ref{d2} is clearly more profitable; however, the forester must
-respect her budget of \$4000. The mathematical programming problem is
-to maximize total profit subject to the resource constraints, which
-are the acres of available hardwood and the budget.
+\vspace{.1in}
+\begin{tabular}{rrr}
+type & cost per acre & revenue per acre \\ \hline
+feed corn & \$90 & \$200 \\
+organic corn & \$150 & \$300
+\end{tabular}
+\vspace{.1in}
+
+A natural objective is to maximize total profit, and organic appears to be 
+more attractive; however, the farmer must
+respect both her operating budget and the available acres. If we let $x1$ and 
+$x_2$ represent the 
+number of acres to allocate to feed corn and organic corn, respectively,
+then the farmer's decision problem is to
+\[
+\begin{array}{lrrrrrl}
+\textrm{maximize}   & 110x_1 & + & 150x_2 &  &  &  \textrm{(profit)} \\
+\textrm{subject to} & 90x_1 & + & 150x_2 & \leq & \num{50000} & \textrm{(budget)} \\
+                    & x_1 & + & x_2   & \leq & 500  & \textrm{(acres)} \\
+\multicolumn{4}{r}{x_1,x_2}& \geq & 0 &
+\end{array}.
+\]
+
+The operating budget and the available acres are constrained resources in
+the sense that if the farmer could obtain a little more of either resource,
+then she could earn more profit. Later in the section, will make this 
+notion more precise. Since this problem has two decision variables, the 
+inequalities that describe the constraints can be shown graphically
+as in Figure\ref{fig:feasibleregion}. Any combination of $x_1$ (feed corn)
+and $x_2$ (organic corn) within the shaded area represents a feasible
+solution for the farmer. The combination that maximizes total profit
+is the optimal solution. 
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[ width=12cm,
+    unit vector ratio*=1 1 1,
+    enlargelimits=false,
+    grid=both,
+    axis x line=middle,
+    axis y line=middle,
+    title=,
+    clip=false,
+    ymin=0, ymax=600,
+    xmin=0, xmax=600]
+
+    \addplot[domain=-50:650] {50000/150 - 90/150*x};
+    \addplot[domain=-50:550] {500 - x};
+    \addplot[domain=-50:400,dashed] {250 - 110/150*x};
+    \addplot[fill=gray, fill opacity=.25]
+    coordinates { (0,0) (500,0) (416.67,83.33) (0,333.33) } \closedcycle;
+
+  % to get axis labels at the end of the axis
+  \node at (axis description cs:1.04,0) {$x_1$}; \node at
+  (axis description cs:0,1.04) {$x_2$};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{Feasible region for the farm problem.}
+\label{fig:feasibleregion}
+\end{figure}
+
 
 The complete problem formulation in AMPL is shown in
 figure~\ref{forest}.  Two decision variables, \texttt{x1} and
@@ -77,36 +128,6 @@ s.t. budget: 10*x1 + 50*x2 <= 4000;
 \label{forest}
 \end{minipage}
 }
-\end{figure}
-
-\begin{figure}
-\begin{center}
-\begin{tikzpicture}
-  \begin{axis}[ width=12cm,
-    unit vector ratio*=1 1 1,
-    enlargelimits=false,
-    grid=both,
-    axis x line=middle,
-    axis y line=middle,
-    title=,
-    clip=false,
-    ymin=0, ymax=120,
-    xmin=0, xmax=420 ]
-
-    \addplot[domain=-10:410] {80 - .2*x};
-    \addplot[domain=-5:102] {100 - x};
-    \addplot[domain=-5:45,dashed] {20 - .57143*x};
-    \addplot[fill=gray, fill opacity=.25]
-    coordinates { (0,0) (100,0) (25,75) (0,80) }\closedcycle;
-
-  % to get axis labels at the end of the axis
-  \node at (axis description cs:1.04,0) {$x_1$}; \node at
-  (axis description cs:0,1.04) {$x_2$};
-\end{axis}
-\end{tikzpicture}
-\end{center}
-\caption{Feasible region for the forestry problem}
-\label{feasibleregion}
 \end{figure}
 
 The constraints labeled \texttt{acres} and \texttt{budget} represent the limitations
