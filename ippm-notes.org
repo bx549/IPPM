@@ -22,11 +22,12 @@ Predictive Modeling
 - Linear Regression (R) (Braeden)
 - Time Series  (R) 
 
-Learn to use LaTeX/Overleaf (Everyone)
+Learn to use LaTeX/git (Everyone)
 
 Learn to use Jupyter Notebook (Braeden)
 
-Solving problems in the areas of
+The book will discuss the application of modeling techniques to to
+problems in the areas of
 
 Manufacturing
 Finance
@@ -37,5 +38,5 @@ Retail
 Transportation
 Computing
 Education
-
-
+Crime
+Employment
