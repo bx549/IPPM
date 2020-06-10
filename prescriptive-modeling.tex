@@ -1049,29 +1049,18 @@ profit          7120.83
 % anyway). the idea is to extract a shadow price and use it
 % to answer questions.
 \item \emph{The marginal value of a resource.}
-This problem appears in Bradley et. al. \emph{Applied Mathematical
-  Programming}.
-After paying its monthly bills, a family has \$100
-left over to spend on leisure. The family enjoys two types of
-activities: (i) eating out; and (ii) other entertainment, such as
-seeing movies and sporting events. The family has determined the
-relative value (utility) of these two activities. Each dollar spent on
-eating out provides 1.2 units of value for each dollar spent on other
-entertainment. Suppose that the family wishes to determine how to
-spend this money to maximize the value of its expenditures, but that
-no more than \$70 can be spent on eating out and no more than \$50 on
-other entertainment (if desired, part of the money can be saved). The
-family also would like to know:
+A manufacturing company has assembled a safety committee to reduce the number of injuries sustained by employees at work. The company has allotted the committee a budget of \$100 each week for purchasing items that will increase employee safety. After analyzing past incidents, the safety committee has concluded that the most common work hazard is exposure to loud noises. As a result, the committee would like to purchase (i) earplugs and (ii) other PPE (personal protection equipment). The relative value (utility) of the safety items was investigated, and it was determined that earplugs provide 1.2 units of value for each dollar spent on other types of PPE. The safety committee would like to determine how to spend the budget to maximize the safety of employees, but the company does not want to spend more than \$70 on earplugs and \$50 on other PPE each week. The committee also has the option to save part of the money.
+Additionally, the company would like to know:
 \begin{enumerate}
-\item How the total value of its expenditures for leisure would change
+\item How the total value of its expenditures for safety would change
   if there were only \$99 to spend. \label{a}
 \item How the total value would change if \$75 could be spent on
-  eating out.\label{b}
+  earplugs.\label{b}
 \item Whether it would save any money if each dollar of savings would
   provide 1.1 units of value for each dollar spent on other
-  entertainment.\label{c}
+  PPE.\label{c}
 \end{enumerate}
-Formulate the family's spending decision as a linear program. Sketch
+Formulate the safety committee's spending decision as a linear program. Sketch
 the feasible region and determine the optimal solution using the
 graphical method.  Then solve the linear program using optimization
 software and obtain post-optimality output (i.e. a sensitivity
@@ -1083,11 +1072,11 @@ report).  Use this output to answer each of the questions \ref{a},
 In the problem formulation to maximize total value, let
 \[
   \begin{array}{lcl}
-    x_1 &=& \textrm{\$ to spend on eating out} \\
-    x_2 &=& \textrm{\$ to spend on other entertainment}
+    x_1 &=& \textrm{\$ to spend on earplugs} \\
+    x_2 &=& \textrm{\$ to spend on other PPE}
   \end{array}
 \]
-Then the family wants to solve the following problem.
+Then the committee wants to solve the following problem.
 \[
 \begin{array}{lrrrrr}
 \textrm{maximize}   & 1.2x_1& +& x_2&      &   \\
@@ -1122,77 +1111,92 @@ for a total value of 114.
 \end{tikzpicture}
 \end{center}
 
-In order to answer parts a), b), and c), I solved the problem using AMPL
-and displayed post-optimality information. The model as implemented in AMPL follows.
+In order to answer parts a), b), and c), I solved the problem using GAMS
+and displayed post-optimality information. The model as implemented in GAMS follows.
 \begin{Verbatim}[samepage=true]
-var x1 >= 0;   # amount to spend on eating out
-var x2 >= 0;   # other entertainment
+positive variables
+x1 'earplugs'
+x2 'other PPE';
 
-maximize z: 1.2*x1 + x2;
+free variable
+value;
 
-s.t. budget: x1 + x2 <= 100;
-s.t. eatout: x1 <= 70;
-s.t. other : x2 <= 50;
+equations budget, earplugs, other, objective;
+budget.. x1 + x2 =l= 100;
+earplugs.. x1 =l= 70;
+other.. x2 =l= 50;
+objective.. value =e= 1.2*x1 + x2;
+
+model equipment /all/;
+Option LP = cplex;
+$onecho > cplex.opt
+objrng all
+rhsrng all
+$offecho
+equipment.OptFile =1;
+solve equipment using lp maximizing value;
 \end{Verbatim}
-and the output from the AMPL session:
+and the output from the GAMS session:
 \begin{Verbatim}[samepage=true]
-ampl: include '/home/darin/mega/isye/ie1101/ampl/options.run';
-ampl: model '/home/darin/mega/isye/ie1101/ampl/familyspending.mod';
-ampl: solve;
-Gurobi 8.1.0: solnsens 1
-Gurobi 8.1.0: optimal solution; objective 114
-1 simplex iterations
+Optimal solution found.
+Objective :         114.000000
 
-suffix sensublo OUT;
-suffix sensubhi OUT;
-suffix sensobjlo OUT;
-suffix sensobjhi OUT;
-suffix senslblo OUT;
-suffix senslbhi OUT;
-suffix sensrhslo OUT;
-suffix sensrhshi OUT;
-ampl: display x1, x2;
-x1 = 70
-x2 = 30
+  
+ 
+EQUATION NAME                                 LOWER      CURRENT        UPPER
+-------------                                 -----      -------        -----
+budget                                           70          100          120
+earplugs                                         50           70          100
+other                                            30           50         +INF
+objective                                      -INF            0         +INF
+  
+ 
+VARIABLE NAME                                 LOWER      CURRENT        UPPER
+-------------                                 -----      -------        -----
+x1                                                1          1.2         +INF
+x2                                                0            1          1.2
+value                                          -INF            1         +INF
+ 
+ 
 
-ampl: display budget, eatout, other;
-budget = 1
-eatout = 0.2
-other = 0
+                       LOWER     LEVEL     UPPER    MARGINAL
 
-ampl: display budget.sensrhslo, budget.sensrhshi;
-budget.sensrhslo = 70
-budget.sensrhshi = 120
+---- EQU budget         -INF    100.000   100.000     1.000      
+---- EQU earplugs       -INF     70.000    70.000     0.200      
+---- EQU other          -INF     30.000    50.000      .         
+---- EQU objective       .         .         .        1.000      
 
-ampl: display eatout.sensrhslo, eatout.sensrhshi;
-eatout.sensrhslo = 50
-eatout.sensrhshi = 100
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- VAR x1              .       70.000     +INF       .         
+---- VAR x2              .       30.000     +INF       .         
+---- VAR value          -INF    114.000     +INF       .         
+
 \end{Verbatim}
 
 part a) The shadow price on the \texttt{budget} constraint tells us
 that if we decrease the RHS from 100 to 99, the value of the objective
-function will decrease to 113. Since eating out provides more value
-than other entertainment, the new solution will be $x_1=70$ and
+function will decrease to 113. Since earplugs provide more value
+than other PPE, the new solution will be $x_1=70$ and
 $x_2=29$.
 
 part b) Notice that \$75 is within the range for the shadow price on
-the \texttt{eatout} constraint. So, increasing the RHS to 75 will
+the \texttt{earplugs} constraint. So, increasing the RHS to 75 will
 increase the total value by
 \[ \$5 \times 0.2~\text{units of value per dollar} = 1 \]
 for a total value of 115.
 
-part c) Saving one dollar requires \$1; however, the family gets 1.1
-units of value for each dollar saved. Yes, the family would save
-\emph{some} amount of money and spend less on other entertainment. To
+part c) Saving one dollar requires \$1; however, the company gets 1.1
+units of value for each dollar saved. Yes, the company would save
+\emph{some} amount of money and spend less on other PPE. To
 use the shadow price to answer this question, notice that the shadow
 price on the \texttt{budget} constraint is 1. If we ``price-out'' the
 new activity of saving money, we see that it cost \$1 per unit, but it
-returns \$1.1 per unit in total value. So the family would save some
+returns \$1.1 per unit in total value. So the company would save some
 amount of money. The question did not ask us to determine the new
 solution. It only asked whether \emph{any} money would be allocated to
 savings.
 \end{solution}
-
 % this problem needs to be re-written and GAMS code added.
 \item \emph{A blending problem.}
 A manufacturer of soft drinks wishes to blend
