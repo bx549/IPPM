@@ -2,6 +2,8 @@
 
 \section{Linear Regression}
 
+\subsubsection*{Statistical Models}
+
 % this section should be re-written
 This information is adapted from ~\cite{chambers:1992}.
 Statistical models are simplified descriptions of data that involve
@@ -105,9 +107,9 @@ response variable.
   to the initial model?
 \end{enumerate}
 
-% change this problem into a discussion.
+% change this section into a discussion.
 % it will come later in the section.
-\emph{Taking a transformation.}
+\subsubsection*{Transformations on Data}
   Suppose that a variable $u$ is related to a variable $v$ as
 \[
 u = \gamma_0e^{\gamma_1v}
@@ -117,8 +119,6 @@ though the relationship between $u$ and $v$ is nonlinear, explain how
 you could use simple linear regression to find estimates for
 $\gamma_0$ and $\gamma_1$.
 
-\begin{solution}
-\bs
 We can transform the relationship into a linear one
 by taking logarithms.
 \[
@@ -130,7 +130,49 @@ and $\beta_1 = \gamma_1$. After fitting the linear model,
 \hat{\gamma_0}=e^{\hat{\beta_0}}, \qquad \hat{\gamma_1} = \hat{\beta_1}
 \]
 
-\end{solution}
+% possible example to use
+\begin{Verbatim}
+## example of linear regression on the msleep data to
+## notice that collinearity is present,
+## choose variable transformation,
+## understand the reported p-values,
+## and understand the reported R-squared.
+attach(msleep)
+
+fm <- lm(sleep_total ~ brainwt + bodywt)
+summary(fm)
+## collinearity is present
+plot(brainwt, bodywt)
+plot(log(brainwt), log(bodywt))
+fm <- lm(sleep_total ~ log(brainwt))
+summary(fm)
+
+## a one-unit increase in log(brainwt) decreases
+## sleep time by about one hour (on avg).
+
+## for interpretation, plug in a few values to get an idea
+(x <- seq(from=0.5, to=5, by=0.5))
+y.hat <- predict(fm, newdata=data.frame(brainwt=x))
+plot(x, y.hat)
+
+## the hypothesis test for b1
+
+(t0 <- -1.0397/0.1914) # the t-statistic
+
+pt(-5.432, 54) * 2  # the p-value
+## should match the summary output
+
+## compute R-squared
+y.hat <- predict(fm)
+y <- sleep_total[ !is.na(sleep_total) & !is.na(brainwt) ]
+
+TSS <- sum( (y - mean(y))^2 )
+RSS <- sum( (y - y.hat)^2 )
+1 - RSS/TSS   # R-squared
+
+(F <- ((TSS-RSS)/1) / (RSS/(56-1-1))) # the F-statistic
+1 - pf(29.51, 1, 54)   # p-value for the F-test
+\end{Verbatim}
 
 \section{Time Series}
 
@@ -138,7 +180,7 @@ and $\beta_1 = \gamma_1$. After fitting the linear model,
 
 \begin{enumerate}
 
-\subsection*{Linear Regression}
+\subsubsection*{Linear Regression}
   
 % this problem is OK
 \item \emph{Linear regression with a single predictor variable.}
@@ -250,7 +292,7 @@ at the R prompt. Use this data to perform the following exercises.
   \item Do you think that a linear model is appropriate for this data?
   \end{enumerate}
 
-
+% i'm not yet sure what i want to do with this problem.
 \item \emph{Linear regression with numeric and categorical predictors.}
   The following sales data were
   collected for one particular product from a company for the past 10
@@ -302,6 +344,6 @@ x_3 = \begin{cases} 0 \quad \text{if season is winter} \\
   part~\ref{bb} \label{cc}
 \end{enumerate}
 
-\subsection*{Time Series}
+\subsubsection*{Time Series}
   
 \end{enumerate}
