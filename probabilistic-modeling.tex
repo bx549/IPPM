@@ -112,3 +112,174 @@ Questions.
 \section{Queueing Models}
 
 \section{Exercises}
+
+\begin{enumerate}
+
+% this problem is OK
+\item A manufacturer of automotive batteries offers a one-year
+  warranty. If the battery fails for any reason during the warranty
+  period, it is replaced for free. The time to failure is distributed
+  Exponential with rate $\lambda=.125$ failures per year.
+\begin{enumerate}
+\item What proportion of batteries fail within the warranty period?
+\item The cost to manufacture a battery is \$50, and the profit
+per battery is \$25. What is the effect of the warranty replacement
+policy on profit? \label{ex:profit}
+\end{enumerate}
+
+\begin{solution}
+  \bs The question is asking for the theoretical proportion of
+  batteries that fail within one year. Since all batteries have the
+  same probability of failure, this proportion is equal to the
+  probability that a single battery will fail within one year. Let $X$
+  be a random variable that represents the time to failure.
+\[ P(X<1) = 1-e^{-\lambda t} = 1 - e^{-.125} = 0.118 \]
+Now, imagine that the manufacturer has, over time,
+  sold many batteries and has kept data on how many batteries failed
+  within one year. The empirical proportion is simply the number
+  of batteries that failed divided by the number of batteries sold.
+  The Law of Large Numbers tells us that when the number of batteries
+  sold is large, the empirical proportion will be approximately
+  equal to the theoretical proportion.
+
+Taking the warranty into account, the average profit per battery is
+\[ \$25 - 0.118\times \$50 = \$19.10 \]
+So, the (average) effect of the warranty on profit is -\$5.90.
+\end{solution}
+
+% this problem needs to be re-written
+\item The Springdale High School band is performing a benefit concert
+  in its new 400-seat auditorium. Local businesses buy the tickets in
+  blocks of 10 and donate them to youth organizations. Tickets go on
+  sale to business entities for four hours only the day before the
+  concert. The process of placing orders for tickets is Poisson with a
+  mean 10 calls per hour.  Any (blocks of) tickets remaining after the
+  box office is closed are sold at a discount as ``rush tickets'' one hour
+  before the concert starts. Determine the following:
+\begin{enumerate}
+\item The probability that it will be possible to buy rush tickets. \label{ex:rusha}
+\item  The average number of rush tickets available. \label{ex:rushb}
+\end{enumerate}
+
+For part~\ref{ex:rusha}, you should first write down the expression
+for the probability that it will be possible to buy ``rush''
+tickets. To compute the numerical answer, you will want to use
+software such as R.
+
+\begin{solution}
+\bs
+First note that the number of calls in one hour is distributed
+Poisson with mean 10. Consequently, the number of calls in a 4--hour
+period is distributed Poisson with mean 40. Let $N$ be the
+number of calls in a 4--hour period. Then
+\[ N ~ \text{Poisson}(\lambda = 40) \]
+For part~\ref{ex:rusha}, the probability that tickets remain after they
+are offered to the local businesses is
+\begin{align*}
+  P(N < 40) &= \sum_{n=0}^{39} \frac{\lambda^n e^{-\lambda}}{n!}\\
+            &= \sum_{n=0}^{39} \frac{40^n e^{-40}}{n!}\\
+            &\approx .48
+\end{align*}
+In R,
+\begin{Verbatim}
+> sum(dpois(0:39,40))
+[1] 0.4789711
+\end{Verbatim}  
+
+% this problem needs to be re-written
+For part~\ref{ex:rushb}, our calculations are all done in expectation
+(or on average). There are 40 calls in 4 hours,
+which means that 400 tickets are sold to local
+businesses. So, on average, no rush tickets are available.
+\end{solution}
+  
+\item A freshman student receives a bank deposit of
+  \$100 a month from home to cover incidentals. Withdrawal checks of
+  \$20 each occur randomly during the month and are spaced according to
+  an exponential distribution with a mean value of 1 week.  Determine
+  the probability that the student will run out of incidental money
+  before the end of the fourth week.
+
+\begin{solution}
+\bs
+Let $X$ be a random variable that represents the time between
+checks. The mean time between checks, that is to say the
+expected value of $X$ ($E(X)$), is one week. We know that for
+the Exponential distribution
+\[ E(X) = \frac{1}{\lambda} \]
+where $\lambda$ is the rate (in units of checks
+per week). So,
+\[ X \sim \text{Exp}(\lambda = 1~\text{check per week}) \]
+If the time between checks is distributed Exponential with
+rate $\lambda$, then the number of checks written in $t$ weeks
+is Poisson with mean $\lambda t$. Let $N$ be the number of checks
+written in 4 weeks.
+\[ N \sim \text{Poisson}(\lambda = \lambda \times 4 = 4) \]
+Now, the probability that the student runs out of money is
+\begin{align*}
+  P(N \geq 5) &= 1 - P(N \leq 4) \\
+              &= 1 - \sum_{n=0}^{4} \frac{\lambda^n e^{-\lambda}}{n!}\\
+              &= .37
+\end{align*}
+You may have defined the event that the student runs out of money as
+$P(N = 5)$. In other words, that the student writes exactly five
+checks.  This is incorrect because we are modeling the student's
+check-writing activity as a Poisson process. In other words, the
+(unstated) assumption is that the number of checks written is
+independent of the available funds. (Probably closer to reality?)
+\end{solution}
+
+% this problem needs to be re-written.
+\item 
+Demand for an item occurs according to a Poisson distribution with
+mean 3 per day. The maximum stock level is 25 items, which occurs on
+each Monday immediately after a new order is received. The order size
+depends on the number of units left at the end of the week on Saturday
+(business is closed on Sundays). Determine the following:
+\begin{enumerate}
+\item The average weekly size of the order. \label{ex:asize}
+\item The probability of shortage at the start of business on Friday. \label{ex:pshort}
+\item The probability that the weekly order size exceeds 10 units. \label{ex:pex}
+\end{enumerate}
+
+\begin{solution}
+\bs
+For part~\ref{ex:asize}, the distribution of demand over six days is
+Poisson with mean 18 items. So, the average weekly size
+of the order is 18 items.
+
+For part~\ref{ex:pshort}, shortage at the start of business on Friday means
+that all 25 items sold during Monday through Thursday. Let
+$D4$ be a random variable that represents demand over the
+first four days of the week.
+\[ D4 \sim \text{Poisson}(\lambda = 12) \]
+The probability of shortage at the start of the day on Friday is
+\begin{align*}
+  P(D4 \geq 25) &= 1 - P(D4 \leq 24)\\
+                &= 1 - \sum_{n=0}^{24} \frac{12^n e^{-12}}{n!}\\
+                &\approx 0.0007
+\end{align*}
+In R,
+\begin{Verbatim}
+> 1 - sum(dpois(0:24,12))
+[1] 0.0006856332
+\end{Verbatim}
+
+For part~\ref{ex:pex}, the order size will exceed 10 units whenever more than
+10 items are sold during the six days of the week. Let $D6$ be
+the demand over one week, then
+\[ D6 \sim \text{Poisson}(\lambda = 18) \]
+and the probability that the order size exceeds 10 units is
+\begin{align*}
+  P(D6 > 10) &= 1 - P(D6 \leq 10) \\
+             &= 1 - \sum_{n=0}^{10} \frac{18^n e^{-18}}{n!}\\
+             &\approx .97
+\end{align*}
+Using R,
+\begin{Verbatim}
+> 1 - sum(dpois(0:10,18))
+[1] 0.9696337
+\end{Verbatim}
+\end{solution}
+
+\end{enumerate}
