@@ -57,8 +57,46 @@ plot(height, speed, col=c("magenta","blue")[gender])
 curve(b0 + b2*x, add=TRUE, col="magenta")        # females
 curve(b0 + b1 + (b2+b3)*x, add=TRUE, col="blue") # males
 
-# exercise: Linear regression with numeric and categorical predictors.
 
+## exercise: linear regression with a single predictor
+ggplot(faithful) + geom_histogram(aes(x=eruptions), bins=30)
+ggplot(faithful) + geom_histogram(aes(x=waiting), bins=30)
+
+ggplot(faithful) + geom_point(aes(x=eruptions, y=waiting))
+
+
+## exercise: Multiple linear regression with mtcars data
+fm <- lm(mpg ~ cyl + hp + wt, data = mtcars)
+summary(fm)
+
+beta0 <- coef(fm)[1] # intercept
+beta1 <- coef(fm)[2] # cyl
+beta2 <- coef(fm)[3] # hp
+beta3 <- coef(fm)[4] # wt
+
+mtcars.adj <- mutate(mtcars,
+                   mpg.adj = beta0 + beta1*mean(cyl) + beta2*mean(hp) + beta3*wt
+                   )
+
+ggplot(mtcars.adj) +
+    geom_point(aes(x=wt, y=mpg)) +
+    geom_line(aes(x=wt, y=mpg.adj), color="red")
+
+mtcars.adj$pred <- fitted(fm)
+
+ggplot(mtcars.adj) +
+    geom_point(aes(x=pred, y=mpg)) +
+    geom_abline() +
+    labs(x="Predicted mpg", y="Actual mpg")
+
+n <- nrow(mtcars)
+k <- 4
+y <- mtcars.adj$mpg
+y.hat <- mtcars.adj$pred
+
+sqrt( sum((y - y.hat)^2) / (n-k) )
+
+## exercise: Linear regression with numeric and categorical predictors.
 Sales <- read.csv("../data/sales.csv")
 Sales$season <- factor(Sales$season, levels=c(0,1),
                    labels=c("winter","summer"))
