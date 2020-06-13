@@ -285,6 +285,58 @@ Using R,
 \end{Verbatim}
 \end{solution}
 
+% this problem needs to be re-written
+\item \emph{Lognormal distribution.} The prices of stocks are often modeled
+  with a lognormal distribution. An investor is considering purchasing
+  stock in one of two companies, A or B. The price of a share of stock
+  today is \$1 for both companies. For company A, the value of the
+  stock one year from now is modeled as lognormal with parameters
+  $\mu=.05$ and $\sigma=.1$. For company B, the value of the stock one
+  year from now is modeled as lognormal with parameters $\mu=.02$ and
+  $\sigma=.2$.
+\begin{enumerate}
+\item Find the mean of the price of one share of company A one year
+  from now. \label{a1}
+\item Find the probability that the price of one share of company A
+  one year from now will be greater than \$1.20. \label{a2}
+\item Find the mean of the price of one share of company B one year
+  from now. \label{b1}
+\item Find the probability that the price of one share of company B
+  one year from now will be greater than \$1.20. \label{b2}
+\end{enumerate}
+
+\begin{solution}
+\bs Let $X_A$ and $X_B$ be the price of one share of company A and
+company B one year from now, respectively. We know from the problem
+description that $X_A \sim \text{LogN}(\mu=.05,\sigma=.1)$ and $X_B
+\sim \text{LogN}(\mu=.02,\sigma=.2)$.
+
+For part~\ref{a1}, the mean of $X_A$ is
+\[
+e^{\mu + \sigma^2/2} = \$1.06
+\]
+For part~\ref{a2}, 
+\begin{align*}
+P(X_A > \$1.20) &= P(\ln(X_A) > \ln(1.20)) \\
+&= P\left(Z > \frac{\ln(1.20)-.05}{.1}\right) \\
+&= P(Z > 1.323) \\
+&= 1-P(Z < 1.323) \\
+&= .093
+\end{align*}
+For part~\ref{b1}, the mean of $X_B$ is
+\[
+e^{\mu + \sigma^2/2} = \$1.04
+\]
+For part~\ref{b2}, 
+\begin{align*}
+P(X_B > \$1.20) &= P(\ln(X_B) > \ln(1.20)) \\
+&= P\left(Z > \frac{\ln(1.20)-.02}{.2}\right) \\
+&= P(Z > .812) \\
+&= 1-P(Z < .812) \\
+&= .208
+\end{align*}
+\end{solution}
+
 \subsubsection*{Stochastic Processes}
 
 \subsubsection*{Queueing Models}

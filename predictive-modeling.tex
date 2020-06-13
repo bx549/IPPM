@@ -4,61 +4,60 @@
 
 \subsubsection*{Statistical Models}
 
-% this section should be re-written
-This information is adapted from ~\cite{chambers:1992}.
 Statistical models are simplified descriptions of data that involve
-mathematical relationships. We can think of a statistical model as
-having three parts
-\begin{itemize}
-\item a \emph{formula} that defines the structural part of the model---that is,
-  what data are being modeled and in what form,
-\item \emph{data} to which the model is applied, and
-\item the stochastic part of the model---that is, 
-  the discrepancy or residuals between the data and the fit.
-\end{itemize}
-In this exercise we will concentrate on the first of these: how model
-formulas are represented in the R programming language. Let's start
-with an example.
+mathematical relationships. In addition to the data itself,
+a statistical model consists of \begin{inparaenum}[1)] \item a formula
+  that specifies the mathematical relationships among the variables,
+  and \item a description of how well the data agree with the model.
+  \end{inparaenum} 
+  Let's start with an example of how model formulas are represented in
+  the R programming language. Recall the data set from
+  Chapter~\ref{data-analysis} on speed, gender, and height for a
+  sample of college students. Do we really think that, on average,
+  males drive faster than females (or vice versa)? Similarly, is there
+  any relationship between height and speed? The model formula is
 \begin{Verbatim}
-  Mileage ~ Weight + Disp.
+speed ~ height + gender
 \end{Verbatim}
-We can guess that this
-formula is applied to a data set on automobiles. You should read the
-formula above as ``Mileage is modeled as a linear function of weight
-and displacement''. The term to the left of the ``\mtilde'' is the
+You should read the
+formula above as ``Speed is modeled as a linear function of height and gender''.
+The term to the left of the ``\mtilde'' is the
 response or dependent variable and the terms to the right of the ``\mtilde''
 that are separated by a ``\texttt{+}'' are the predictors or independent variables.
 Mathematically, the formula
 above specifies the model
 \[
-  Mileage = \beta_0 + \beta_1 Weight + \beta_2 Disp. + \epsilon
+  speed_i = \beta_0 + \beta_1 height_i + \beta_2 gender_i + \epsilon_i
 \]
 where the coefficients $\beta_0,~\beta_1,~\beta_2$  along with the variance $\sigma_{\epsilon}^2$ of
 the error term $\epsilon$ are the parameters to be estimated from the data.
-The coefficients and the error term do not appear in the R formula.
-They are inferred and so we do not need to enter them. Notice in particular
-that the R formula does not include the intercept term $\beta_0$. It is there
+The index $i$ refers to the $i$th observation in the data set.
+Notice that neither the coefficients nor the error term appear in the R formula.
+They are inferred and so we do not need to enter them. In particular
+the R formula does not include the intercept term $\beta_0$. It is there
 by default; this is usually what we want. The formula above is equivalent to
 \begin{Verbatim}
-Mileage ~ 1 + Weight + Disp.
+speed ~ 1 + height + gender
 \end{Verbatim}
 If we do not want an intercept term in our model, say because we want to
 force the fit to go through the origin, then we need to explicitly remove
 the intercept, like this:
 \begin{Verbatim}
-Mileage ~ -1 + Weight + Disp.
+speed ~ -1 + height + gender
 \end{Verbatim}
-Statistical modeling is a process that involves the following steps (which are often
-iterated):
+
+Statistical modeling is a process that almost always involves iterating
+over the following steps~\cite{chambers:1992}.
 \begin{itemize}
-\item obtaining data for the process being modeled,
-\item choosing a candidate model that, for the moment, will be used
-  to describe the data,
-\item fitting the model, usually by estimating parameters,
-\item summarizing the model to see what it says about the data, and
-\item using diagnostics to see if/where the model fails to agree
-  with the data.
+\item obtaining data 
+\item choosing a candidate model 
+\item fitting the model, i.e. using software to  estimate the model parameters
+\item interpretation of the fitted model parameters
+\item diagnostics to see in what ways the model \emph{fails} to fit the data
 \end{itemize}
+
+\begin{comment}
+
 The automobile data is available as a data frame that comes with
 the \texttt{rpart} package. 
 If you don't already have this package installed, then
@@ -106,6 +105,8 @@ response variable.
   \texttt{Fuel} vs the fitted values.  How does this model compare
   to the initial model?
 \end{enumerate}
+
+\end{comment}
 
 % change this section into a discussion.
 % it will come later in the section.
