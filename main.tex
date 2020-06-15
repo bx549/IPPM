@@ -8,12 +8,18 @@
 \usepackage{paralist,comment,fancyvrb}
 \usepackage{multirow,url,calc}
 \usepackage[group-separator={,}]{siunitx}
-\usepackage{pgfplots}
-\usepackage{xmpincl}
+\usepackage{pgfplots,xmpincl}
 \usepackage{epstopdf}
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage{color,colortbl}
 \usepackage{draftwatermark}
+
+\newcommand{\mtilde}{$\mathtt{\sim}$}
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
 
 \SetWatermarkScale{3}
 
@@ -34,6 +40,8 @@
 \newcommand{\bs}{\textbf{Solution.}~}
 
 \setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+
 \addbibresource{bibdata.bib}
 
 \begin{document}
@@ -70,7 +78,7 @@ contained within.
 \include{prescriptive-modeling}
 \include{probabilistic-modeling}
 \include{decision-problems}
-\include{data-analysis-and-statistics}
+\include{data-analysis}
 \include{predictive-modeling}
 \include{appendix}
 
