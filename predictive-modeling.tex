@@ -1,6 +1,181 @@
 \chapter{Predictive Modeling}
 
-\section{Linear Regression}
+\section{Regression}
+
+\subsubsection*{Statistical Models}
+
+Statistical models are simplified descriptions of data that involve
+mathematical relationships. In addition to the data itself,
+a statistical model consists of \begin{inparaenum}[1)] \item a formula
+  that specifies the mathematical relationships among the variables,
+  and \item a description of how well the data agree with the model.
+  \end{inparaenum} 
+  Let's start with an example of how model formulas are represented in
+  the R programming language. Recall the data set from
+  Chapter~\ref{data-analysis} on speed, gender, and height for a
+  sample of college students. Do we really think that, on average,
+  males drive faster than females (or vice versa)? Similarly, is there
+  any relationship between height and speed? The model formula is
+\begin{Verbatim}
+speed ~ height + gender
+\end{Verbatim}
+You should read the
+formula above as ``Speed is modeled as a linear function of height and gender''.
+The term to the left of the ``\mtilde'' is the
+response or dependent variable and the terms to the right of the ``\mtilde''
+that are separated by a ``\texttt{+}'' are the predictors or independent variables.
+Mathematically, the formula
+above specifies the model
+\[
+  speed_i = \beta_0 + \beta_1 height_i + \beta_2 gender_i + \epsilon_i
+\]
+where the coefficients $\beta_0,~\beta_1,~\beta_2$  along with the variance $\sigma_{\epsilon}^2$ of
+the error term $\epsilon$ are the parameters to be estimated from the data.
+The index $i$ refers to the $i$th observation in the data set.
+Notice that neither the coefficients nor the error term appear in the R formula.
+They are inferred and so we do not need to enter them. In particular
+the R formula does not include the intercept term $\beta_0$. It is there
+by default; this is usually what we want. The formula above is equivalent to
+\begin{Verbatim}
+speed ~ 1 + height + gender
+\end{Verbatim}
+If we do not want an intercept term in our model, say because we want to
+force the fit to go through the origin, then we need to explicitly remove
+the intercept, like this:
+\begin{Verbatim}
+speed ~ -1 + height + gender
+\end{Verbatim}
+
+Statistical modeling is a process that almost always involves iterating
+over the following steps~\cite{chambers:1992}.
+\begin{itemize}
+\item obtaining data 
+\item choosing a candidate model 
+\item fitting the model, i.e. using software to  estimate the model parameters
+\item interpretation of the fitted model parameters
+\item diagnostics to see in what ways the model \emph{fails} to fit the data
+\end{itemize}
+
+\begin{comment}
+
+The automobile data is available as a data frame that comes with
+the \texttt{rpart} package. 
+If you don't already have this package installed, then
+\begin{Verbatim}
+install.packages(``rpart'')
+library(rpart)
+attach(car.test.frame)
+\end{Verbatim}
+Having the data and a candidate model, let's fit the model
+and plot \texttt{Mileage} against the values predicted by the model.
+\begin{Verbatim}[samepage=true]
+fm <- lm(Mileage ~ Weight + Disp.)
+plot(fitted(fm), Mileage)
+abline(0, 1, lty=2)
+\end{Verbatim}
+\includegraphics[width=0.7\textwidth]{Mileage-vs-fitted.pdf}
+
+The dashed line in the plot represents a perfect fit. Qualitatively,
+the model is doing pretty well, except for cars with high gas mileage.
+Those points fall above the dashed line, an indication that the
+predictions are too low. Let's try two different ways to improve the model,
+1) by adding additional predictor variables to the model, and 2)
+by changing our concept of how the data generating process should
+be modeled. For example, let's suppose that we know something about
+the physics of internal combustion engines in automobiles. Consequently,
+we feel that fuel consumption is more natural than mileage as a
+variable to relate linearly to weight. Noting that \texttt{Mileage}
+is in units of miles per gallon, we can define fuel consumption in gallons per
+100 miles driven as
+\begin{Verbatim}
+Fuel <- 100/Mileage
+\end{Verbatim}
+In other words, we want to try using the inverse of mileage as the
+response variable.
+
+\begin{enumerate}
+\item Fit a model with \texttt{Mileage} as the response and
+  \texttt{Weight}, \texttt{Disp.}, and \texttt{Type} as predictors.
+  \texttt{Type} is a categorical variable with six levels: Compact,
+  Large, Medium, Small, Sporty, and Van.
+  Plot \texttt{Mileage} vs the fitted values. How does this model
+  compare to the initial model?
+\item Fit a model with \texttt{Fuel} as the response and
+  \texttt{Weight} and \texttt{Disp.} as the predictors.  Plot
+  \texttt{Fuel} vs the fitted values.  How does this model compare
+  to the initial model?
+\end{enumerate}
+
+\end{comment}
+
+% change this section into a discussion.
+% it will come later in the section.
+\subsubsection*{Transformations on Data}
+  Suppose that a variable $u$ is related to a variable $v$ as
+\[
+u = \gamma_0e^{\gamma_1v}
+\]
+where $\gamma_0$ and $\gamma_1$ are parameters to be estimated.  Even
+though the relationship between $u$ and $v$ is nonlinear, explain how
+you could use simple linear regression to find estimates for
+$\gamma_0$ and $\gamma_1$.
+
+We can transform the relationship into a linear one
+by taking logarithms.
+\[
+\text{ln}(u) = \text{ln}(\gamma_0) + \gamma_1v
+\]
+Then we have the form of a linear regression model with $\beta_0 = \text{ln}(\gamma_0)$
+and $\beta_1 = \gamma_1$. After fitting the linear model,
+\[
+\hat{\gamma_0}=e^{\hat{\beta_0}}, \qquad \hat{\gamma_1} = \hat{\beta_1}
+\]
+
+% possible example to use
+\begin{Verbatim}
+## example of linear regression on the msleep data to
+## notice that collinearity is present,
+## choose variable transformation,
+## understand the reported p-values,
+## and understand the reported R-squared.
+attach(msleep)
+
+fm <- lm(sleep_total ~ brainwt + bodywt)
+summary(fm)
+## collinearity is present
+plot(brainwt, bodywt)
+plot(log(brainwt), log(bodywt))
+fm <- lm(sleep_total ~ log(brainwt))
+summary(fm)
+
+## a one-unit increase in log(brainwt) decreases
+## sleep time by about one hour (on avg).
+
+## for interpretation, plug in a few values to get an idea
+(x <- seq(from=0.5, to=5, by=0.5))
+y.hat <- predict(fm, newdata=data.frame(brainwt=x))
+plot(x, y.hat)
+
+## the hypothesis test for b1
+
+(t0 <- -1.0397/0.1914) # the t-statistic
+
+pt(-5.432, 54) * 2  # the p-value
+## should match the summary output
+
+## compute R-squared
+y.hat <- predict(fm)
+y <- sleep_total[ !is.na(sleep_total) & !is.na(brainwt) ]
+
+TSS <- sum( (y - mean(y))^2 )
+RSS <- sum( (y - y.hat)^2 )
+1 - RSS/TSS   # R-squared
+
+(F <- ((TSS-RSS)/1) / (RSS/(56-1-1))) # the F-statistic
+1 - pf(29.51, 1, 54)   # p-value for the F-test
+\end{Verbatim}
+
+\section{Classification}
 
 \section{Time Series}
 
@@ -8,6 +183,8 @@
 
 \begin{enumerate}
 
+\subsubsection*{Regression}
+  
 % this problem is OK
 \item \emph{Linear regression with a single predictor variable.}
 In the \texttt{datasets} package in R there is a data set named
@@ -73,10 +250,8 @@ at the R prompt. Use this data to perform the following exercises.
     \item Looking at the summary of the fitted model, the coefficient for weight 
       $\beta_3 \approx -3.17$. What is the interpretation of $\beta_3$?
       
-    \item If you are an engineer designing a car and you want to
-      increase its fuel efficiency (\texttt{mpg}), would you want to
-      increase or decrease the weight of the vehicle? What about
-      number of cylinders and horsepower?
+    \item How do the number of cylinders and horsepower affect fuel
+      efficiency?
      
     \item Plot \texttt{mpg} as a function of
     \texttt{wt}. Overlay a fitted regression line from the
@@ -117,5 +292,61 @@ at the R prompt. Use this data to perform the following exercises.
 
   \item Do you think that a linear model is appropriate for this data?
   \end{enumerate}
-    
+
+% i'm not yet sure what i want to do with this problem.
+\item \emph{Linear regression with numeric and categorical predictors.}
+  The following sales data were
+  collected for one particular product from a company for the past 10
+  seasons.  The data are the price of the product that the company
+  itself charged, the price that its competitor charged (for the
+  competitor's version of the same product), the corresponding sales
+  of the company's product, and the season. This data is available
+  in the file \texttt{sales.csv}.
+
+\begin{center}
+\begin{tabular}{rrrl}
+company price & competitor price & sales (1000s) & season \\ \hline
+         \$10.2         &     \$9.9  &71.1 &winter \\
+         11.6         &     9.9  &63.0 &summer \\
+          9.8         &    11.7  &71.7 &winter \\
+         13.7         &     9.5  &58.3 &summer \\
+         12.0         &     8.9  &61.8 &summer \\
+         11.2         &    10.1  &66.0 &summer \\
+         10.2         &    11.1  &71.2 &winter \\
+         10.6         &    10.7  &66.9 &winter \\
+          9.5         &    12.6  &72.5 &winter \\
+         11.8         &    10.0  &65.4 &winter
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+\item Create a visualization that shows all of the data on one plot.
+  One idea is to plot sales vs. price, distinguish company and competitor
+  price by symbol shape, and distinguish season by color.
+  \item Fit a linear regression model 
+\[
+y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \beta_3x_3
+\]
+where $y$ represents the sales in 1000s of units, $x_1$ represents
+the company price in dollars, $x_2$ represents the competitor price in
+dollars, and $x_3$ is an indicator variable as follows
+\[
+x_3 = \begin{cases} 0 \quad \text{if season is winter} \\
+1 \quad \text{if season is summer}
+\end{cases}
+\]
+\item Provide an interpretation each of the fitted parameters $\beta_0$, $\beta_1$,
+  $\beta_2$, and $\beta_3$. \label{aa}
+\item Do you think that competitor price should be included in the
+  model?  Explain the reasoning for your answer. \label{bb}
+\item What is the expected company sales if the company and the
+  competitor both set their prices to \$11 for the winter season?  Use
+  the full model, regardless of your answer to
+  part~\ref{bb} \label{cc}
+\end{enumerate}
+
+\subsubsection*{Classification}
+
+\subsection*{Time Series}
+  
 \end{enumerate}
