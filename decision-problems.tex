@@ -518,6 +518,55 @@ The value of the game does not change as long as one player
 sticks to the optimal mixed strategy.
 \end{solution}
 
+% written by Emily to replace cops and robbers
+\item \emph{Marketing Strategies} 
+Two peanut butter companies, Doodle's and Lola's, are deciding on their marketing strategy for the upcoming year. They know that they are each other's main competitor and that the demand for peanut butter is relatively constant, so a gain in sales for Doodle's is a loss of sales for Lola's. Each company has their standard packaging for peanut butter and a new innovative packaging for peanut butter. Both companies will be producing and selling both types of packaging. 
+If both companies choose to market only their innovative packaging, Doodle's will win an extra 2\%\ of the market's sales. 
+If both companies choose to market their standard packaging, Doodle's will loose 2\%\ of the market.
+If Doodle's markets their innovative product and Lola's markets their standard product, Doodle's will win over 10\%\ of the market.
+If Lola's markets their innovative product and Doodle's markets their standard product, Doodle's will win over 8\%\ of the market.
+ 
+\begin{enumerate}
+\item  Formulate this decision problem as a two--person
+  zero--sum game and determine the optimal marketing strategy for each company. Note that they are able to change their advertising throughout the year, so a mixed strategy is possible.
+\item Compute the value of the game. \label{val}
+\item Suppose that a member of the Doodle's marketing team quits their job and goes to work for the Lola's marketing team. She tells her new co-workers about the strategy that Doodle's is planning to use. She is able to tell them the probabilities with which Doodle's will market their standard product and their innovative product. The Lola's marketing team now knows that Doodle's is more likely to market the innovative product than the standard product. Since they know that, they choose to only market their innovative product. Is Lola's argument valid? In other words, does the value of the game change if the Lola's marketing team knows the Doodle's marketing team's mixing probabilities? 
+\label{knowledge}
+\end{enumerate}
+
+\begin{solution}
+\bs
+The game is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{3.25in}{YYYY}
+& & \multicolumn{2}{c}{Lola's} \\
+& & standard & innovative \\ \cline{3-4}
+\multirow{2}{.5in}{Doodle's} & \gtcol{standard} & \gtcol{-2} & \gtcol{8} \\ \cline{3-4}
+& \gtcol{innovative} & \gtcol{10} & \gtcol{2} \\ \cline{3-4}
+\end{tabularx}
+\endgroup
+\vspace{.1in}
+
+Note that there is no saddle point, so the best strategy
+is a mixed one. The best strategy for Doodle's is to mix standard to innovative in the ratio 4 to 5, while Lola's should mix their strategy of standard to innovative in the ratio 1 to 2.
+The corresponding probabilities are $(4/9,\,5/9)$ for Doodle's and $(1/3,\,2/3)$ for Lola's.
+
+
+Part \ref{val}. To compute the value of the game, note that
+when the Doodle's markets the standard product, they receive a payoff of -2 with probability 1/3 and payoff of 8 with probability 2/3.
+The value of the game is
+\[ \frac{1 \times -2 + 2 \times 8}{3} = \frac{14}{3} = 4.67 \]
+On average Doodle's comes out ahead.
+
+Part \ref{knowledge}, the team's thought process is not valid.
+The value of the game does not change as long as one player
+sticks to the optimal mixed strategy.
+\end{solution}
+
+
 % this problem desperately needs to be re-written. Something
 % more interesting. The main idea is that the payoffs are
 % probabilities are probabilities.
