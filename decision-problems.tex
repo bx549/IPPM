@@ -317,6 +317,54 @@ Unless the probability of poor weather is greater than .68,
 planning to burn is the best decision. 
 \end{solution}
 
+<<<<<<< Updated upstream
+=======
+% Emily - expected value and sensitivity analysis
+\item \emph{Decisions under risk and sensitivity analysis.} The employees at a popular outdoor furniture company predict that their sales will double this coming year. The company is already producing the maximum amount of furniture possible in their current facility. They are considering building another manufacturing facility to be able to meet the predicted increase in demand. The facility will cost \$500,000 to build. If the demand doubles as predicted, their income will increase by \$800,000. If the demand only slightly increases, their income will increase by \$250,000. If the facility is not built, the company will lose \$50,000 because of the time workers will have to spend talking to upset customers to explain why furniture pieces are out-of-stock. The change in demand will be determined by the weather that year because more people want to buy outdoor furniture if they can enjoy the good weather outside. There is a 0.55 chance of good weather, which will result in a double in demand. There is a 0.45 chance of poor weather, which will result in only a slight increase in demand.
+
+\begin{enumerate}
+	\item Should the facility by built? Use expected value to make your decision.
+	
+	\item How does the decision change with the probability of good/poor
+	weather? Perform a sensitivity analysis to answer.
+	
+\end{enumerate}
+
+\begin{solution}
+	\bs The decision table for this problem is
+	\begin{center}
+		\begin{tabular}{rrr}
+			& $\frac{55}{100}$ & $\frac{45}{100}$ \\
+			& good weather & poor weather \\ \hline
+			build facility & \$300,000 & -\$250,000 \\
+			do not build & -\$50,000 & -\$50,000
+		\end{tabular}
+	\end{center}
+
+The expected payoff of each decision is
+\begin{align*}
+&E(\text{do not build}) = -\$50,000 \\
+&E(\text{build}) = \left(\frac{55}{100}\right)(\$300,000)
++ \left(\frac{45}{100}\right)(-\$250,000) = \$52,500
+\end{align*}
+The company should build the facility. As the probability of poor weather increases, the expected value of building the new facility decreases. 
+Let $p$ represent the probability of poor weather.
+\begin{align*}
+E(\text{build}) &= (1-p)300,000 + p(-250,000) \\
+&= 300,000 - 550,000p
+\end{align*}
+The company should build that facility as long as
+\begin{align*}
+E(\text{build}) &\geq E(\text{don't build}) \\
+300,000 - 550,000p &\geq -50,000 \\
+-550,0000p &\geq -350,000 \\
+p &\leq \frac{7}{11} \approx .64
+\end{align*}
+Building the facility is the best decision unless the probability of poor weather is greater than .64.	
+
+\end{solution}
+
+>>>>>>> Stashed changes
 % written by Emily
 \item \emph{Elimination of dominated strategies.}
 Two street vendors, A and B, are located near a major tourist attraction. 
@@ -634,4 +682,4 @@ and the optimal strategy is the same for both players. Each
 should play a mixture of $(2/5,~3/5)$.
 
 
-\end{enumerate}
+\end{solution}
