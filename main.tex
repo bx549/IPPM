@@ -6,14 +6,22 @@
 \usepackage{biblatex,tipa,textcomp}
 \usepackage{fancyhdr,tabularx,tabulary}
 \usepackage{paralist,comment,fancyvrb}
-\usepackage{multirow,url}
+\usepackage{multirow,url,calc}
 \usepackage[group-separator={,}]{siunitx}
-\usepackage{pgfplots}
-\usepackage{xmpincl}
+\usepackage{pgfplots,xmpincl}
 \usepackage{epstopdf}
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage{color,colortbl}
-\usepackage{calc}
+\usepackage{draftwatermark}
+
+\newcommand{\mtilde}{$\mathtt{\sim}$}
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+
+\SetWatermarkScale{3}
 
 \usetikzlibrary{arrows.meta}
 \pgfplotsset{compat=1.12}
@@ -32,6 +40,8 @@
 \newcommand{\bs}{\textbf{Solution.}~}
 
 \setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+
 \addbibresource{bibdata.bib}
 
 \begin{document}
@@ -58,17 +68,18 @@ Attribution – You must give appropriate credit, provide a link to the license,
 and indicate if changes were made. You may do so in any reasonable manner,
 but not in any way that suggests the licensor endorses you or your use.\\
 NonCommercial – You may not use the material for commercial purposes.\\
-Although every precaution has been taken to verify the accuracy of the information
-contained herein, the author and publisher assume no responsibility for any errors or
-omissions. No liability is assumed for damages that may result from the use of information
-contained within.
+Although every precaution has been taken to verify the accuracy of the
+information contained herein, the author and publisher assume no
+responsibility for any errors or omissions. No liability is assumed
+for damages that may result from the use of information contained
+within.
 
 \tableofcontents
 
 \include{prescriptive-modeling}
 \include{probabilistic-modeling}
 \include{decision-problems}
-\include{data-analysis-and-statistics}
+\include{data-analysis}
 \include{predictive-modeling}
 \include{appendix}
 

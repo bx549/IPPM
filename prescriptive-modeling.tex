@@ -1199,34 +1199,218 @@ savings.
 \end{solution}
 % this problem needs to be re-written and GAMS code added.
 \item \emph{A blending problem.}
-A manufacturer of soft drinks wishes to blend
-three sugars to ensure uniformity of taste in a product. Suppliers
-only provide blends of the sugars, at varying costs per ton.
+A pet food manufacturer is developing a new dog food recipe with natural ingredients. It has been decided that the recipe will contain a combination of 4 ingredients: chicken, brown rice, vegetables, and corn meal. The cost and important nutritional information for each ingredient is summarized in the table below.
 
 \begin{center}
-\begin{tabular}{lccccccc} \centering
- & \multicolumn{7}{c}{Supplier}\\
-Sugar  &   A &  B &  C &  D &  E &  F &  G \\ \hline
-Cane   &  10\% & 10\% & 20\% & 30\% & 40\% & 20\% & 60\% \\
-Corn   &  30\% & 40\% & 40\% & 20\% & 60\% & 70\% & 10\% \\
-Beet   &  60\% & 50\% & 40\% & 50\% &  0\% & 10\% & 30\% \\
-Cost/ton& \$10 & \$11 & \$12 & \$13 & \$14 & \$12 & \$15
-\end{tabular}
+	\begin{tabular}{lcccc} \\
+		Ingredient  &   Cost (\$/lb)  & Protein (g/lb)  &  Fat (g/lb) &  Fiber (g/lb)  \\ \hline
+		(1) Chicken   &  3.00 & 125 & 60 & 0 \\
+		(2) Brown rice   &  0.75 & 12 & 4 & 9 \\
+		(3) Vegetables   &  1.80 & 14 & 1.5 & 12 \\
+		(4) Corn meal& 0.60 & 32 & 8 & 17
+	\end{tabular}
 \end{center}
 
+Industrial engineers have been asked to determine the most cost-effective mixture of ingredients given the following guidelines:
+\begin{itemize}
+	\item Each pound of dog food must contain less than 40 grams of fat
+	
+	\item Each pound of dog food must contain at least 80 grams of protein 
+	
+	\item Each pound of dog food must contain between 4 and 10 grams of fiber
+	
+	\item Each ingredient must comprise at least 10\% of the mixture
+\end{itemize}
+
 \begin{enumerate}
-\item Formulate an (algebraic) mathematical programming model to minimize 
-the cost of the sugar supplies while producing a blend that contains 52 tons
-of cane sugar, 56 tons of corn sugar, and 59 tons of beet sugar. \label{ex:blenda}
-
-\item The manufacturer feels that to maintain good relations with suppliers
-it is necessary to buy at least 10 tons from each. Modify the model in
-part~\ref{ex:blenda} to accommodate this requirement.
-
-\item Formulate an alternative to the model in part~\ref{ex:blenda} that finds the 
-lowest cost way to blend one ton of supplies so that the amount of each 
-sugar is between 30 and 37 percent of the total.
+	\item Formulate an (algebraic) mathematical programming model using the information above and generate a solution using software.
+	
+	\item Formulate an alternative (algebraic) mathematical programming model given the additional constraint that 80\% of the mixture must contain a combination of chicken and vegetables. Generate a solution using software and determine the added cost due to the new constraint. 
 \end{enumerate}
+
+\begin{solution}
+	\bs
+	
+	part a) A GAMS model and solution is presented. The mixture should contain 55.7\% chicken, 10\% brown rice, 10\% vegetables, and 24.3\% corn meal for a cost of \$2.07 per pound.
+	\begin{Verbatim}[samepage=true]
+	sets
+	i 'ingredients' /1,2,3,4/;
+	parameters
+	a(i)'cost of ingredient i'
+	/ 1 3
+	2 0.75
+	3 1.8
+	4 0.6/
+	b(i) 'protein content of ingredient i'
+	/ 1 125
+	2 12
+	3 14
+	4 32/
+	c(i) 'fat content of ingredient i'
+	/ 1 60
+	2 4
+	3 1.5
+	4 8/
+	d(i) 'fiber content of ingredient i'
+	/ 1 0
+	2 9
+	3 12
+	4 17/;
+	
+	variables
+	x(i) 'fraction of mixture of ingredient i'
+	z    'cost per pound of dog food'
+	positive variables x;
+	
+	equations
+	fat 'upper bound on total fat content',
+	protein 'lower bound on total protein content',
+	fiberlow 'lower bound on total fiber content',
+	fiberup 'upper bound on total fiber content',
+	minimum(i) 'minimum fraction of each ingredient i',
+	total 'sum of fractions must equal 1',
+	cost 'objective function';
+	
+	fat.. sum(i,x(i)*c(i)) =l= 40;
+	protein.. sum(i,x(i)*b(i)) =g= 80;
+	fiberlow.. sum(i,x(i)*d(i)) =g= 4;
+	fiberup.. sum(i,x(i)*d(i)) =l= 10;
+	minimum(i).. x(i) =g= .1;
+	total..sum(i,x(i)) =e= 1;
+	cost.. z =e= sum(i,x(i)*a(i));
+	
+	model mixture /all/;
+	solve mixture using lp minimizing z;
+	\end{Verbatim}
+	
+	\begin{Verbatim}[samepage=true]
+	Optimal Solution found, objective:        2.071774
+	
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	---- EQU fat            -INF     35.913    40.000      .         
+	---- EQU protein       80.000    80.000     +INF      0.026      
+	---- EQU fiberlow       4.000     6.231     +INF       .         
+	---- EQU fiberup        -INF      6.231    10.000      .         
+	
+	fat  upper bound on total fat content
+	protein  lower bound on total protein content
+	fiberlow  lower bound on total fiber content
+	fiberup  upper bound on total fiber content
+	
+	---- EQU minimum  minimum fraction of each ingredient i
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	1     0.100     0.557     +INF       .         
+	2     0.100     0.100     +INF      0.666      
+	3     0.100     0.100     +INF      1.665      
+	4     0.100     0.243     +INF       .         
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	---- EQU total          1.000     1.000     1.000    -0.226      
+	---- EQU cost            .         .         .        1.000      
+	
+	total  sum of fractions must equal 1
+	cost  objective function
+	
+	---- VAR x  fraction of mixture of ingredient i
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	1      .        0.557     +INF       .         
+	2      .        0.100     +INF       .         
+	3      .        0.100     +INF       .         
+	4      .        0.243     +INF       .         
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	---- VAR z              -INF      2.072     +INF       .         
+	\end{Verbatim}
+	
+	part b) A GAMS model and solution is presented. The added cost due to the additional constraint is \$0.20. The mixture should contain 58\% chicken, 10\% brown rice, 22\% vegetables, and 10\% corn meal for a cost of \$2.27 per pound.
+	\begin{Verbatim}[samepage=true]
+	variables
+	x(i) 'fraction of mixture of ingredient i'
+	z    'cost per pound of dog food'
+	positive variables x;
+	
+	equations
+	fat 'upper bound on total fat content',
+	protein 'lower bound on total protein content',
+	fiberlow 'lower bound on total fiber content',
+	fiberup 'upper bound on total fiber content',
+	minimum(i) 'minimum fraction of each ingredient i',
+	total 'sum of fractions must equal 1',
+	chickveg 'lower bound on fraction of chicken and vegetables',
+	cost 'objective function';
+	
+	fat.. sum(i,x(i)*c(i)) =l= 40;
+	protein.. sum(i,x(i)*b(i)) =g= 80;
+	fiberlow.. sum(i,x(i)*d(i)) =g= 4;
+	fiberup.. sum(i,x(i)*d(i)) =l= 10;
+	minimum(i).. x(i) =g= .1;
+	total..sum(i,x(i)) =e= 1;
+	chickveg.. x('1') + x('3') =g= .8;
+	cost.. z =e= sum(i,x(i)*a(i));
+	
+	model mixture /all/;
+	solve mixture using lp minimizing z;
+	\end{Verbatim}
+	
+	\begin{Verbatim}[samepage=true]
+	Optimal Solution found, objective:        2.271216
+	
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	---- EQU fat            -INF     36.341    40.000      .         
+	---- EQU protein       80.000    80.000     +INF      0.011      
+	---- EQU fiberlow       4.000     5.238     +INF       .         
+	---- EQU fiberup        -INF      5.238    10.000      .         
+	
+	fat  upper bound on total fat content
+	protein  lower bound on total protein content
+	fiberlow  lower bound on total fiber content
+	fiberup  upper bound on total fiber content
+	
+	---- EQU minimum  minimum fraction of each ingredient i
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	1     0.100     0.580     +INF       .         
+	2     0.100     0.100     +INF      0.366      
+	3     0.100     0.220     +INF       .         
+	4     0.100     0.100     +INF       .         
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	---- EQU total          1.000     1.000     1.000     0.254      
+	---- EQU chickveg       0.800     0.800     +INF      1.395      
+	---- EQU cost            .         .         .        1.000      
+	
+	total  sum of fractions must equal 1
+	chickveg  lower bound on fraction of chicken and vegetables
+	cost  objective function
+	
+	---- VAR x  fraction of mixture of ingredient i
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	1      .        0.580     +INF       .         
+	2      .        0.100     +INF       .         
+	3      .        0.220     +INF       .         
+	4      .        0.100     +INF       .         
+	
+	LOWER     LEVEL     UPPER    MARGINAL
+	
+	---- VAR z              -INF      2.271     +INF       .          .         
+	\end{Verbatim}
+	
+\end{solution}
+
 
 % re-written by Hannah
 \item \emph{A network flow problem.}  Amy and Brian are professional

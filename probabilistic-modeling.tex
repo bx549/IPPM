@@ -108,7 +108,407 @@ Questions.
   no tweets between 9pm and 11pm?
 \end{enumerate}
 
-
 \section{Queueing Models}
 
 \section{Exercises}
+
+\begin{enumerate}
+\subsubsection*{Modeling with Probability Distributions.}
+
+% this problem is OK
+\item \emph{Evaluating a warranty.}
+  A manufacturer of automotive batteries offers a one-year
+  warranty. If the battery fails for any reason during the warranty
+  period, it is replaced for free. The time to failure is distributed
+  Exponential with rate $\lambda=.125$ failures per year.
+\begin{enumerate}
+\item What proportion of batteries fail within the warranty period?
+\item The cost to manufacture a battery is \$50, and the profit
+per battery is \$25. What is the effect of the warranty replacement
+policy on profit? \label{ex:profit}
+\end{enumerate}
+
+\begin{solution}
+  \bs The question is asking for the theoretical proportion of
+  batteries that fail within one year. Since all batteries have the
+  same probability of failure, this proportion is equal to the
+  probability that a single battery will fail within one year. Let $X$
+  be a random variable that represents the time to failure.
+\[ P(X<1) = 1-e^{-\lambda t} = 1 - e^{-.125} = 0.118 \]
+Now, imagine that the manufacturer has, over time,
+  sold many batteries and has kept data on how many batteries failed
+  within one year. The empirical proportion is simply the number
+  of batteries that failed divided by the number of batteries sold.
+  The Law of Large Numbers tells us that when the number of batteries
+  sold is large, the empirical proportion will be approximately
+  equal to the theoretical proportion.
+
+Taking the warranty into account, the average profit per battery is
+\[ \$25 - 0.118\times \$50 = \$19.10 \]
+So, the (average) effect of the warranty on profit is -\$5.90.
+\end{solution}
+
+% this problem needs to be re-written
+\item \emph{Selling tickets.}
+  The Springdale High School band is performing a benefit concert
+  in its new 400-seat auditorium. Local businesses buy the tickets in
+  blocks of 10 and donate them to youth organizations. Tickets go on
+  sale to business entities for four hours only the day before the
+  concert. The process of placing orders for tickets is Poisson with a
+  mean 10 calls per hour.  Any (blocks of) tickets remaining after the
+  box office is closed are sold at a discount as ``rush tickets'' one hour
+  before the concert starts. Determine the following:
+\begin{enumerate}
+\item The probability that it will be possible to buy rush tickets. \label{ex:rusha}
+\item  The average number of rush tickets available. \label{ex:rushb}
+\end{enumerate}
+
+For part~\ref{ex:rusha}, you should first write down the expression
+for the probability that it will be possible to buy ``rush''
+tickets. To compute the numerical answer, you will want to use
+software such as R.
+
+\begin{solution}
+\bs
+First note that the number of calls in one hour is distributed
+Poisson with mean 10. Consequently, the number of calls in a 4--hour
+period is distributed Poisson with mean 40. Let $N$ be the
+number of calls in a 4--hour period. Then
+\[ N ~ \text{Poisson}(\lambda = 40) \]
+For part~\ref{ex:rusha}, the probability that tickets remain after they
+are offered to the local businesses is
+\begin{align*}
+  P(N < 40) &= \sum_{n=0}^{39} \frac{\lambda^n e^{-\lambda}}{n!}\\
+            &= \sum_{n=0}^{39} \frac{40^n e^{-40}}{n!}\\
+            &\approx .48
+\end{align*}
+In R,
+\begin{Verbatim}
+> sum(dpois(0:39,40))
+[1] 0.4789711
+\end{Verbatim}  
+
+For part~\ref{ex:rushb}, our calculations are all done in expectation
+(or on average). There are 40 calls in 4 hours,
+which means that 400 tickets are sold to local
+businesses. So, on average, no rush tickets are available.
+\end{solution}
+
+% this problem needs to be re-written, but it can be very similar
+\item \emph{College expenses.}
+  A freshman student receives a bank deposit of
+  \$100 a month from home to cover incidentals. Withdrawal checks of
+  \$20 each occur randomly during the month and are spaced according to
+  an exponential distribution with a mean value of 1 week.  Determine
+  the probability that the student will run out of incidental money
+  before the end of the fourth week.
+
+\begin{solution}
+\bs
+Let $X$ be a random variable that represents the time between
+checks. The mean time between checks, that is to say the
+expected value of $X$ ($E(X)$), is one week. We know that for
+the Exponential distribution
+\[ E(X) = \frac{1}{\lambda} \]
+where $\lambda$ is the rate (in units of checks
+per week). So,
+\[ X \sim \text{Exp}(\lambda = 1~\text{check per week}) \]
+If the time between checks is distributed Exponential with
+rate $\lambda$, then the number of checks written in $t$ weeks
+is Poisson with mean $\lambda t$. Let $N$ be the number of checks
+written in 4 weeks.
+\[ N \sim \text{Poisson}(\lambda = \lambda \times 4 = 4) \]
+Now, the probability that the student runs out of money is
+\begin{align*}
+  P(N \geq 5) &= 1 - P(N \leq 4) \\
+              &= 1 - \sum_{n=0}^{4} \frac{\lambda^n e^{-\lambda}}{n!}\\
+              &= .37
+\end{align*}
+You may have defined the event that the student runs out of money as
+$P(N = 5)$. In other words, that the student writes exactly five
+checks.  This is incorrect because we are modeling the student's
+check-writing activity as a Poisson process. In other words, the
+(unstated) assumption is that the number of checks written is
+independent of the available funds. (Probably closer to reality?)
+\end{solution}
+
+% this problem needs to be re-written, but it can be very similar.
+\item \emph{Stocking an item in inventory.}
+Demand for an item occurs according to a Poisson distribution with
+mean 3 per day. The maximum stock level is 25 items, which occurs on
+each Monday immediately after a new order is received. The order size
+depends on the number of units left at the end of the week on Saturday
+(business is closed on Sundays). Determine the following:
+\begin{enumerate}
+\item The average weekly size of the order. \label{ex:asize}
+\item The probability of shortage at the start of business on Friday. \label{ex:pshort}
+\item The probability that the weekly order size exceeds 10 units. \label{ex:pex}
+\end{enumerate}
+
+\begin{solution}
+\bs
+For part~\ref{ex:asize}, the distribution of demand over six days is
+Poisson with mean 18 items. So, the average weekly size
+of the order is 18 items.
+
+For part~\ref{ex:pshort}, shortage at the start of business on Friday means
+that all 25 items sold during Monday through Thursday. Let
+$D4$ be a random variable that represents demand over the
+first four days of the week.
+\[ D4 \sim \text{Poisson}(\lambda = 12) \]
+The probability of shortage at the start of the day on Friday is
+\begin{align*}
+  P(D4 \geq 25) &= 1 - P(D4 \leq 24)\\
+                &= 1 - \sum_{n=0}^{24} \frac{12^n e^{-12}}{n!}\\
+                &\approx 0.0007
+\end{align*}
+In R,
+\begin{Verbatim}
+> 1 - sum(dpois(0:24,12))
+[1] 0.0006856332
+\end{Verbatim}
+
+For part~\ref{ex:pex}, the order size will exceed 10 units whenever more than
+10 items are sold during the six days of the week. Let $D6$ be
+the demand over one week, then
+\[ D6 \sim \text{Poisson}(\lambda = 18) \]
+and the probability that the order size exceeds 10 units is
+\begin{align*}
+  P(D6 > 10) &= 1 - P(D6 \leq 10) \\
+             &= 1 - \sum_{n=0}^{10} \frac{18^n e^{-18}}{n!}\\
+             &\approx .97
+\end{align*}
+Using R,
+\begin{Verbatim}
+> 1 - sum(dpois(0:10,18))
+[1] 0.9696337
+\end{Verbatim}
+\end{solution}
+
+% this problem needs to be re-written
+\item \emph{Lognormal distribution.} The prices of stocks are often modeled
+  with a lognormal distribution. An investor is considering purchasing
+  stock in one of two companies, A or B. The price of a share of stock
+  today is \$1 for both companies. For company A, the value of the
+  stock one year from now is modeled as lognormal with parameters
+  $\mu=.05$ and $\sigma=.1$. For company B, the value of the stock one
+  year from now is modeled as lognormal with parameters $\mu=.02$ and
+  $\sigma=.2$.
+\begin{enumerate}
+\item Find the mean of the price of one share of company A one year
+  from now. \label{a1}
+\item Find the probability that the price of one share of company A
+  one year from now will be greater than \$1.20. \label{a2}
+\item Find the mean of the price of one share of company B one year
+  from now. \label{b1}
+\item Find the probability that the price of one share of company B
+  one year from now will be greater than \$1.20. \label{b2}
+\end{enumerate}
+
+\begin{solution}
+\bs Let $X_A$ and $X_B$ be the price of one share of company A and
+company B one year from now, respectively. We know from the problem
+description that $X_A \sim \text{LogN}(\mu=.05,\sigma=.1)$ and $X_B
+\sim \text{LogN}(\mu=.02,\sigma=.2)$.
+
+For part~\ref{a1}, the mean of $X_A$ is
+\[
+e^{\mu + \sigma^2/2} = \$1.06
+\]
+For part~\ref{a2}, 
+\begin{align*}
+P(X_A > \$1.20) &= P(\ln(X_A) > \ln(1.20)) \\
+&= P\left(Z > \frac{\ln(1.20)-.05}{.1}\right) \\
+&= P(Z > 1.323) \\
+&= 1-P(Z < 1.323) \\
+&= .093
+\end{align*}
+For part~\ref{b1}, the mean of $X_B$ is
+\[
+e^{\mu + \sigma^2/2} = \$1.04
+\]
+For part~\ref{b2}, 
+\begin{align*}
+P(X_B > \$1.20) &= P(\ln(X_B) > \ln(1.20)) \\
+&= P\left(Z > \frac{\ln(1.20)-.02}{.2}\right) \\
+&= P(Z > .812) \\
+&= 1-P(Z < .812) \\
+&= .208
+\end{align*}
+\end{solution}
+
+\subsubsection*{Stochastic Processes}
+
+\subsubsection*{Queueing Models}
+
+% this problem is ok.
+\item \emph{Performance metrics for a queueing system.} Consider a
+  single server queueing system with FIFO queue discipline.  For the
+  particular day that this system was in operation, the arrival times
+  and the service times of the first six customers were
+  (0,3,7,9,10,12) and (4,6,2,1,3,1), respectively. Arrival times and
+  service times are in minutes.  Compute the average waiting time and
+  the average number of customers in the queue for the first six
+  customers. It will help to construct a diagram of number in
+  system versus time.
+
+\begin{solution}
+\bs
+    
+\pgfplotsset{compat=1.12}
+\begin{center}
+  \begin{tikzpicture}[scale=1.0]
+    \begin{axis}[clip=false,
+      width=12cm, height=6cm,
+    axis x line=middle,
+    axis y line=middle,
+    ymin=0, ymax=4.5,
+    ytick={0,1,2,3,4},
+    yticklabels={0,1,2,3,4},
+    xmin=0, xmax=18,
+    xtick={2,4,6,8,10,12,14,16},
+    xticklabels={2,4,6,8,10,12,14,16},
+    x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+    y label style={at={(axis description cs:-0.1,.5)},rotate=90,anchor=south},
+    xlabel=Time,
+    ylabel=Number in System,
+    ]
+    \addplot[mark=none, style=thick] coordinates { (0, 1) (3, 1) };
+    \addplot[mark=none, style=thick] coordinates { (3, 1) (3, 2) };
+    \addplot[mark=none, style=thick] coordinates { (3, 2) (4, 2) };
+    \addplot[mark=none, style=thick] coordinates { (4, 1) (4, 2) };
+    \addplot[mark=none, style=thick] coordinates { (4, 1) (7, 1) };
+    \addplot[mark=none, style=thick] coordinates { (7, 1) (7, 2) };
+    \addplot[mark=none, style=thick] coordinates { (7, 2) (9, 2) };
+    \addplot[mark=none, style=thick] coordinates { (9, 2) (9, 3) };
+    \addplot[mark=none, style=thick] coordinates { (9, 3) (13,3) };
+    \addplot[mark=none, style=thick] coordinates { (13, 3) (13,2) };
+    \addplot[mark=none, style=thick] coordinates { (13,2) (16,2) };
+    \addplot[mark=none, style=thick] coordinates { (16,2) (16,1) };
+    \addplot[mark=none, style=thick] coordinates { (16,1) (17,1) };
+    \addplot[mark=none, style=thick] coordinates { (17,1) (17,0) };
+
+    \addplot[mark=none,dashed] coordinates { (3,1) (4,1) };
+    \addplot[mark=none,dashed] coordinates { (7,1) (16,1) };
+    \addplot[mark=none,dashed] coordinates { (9,2) (13,2) };
+    \addplot[mark=none,dashed] coordinates { (10,3) (10,0) };
+    \addplot[mark=none,dashed] coordinates { (12,3) (12,0) };
+    \addplot[mark=none,dashed] coordinates { (16,1) (16,0) };
+    \addplot[mark=none,dashed] coordinates { (4,0) (4,1) };
+    \addplot[mark=none,dashed] coordinates { (13,0) (13,2) };
+
+    \node at (2,.5) {1};
+    \node at (3.5,1.5) {2};
+    \node at (8.5,1.5) {3};
+    \node at (9.5,2.5) {4};
+    \node at (7,.5) {2};
+    \node at (11,.5) {3};
+    \node at (11,1.5) {4};
+    \node at (11,2.5) {5};
+    \node at (12.5,.5) {4};
+    \node at (12.5,1.5) {5};
+    \node at (12.5,2.5) {6};
+    \node at (16.5,.5) {6};
+    \node at (14.5,.5) {5};
+    \node at (14.5,1.5) {6};
+
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+
+First note that the problem description does \emph{not} tell us that
+the times between arrivals and/or the service times are exponentially
+distributed. So it is not an $M/M/1$ system.
+The total delay of all six customers is $0+1+3+3+3+4=14$. The average
+waiting time in the queue is the total delay divided by the number
+of customers.
+\[ W_q = \frac{14}{6} = 2.3333~\text{min} \]
+To compute the average number in the queue, weight the time in queue
+by the number of customers. In other words, compute the area under the
+curve but above one, and then divide by the total time.
+\[ L_q = \frac{14}{17} \]
+
+\end{solution}
+
+% this problem needs to be re-written.
+\item \emph{Justification for a capital expense.}
+  Cars arrive at the Lincoln Tunnel toll gate according to a Poisson
+  process with an average rate of 90 cars per hour. The time for passing
+  the gate is exponential with mean 38 seconds.  Drivers complain of
+  the long waiting time, and authorities are willing to reduce the
+  average passing time to 30 seconds by installing automatic toll
+  collecting devices, provided two conditions are satisfied: 1) the
+  average number of waiting cars in the present system exceeds 5 and
+  2) the percentage of the gate idle time with the new device
+  installed does not exceed 10\%. Can the new device be justified?
+
+\begin{solution}
+\bs
+Cars arrive at the rate
+\[ \lambda = 90~\text{cars per hour} \times 1/3600 =
+  1~\text{car}/40~\text{seconds} \]
+We know that $\mu=1/38$
+for the current system and $\mu_{\text{new}}=1/30$ for the new
+system.
+Condition 1 states that the average number of waiting
+cars in the current system must exceed 5.
+\[ L_s = \frac{\lambda}{\mu-\lambda} = \frac{1/40}{1/38-1/40} = 19 \]
+You may have also computed
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} =
+  \frac{(1/40)^2}{(1/38)(1/38 - 1/40)} = 18.05 \]
+Either way, the first condition is satisfied. The second condition
+states that the percentage of idle time in the new system cannot
+exceed 10\%.
+\[ p_0 = 1 - \frac{\lambda}{\mu_{\text{new}}} = 1 - \frac{1/40}{1/30} = .25 \]
+The second condition is not satisfied. There is no justification
+for the new toll gate device.
+\end{solution}
+
+% this problem needs to be re-written
+\item \emph{Comparing system configurations.}
+  Pete's Market is a small local grocery store with one checkout counter.
+  Shoppers arrive at the checkout lane according to a Poisson process,
+  with an arrival rate of 15 customers per hour. The checkout service times
+  are distributed Exponential with a service rate of 20 customers per hour.
+  The manager is considering two options for improving service.
+  \begin{compactenum}
+    \item Hire a second person to bag groceries while the cashier is scanning
+      and collecting money from the customer. With this improved single-server
+      operation, the service rate would be increased to 30 customers per hour.
+    \item Hire a second person to operate a second checkout counter. The
+      two-server operation would have a service rate of 20 customers per
+      hour for each server.
+  \end{compactenum}
+  Determine the improvements that would result, consider the
+  relative cost of each option, and make a recommendation to the manager.
+
+\begin{solution}
+\bs Let's look at the average number in the queue $L_Q$ and the
+average time in queue $W_Q$ as metrics to judge improvement in
+system performance. Because the interarrival times and the service
+times are exponentially distributed, we can use the results from
+section 11.2. Before any improvements are made,
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{15^2}{20(20-15)} = 2.25~\text{cust} \]
+and
+\[W_q = \frac{L_q}{\lambda} = \frac{2.25}{15} = .15~\text{hour} = 9~\text{min} \]
+If they add a second person to the existing single checkout
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{15^2}{30(30-15)} = 0.5~\text{cust} \]
+and
+\[W_q = \frac{L_q}{\lambda} = \frac{0.5}{15} = 0.0333~\text{hour} = 2~\text{min} \]
+and if they add a completely separate second checkout then we
+need to use the formulas from section 11.3 for a two-server operation. First,
+\[ P_0 = \frac{1}{\sum_{n=0}^{k-1}\frac{\left(\lambda/\mu\right)^n}{n!} + \frac{\left(\lambda/\mu\right)^k}{k!}\left(\frac{k\mu}{k\mu-\lambda}\right)} \]
+where $k=2$ servers. Then
+\[ L_q = \frac{\left(\lambda/\mu\right)^k\lambda\mu}{(k-1)!(k\mu-\lambda)^2}P_0 \]
+and
+\[W_q = \frac{L_q}{\lambda}  \]
+Plugging values, I got $P_0=0.4545$, $L_q=0.123$, and $W_q=0.0082$ hours or 0.5 minutes.
+Considering the relative improvement and the cost
+of adding a second checkout, I would recommend option a). That is, to
+add a second person to the existing checkout. The average number in
+queue and the average time in queue appear to be acceptable for a
+grocery store.
+\end{solution}
+
+
+\end{enumerate}
