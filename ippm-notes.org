@@ -14,7 +14,7 @@ Decision Problems
 - Games against Nature (Emily)
 - Games against an Opponent (Emily)
 
-Data Analysis and Statistics
+Data Analysis
 - Summarizing Data (R) (Braeden)
 - Visualizing Data (R) (Braeden)
 
