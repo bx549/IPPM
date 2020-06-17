@@ -1570,51 +1570,49 @@ brian.sam           .             8.0000        +INF             .
 % this problem need to be re-written.
 % the idea is that it is a set covering problem.
 \item \emph{A set covering problem.}
-There are six cities in Kilroy County. The county must decide where to build fire
-stations. The county wants to build as few fire stations as possible
-while ensuring that there is at least one fire station within 15 minutes driving
-time of each city. Driving times between cities are shown in the table below.
-Formulate an integer programming problem that will determine how many fire
-stations are required and in which cities they should be located.
+A general merchandise retailer is planning to expand into a new metropolitan area comprised of seven cities. The following table shows the distance (in miles) between each city.
 
 \begin{center}
-\begin{tabular}{l|rrrrrr}
- & \multicolumn{6}{c}{To} \\
-From & City 1 & City 2 & City 3 & City 4 & City 5 & City 6 \\ \hline
-City 1 & 0 & 10 & 20 & 30 & 30 & 20 \\
-City 2 & 10 & 0 & 25 & 35 & 20 & 10 \\
-City 3 & 20 & 25 & 0 & 15 & 30 & 20 \\
-City 4 & 30 & 35 & 15 & 0 & 15 & 25 \\
-City 5 & 30 & 20 & 30 & 15 & 0 & 14 \\
-City 6 & 20 & 10 & 20 & 25 & 14 & 0 \\
-\end{tabular}
+	\begin{tabular}{l|ccccccc}
+		& \multicolumn{7}{c}{To} \\
+		From & City 1 & City 2 & City 3 & City 4 & City 5 & City 6 & City 7\\ \hline
+		City 1 & 0 & 15 & 20 & 38 & 20 & 28 & 22 \\
+		City 2 & 15 & 0 &  5 & 23 & 16 & 12 & 10 \\
+		City 3 & 20 & 5 & 0 & 18 & 12 & 13 & 14 \\
+		City 4 & 38 & 23 & 18 & 0 & 31 & 19 & 27 \\
+		City 5 & 20 & 16 & 12 & 31 & 0 & 7 & 19 \\
+		City 6 & 28 & 12 & 13 & 19 & 7 & 0 & 22 \\
+		City 7 & 22 & 10 & 14 & 27 & 19 & 22 & 0 \\
+	\end{tabular}
 \end{center}
 
-\begin{solution}
-  \bs
-\begin{equation*}
-\text{Let $x_i$} = 
-\begin{cases}
-1 & \text{if a fire station is built in city $i$,}\\
-0 & \text{otherwise.}
-\end{cases}
-\end{equation*}
+The company assumes that customers will only visit a retail location if it is within 15 miles of the city in which the customer lives. Using this information, the company would like to construct the fewest number of stores while ensuring that they can serve every customer in the metropolitan area. Formulate an integer programming model to determine the cities where retail locations should be constructed.
 
-To model the requirement that there is at least one fire station within
-15 minutes of city 1, we require that $x_1 + x_2 \geq 1$. The full
-problem formulation is
-\[
-\begin{array}{lrrrrrrl}
-\textrm{minimize} & \sum_{i=1}^{6} x_i & & & & & & \\
-\textrm{subject to} & & & x_1 & + & x_2 & \geq & 1 \\
- & x_1 & + & x_2 & + & x_6 & \geq & 1 \\
- &     &   & x_3 & + & x_4 & \geq & 1 \\
- & x_3 & + & x_4 & + & x_5 & \geq & 1 \\
- & x_4 & + & x_5 & + & x_6 & \geq & 1 \\
- & x_2 & + & x_5 & + & x_6 & \geq & 1 \\
- \multicolumn{8}{r}{x_i \in \{0,1\} \quad i = 1,\ldots,6}
-\end{array}
-\]
+\begin{solution}
+	\bs
+	\begin{equation*}
+		\text{Let $x_i$} = 
+		\begin{cases}
+			1 & \text{if retail location is constructed in city $i$,}\\
+			0 & \text{otherwise.}
+		\end{cases}
+	\end{equation*}
+	
+	To model the requirement that there is at least one retail location within
+	15 miles of city 1, we require that $x_1 + x_2 \geq 1$. The full
+	problem formulation is
+	\[
+	\begin{array}{lrrrrrrrrrrrrl}
+	\textrm{minimize} & \sum_{i=1}^{7} x_i & & & & & & \\
+	\textrm{subject to} && & & & & & & & x_1 & + & x_2 & \geq & 1 \\
+	& & & x_1 & + & x_2 & + & x_3 & + & x_6 & + & x_7 & \geq & 1 \\ & &  & x_2 & + & x_3 & + & x_5 & + & x_6 & + & x_7 & \geq & 1 \\
+	& &  & & & & & &  &  &  & x_4 & \geq & 1 \\
+	& & & &  & &  & x_3 & + & x_5 & + & x_6 & \geq & 1 \\
+	& & & &  & x_2 & + & x_3 & + & x_5 & + & x_6 & \geq & 1 \\
+	& & & & & & & x_2 & + & x_3 & + & x_7 & \geq & 1 \\
+	\multicolumn{14}{r}{x_i \in \{0,1\} \quad i = 1,\ldots,7}
+	\end{array}
+	\]
 \end{solution}
 
 % integer programming with a fixed charge
