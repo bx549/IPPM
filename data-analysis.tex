@@ -1,0 +1,95 @@
+\chapter{Data Analysis}
+\label{data-analysis}
+
+
+\section{Descriptive Statistics}
+
+Point estimate of a population proportion. Consider the
+  pizza delivery data that is available on the class Moodle
+  page. Construct a point estimate of the probability that the amount
+  of tips received in a shift is greater than \$60. What is the
+  standard error of your point estimate? You can do the calculations
+  by hand or use the software of your choice. If you use software, you
+  can use it in any way you like.  For example, I used R as a
+  calculator to simply help with the required computations.
+  
+\begin{Verbatim}
+pizza <- read.table("pizza.txt", header=TRUE)
+attach(pizza)
+x <- sum(Tips > 60)
+n <- length(Tips)
+
+# follow the formula for the point estimate and the standard
+# error of a sample proportion
+phat <- x/n
+se <- sqrt((phat*(1-phat))/n)
+
+> phat
+[1] 0.2413793
+> se
+[1] 0.0212373
+\end{Verbatim}
+
+
+\section{Descriptive Graphics}
+
+\section{Exercises}
+
+\begin{enumerate}
+\subsubsection*{Descriptive Statistics}
+
+%re-written
+\item \emph{Point estimate of a population mean.} Suppose the
+  following data points are a sample of a golfer's scores over his last 20 rounds.
+  Construct a point estimate of his average score. What is the standard error of your point estimate? You can do
+  this problem either by hand or use the software of your choice. 
+\begin{verbatim}
+73,69,65,70,67,67,78,72,74,71,70,69,70,67,68,73,70,77,72,69
+\end{verbatim}
+  
+% this problem needs to be re-written
+\item \emph{Maximum error when estimating a proportion.} In a poll a
+  random sample of \num{1400} residents are asked whether they support
+  or oppose a proposal. What is the largest possible value of the
+  standard error of the estimate of the overall proportion in favor of
+  the proposal?
+
+\begin{solution}
+  \bs Let $\hat{p}$ be the estimate of the true overall proportion of
+  people in favor of the proposal. An unbiased point estimate for $p$
+  is
+\[ \hat{p} = \frac{X}{1400} \]
+where $X$ is the number of people who responded to the poll that they
+favor the proposal. $X$ follows a Binomial distribution. Now,
+\begin{align*}
+  \text{Var}(\hat{p}) = \frac{1}{n^2}\text{Var}(X) &= \frac{1}{n^2}np(1-p) \\
+                                                   &= \frac{p(1-p)}{n} \\
+                                                   &= \frac{p(1-p)}{1400}
+\end{align*}
+The variance (and hence the standard error) is maximum when the
+quantity $p(1-p)$ is maximum, or when $p=1/2$. Using $p=1/2$ and
+taking the square root we get a maximum standard error of
+\[ \sqrt{\frac{.5(1-.5)}{1400}} \approx 0.013 \]
+
+\end{solution}
+
+\subsubsection*{Descriptive Graphics}
+
+% this problem is OK.
+\item \emph{College students and driving speed.} The file
+  \texttt{speed\_gender\_height.csv} contains 1,325 observations on
+  gender, height, and the fastest speed ever driven (in mph) for a
+  sample of college students.
+
+\begin{enumerate}
+\item Create a boxplot of speed by gender. That is to say, make one
+  boxplot for males and one boxplot for females, but put them
+  side-by-side on the same plot.
+\item Make an x--y plot with height on the x--axis and speed on the
+  y--axis. Color the plotted points according to gender. Place a
+  legend that shows the color associations. Another option is to use
+  different plotting symbols rather than color to distinguish males
+  and females.
+\end{enumerate}
+
+\end{enumerate}
