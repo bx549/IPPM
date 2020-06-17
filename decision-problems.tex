@@ -89,7 +89,6 @@ worth of umbrellas and
 worth of sunglasses so that he enjoys a steady profit of \$72.22.
 
 \section{Exercises}
-\begin{enumerate}
 
 % This exercise is OK
 \item \emph{Rules for decision--making under ignorance.}
@@ -320,7 +319,7 @@ planning to burn is the best decision.
 <<<<<<< Updated upstream
 =======
 % Emily - expected value and sensitivity analysis
-\item \emph{Decisions under risk and sensitivity analysis.} The employees at a popular outdoor furniture company predict that their sales will double this coming year. The company is already producing the maximum amount of furniture possible in their current facility. They are considering building another manufacturing facility to be able to meet the predicted increase in demand. The facility will cost \$500,000 to build. If the demand doubles as predicted, their income will increase by \$800,000. If the demand only slightly increases, their income will increase by \$250,000. If the facility is not built, the company will lose \$50,000 because of the time workers will have to spend talking to upset customers to explain why furniture pieces are out-of-stock. The change in demand will be determined by the weather that year because more people want to buy outdoor furniture if they can enjoy the good weather outside. There is a 0.55 chance of good weather, which will result in a double in demand. There is a 0.45 chance of poor weather, which will result in only a slight increase in demand.
+\item \emph {Decisions under risk and sensitivity analysis.} The employees at a popular outdoor furniture company predict that their sales will double this  coming year. The company is already producing the maximum amount of furniture possible in their current facility. They are considering building another manufacturing facility to be able to meet the predicted increase in demand. The facility will cost \$500,000 to build. If the demand doubles as predicted, their income will increase by \$800,000. If the demand only slightly increases, their income will increase by \$250,000. If the facility is not built, the company will lose \$50,000 because of the time workers will have to spend talking to upset customers to explain why furniture pieces are out-of-stock. The change in demand will be determined by the weather that year because more people want to buy outdoor furniture if they can enjoy the good weather outside. There is a 0.55 chance of good weather, which will result in a double in demand. There is a 0.45 chance of poor weather, which will result in only a slight increase in demand.
 
 \begin{enumerate}
 	\item Should the facility by built? Use expected value to make your decision.
@@ -496,6 +495,137 @@ get, on average
 \]
 \end{solution}
 
+<<<<<<< Updated upstream
+=======
+% written by Emily to replace Goldsen and Kershaw battle of words
+\item \emph{A two-person zero-sum game.}
+  A professional football player believes he should be paid more than his current contract allows for. His two options are to play in the upcoming season or not play in the upcoming season and hope the team will negotiate with him. The team knows that he is a valuable player but does not want to have to pay him more or go through the process of negotiations. The team's has come up with three options to deal with the situation: negotiate, refuse to negotiate, or offer to double the player's salary with no other negotiations. 
+  If the player plays and the team does not negotiate, the player will make his regular salary of \$1\ million but  
+  If the player does not play and the team negotiates, the player will
+  If the player 
+  
+  Formulate the 2-by-3 decision matrix in terms of changes to the player's salary. 
+  Determine the best strategy for the player and the team. 
+  Is this a fair game?
+  
+  % need to edit solution
+  \begin{solution}
+  	\bs The game is
+  	
+  	\begingroup
+  	\setlength{\tabcolsep}{9pt}
+  	\renewcommand*{\arraystretch}{2}
+  	\begin{tabularx}{4in}{YYYYY}
+  		& & \multicolumn{3}{c}{Kershaw} \\
+  		& & \emph{f} & \emph{t} & \emph{x} \\ \cline{3-5}
+  		\multirow{2}{.5in}{Goldsen} & \gtcol{\emph{a}} & \gtcol{-2} & \gtcol{1} & \gtcol{4} \\ \cline{3-5}
+  		& \gtcol{\emph{i}} & \gtcol{1} & \gtcol{4} & \gtcol{-2} \\ \cline{3-5}
+  	\end{tabularx}
+  	\endgroup
+  	\vspace{.1in}
+  	
+  	Note that there is no saddle point. Also note that Kershaw's strategy
+  	of \emph{t} is dominated by \emph{f}, so there is no reason that 
+  	he would choose \emph{t}. The reduced game is
+  	
+  	\begingroup
+  	\setlength{\tabcolsep}{9pt}
+  	\renewcommand*{\arraystretch}{2}
+  	\begin{tabularx}{4in}{YYYY}
+  		& & \multicolumn{2}{c}{Kershaw} \\
+  		& & \emph{f} & \emph{x} \\ \cline{3-4}
+  		\multirow{2}{.5in}{Goldsen} & \gtcol{\emph{a}} & \gtcol{-2} & \gtcol{4} \\ \cline{3-4}
+  		& \gtcol{\emph{i}} & \gtcol{1} & \gtcol{-2} \\ \cline{3-4}
+  	\end{tabularx}
+  	\vspace{.1in}
+  	\endgroup
+  	
+  	Using our scheme outlined in class, Goldsen should play a mixture of
+  	\emph{a} and \emph{i} according to the odds 3:6 (or equivalenty
+  	1:2). Kershaw should mix \emph{f} and \emph{x} according to the odds
+  	6:3 (or equivalently 2:1). The value of the game is
+  	\[
+  	\frac{1 \times (-2) + 2 \times 1}{3} = 0,
+  	\]
+  	and so this is a fair game. If Kershaw uses \emph{t}, Goldsen will 
+  	get, on average
+  	\[
+  	\frac{1 \times 1 + 2 \times 4}{3} = \$3.
+  	\]
+  \end{solution}
+  
+
+% I like this problem but it was mostly taken from another book, so
+% needs to be re-written. I added the last part of the question
+% ... the idea that as long as one player sticks to the optimal
+% strategy, then it makes no difference what the other player does. i
+% would like to keep that idea.
+\item \emph{Cops and Robbers.} A police officer must decide whether
+  to patrol the streets or hang out at the coffee shop.
+  Simultaneously, a robber must decide whether to prowl the streets or
+  stay in his hideaway. If the police officer patrols and the robber
+  prowls, then the officer will surely make an arrest with a payoff of
+  10 for the officer's reputation. If the officer is in the coffee
+  shop while the robber prowls, the payoff (in the form of damage to
+  the officer's reputation) is -1. If the robber stays hidden, then
+  the payoff to the officer is zero to patrol and 5 to hang out
+  in the coffee shop.
+\begin{enumerate}
+\item  Formulate this decision problem as a two--person
+  zero--sum game and determine the optimal strategies for the
+  officer and robber.
+\item Compute the value of the game. \label{val}
+\item Suppose that the robber, who did not take a course in game
+  theory, has a police radio. He overhears the officer, who did well
+  in her course on game theory, telling her partner of her mixed
+  strategy. That is to say, the robber knows the probabilities with
+  which the officer will patrol or get coffee (but he does not know
+  which pure strategy the officer will actually choose). The robber
+  thinks ``Hmmm. That officer is more likely to get coffee than to
+  patrol. Since I know this, I will prowl the streets and my chances
+  of not getting caught are improved.'' Is the robber's argument
+  valid? In other words, does the value of the game change if the
+  robber knows the officer's mixing probabilities (and the officer
+  sticks to them)? \label{knowledge}
+\end{enumerate}
+
+\begin{solution}
+\bs
+The game is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{3.25in}{YYYY}
+& & \multicolumn{2}{c}{Robber} \\
+& & prowl & hide \\ \cline{3-4}
+\multirow{2}{.5in}{Officer} & \gtcol{patrol} & \gtcol{10} & \gtcol{0} \\ \cline{3-4}
+& \gtcol{coffee} & \gtcol{-1} & \gtcol{5} \\ \cline{3-4}
+\end{tabularx}
+\endgroup
+\vspace{.1in}
+
+Note that there is no saddle point, so the best strategy
+is a mixed one. According to our scheme given in class, the
+officer's best strategy is to randomize between patrolling and getting
+coffee in the ratio 6 to 10, while the robber should mix his
+strategy of prowling/hiding in the ratio 5 to 11. The corresponding
+probabilities are $(3/8,\,5/8)$ for the officer and $(5/16,\,11/16)$
+for the robber.
+
+Part \ref{val}. To compute the value of the game, note that
+when the officer patrols, she receives a payoff of 10 with
+probability 5/16 and payoff of zero with probability 11/16.
+The value of the game is
+\[ \frac{5 \times 10 + 11 \times 0}{16} = \frac{50}{16} = 3.125 \]
+On average the officer comes out ahead.
+
+Part \ref{knowledge}, the robber's thought process is not valid.
+The value of the game does not change as long as one player
+sticks to the optimal mixed strategy.
+\end{solution}
+
+>>>>>>> Stashed changes
 % written by Emily to replace cops and robbers
 \item \emph{Marketing strategies.} Two peanut butter companies,
   Doodle's and Lola's, are deciding on their marketing strategy for
