@@ -2,6 +2,7 @@
 
 \section{Games Against Nature}
 
+% this is a test
 % this portion will come later in the section.
 % we explain how to use Baye's formula to update a belief.
 % need to change the problem context and add explanatory prose.
@@ -89,7 +90,7 @@ worth of sunglasses so that he enjoys a steady profit of \$72.22.
 
 \section{Exercises}
 \begin{enumerate}
-
+	
 % This exercise is OK
 \item \emph{Rules for decision--making under ignorance.}
   You have the opportunity to go on a
@@ -316,6 +317,66 @@ Unless the probability of poor weather is greater than .68,
 planning to burn is the best decision. 
 \end{solution}
 
+=======
+% Emily - expected value and sensitivity analysis
+\item \emph {Decisions under risk and sensitivity analysis.} 
+	The employees at a popular outdoor furniture company predict that their 
+	sales will double this coming year. The company is already producing the 
+	maximum amount of furniture possible in their current facility. They are 
+	considering building another manufacturing facility to be able to meet the 
+	predicted increase in demand. The facility will cost \$500,000 to build. If 
+	the demand doubles as predicted, their income will increase by \$800,000. 
+	If the demand only slightly increases, their income will increase by \$250,000. 
+	If the facility is not built, the company will lose \$50,000 because of the 
+	time workers will have to spend talking to upset customers to explain why 
+	furniture pieces are out-of-stock. The change in demand will be determined by 
+	the weather that year because more people want to buy outdoor furniture if they 
+	can enjoy the good weather outside. There is a 0.55 chance of good weather, 
+	which will result in a double in demand. There is a 0.45 chance of poor 
+	weather, which will result in only a slight increase in demand.
+
+\begin{enumerate}
+	\item Should the facility by built? Use expected value to make your decision.
+	
+	\item How does the decision change with the probability of good/poor
+	weather? Perform a sensitivity analysis to answer.
+	
+\end{enumerate}
+
+\begin{solution}
+	\bs The decision table for this problem is
+	\begin{center}
+		\begin{tabular}{rrr}
+			& $\frac{55}{100}$ & $\frac{45}{100}$ \\
+			& good weather & poor weather \\ \hline
+			build facility & \$300,000 & -\$250,000 \\
+			do not build & -\$50,000 & -\$50,000
+		\end{tabular}
+	\end{center}
+
+The expected payoff of each decision is
+\begin{align*}
+&E(\text{do not build}) = -\$50,000 \\
+&E(\text{build}) = \left(\frac{55}{100}\right)(\$300,000)
++ \left(\frac{45}{100}\right)(-\$250,000) = \$52,500
+\end{align*}
+The company should build the facility. As the probability of poor weather increases, the expected value of building the new facility decreases. 
+Let $p$ represent the probability of poor weather.
+\begin{align*}
+E(\text{build}) &= (1-p)300,000 + p(-250,000) \\
+&= 300,000 - 550,000p
+\end{align*}
+The company should build that facility as long as
+\begin{align*}
+E(\text{build}) &\geq E(\text{don't build}) \\
+300,000 - 550,000p &\geq -50,000 \\
+-550,0000p &\geq -350,000 \\
+p &\leq \frac{7}{11} \approx .64
+\end{align*}
+Building the facility is the best decision unless the probability of poor weather is greater than .64.	
+
+\end{solution}
+
 % written by Emily
 \item \emph{Elimination of dominated strategies.}
 Two street vendors, A and B, are located near a major tourist attraction. 
@@ -447,6 +508,76 @@ get, on average
 \]
 \end{solution}
 
+% written by Emily to replace Goldsen and Kershaw battle of words
+\item \emph{A two-person zero-sum game.}
+   A professional football player believes that the team he plays for should be allocating more money to the salaries of the players, so he wants his contract
+   to be changed to pay him more. His two options are to play in the upcoming season or not play in the upcoming season and hope the team will negotiate with him. The team knows that he is a valuable player but does not want to pay him more or go through the process of negotiations. The team has come up with three options to deal with the situation: negotiate, refuse to negotiate and play the season without him, or increase the player's salary by a set amount with no other negotiations. Keep in mind that the player wants to maximize his salary, and the team wants to minimize their costs, which means keep salaries as low as possible. The payouts are as follows (in millions of dollars):
+  
+  
+  \begin{tabular}{l}
+  	If the player plays and the team does not negotiate, the player's \\
+  	salary will not change. \\
+  	If the player does not play and the team does not negotiate, the \\
+  	player will find a different job as a broadcaster for a pay\\
+  	increase of 1 because he is such a well-known person. This is \\
+  	bad publicity for the team and hurts their jersey sales. \\
+   	If the player plays but the team still negotiates, the \\
+   	player will end up with a pay increase of 3. \\
+   	If the player had chosen to not play and the team negotiates, \\
+   	the negotiations will go poorly and the player will end up \\
+   	kicked off the team and having to deal with costs related to \\
+   	poor publicity. \\
+    If the team decides to set an increase with no negotiations, \\
+    the player will end up with a positive 2 no matter what he \\
+    chooses to do.	
+  \end{tabular}
+
+  
+  Formulate the 2-by-3 decision matrix in terms of changes to the player's salary. 
+  Determine the best strategy for the player and for the team. 
+  Who is most likely to come out ahead in this situation?
+  
+  \begin{solution}
+  	\bs The game is
+  	
+  	\begingroup
+  	\setlength{\tabcolsep}{9pt}
+  	\renewcommand*{\arraystretch}{2}
+  	\begin{tabularx}{4in}{YYYYY}
+  		& & \multicolumn{3}{c}{Team} \\
+  		& & \emph{negotiate} & \emph{don't negotiate} & \emph{double salary} \\ \cline{3-5}
+  		\multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} & \gtcol{2} \\ \cline{3-5}
+  		& \gtcol{\emph{don't play}} & \gtcol{-2} & \gtcol{1} & \gtcol{2} \\ \cline{3-5}
+  	\end{tabularx}
+  	\endgroup
+  	\vspace{.1in}
+  	
+  	There is no saddle point in this game. The team's strategy
+  	of a set increase is dominated by the strategy to not negotiate, so there is no financial reason that 
+  	they would chose to offer a pre-determined increase without negotiations. The reduced game is
+  	
+  	\begingroup
+  	\setlength{\tabcolsep}{9pt}
+  	\renewcommand*{\arraystretch}{2}
+  	\begin{tabularx}{4in}{YYYY}
+  		& & \multicolumn{2}{c}{Team} \\
+  		& & {negotiate} & {don't negotiate} \\ \cline{3-4}
+  		\multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} \\ \cline{3-4}
+  		& \gtcol{don't play} & \gtcol{-2} & \gtcol{1} \\ \cline{3-4}
+  	\end{tabularx}
+  	\vspace{.1in}
+  	\endgroup
+  	
+  	Using the scheme outlined in class, the player should play or not play according to the odds 1:1. The team should negotiate or not negotiate according to the odds 1:5. The value of the game is 
+  	\[
+  	\frac{1 \times (3) + 1 \times (-2)}{2} = 1/2,
+  	\]
+  	so the player is more likely to come out ahead. 
+
+  
+  \end{solution}
+  
+
 % I like this problem but it was mostly taken from another book, so
 % needs to be re-written. I added the last part of the question
 % ... the idea that as long as one player sticks to the optimal
@@ -517,46 +648,116 @@ The value of the game does not change as long as one player
 sticks to the optimal mixed strategy.
 \end{solution}
 
-% this problem desperately needs to be re-written. Something
-% more interesting. The main idea is that the payoffs are
-% probabilities are probabilities.
-\item \emph{The silver dollar.}
-  A game with two players and a silver dollar. Player 2
-  chooses one of two rooms in which to hide a silver dollar. Then,
-  player 1, not knowing which room contains the dollar, selects one of
-  the rooms to search. However, the search is not always
-  successful. In fact, if the dollar is in room \#1 and player 1
-  searches there, then (by a chance move) he has only probability 1/2
-  of finding it, and if the dollar is in room \#2 and player 1
-  searches there, then he has only probability 1/3 of finding it. Of
-  course, if he searches the wrong room, he certainly won’t find
-  it. If he does find the coin, he keeps it; otherwise the dollar is
-  returned to player 2.  Formulate this game as a two-person, zero-sum
-  game. Player 1 is the row player and player 2 is the column
-  player. Find the optimal strategies for both players. \label{sda}
+>>>>>>> Stashed changes
+% written by Emily to replace cops and robbers
+\item \emph{Marketing strategies.} Two peanut butter companies,
+  Doodle's and Lola's, are deciding on their marketing strategy for
+  the upcoming year. They know that they are each other's main
+  competitor and that the demand for peanut butter is relatively
+  constant, so a gain in sales for Doodle's is a loss of sales for
+  Lola's. Each company has their standard packaging for peanut butter
+  and a new innovative packaging for peanut butter. Both companies
+  may produce and sell both types of packaging.  If both
+  companies choose to market only their innovative packaging, Doodle's
+  will gain an extra 2\%\ of the market's sales.  If both companies
+  choose to market their standard packaging, Doodle's will loose 2\%\
+  of the market.  If Doodle's markets their innovative product and
+  Lola's markets their standard product, Doodle's will gain 10\%\
+  of the market.  If Lola's markets their innovative product and
+  Doodle's markets their standard product, Doodle's will gain 8\%\
+  of the market.
+ 
+\begin{enumerate}
+\item Formulate this decision problem as a two-person zero-sum game
+  and determine the optimal marketing strategy for each company. Note
+  that they are able to change their advertising throughout the year,
+  so a mixed strategy is possible.
+\item Compute the value of the game. \label{val}
+\item Suppose that a member of the Doodle's marketing team quits their
+  job and goes to work for the Lola's. She tells her
+  new co-workers about the strategy that Doodle's is planning to
+  use. She is able to tell them the probabilities with which Doodle's
+  will market their standard product and their innovative product. The
+  Lola's marketing team now knows that Doodle's is more likely to
+  market the innovative product than the standard product. Armed with this
+  knowledge, they choose to only market their innovative product. Is
+  Lola's argument valid? In other words, does the value of the game
+  change if the Lola's marketing team knows the Doodle's marketing
+  team's mixing probabilities?
+\label{knowledge}
+\end{enumerate}
 
 \begin{solution}
-\bs
-The strategic game is constructed by noticing that player 1 has
-two possible actions: search room 1 or search room 2. Similarly
-player 2 also has two actions: hide the dollar in room 1 or
-hide the dollar in room 2. The game is
+	\bs
+	The game is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{3.25in}{YYYY}
+& & \multicolumn{2}{c}{Lola's} \\
+& & standard & innovative \\ \cline{3-4}
+\multirow{2}{.5in}{Doodle's} & \gtcol{standard} & \gtcol{-2} & \gtcol{8} \\ \cline{3-4}
+& \gtcol{innovative} & \gtcol{10} & \gtcol{2} \\ \cline{3-4}
+\end{tabularx}
+\endgroup
+\vspace{.1in}
+
+Note that there is no saddle point, so the best strategy is mixed.
+Doodle's should mix the strategies standard and innovative
+in the ratio 4 to 5, while Lola's should mix their strategies of
+standard to innovative in the ratio 1 to 2.  The corresponding
+probabilities are $(4/9,\,5/9)$ for Doodle's and $(1/3,\,2/3)$ for
+Lola's.
+
+To compute the value of the game, note that when the
+Doodle's markets the standard product, they receive a payoff of -2
+with probability 1/3 and payoff of 8 with probability 2/3.  The value
+of the game is
+\[ \frac{1 \times -2 + 2 \times 8}{3} = \frac{14}{3} = 4.67 \]
+On average Doodle's comes out ahead.
+
+Regarding part \ref{knowledge}), the team's thought process is not
+valid.  As long as one player sticks to the optimal mixed strategy,
+the value of the game does not change.
+\end{solution}
+
+% written by Emily to replace the silver dollar
+\item \emph{The birthday gift.} Liam's birthday is coming up and he
+  can't wait to see what he will get as a gift. Liam's parents want
+  the gift to be a surprise, but they always hide gifts in either the
+  kitchen or the basement. Liam plans to search for the gift when his
+  parents are busy, but he knows that even if he searches the room
+  that contains the gift, he may not find it. If the gift is hidden in
+  the kitchen and Liam searches the kitchen, he will find the gift
+  with probability 0.75.  If the gift in hidden in the basement and he
+  searches the basement, then he will find it with probability 0.5.
+  If he searches the wrong room, there is no way he will find the
+  gift. Assume that the payoff to Liam for finding the gift early is
+  the same as the payoff to the parents of keeping the gift a
+  surprise.  Formulate this game as a two-person, zero-sum game. Liam
+  is the row player and his parents are the column player. Find the
+  optimal strategies for both players. \label{sda}
+
+\begin{solution}
+  \bs Liam has two possible actions for this game: search the kitchen
+  or search the basement. His parents also have two options: hide the
+  gift in the kitchen or hide the gift in the basement.  The game is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
 \renewcommand*{\arraystretch}{2}
 \begin{tabularx}{4in}{YYYY}
-& & \multicolumn{2}{c}{player 2} \\
-& & hide 1 & hide 2 \\ \cline{3-4}
-\multirow{2}{.5in}{player 1} & \gtcol{search 1} & \gtcol{1/2} & \gtcol{0} \\ \cline{3-4}
-& \gtcol{search 2} & \gtcol{0} & \gtcol{1/3} \\ \cline{3-4}
+& & \multicolumn{2}{c}{Parents} \\
+& & hide in kitchen & hide in basement \\ \cline{3-4}
+\multirow{2}{.5in}{Liam} & \gtcol{search kitchen} & \gtcol{3/4} & \gtcol{0} \\ \cline{3-4}
+& \gtcol{search basement} & \gtcol{0} & \gtcol{1/2} \\ \cline{3-4}
 \end{tabularx}
 \endgroup
 \vspace{.1in}
 
-and the optimal strategy is the same for both players. That is, each
+and the optimal strategy is the same for both players. Each
 should play a mixture of $(2/5,~3/5)$.
-
 \end{solution}
 
 \end{enumerate}
