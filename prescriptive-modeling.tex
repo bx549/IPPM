@@ -1622,63 +1622,52 @@ The company assumes that customers will only visit a retail location if it is wi
 % types are mountain bike, road bike, fat bike, each requires a different machine.
 % resources are labor and material (e.g. aluminum.)
 \item \emph{A problem with a fixed charge.}
-Subzero clothing company is capable of manufacturing three types of clothing:
-vests, jackets, and pants. Each type of clothing requires the appropriate
-machinery. This machinery can be rented at the following rates: vest machinery
-costs \$200 per week, jacket machinery costs \$150 per week, and pants
-machinery costs \$100 per week. Each type of clothing also requires the
-amounts of labor and material shown in the table below. Each week 150 hours
-of labor and 160 square yards of material are available. The per-unit variable
-cost and the per-unit selling price of each clothing type are shown in the table. 
-Assume that Subzero can sell all of the clothing that it manufactures.
-Also, note that the cost of renting machinery for a particular clothing
-type is only incurred if that clothing type is produced.
-Formulate an integer programming problem to determine the production levels
-of each clothing type so that overall profit is maximized.
+A bicycle manufacturing company can produce three types of bikes: mountain bikes, road bikes, and fat bikes. The company rents specific machinery for producing each type of bike. It costs \$150 each week to rent machinery for mountain bikes, \$250 each week to rent machinery for road bikes, and \$300 each week to rent machinery for fat bikes. A maximum of 120 hours of labor and 11,000 pounds of material (e.g. aluminum) are available each week for production. The material and labor requirements to produce one unit of each type of bike are shown in the table below. The unit variable cost and the unit selling price for each type of bike are also shown. 
 
 \vspace{.1in}
-\begin{tabulary}{4.5in}{LCCCC}
-Clothing type
-& Labor (hours) 
-& Material (sq. yds) 
-& Sale price 
-& Variable cost \\ \hline
-Vests   & 3 & 4 & \$12 & \$6 \\
-Jackets & 2 & 3 & \$8 & \$4 \\
-Pants   & 6 & 4 & \$15 & \$8
+\begin{tabulary}{5.75in}{LCCCC}
+	
+	& Labor (hours) 
+	& Material (pounds) 
+	& Variable cost 
+	& Selling price \\ \hline
+	Mountain bike & 2.5 & 28 & \$350 & \$550 \\
+	Road bike & 7 & 25 & \$420 & \$800 \\
+	Fat bike & 4.5 & 36 & \$680 & \$1,200
 \end{tabulary}
 \vspace{.1in}
 
-\begin{solution}
-  \bs
-Let the decision variables $x_1,x_2,x_3$ be the number of vests, jackets, and 
-pants, respectively, to produce. Because the machinery rental costs are only
-incurred if clothing of that particular type is produced, this is a fixed-charge
-problem. Introduce auxiliary binary variables to model the fixed charge.
-\[
-\text{Let $y_i$} = 
-\begin{cases}
-1 & \text{if $x_i > 0$} \\
-0 & \text{otherwise}
-\end{cases}
-\quad i = 1,2,3.
-\]
-The mathematical formulation of the Integer Programming problem is
-\[
-\begin{array}{lrrrrrrl}
-\textrm{maximize} &   & 12x_1 & + & 8x_2 & + & 15x_3 & \\
-                  & - & 6x_1  & - & 4x_2 & - & 8x_3  & \\
-                  & - & 200y_1& - & 150y_2&- & 100y_3& \\
-& & & & & & &\\
-\textrm{subject to} & 3x_1 & + & 2x_2 & + & 6x_3 & \leq & 150 \\
-                    & 4x_1 & + & 3x_2 & + & 4x_3 & \leq & 160 \\
-& & & & & x_1 & \leq & My_1 \\
-& & & & & x_2 & \leq & My_2 \\
-& & & & & x_3 & \leq & My_3 \\
-\end{array}
-\]
-where $M$ is a large number, $x_i \geq 0$, $x_i$ are integer-valued, 
-$y_i \in \{0,1\}$, and $i = 1,2,3$.
-\end{solution}
+The machinery needed to produce a specific type of bike is only rented if that type of bike is produced, and all bikes produced are sold. Formulate a mixed integer linear programing problem to determine how many mountain bikes, road bikes, and fat bikes should be produced each week to maximize profit. 
 
+\begin{solution}
+	\bs
+	Let the decision variables $x_1,x_2,x_3$ be the number of mountain bikes, road bikes, and 
+	fat bikes, respectively, to produce. Because the machinery rental costs are only
+	incurred if bikes of that particular type is produced, this is a fixed-charge
+	problem. Introduce auxiliary binary variables to model the fixed charge.
+	\[
+	\text{Let $y_i$} = 
+	\begin{cases}
+	1 & \text{if $x_i > 0$} \\
+	0 & \text{otherwise}
+	\end{cases}
+	\quad i = 1,2,3.
+	\]
+	The mathematical formulation of the Integer Programming problem is
+	\[
+	\begin{array}{lrrrrrrl}
+	\textrm{maximize} &   & 550x_1 & + & 800x_2 & + & 1,200x_3 & \\
+	& - & 350x_1  & - & 420x_2 & - & 680x_3  & \\
+	& - & 150y_1& - & 250y_2&- & 300y_3& \\
+	& & & & & & &\\
+	\textrm{subject to} & 2.5x_1 & + & 7x_2 & + & 4.5x_3 & \leq & 120 \\
+	& 28x_1 & + & 25x_2 & + & 36x_3 & \leq & 11,000 \\
+	& & & & & x_1 & \leq & My_1 \\
+	& & & & & x_2 & \leq & My_2 \\
+	& & & & & x_3 & \leq & My_3 \\
+	\end{array}
+	\]
+	where $M$ is a large number, $x_i \geq 0$, $x_i$ are integer-valued, 
+	$y_i \in \{0,1\}$, and $i = 1,2,3$.
+\end{solution}
 \end{enumerate}
