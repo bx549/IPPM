@@ -316,7 +316,6 @@ Unless the probability of poor weather is greater than .68,
 planning to burn is the best decision. 
 \end{solution}
 
-<<<<<<< Updated upstream
 =======
 % Emily - expected value and sensitivity analysis
 \item \emph {Decisions under risk and sensitivity analysis.} The employees at a popular outdoor furniture company predict that their sales will double this  coming year. The company is already producing the maximum amount of furniture possible in their current facility. They are considering building another manufacturing facility to be able to meet the predicted increase in demand. The facility will cost \$500,000 to build. If the demand doubles as predicted, their income will increase by \$800,000. If the demand only slightly increases, their income will increase by \$250,000. If the facility is not built, the company will lose \$50,000 because of the time workers will have to spend talking to upset customers to explain why furniture pieces are out-of-stock. The change in demand will be determined by the weather that year because more people want to buy outdoor furniture if they can enjoy the good weather outside. There is a 0.55 chance of good weather, which will result in a double in demand. There is a 0.45 chance of poor weather, which will result in only a slight increase in demand.
@@ -363,7 +362,6 @@ Building the facility is the best decision unless the probability of poor weathe
 
 \end{solution}
 
->>>>>>> Stashed changes
 % written by Emily
 \item \emph{Elimination of dominated strategies.}
 Two street vendors, A and B, are located near a major tourist attraction. 
@@ -499,16 +497,16 @@ get, on average
 =======
 % written by Emily to replace Goldsen and Kershaw battle of words
 \item \emph{A two-person zero-sum game.}
-  A professional football player believes he should be paid more than his current contract allows for. His two options are to play in the upcoming season or not play in the upcoming season and hope the team will negotiate with him. The team knows that he is a valuable player but does not want to have to pay him more or go through the process of negotiations. The team has come up with three options to deal with the situation: negotiate, refuse to negotiate, or offer to double the player's salary with no other negotiations. 
+  A professional football player believes he should be paid more than his current contract allows for. His two options are to play in the upcoming season or not play in the upcoming season and hope the team will negotiate with him. The team knows that he is a valuable player but does not want to pay him more or go through the process of negotiations. The team has come up with three options to deal with the situation: negotiate, refuse to negotiate, or double the player's salary with no other negotiations. The player's current salary is \$1\ million per year. Keep in mind that the player wants to maximize his salary, and the team wants to minimize their costs, which means keep salaries as low as possible.
+  
   If the player plays and the team does not negotiate, the player's salary will not change. 
-  If the player does not play and the team does not negotiate, the player will lose out on his regular salary of \$2\ million.
-  If the player plays and the team negotiates, he will end up with a \$1\ million pay increase.
-  If the player does not play but the team was willing to negotiate, the player would miss out on the \$2\ he would have made if he had played.
-  -If the player plays and the salary is doubled for players that played, he would have made an extra \$1\ million. 
+  If the player does not play and the team does not negotiate, the player will lose out on his regular salary of \$1\ million.
+  If the team negotiates, the player will end up with a \$2\ million pay increase. If the player had chosen to not play, he would immediately return to the team and still get the pay increase.
+  If the player plays and his salary is doubled, he will make an additional \$1\ million. If he does not play and the team decides to double his salary, he will not return to the team and will lose out on \$2\ million. 
   
   Formulate the 2-by-3 decision matrix in terms of changes to the player's salary. 
   Determine the best strategy for the player and the team. 
-  Is this a fair game?
+  Is this a request by the player?
   
   % need to edit solution
   \begin{solution}
@@ -518,26 +516,26 @@ get, on average
   	\setlength{\tabcolsep}{9pt}
   	\renewcommand*{\arraystretch}{2}
   	\begin{tabularx}{4in}{YYYYY}
-  		& & \multicolumn{3}{c}{Kershaw} \\
-  		& & \emph{f} & \emph{t} & \emph{x} \\ \cline{3-5}
-  		\multirow{2}{.5in}{Goldsen} & \gtcol{\emph{a}} & \gtcol{-2} & \gtcol{1} & \gtcol{4} \\ \cline{3-5}
-  		& \gtcol{\emph{i}} & \gtcol{1} & \gtcol{4} & \gtcol{-2} \\ \cline{3-5}
+  		& & \multicolumn{3}{c}{Team} \\
+  		& & \emph{negotiate} & \emph{don't negotiate} & \emph{double salary} \\ \cline{3-5}
+  		\multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{2} & \gtcol{0} & \gtcol{1} \\ \cline{3-5}
+  		& \gtcol{\emph{don't play}} & \gtcol{2} & \gtcol{-1} & \gtcol{-2} \\ \cline{3-5}
   	\end{tabularx}
   	\endgroup
   	\vspace{.1in}
   	
-  	Note that there is no saddle point. Also note that Kershaw's strategy
-  	of \emph{t} is dominated by \emph{f}, so there is no reason that 
-  	he would choose \emph{t}. The reduced game is
+  	There is no saddle point in this game. The team's strategy
+  	of "negotiate" is dominated by both "don't negotiate" and "double salary", so there is no reason that 
+  	they would chose to negotiate. The reduced game is
   	
   	\begingroup
   	\setlength{\tabcolsep}{9pt}
   	\renewcommand*{\arraystretch}{2}
   	\begin{tabularx}{4in}{YYYY}
-  		& & \multicolumn{2}{c}{Kershaw} \\
-  		& & \emph{f} & \emph{x} \\ \cline{3-4}
-  		\multirow{2}{.5in}{Goldsen} & \gtcol{\emph{a}} & \gtcol{-2} & \gtcol{4} \\ \cline{3-4}
-  		& \gtcol{\emph{i}} & \gtcol{1} & \gtcol{-2} \\ \cline{3-4}
+  		& & \multicolumn{2}{c}{Team} \\
+  		& & {don't negotiate} & {double salary} \\ \cline{3-4}
+  		\multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{0} & \gtcol{1} \\ \cline{3-4}
+  		& \gtcol{don't play} & \gtcol{-1} & \gtcol{-2} \\ \cline{3-4}
   	\end{tabularx}
   	\vspace{.1in}
   	\endgroup
