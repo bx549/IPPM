@@ -47,31 +47,11 @@ se <- sqrt((phat*(1-phat))/n)
 73,69,65,70,67,67,78,72,74,71,70,69,70,67,68,73,70,77,72,69
 \end{verbatim}
   
-% this problem needs to be re-written
-\item \emph{Maximum error when estimating a proportion.} In a poll a
-  random sample of \num{1400} residents are asked whether they support
-  or oppose a proposal. What is the largest possible value of the
-  standard error of the estimate of the overall proportion in favor of
-  the proposal?
-
-\begin{solution}
-  \bs Let $\hat{p}$ be the estimate of the true overall proportion of
-  people in favor of the proposal. An unbiased point estimate for $p$
-  is
-\[ \hat{p} = \frac{X}{1400} \]
-where $X$ is the number of people who responded to the poll that they
-favor the proposal. $X$ follows a Binomial distribution. Now,
-\begin{align*}
-  \text{Var}(\hat{p}) = \frac{1}{n^2}\text{Var}(X) &= \frac{1}{n^2}np(1-p) \\
-                                                   &= \frac{p(1-p)}{n} \\
-                                                   &= \frac{p(1-p)}{1400}
-\end{align*}
-The variance (and hence the standard error) is maximum when the
-quantity $p(1-p)$ is maximum, or when $p=1/2$. Using $p=1/2$ and
-taking the square root we get a maximum standard error of
-\[ \sqrt{\frac{.5(1-.5)}{1400}} \approx 0.013 \]
-
-\end{solution}
+%re-written
+\item {Standard error when estimating a proportion.} In a survey, a
+  random sample of \num{1200} students are asked whether they prefer online or in-person classes. 
+  Out of the \num{1200} students, \num{424} said they prefer online classes. Compute a point estimate 
+  of the overall proportion of students that prefer online classes and calculate the standard error of your estimate. 
 
 \subsubsection*{Descriptive Graphics}
 
