@@ -317,61 +317,60 @@ Unless the probability of poor weather is greater than .68,
 planning to burn is the best decision. 
 \end{solution}
 
-=======
 % Emily - expected value and sensitivity analysis
 \item \emph {Decisions under risk and sensitivity analysis.}  The
   employees at a popular outdoor furniture company predict that their
   sales will double this coming year. The company is already producing
   the maximum amount of furniture possible in their current
   facility. They are considering building another manufacturing
-  facility to be able to meet the predicted increase in demand. The
-  facility will cost \$500,000 to build. If the demand doubles as
-  predicted, their income will increase by \$800,000.  If the demand
-  only slightly increases, their income will increase by \$250,000.
-  If the facility is not built, the company will lose \$50,000 because
+  facility in order to meet the predicted increase in demand. The
+  facility will cost \$\num{500000} to build. If the demand doubles as
+  predicted, their income will increase by \$\num{800000}.  If the demand
+  only slightly increases, their income will increase by \$\num{250000}.
+  If the facility is not built, the company will lose \$\num{50000} because
   of the time workers will have to spend talking to upset customers to
   explain why furniture pieces are out-of-stock. The change in demand
-  will be determined by the weather that year because more people want
-  to buy outdoor furniture if they can enjoy the good weather
-  outside. There is a 0.55 chance of good weather, which will result
-  in a double in demand. There is a 0.45 chance of poor weather, which
-  will result in only a slight increase in demand.
+  will be determined by next year's weather; more people want
+  to buy outdoor furniture if the weather is nice.
+  There is a 0.55 chance of good weather, which will result
+  in a doubling of sales. There is a 0.45 chance of poor weather, which
+  will result in only a slight increase in sales.
 
-8\begin{enumerate}
+\begin{enumerate}
 \item Should the facility by built? Use expected value to make your decision.
 \item How does the decision change with the probability of good/poor
-weather? Perform a sensitivity analysis to answer.
+weather? To answer this question, you should perform a sensitivity analysis.
 \end{enumerate}
 
 \begin{solution}
 \bs The decision table for this problem is
 \begin{center}
 \begin{tabular}{rrr}
-      & $\frac{55}{100}$ & $\frac{45}{100}$ \\
+      & $0.55$ & $0.45$ \\
       & good weather & poor weather \\ \hline
-      build facility & \$300,000 & -\$250,000 \\
-      do not build & -\$50,000 & -\$50,000
+      build facility & \$\num{300000} & -\$\num{250000} \\
+      do not build & -\$\num{50000} & -\$\num{50000}
 \end{tabular}
 \end{center}
 
 The expected payoff of each decision is
 \begin{align*}
-&E(\text{do not build}) = -\$50,000 \\
-&E(\text{build}) = \left(\frac{55}{100}\right)(\$300,000)
-+ \left(\frac{45}{100}\right)(-\$250,000) = \$52,500
+&E(\text{do not build}) = -\$\num{50000} \\
+&E(\text{build}) = 0.55 \times \$\num{300000}
+- 0.45 \times \$\num{250000} = \$\num{52500}
 \end{align*}
 The company should build the facility. As the probability of poor
 weather increases, the expected value of building the new facility
 decreases.  Let $p$ represent the probability of poor weather.
 \begin{align*}
-E(\text{build}) &= (1-p)300,000 + p(-250,000) \\
-&= 300,000 - 550,000p
+E(\text{build}) &= \num{300000}(1-p) - \num{250000}p \\
+&= \num{300000} - \num{550000}p
 \end{align*}
 The company should build that facility as long as
 \begin{align*}
 E(\text{build}) &\geq E(\text{don't build}) \\
-300,000 - 550,000p &\geq -50,000 \\
--550,0000p &\geq -350,000 \\
+\num{300000} - \num{550000}p &\geq -\num{50000} \\
+-\num{5500000}p &\geq -\num{350000} \\
 p &\leq \frac{7}{11} \approx .64
 \end{align*}
 Building the facility is the best decision unless the probability of
@@ -419,8 +418,8 @@ and find a solution by elimination of dominated strategies.
 \endgroup
 \vspace{.1in}
 
-For A, ice cream strictly dominates souvenirs and for B, souvenirs strictly dominates
-clothing, leaving a $2 \times 2$ game.
+For A, ice cream strictly dominates souvenirs and for B, souvenirs
+strictly dominates clothing, leaving a $2 \times 2$ game.
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
@@ -434,10 +433,10 @@ clothing, leaving a $2 \times 2$ game.
 \endgroup
 \vspace{.1in}
 
-Now for B, souvenirs dominates ice cream. Then, A will choose to sell ice cream
-over clothing. So, the
-best strategies for A and B are to sell ice cream and souvenirs, respectively. 
-Using this pair of strategies, A will capture 40\% of the customers.
+Now for B, souvenirs dominates ice cream. Then, A will choose to sell
+ice cream over clothing. So, the best strategies for A and B are to
+sell ice cream and souvenirs, respectively.  Using this pair of
+strategies, A will capture 40\% of the customers.
 \end{solution}
 
 % written by Emily to replace Goldsen and Kershaw battle of words
@@ -453,32 +452,26 @@ Using this pair of strategies, A will capture 40\% of the customers.
   without him, or increase the player's salary by a set amount with no
   other negotiations. Keep in mind that the player wants to maximize
   his salary, and the team wants to minimize their costs, which means
-  keep salaries as low as possible. The payouts are as follows (in
-  millions of dollars):
+  keep salaries as low as possible. The utilities/payoffs to
+  the player and to the team are described next.
+
+  If the player plays and the team does not negotiate, the player's
+  salary will not change.  If the player does not play and the team
+  does not negotiate, the player will find a different job as a
+  broadcaster for a payoff of 1 because he is such a well-known
+  person. This is bad publicity for the team and hurts their jersey
+  sales.  If the player plays but the team still negotiates, the
+  player will end up with a payoff of 3.  If the player had
+  chosen to not play and the team negotiates, the negotiations will go
+  poorly and the player will end up with a payoff of -2 for having to
+  deal with costs related to poor publicity.  If the team decides
+  increase the player's salary with no negotiations, the player will
+  end up with a payoff of 2 no matter what he chooses to do.
 
 
-\begin{tabular}{l}
-If the player plays and the team does not negotiate, the player's \\
-salary will not change. \\
-If the player does not play and the team does not negotiate, the \\
-player will find a different job as a broadcaster for a pay\\
-increase of 1 because he is such a well-known person. This is \\
-bad publicity for the team and hurts their jersey sales. \\
-If the player plays but the team still negotiates, the \\
-player will end up with a pay increase of 3. \\
-If the player had chosen to not play and the team negotiates, \\
-the negotiations will go poorly and the player will end up \\
-kicked off the team and having to deal with costs related to \\
-poor publicity. \\
-If the team decides to set an increase with no negotiations, \\
-the player will end up with a positive 2 no matter what he \\
-chooses to do.	
-\end{tabular}
-
-
-Formulate the 2-by-3 decision matrix in terms of changes to the player's salary. 
-Determine the best strategy for the player and for the team. 
-Who is most likely to come out ahead in this situation?
+  Formulate the 2-by-3 game and determine the best strategy for the
+  player and for the team.  Who is most likely to come out ahead in
+  this situation?
   
 \begin{solution}
 \bs The game is
@@ -486,18 +479,18 @@ Who is most likely to come out ahead in this situation?
 \begingroup
 \setlength{\tabcolsep}{9pt}
 \renewcommand*{\arraystretch}{2}
-\begin{tabularx}{4in}{YYYYY}
-      & & \multicolumn{3}{c}{Team} \\
-      & & \emph{negotiate} & \emph{don't negotiate} & \emph{double salary} \\ \cline{3-5}
-      \multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} & \gtcol{2} \\ \cline{3-5}
-      & \gtcol{\emph{don't play}} & \gtcol{-2} & \gtcol{1} & \gtcol{2} \\ \cline{3-5}
+\begin{tabularx}{4.5in}{YYYYY}
+& & \multicolumn{3}{c}{Team} \\
+& & negotiate & don't negotiate & increase salary \\ \cline{3-5}
+\multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} & \gtcol{2} \\ \cline{3-5}
+& \gtcol{don't play} & \gtcol{-2} & \gtcol{1} & \gtcol{2} \\ \cline{3-5}
 \end{tabularx}
 \endgroup
 \vspace{.1in}
 
-There is no saddle point in this game. The team's strategy of a set
+The team's strategy of a set
 increase is dominated by the strategy to not negotiate, so there is no
-financial reason that they would chose to offer a pre-determined
+reason that they would chose to offer a pre-determined
 increase without negotiations. The reduced game is
 
 \begingroup
@@ -512,13 +505,16 @@ increase without negotiations. The reduced game is
 \vspace{.1in}
 \endgroup
 
-Using the scheme outlined in class, the player should play or not play
-according to the odds 1:1. The team should negotiate or not negotiate
-according to the odds 1:5. The value of the game is
+Since there is no saddle point, the best strategies for the player and
+for team are mixed. The player should mix the strategies ``play'' and
+``don't play'' in the ratio 1:1. The team should mix the strategies
+``negotiate'' and ``don't negotiate'' in the ratio 1:5.  Using the
+player's mixing ratios against the team's strategy of ``negotiate''
+the value of the game is computed as
 \[
-\frac{1 \times (3) + 1 \times (-2)}{2} = 1/2,
+\frac{1 \times (3) + 1 \times (-2)}{2} = 1/2.
 \]
-so the player is more likely to come out ahead. 
+The player is more likely to come out ahead. 
 \end{solution}
   
 % written by Emily to replace cops and robbers
