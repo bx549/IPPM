@@ -90,7 +90,7 @@ worth of sunglasses so that he enjoys a steady profit of \$72.22.
 
 \section{Exercises}
 \begin{enumerate}
-
+	
 % This exercise is OK
 \item \emph{Rules for decision--making under ignorance.}
   You have the opportunity to go on a
@@ -317,29 +317,42 @@ Unless the probability of poor weather is greater than .68,
 planning to burn is the best decision. 
 \end{solution}
 
-<<<<<<< Updated upstream
 =======
 % Emily - expected value and sensitivity analysis
-\item \emph{Decisions under risk and sensitivity analysis.} The employees at a popular outdoor furniture company predict that their sales will double this coming year. The company is already producing the maximum amount of furniture possible in their current facility. They are considering building another manufacturing facility to be able to meet the predicted increase in demand. The facility will cost \$500,000 to build. If the demand doubles as predicted, their income will increase by \$800,000. If the demand only slightly increases, their income will increase by \$250,000. If the facility is not built, the company will lose \$50,000 because of the time workers will have to spend talking to upset customers to explain why furniture pieces are out-of-stock. The change in demand will be determined by the weather that year because more people want to buy outdoor furniture if they can enjoy the good weather outside. There is a 0.55 chance of good weather, which will result in a double in demand. There is a 0.45 chance of poor weather, which will result in only a slight increase in demand.
+\item \emph {Decisions under risk and sensitivity analysis.}  The
+  employees at a popular outdoor furniture company predict that their
+  sales will double this coming year. The company is already producing
+  the maximum amount of furniture possible in their current
+  facility. They are considering building another manufacturing
+  facility to be able to meet the predicted increase in demand. The
+  facility will cost \$500,000 to build. If the demand doubles as
+  predicted, their income will increase by \$800,000.  If the demand
+  only slightly increases, their income will increase by \$250,000.
+  If the facility is not built, the company will lose \$50,000 because
+  of the time workers will have to spend talking to upset customers to
+  explain why furniture pieces are out-of-stock. The change in demand
+  will be determined by the weather that year because more people want
+  to buy outdoor furniture if they can enjoy the good weather
+  outside. There is a 0.55 chance of good weather, which will result
+  in a double in demand. There is a 0.45 chance of poor weather, which
+  will result in only a slight increase in demand.
 
-\begin{enumerate}
-	\item Should the facility by built? Use expected value to make your decision.
-	
-	\item How does the decision change with the probability of good/poor
-	weather? Perform a sensitivity analysis to answer.
-	
+8\begin{enumerate}
+\item Should the facility by built? Use expected value to make your decision.
+\item How does the decision change with the probability of good/poor
+weather? Perform a sensitivity analysis to answer.
 \end{enumerate}
 
 \begin{solution}
-	\bs The decision table for this problem is
-	\begin{center}
-		\begin{tabular}{rrr}
-			& $\frac{55}{100}$ & $\frac{45}{100}$ \\
-			& good weather & poor weather \\ \hline
-			build facility & \$300,000 & -\$250,000 \\
-			do not build & -\$50,000 & -\$50,000
-		\end{tabular}
-	\end{center}
+\bs The decision table for this problem is
+\begin{center}
+\begin{tabular}{rrr}
+      & $\frac{55}{100}$ & $\frac{45}{100}$ \\
+      & good weather & poor weather \\ \hline
+      build facility & \$300,000 & -\$250,000 \\
+      do not build & -\$50,000 & -\$50,000
+\end{tabular}
+\end{center}
 
 The expected payoff of each decision is
 \begin{align*}
@@ -347,8 +360,9 @@ The expected payoff of each decision is
 &E(\text{build}) = \left(\frac{55}{100}\right)(\$300,000)
 + \left(\frac{45}{100}\right)(-\$250,000) = \$52,500
 \end{align*}
-The company should build the facility. As the probability of poor weather increases, the expected value of building the new facility decreases. 
-Let $p$ represent the probability of poor weather.
+The company should build the facility. As the probability of poor
+weather increases, the expected value of building the new facility
+decreases.  Let $p$ represent the probability of poor weather.
 \begin{align*}
 E(\text{build}) &= (1-p)300,000 + p(-250,000) \\
 &= 300,000 - 550,000p
@@ -360,11 +374,10 @@ E(\text{build}) &\geq E(\text{don't build}) \\
 -550,0000p &\geq -350,000 \\
 p &\leq \frac{7}{11} \approx .64
 \end{align*}
-Building the facility is the best decision unless the probability of poor weather is greater than .64.	
-
+Building the facility is the best decision unless the probability of
+poor weather is greater than .64.
 \end{solution}
 
->>>>>>> Stashed changes
 % written by Emily
 \item \emph{Elimination of dominated strategies.}
 Two street vendors, A and B, are located near a major tourist attraction. 
@@ -427,30 +440,46 @@ best strategies for A and B are to sell ice cream and souvenirs, respectively.
 Using this pair of strategies, A will capture 40\% of the customers.
 \end{solution}
 
-% this problem definitely needs to be re-written.  it is unfair to
-% students for whom english is a 2nd language.  the main idea is that
-% we have a 2x3 game, but for the column player, one strategy can be
-% eliminated by domination and so it's really a 2x2 game and we can
-% solve it by hand. it's OK to have one or two exercises that are
-% a little quirky.
-\item \emph{A two-person zero-sum game.}
-Two friends, Goldsen and Kershaw get into a battle of
-  words. Kershaw, hoping to make a little money on the argument,
-  suggests that they create words, or try to, according to the scheme
-  he outlines. Kershaw says the following to Goldsen:
+% written by Emily to replace Goldsen and Kershaw battle of words
+\item \emph{A two-person zero-sum game.}  A professional football
+  player believes that the team he plays for should be allocating more
+  money to the salaries of the players, so he wants his contract to be
+  changed to pay him more. His two options are to play in the upcoming
+  season or not play in the upcoming season and hope the team will
+  negotiate with him. The team knows that he is a valuable player but
+  does not want to pay him more or go through the process of
+  negotiations. The team has come up with three options to deal with
+  the situation: negotiate, refuse to negotiate and play the season
+  without him, or increase the player's salary by a set amount with no
+  other negotiations. Keep in mind that the player wants to maximize
+  his salary, and the team wants to minimize their costs, which means
+  keep salaries as low as possible. The payouts are as follows (in
+  millions of dollars):
 
-\begin{quote}
-Suppose you choose either the letter \emph{a} or the letter
-  \emph{i}, and, independently and at the same time, I will choose
-  \emph{f}, \emph{t}, or \emph{x}. If the two letters chosen form a
-  word, I will pay you \$1, plus a \$3 bonus if the word is a noun or
-  pronoun. In the event that the letters chosen don't form a word, you
-  pay me \$2.
-\end{quote}
 
-Formulate Kershaw's scheme as a 2--by--3 game and determine the best
-strategy for each player. Is this a fair game?
+\begin{tabular}{l}
+If the player plays and the team does not negotiate, the player's \\
+salary will not change. \\
+If the player does not play and the team does not negotiate, the \\
+player will find a different job as a broadcaster for a pay\\
+increase of 1 because he is such a well-known person. This is \\
+bad publicity for the team and hurts their jersey sales. \\
+If the player plays but the team still negotiates, the \\
+player will end up with a pay increase of 3. \\
+If the player had chosen to not play and the team negotiates, \\
+the negotiations will go poorly and the player will end up \\
+kicked off the team and having to deal with costs related to \\
+poor publicity. \\
+If the team decides to set an increase with no negotiations, \\
+the player will end up with a positive 2 no matter what he \\
+chooses to do.	
+\end{tabular}
 
+
+Formulate the 2-by-3 decision matrix in terms of changes to the player's salary. 
+Determine the best strategy for the player and for the team. 
+Who is most likely to come out ahead in this situation?
+  
 \begin{solution}
 \bs The game is
 
@@ -458,44 +487,40 @@ strategy for each player. Is this a fair game?
 \setlength{\tabcolsep}{9pt}
 \renewcommand*{\arraystretch}{2}
 \begin{tabularx}{4in}{YYYYY}
-& & \multicolumn{3}{c}{Kershaw} \\
-& & \emph{f} & \emph{t} & \emph{x} \\ \cline{3-5}
-\multirow{2}{.5in}{Goldsen} & \gtcol{\emph{a}} & \gtcol{-2} & \gtcol{1} & \gtcol{4} \\ \cline{3-5}
-& \gtcol{\emph{i}} & \gtcol{1} & \gtcol{4} & \gtcol{-2} \\ \cline{3-5}
+      & & \multicolumn{3}{c}{Team} \\
+      & & \emph{negotiate} & \emph{don't negotiate} & \emph{double salary} \\ \cline{3-5}
+      \multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} & \gtcol{2} \\ \cline{3-5}
+      & \gtcol{\emph{don't play}} & \gtcol{-2} & \gtcol{1} & \gtcol{2} \\ \cline{3-5}
 \end{tabularx}
 \endgroup
 \vspace{.1in}
 
-Note that there is no saddle point. Also note that Kershaw's strategy
-of \emph{t} is dominated by \emph{f}, so there is no reason that 
-he would choose \emph{t}. The reduced game is
+There is no saddle point in this game. The team's strategy of a set
+increase is dominated by the strategy to not negotiate, so there is no
+financial reason that they would chose to offer a pre-determined
+increase without negotiations. The reduced game is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
 \renewcommand*{\arraystretch}{2}
 \begin{tabularx}{4in}{YYYY}
-& & \multicolumn{2}{c}{Kershaw} \\
-& & \emph{f} & \emph{x} \\ \cline{3-4}
-\multirow{2}{.5in}{Goldsen} & \gtcol{\emph{a}} & \gtcol{-2} & \gtcol{4} \\ \cline{3-4}
-& \gtcol{\emph{i}} & \gtcol{1} & \gtcol{-2} \\ \cline{3-4}
+      & & \multicolumn{2}{c}{Team} \\
+      & & {negotiate} & {don't negotiate} \\ \cline{3-4}
+      \multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} \\ \cline{3-4}
+      & \gtcol{don't play} & \gtcol{-2} & \gtcol{1} \\ \cline{3-4}
 \end{tabularx}
 \vspace{.1in}
 \endgroup
 
-Using our scheme outlined in class, Goldsen should play a mixture of
-\emph{a} and \emph{i} according to the odds 3:6 (or equivalenty
-1:2). Kershaw should mix \emph{f} and \emph{x} according to the odds
-6:3 (or equivalently 2:1). The value of the game is
+Using the scheme outlined in class, the player should play or not play
+according to the odds 1:1. The team should negotiate or not negotiate
+according to the odds 1:5. The value of the game is
 \[
-\frac{1 \times (-2) + 2 \times 1}{3} = 0,
+\frac{1 \times (3) + 1 \times (-2)}{2} = 1/2,
 \]
-and so this is a fair game. If Kershaw uses \emph{t}, Goldsen will 
-get, on average
-\[
-\frac{1 \times 1 + 2 \times 4}{3} = \$3.
-\]
+so the player is more likely to come out ahead. 
 \end{solution}
-
+  
 % written by Emily to replace cops and robbers
 \item \emph{Marketing strategies.} Two peanut butter companies,
   Doodle's and Lola's, are deciding on their marketing strategy for
@@ -535,8 +560,7 @@ get, on average
 \end{enumerate}
 
 \begin{solution}
-\bs
-The game is
+\bs The game is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
