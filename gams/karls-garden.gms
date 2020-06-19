@@ -31,8 +31,3 @@ demand(i).. x(i) =l= d(i);
 
 model garden /all/;
 solve garden using lp maximizing z;
-
-file results /results.dat/;
-put results;
-loop(i, put i.tl, @12, x.l(i) /);
-put 'profit', @12, z.l /;

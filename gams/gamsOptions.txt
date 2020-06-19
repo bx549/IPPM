@@ -1,0 +1,4 @@
+* options that should work for output listings in IPPM
+pageContr=2
+pageSize=0
+pageWidth=100

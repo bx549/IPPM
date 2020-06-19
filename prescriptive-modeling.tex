@@ -1031,15 +1031,39 @@ demand(i).. x(i) =l= d(i);
 model garden /all/;
 solve garden using lp maximizing z;
 
-file results /results.dat/;
-put results;
-loop(i, put i.tl, @12, x.l(i) /);
-put 'profit', @12, z.l /;
+Optimal solution found.
+Objective :        7120.833333
 
-lettuce          350.00
-broccoli         135.42
-carrots          250.00
-profit          7120.83
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- EQU profit          .         .         .        1.000      
+---- EQU space          -INF    400.000   400.000    10.667      
+
+  profit  objective function
+  space  limit on available garden space
+
+---- EQU demand   limit on demand for vegetables
+
+            LOWER     LEVEL     UPPER    MARGINAL
+
+lettuce      -INF    350.000   350.000     4.167      
+broccoli     -INF    135.417   350.000      .         
+carrots      -INF    250.000   250.000     5.583      
+
+---- VAR x  number of plants of type i
+
+            LOWER     LEVEL     UPPER    MARGINAL
+
+lettuce       .      350.000     +INF       .         
+broccoli      .      135.417     +INF       .         
+carrots       .      250.000     +INF       .         
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- VAR z              -INF   7120.833     +INF       .         
+
+  z  total profit of garden
 \end{Verbatim}
 \end{solution}
 
@@ -1526,41 +1550,41 @@ Optimal solution found.
 Objective :         588.000000
 
 
-                           LOWER          LEVEL          UPPER         MARGINAL
+                       LOWER     LEVEL     UPPER    MARGINAL
 
----- EQU revenue             .              .              .             1.0000      
+---- EQU revenue         .         .         .        1.000      
 
   revenue  objective function
 
 ---- EQU hours  available hours
 
-             LOWER          LEVEL          UPPER         MARGINAL
+         LOWER     LEVEL     UPPER    MARGINAL
 
-amy          10.0000        10.0000        10.0000        26.0000      
-brian        10.0000        10.0000        10.0000        28.0000      
+amy      10.000    10.000    10.000    26.000      
+brian    10.000    10.000    10.000    28.000      
 
 ---- EQU limit  8 hours per bidder max
 
-            LOWER          LEVEL          UPPER         MARGINAL
+        LOWER     LEVEL     UPPER    MARGINAL
 
-emma        -INF            8.0000         8.0000         2.0000      
-dan         -INF            4.0000         8.0000          .          
-sam         -INF            8.0000         8.0000         4.0000      
+emma     -INF      8.000     8.000     2.000      
+dan      -INF      4.000     8.000      .         
+sam      -INF      8.000     8.000     4.000      
 
 ---- VAR x  hours bidder j spends with instructor i
 
-                  LOWER          LEVEL          UPPER         MARGINAL
+              LOWER     LEVEL     UPPER    MARGINAL
 
-amy  .emma          .             6.0000        +INF             .          
-amy  .dan           .             4.0000        +INF             .          
-amy  .sam           .              .            +INF            EPS         
-brian.emma          .             2.0000        +INF             .          
-brian.dan           .              .            +INF            EPS         
-brian.sam           .             8.0000        +INF             .          
+amy  .emma      .        6.000     +INF       .         
+amy  .dan       .        4.000     +INF       .         
+amy  .sam       .         .        +INF       EPS       
+brian.emma      .        2.000     +INF       .         
+brian.dan       .         .        +INF       EPS       
+brian.sam       .        8.000     +INF       .         
 
-                           LOWER          LEVEL          UPPER         MARGINAL
+                       LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR z                 -INF          588.0000        +INF             .          
+---- VAR z              -INF    588.000     +INF       .         
 
   z  total revenue
 \end{Verbatim}
