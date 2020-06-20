@@ -245,101 +245,31 @@ E(\text{do not}) &= (-600)(.851) = -511
 The best decision is to take away prizes when a player tests positive.
 \end{solution}
 
-% this problem needs to be re-written. the main idea is that decisions
-% are made based on expected value and that we can perform a
-% sensitivity analysis and obtain a threshold on a decision, i.e. make
-% decision x if the probability of the state of nature is greater than
-% p.
-\item \emph{Decisions under risk and sensitivity analysis.}
-  Modern forest
-  management uses controlled fires to reduce fire hazards and to
-  stimulate new forest growth. Management has the option to postpone
-  or plan a burning. In a specific forest tract, if burning is
-  postponed, a general administrative cost of \$300 is incurred. If a
-  controlled burning is planned, there is a 50\% chance that good
-  weather will prevail and burning will cost \$3200. The results of
-  the burning may be either successful with probability .6 or marginal
-  with probability .4. Successful execution will result in an
-  estimated benefit of \$6000, and marginal execution will provide
-  only \$3000 in benefits. If the weather is poor, burning will be
-  canceled incurring a cost of \$1200 and no benefit.
-
-  \begin{enumerate}
-  \item On the basis of expected value, should a burning
-    be planned or postponed?
-  \item How does the decision change with the probability of good/poor
-    weather? \label{sen} In other words, you should perform a
-    sensitivity analysis.
-  \end{enumerate}
-
-\begin{solution}
-\bs
-A decision table for this problem is
-
-\begin{center}
-\begin{tabular}{rrr}
-    & $\frac{1}{2}$ & $\frac{1}{2}$ \\
-    & good weather & poor weather \\ \hline
-    postpone burn & -\$300 & -\$300 \\
-    plan burn & \$1600 & -\$1200
-\end{tabular}
-\end{center}
-
-Note that the payoff of \$1600 for a planned burn and resulting good weather is
-\[
--\$3200 + (.6)(\$6000) + (.4)(\$3000) = \$1600
-\]
-
-The expected payoff of each decision is
-\begin{align*}
-&E(\text{postpone}) = -\$300 \\
-&E(\text{plan}) = \left(\frac{1}{2}\right)(\$1600)
-   + \left(\frac{1}{2}\right)(-\$1200) = \$200
-\end{align*}
-Management should plan the burn. For part~\ref{sen}, it
-makes sense that as the probability of poor weather
-increases, the expected value of planning a burn will
-decrease. Specifically, let $p$ represent the probability
-of poor weather.
-\begin{align*}
-  E(\text{plan}) &= (1-p)1600 + p(-1200) \\
-  &= 1600 - 2800p
-\end{align*}
-$E(\text{plan})$ is decreasing in $p$. Management should
-plan a burn as long as
-\begin{align*}
-  E(\text{plan}) &\geq E(\text{postpone}) \\
-  1600 - 2800p &\geq -300 \\
-  -2800p &\geq -1900 \\
-  p &\leq \frac{19}{28} \approx .68
-\end{align*}
-Unless the probability of poor weather is greater than .68,
-planning to burn is the best decision. 
-\end{solution}
-
 % Emily - expected value and sensitivity analysis
 \item \emph {Decisions under risk and sensitivity analysis.}  The
-  employees at a popular outdoor furniture company predict that their
+  owners of a popular outdoor furniture company predict that their
   sales will double this coming year. The company is already producing
   the maximum amount of furniture possible in their current
-  facility. They are considering building another manufacturing
-  facility in order to meet the predicted increase in demand. The
-  facility will cost \$\num{500000} to build. If the demand doubles as
-  predicted, their income will increase by \$\num{800000}.  If the demand
-  only slightly increases, their income will increase by \$\num{250000}.
-  If the facility is not built, the company will lose \$\num{50000} because
-  of the time workers will have to spend talking to upset customers to
-  explain why furniture pieces are out-of-stock. The change in demand
-  will be determined by next year's weather; more people want
-  to buy outdoor furniture if the weather is nice.
-  There is a 0.55 chance of good weather, which will result
-  in a doubling of sales. There is a 0.45 chance of poor weather, which
-  will result in only a slight increase in sales.
+  facility. They are considering expanding their manufacturing
+  facility to accommodate the predicted increase in demand. If
+  undertaken, the expansion will cost \$\num{500000}. If the demand
+  doubles as predicted, revenue will increase by \$\num{800000}.  If
+  the predicted increase in demand proves to be too optimistic,
+  revenue will increase by only \$\num{250000}.  If the expansion is
+  not undertaken, the company will lose \$\num{50000} due to
+  out-of-stock orders from agitated customers.  The change in demand
+  will be determined by next year's weather; more outdoor furniture is
+  sold when the weather is nice.  There is a 0.55 chance of good
+  weather, which will result in a doubling of demand. There is a 0.45
+  chance of poor weather, which will result in only a slight increase
+  in demand.
 
 \begin{enumerate}
-\item Should the facility by built? Use expected value to make your decision.
+\item Should the manufacturing facility be expanded? The owners make
+  decisions based on expected value.
 \item How does the decision change with the probability of good/poor
-weather? To answer this question, you should perform a sensitivity analysis.
+  weather? To answer this question, you should perform a sensitivity
+  analysis.
 \end{enumerate}
 
 \begin{solution}
@@ -348,32 +278,32 @@ weather? To answer this question, you should perform a sensitivity analysis.
 \begin{tabular}{rrr}
       & $0.55$ & $0.45$ \\
       & good weather & poor weather \\ \hline
-      build facility & \$\num{300000} & -\$\num{250000} \\
-      do not build & -\$\num{50000} & -\$\num{50000}
+      expansion & \$\num{300000} & -\$\num{250000} \\
+      no expansion & -\$\num{50000} & -\$\num{50000}
 \end{tabular}
 \end{center}
 
 The expected payoff of each decision is
 \begin{align*}
-&E(\text{do not build}) = -\$\num{50000} \\
-&E(\text{build}) = 0.55 \times \$\num{300000}
-- 0.45 \times \$\num{250000} = \$\num{52500}
+&E(\text{expansion}) = 0.55 \times \$\num{300000}
+- 0.45 \times \$\num{250000} = \$\num{52500} \\
+&E(\text{no expansion}) = -\$\num{50000}
 \end{align*}
-The company should build the facility. As the probability of poor
-weather increases, the expected value of building the new facility
+The company should expand the facility. As the probability of poor
+weather increases, the expected value of the expansion
 decreases.  Let $p$ represent the probability of poor weather.
 \begin{align*}
-E(\text{build}) &= \num{300000}(1-p) - \num{250000}p \\
+E(\text{expansion}) &= \num{300000}(1-p) - \num{250000}p \\
 &= \num{300000} - \num{550000}p
 \end{align*}
-The company should build that facility as long as
+The company should expand the facility as long as
 \begin{align*}
-E(\text{build}) &\geq E(\text{don't build}) \\
+E(\text{expansion}) &\geq E(\text{no expansion}) \\
 \num{300000} - \num{550000}p &\geq -\num{50000} \\
 -\num{5500000}p &\geq -\num{350000} \\
 p &\leq \frac{7}{11} \approx .64
 \end{align*}
-Building the facility is the best decision unless the probability of
+Expanding the facility is the best decision unless the probability of
 poor weather is greater than .64.
 \end{solution}
 
