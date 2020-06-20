@@ -979,7 +979,7 @@ the optimal solution is $z=0$.
 \end{solution}
 
 % re-written by Hannah
-\item \emph{Resource allocation to maximize profit.} 
+\item \emph{Karl's garden.}
 Karl is a local gardener who grows lettuce, broccoli, and carrots. His garden is 
 400 ft$^2$, and each individual plant of lettuce, broccoli, and carrots occupies 
 0.5 ft$^2$, 1.2 ft$^2$, and 0.25 ft$^2$, respectively. Karl recently learned that 
@@ -991,80 +991,11 @@ plants of each type of vegetable should Karl grow to maximize profit? Solve this
 problem using optimization software.
 
 \begin{solution}
-\bs A GAMS model and solution follow. The solution indicates that Karl should grow 
-350 lettuce plants, 135 broccoli plants, and 250 carrot plants for a total profit of
-about \$\num{7120}. Note that we are ignoring any fractional values of the 
-decision variables.
-
-\begin{Verbatim}
-sets
-i 'vegetable' / lettuce, broccoli, carrots /;
-
-parameters
-a(i) 'space required by vegetable in sq. ft.'
-/ lettuce 0.5
-  broccoli 1.2
-  carrots 0.25 /
-c(i) 'profit of each vegetable in dollars'
-/ lettuce 9.5
-  broccoli 12.8
-  carrots 8.25 /
-  d(i) 'demand for each vegetable'
-/ lettuce 350
-  broccoli 350
-  carrots 250 /;
-
-variables
-x(i) 'number of plants of type i'
-z    'total profit of garden';
-positive variables x;
-
-equations
-profit 'objective function',
-space  'limit on available garden space',
-demand ' limit on demand for vegetables';
-
-profit.. z =e= sum(i, c(i)*x(i));
-space.. sum(i, a(i)*x(i)) =l= 400;
-demand(i).. x(i) =l= d(i);
-
-model garden /all/;
-solve garden using lp maximizing z;
-
-Optimal solution found.
-Objective :        7120.833333
-
-
-                       LOWER     LEVEL     UPPER    MARGINAL
-
----- EQU profit          .         .         .        1.000      
----- EQU space          -INF    400.000   400.000    10.667      
-
-  profit  objective function
-  space  limit on available garden space
-
----- EQU demand   limit on demand for vegetables
-
-            LOWER     LEVEL     UPPER    MARGINAL
-
-lettuce      -INF    350.000   350.000     4.167      
-broccoli     -INF    135.417   350.000      .         
-carrots      -INF    250.000   250.000     5.583      
-
----- VAR x  number of plants of type i
-
-            LOWER     LEVEL     UPPER    MARGINAL
-
-lettuce       .      350.000     +INF       .         
-broccoli      .      135.417     +INF       .         
-carrots       .      250.000     +INF       .         
-
-                       LOWER     LEVEL     UPPER    MARGINAL
-
----- VAR z              -INF   7120.833     +INF       .         
-
-  z  total profit of garden
-\end{Verbatim}
+  \bs A GAMS model is provided in the file
+  \texttt{karls-garden.gms}. The solution indicates that Karl should
+  grow 350 lettuce plants, 135 broccoli plants, and 250 carrot plants
+  for a total profit of about \$\num{7120}. Note that we are ignoring
+  any fractional values of the decision variables.
 \end{solution}
 
 
@@ -1072,28 +1003,40 @@ carrots       .      250.000     +INF       .
 % change the context and leave the numbers as they are (or very close
 % anyway). the idea is to extract a shadow price and use it
 % to answer questions.
-\item \emph{The marginal value of a resource.}
-A manufacturing company has assembled a safety committee to reduce the number of injuries sustained by employees at work. The company has allotted the committee a budget of \$100 each week for purchasing items that will increase employee safety. After analyzing past incidents, the safety committee has concluded that the most common work hazard is exposure to loud noises. As a result, the committee would like to purchase (i) earplugs and (ii) other PPE (personal protection equipment). The relative value (utility) of the safety items was investigated, and it was determined that earplugs provide 1.2 units of value for each dollar spent on other types of PPE. The safety committee would like to determine how to spend the budget to maximize the safety of employees, but the company does not want to spend more than \$70 on earplugs and \$50 on other PPE each week. The committee also has the option to save part of the money.
-Additionally, the company would like to know:
+\item \emph{Workplace safety.}  A manufacturing
+  company has assembled a safety committee to reduce the number of
+  injuries sustained by employees at work. The company has allotted
+  the committee a budget of \$100 each week for purchasing items that
+  will increase employee safety. After analyzing past incidents, the
+  safety committee has concluded that the most common work hazard is
+  exposure to loud noises. As a result, the committee would like to
+  purchase (i) earplugs and (ii) other PPE (personal protection
+  equipment). The relative value (utility) of the safety items was
+  investigated, and it was determined that earplugs provide 1.2 units
+  of value for each dollar spent on other types of PPE. The safety
+  committee would like to determine how to spend the budget to
+  maximize the safety of employees, but the company does not want to
+  spend more than \$70 on earplugs and \$50 on other PPE each
+  week. The committee also has the option to save part of the money.
+  Additionally, the company would like to know:
 \begin{enumerate}
 \item How the total value of its expenditures for safety would change
-  if there were only \$99 to spend. \label{a}
+  if there were only \$99 to spend. \label{safetya}
 \item How the total value would change if \$75 could be spent on
-  earplugs.\label{b}
+  earplugs.\label{safetyb}
 \item Whether it would save any money if each dollar of savings would
   provide 1.1 units of value for each dollar spent on other
-  PPE.\label{c}
+  PPE.\label{safetyc}
 \end{enumerate}
 Formulate the safety committee's spending decision as a linear program. Sketch
 the feasible region and determine the optimal solution using the
 graphical method.  Then solve the linear program using optimization
 software and obtain post-optimality output (i.e. a sensitivity
-report).  Use this output to answer each of the questions \ref{a},
-\ref{b}, \ref{c}.
+report).  Use this output to answer each of the questions \ref{safetya},
+\ref{safetyb}, \ref{safetyc}.
 
 \begin{solution}
-\bs
-In the problem formulation to maximize total value, let
+\bs In the problem formulation to maximize total value, let
 \[
   \begin{array}{lcl}
     x_1 &=& \textrm{\$ to spend on earplugs} \\
@@ -1135,92 +1078,30 @@ for a total value of 114.
 \end{tikzpicture}
 \end{center}
 
-In order to answer parts a), b), and c), I solved the problem using GAMS
-and displayed post-optimality information. The model as implemented in GAMS follows.
-\begin{Verbatim}[samepage=true]
-positive variables
-x1 'earplugs'
-x2 'other PPE';
-
-free variable
-value;
-
-equations budget, earplugs, other, objective;
-budget.. x1 + x2 =l= 100;
-earplugs.. x1 =l= 70;
-other.. x2 =l= 50;
-objective.. value =e= 1.2*x1 + x2;
-
-model equipment /all/;
-Option LP = cplex;
-$onecho > cplex.opt
-objrng all
-rhsrng all
-$offecho
-equipment.OptFile =1;
-solve equipment using lp maximizing value;
-\end{Verbatim}
-and the output from the GAMS session:
-\begin{Verbatim}[samepage=true]
-Optimal solution found.
-Objective :         114.000000
-
-  
- 
-EQUATION NAME                                 LOWER      CURRENT        UPPER
--------------                                 -----      -------        -----
-budget                                           70          100          120
-earplugs                                         50           70          100
-other                                            30           50         +INF
-objective                                      -INF            0         +INF
-  
- 
-VARIABLE NAME                                 LOWER      CURRENT        UPPER
--------------                                 -----      -------        -----
-x1                                                1          1.2         +INF
-x2                                                0            1          1.2
-value                                          -INF            1         +INF
- 
- 
-
-                       LOWER     LEVEL     UPPER    MARGINAL
-
----- EQU budget         -INF    100.000   100.000     1.000      
----- EQU earplugs       -INF     70.000    70.000     0.200      
----- EQU other          -INF     30.000    50.000      .         
----- EQU objective       .         .         .        1.000      
-
-                       LOWER     LEVEL     UPPER    MARGINAL
-
----- VAR x1              .       70.000     +INF       .         
----- VAR x2              .       30.000     +INF       .         
----- VAR value          -INF    114.000     +INF       .         
-
-\end{Verbatim}
-
-part a) The shadow price on the \texttt{budget} constraint tells us
-that if we decrease the RHS from 100 to 99, the value of the objective
-function will decrease to 113. Since earplugs provide more value
-than other PPE, the new solution will be $x_1=70$ and
-$x_2=29$.
-
-part b) Notice that \$75 is within the range for the shadow price on
-the \texttt{earplugs} constraint. So, increasing the RHS to 75 will
-increase the total value by
+A GAMS model is provided in \texttt{workplace-saftey.gms}. Refer to
+the listing file \texttt{workplace-saftey.lst}, to answer questions
+\ref{safetya}, \ref{safetyb}, and \ref{safetyc}.  Regarding part
+\ref{safetya}, the shadow price on the \texttt{budget} constraint
+tells us that if we decrease the RHS from 100 to 99, the value of the
+objective function will decrease to 113. Since earplugs provide more
+value than other PPE, the new solution will be $x_1=70$ and $x_2=29$.
+For part \ref{safetyb}, notice that \$75 is within the range for the
+shadow price on the \texttt{earplugs} constraint. So, increasing the
+RHS to 75 will increase the total value by
 \[ \$5 \times 0.2~\text{units of value per dollar} = 1 \]
 for a total value of 115.
-
-part c) Saving one dollar requires \$1; however, the company gets 1.1
-units of value for each dollar saved. Yes, the company would save
-\emph{some} amount of money and spend less on other PPE. To
-use the shadow price to answer this question, notice that the shadow
-price on the \texttt{budget} constraint is 1. If we ``price-out'' the
-new activity of saving money, we see that it cost \$1 per unit, but it
-returns \$1.1 per unit in total value. So the company would save some
-amount of money. The question did not ask us to determine the new
-solution. It only asked whether \emph{any} money would be allocated to
-savings.
+Finally, for part \ref{safetyc}, saving one dollar requires \$1; however, the
+company gets 1.1 units of value for each dollar saved. Yes, the
+company would save \emph{some} amount of money and spend less on other
+PPE. To use the shadow price to answer this question, notice that the
+shadow price on the \texttt{budget} constraint is 1. If we
+``price-out'' the new activity of saving money, we see that it cost
+\$1 per unit, but it returns \$1.1 per unit in total value. So the
+company would save some amount of money. The question did not ask us
+to determine the new solution. It only asked whether \emph{any} money
+would be allocated to savings.
 \end{solution}
+
 % this problem needs to be re-written and GAMS code added.
 \item \emph{A blending problem.}
 A pet food manufacturer is developing a new dog food recipe with natural ingredients. It has been decided that the recipe will contain a combination of 4 ingredients: chicken, brown rice, vegetables, and corn meal. The cost and important nutritional information for each ingredient is summarized in the table below.

@@ -1,0 +1,155 @@
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/20/20 10:35:31 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  positive variables
+   2  x1 'earplugs'
+   3  x2 'other PPE';
+   4   
+   5  free variable
+   6  value;
+   7   
+   8  equations budget, earplugs, other, objective;
+   9  budget.. x1 + x2 =l= 100;
+  10  earplugs.. x1 =l= 70;
+  11  other.. x2 =l= 50;
+  12  objective.. value =e= 1.2*x1 + x2;
+  13   
+  14  model equipment /all/;
+  15  solve equipment using lp maximizing value;
+
+
+COMPILATION TIME     =        0.001 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/20/20 10:35:31 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE equipment Using LP From line 15
+
+
+---- budget  =L=  
+
+budget..  x1 + x2 =L= 100 ; (LHS = 0)
+     
+
+---- earplugs  =L=  
+
+earplugs..  x1 =L= 70 ; (LHS = 0)
+     
+
+---- other  =L=  
+
+other..  x2 =L= 50 ; (LHS = 0)
+     
+
+---- objective  =E=  
+
+objective..  - 1.2*x1 - x2 + value =E= 0 ; (LHS = 0)
+     
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/20/20 10:35:31 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE equipment Using LP From line 15
+
+
+---- x1  earplugs
+
+x1
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       budget
+        1       earplugs
+       -1.2     objective
+
+
+---- x2  other PPE
+
+x2
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       budget
+        1       other
+       -1       objective
+
+
+---- value  
+
+value
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       objective
+
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/20/20 10:35:31 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE equipment Using LP From line 15
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           4     SINGLE EQUATIONS            4
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES            3
+NON ZERO ELEMENTS             7
+
+
+GENERATION TIME      =        0.001 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+EXECUTION TIME       =        0.001 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/20/20 10:35:31 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE equipment Using LP From line 15
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   equipment           OBJECTIVE  value
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  15
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE              114.0000
+
+ RESOURCE USAGE, LIMIT          0.025      1000.000
+ ITERATION COUNT, LIMIT         1    2000000000
+
+IBM ILOG CPLEX   31.1.0 r55b6ce3 Released May 01, 2020 LEG x86 64bit/Linux    
+*** This solver runs with a demo license. No commercial use.
+Cplex 12.10.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.00sec (det. 0.00 ticks)
+Optimal solution found.
+Objective :         114.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU budget            -INF          100.0000       100.0000         1.0000      
+---- EQU earplugs          -INF           70.0000        70.0000         0.2000      
+---- EQU other             -INF           30.0000        50.0000          .          
+---- EQU objective           .              .              .             1.0000      
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR x1                  .            70.0000        +INF             .          
+---- VAR x2                  .            30.0000        +INF             .          
+---- VAR value             -INF          114.0000        +INF             .          
+
+  x1  earplugs
+  x2  other PPE
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.000 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
+      University of Minnesota Twin Cities, United States of AmeDL009821
+
+
+**** FILE SUMMARY
+
+Input      /home/darin/MEGA/IPPM/gams/workplace-safety.gms
+Output     /home/darin/MEGA/IPPM/gams/workplace-safety.lst
