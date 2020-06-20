@@ -115,3 +115,41 @@ ggplot(Sales2) +
 fm <- lm(sales ~ company.price + competitor.price + season, data=Sales)
 summary(fm)
 coef(fm)
+
+## Exercise: Simulation of a simple trading strategy.
+Bit <- read.csv("BTC-USD.csv", stringsAsFactors=FALSE)
+Bit$Date <- as.Date(Bit$Date)
+
+(p <- ggplot(Bit) + geom_line(aes(x=Date, y=Close)))
+
+(p2 <- ggplot(Bit) + geom_point(aes(x=Volume, y=Close)))
+
+## plot Close vs Volume on log scale
+require(scales)
+p2 + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +
+    scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x)))
+
+## get set up
+alpha <- 0.5  # the smooting parameter
+n <- length(Bit$Close)
+net <- 0                 # gain/loss
+fcst <- numeric(n)       # will hold the forecast
+fcst[1] <- Bit$Close[1]  # to start the exponential smooting formula
+
+for (i in 2:n) {
+    # fcst[i] holds the prediction for day i+1
+    fcst[i] <- alpha * Bit$Close[i] + (1-alpha) * fcst[i-1]
+
+    if (fcst[i] >= Bit$Close[i]) { # fcst is for price increase
+        net  <- net - Bit$Close[i] # buy one BTC
+    } else {                       # fcst is for price decrease
+        net <- net + Bit$Close[i]  # sell one BTC
+    }
+}
+message("net dollar position = ",  net)
+
+# plot the forecasted price and the actual price
+Bit$fcst <- fcst
+p + geom_line(aes(x=Date, y=fcst), color="blue")
