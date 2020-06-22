@@ -212,7 +212,7 @@ at the R prompt. Use this data to perform the following exercises.
 \item From the histograms and the scatter plot that you created, what
   can you say about the behavior of the Old Faithful geyser? \label{interp}
   
-\item Fit a linear regression model (using the \texttt{lm()} function
+\item Fit a linear regression model using the \texttt{lm()} function
   with \texttt{waiting} as the response variable and \texttt{eruptions}
   as the only predictor variable. Print a summary of the results.
   \begin{enumerate}
@@ -348,5 +348,35 @@ x_3 = \begin{cases} 0 \quad \text{if season is winter} \\
 \subsubsection*{Classification}
 
 \subsection*{Time Series}
+
+\item \emph{Simulation of a simple trading strategy.}
+  The file \texttt{BTC-USD.csv} contains one year's worth of price
+  data on Bitcoin. The \texttt{Close} column is the price of
+  Bitcoin in USD on \texttt{Date}. 
+
+\begin{enumerate}
+\item Read the data into an R data frame.
+\item Turn the \texttt{Date} field into a proper Date variable rather
+  than a character string.
+\item Make a time-series plot with \texttt{Date} on the x axis and
+  \texttt{Close} on the y axis.
+\item Make a scatter plot with \texttt{Volume} on the x axis and
+  \texttt{Close} on the y axis. Do you see a pattern? Try making
+  this plot using a logarithmic transformation on \texttt{Volume} and
+  \texttt{Close}.
+\item Create a one-step-ahead forecast for the closing price using
+  simple exponential smoothing. Use a smoothing parameter value
+  of $\alpha = 0.5$.
+\item Using your forecast simulate a very simple trading strategy.
+  The strategy is: if the forecast is for a price increase then buy,
+  otherwise if the forecast is for a price decrease then sell. Don't
+  worry about the bid/ask spread, trading fees, or any of the messy
+  details. You are simply buying or selling one Bitcoin at the closing
+  price. Keep track of your gain/loss. How did you do? Do you
+  have any criticisms of this trading strategy?
+\item  Now plot your forecasted/predicted price and the actual price
+  on the same plot. Do you see a general behavior in the forecast?
+  Experiment with different values for $\alpha$.
+\end{enumerate}
   
 \end{enumerate}

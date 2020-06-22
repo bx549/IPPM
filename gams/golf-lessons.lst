@@ -1,4 +1,4 @@
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 1
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux         06/19/20 15:28:53 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -35,22 +35,19 @@ C o m p i l a t i o n
   30   
   31  model auction /all/;
   32  solve auction using lp maximizing z;
-  33   
-      file results /results.dat/;
-      put results;
-      loop(i, put i.tl, @12, x.l(i) /);
-      put "profit", @12, z.l /;
 
 
 COMPILATION TIME     =        0.001 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 2
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux         06/19/20 15:28:53 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Equation Listing    SOLVE auction Using LP From line 32
 
 
 ---- revenue  =E=  objective function
 
-revenue..  - 28*x(amy,emma) - 26*x(amy,dan) - 30*x(amy,sam) - 30*x(brian,emma) - 28*x(brian,dan) - 32*x(brian,sam) + z =E= 0 ; (LHS = 0)
+revenue..  - 28*x(amy,emma) - 26*x(amy,dan) - 30*x(amy,sam) - 30*x(brian,emma) - 28*x(brian,dan)
+     
+      - 32*x(brian,sam) + z =E= 0 ; (LHS = 0)
      
 
 ---- hours  =E=  available hours
@@ -68,7 +65,7 @@ limit(dan)..  x(amy,dan) + x(brian,dan) =L= 8 ; (LHS = 0)
      
 limit(sam)..  x(amy,sam) + x(brian,sam) =L= 8 ; (LHS = 0)
      
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 3
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux         06/19/20 15:28:53 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Column Listing      SOLVE auction Using LP From line 32
 
@@ -101,7 +98,7 @@ z
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       revenue
 
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 4
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux         06/19/20 15:28:53 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Model Statistics    SOLVE auction Using LP From line 32
 
@@ -113,11 +110,11 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES            7
 NON ZERO ELEMENTS            19
 
 
-GENERATION TIME      =        0.001 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
+GENERATION TIME      =        0.003 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
 
 
-EXECUTION TIME       =        0.001 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
-GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 06/06/20 15:31:00 Page 5
+EXECUTION TIME       =        0.003 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux         06/19/20 15:28:53 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Solution Report     SOLVE auction Using LP From line 32
 
@@ -132,7 +129,7 @@ Solution Report     SOLVE auction Using LP From line 32
 **** MODEL STATUS      1 Optimal                   
 **** OBJECTIVE VALUE              588.0000
 
- RESOURCE USAGE, LIMIT          0.028      1000.000
+ RESOURCE USAGE, LIMIT          0.024      1000.000
  ITERATION COUNT, LIMIT         3    2000000000
 
 IBM ILOG CPLEX   31.1.0 r55b6ce3 Released May 01, 2020 LEG x86 64bit/Linux    
@@ -147,41 +144,41 @@ Optimal solution found.
 Objective :         588.000000
 
 
-                           LOWER          LEVEL          UPPER         MARGINAL
+                       LOWER     LEVEL     UPPER    MARGINAL
 
----- EQU revenue             .              .              .             1.0000      
+---- EQU revenue         .         .         .        1.000      
 
   revenue  objective function
 
 ---- EQU hours  available hours
 
-             LOWER          LEVEL          UPPER         MARGINAL
+         LOWER     LEVEL     UPPER    MARGINAL
 
-amy          10.0000        10.0000        10.0000        26.0000      
-brian        10.0000        10.0000        10.0000        28.0000      
+amy      10.000    10.000    10.000    26.000      
+brian    10.000    10.000    10.000    28.000      
 
 ---- EQU limit  8 hours per bidder max
 
-            LOWER          LEVEL          UPPER         MARGINAL
+        LOWER     LEVEL     UPPER    MARGINAL
 
-emma        -INF            8.0000         8.0000         2.0000      
-dan         -INF            4.0000         8.0000          .          
-sam         -INF            8.0000         8.0000         4.0000      
+emma     -INF      8.000     8.000     2.000      
+dan      -INF      4.000     8.000      .         
+sam      -INF      8.000     8.000     4.000      
 
 ---- VAR x  hours bidder j spends with instructor i
 
-                  LOWER          LEVEL          UPPER         MARGINAL
+              LOWER     LEVEL     UPPER    MARGINAL
 
-amy  .emma          .             6.0000        +INF             .          
-amy  .dan           .             4.0000        +INF             .          
-amy  .sam           .              .            +INF            EPS         
-brian.emma          .             2.0000        +INF             .          
-brian.dan           .              .            +INF            EPS         
-brian.sam           .             8.0000        +INF             .          
+amy  .emma      .        6.000     +INF       .         
+amy  .dan       .        4.000     +INF       .         
+amy  .sam       .         .        +INF       EPS       
+brian.emma      .        2.000     +INF       .         
+brian.dan       .         .        +INF       EPS       
+brian.sam       .        8.000     +INF       .         
 
-                           LOWER          LEVEL          UPPER         MARGINAL
+                       LOWER     LEVEL     UPPER    MARGINAL
 
----- VAR z                 -INF          588.0000        +INF             .          
+---- VAR z              -INF    588.000     +INF       .         
 
   z  total revenue
 
@@ -191,7 +188,7 @@ brian.sam           .             8.0000        +INF             .
                              0  UNBOUNDED
 
 
-EXECUTION TIME       =        0.002 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+EXECUTION TIME       =        0.001 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
 
 
 USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
@@ -200,5 +197,5 @@ USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
 
 **** FILE SUMMARY
 
-Input      /home/darin/MEGA/isye/ie1101/gams/golf-lessons.gms
-Output     /home/darin/MEGA/isye/ie1101/gams/golf-lessons.lst
+Input      /home/darin/MEGA/IPPM/gams/golf-lessons.gms
+Output     /home/darin/MEGA/IPPM/gams/golf-lessons.lst
