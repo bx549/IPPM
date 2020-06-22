@@ -148,50 +148,36 @@ Taking the warranty into account, the average profit per battery is
 So, the (average) effect of the warranty on profit is -\$5.90.
 \end{solution}
 
-% this problem needs to be re-written
-\item \emph{Selling tickets.}
-  The Springdale High School band is performing a benefit concert
-  in its new 400-seat auditorium. Local businesses buy the tickets in
-  blocks of 10 and donate them to youth organizations. Tickets go on
-  sale to business entities for four hours only the day before the
-  concert. The process of placing orders for tickets is Poisson with a
-  mean 10 calls per hour.  Any (blocks of) tickets remaining after the
-  box office is closed are sold at a discount as ``rush tickets'' one hour
-  before the concert starts. Determine the following:
+% this problem has been re-written
+\item \emph{Donut giveaway.}
+A professional baseball team has just won a game that secured them a berth in the league’s playoffs. To celebrate, a local donut shop will be giving away up to 200 free donuts during a two-hour period on the morning following the victory. All 200 donuts will be baked and decorated with a baseball theme before the giveaway starts. If there are any donuts remaining after the giveaway, they will be sold at a discounted price. Assume that customers will arrive at the giveaway according to a Poisson process at a mean rate of 100 customers per hour. Also, note that there is a limit of one donut per customer.
 \begin{enumerate}
-\item The probability that it will be possible to buy rush tickets. \label{ex:rusha}
-\item  The average number of rush tickets available. \label{ex:rushb}
+	\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
+	\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
 \end{enumerate}
 
-For part~\ref{ex:rusha}, you should first write down the expression
-for the probability that it will be possible to buy ``rush''
-tickets. To compute the numerical answer, you will want to use
-software such as R.
+For part~\ref{ex:donuta}, present your answer as an expression for the probability that there will be donuts remaining. Then, use software, such as R, to compute a numerical answer.
 
 \begin{solution}
-\bs
-First note that the number of calls in one hour is distributed
-Poisson with mean 10. Consequently, the number of calls in a 4--hour
-period is distributed Poisson with mean 40. Let $N$ be the
-number of calls in a 4--hour period. Then
-\[ N ~ \text{Poisson}(\lambda = 40) \]
-For part~\ref{ex:rusha}, the probability that tickets remain after they
-are offered to the local businesses is
-\begin{align*}
-  P(N < 40) &= \sum_{n=0}^{39} \frac{\lambda^n e^{-\lambda}}{n!}\\
-            &= \sum_{n=0}^{39} \frac{40^n e^{-40}}{n!}\\
-            &\approx .48
-\end{align*}
-In R,
-\begin{Verbatim}
-> sum(dpois(0:39,40))
-[1] 0.4789711
-\end{Verbatim}  
-
-For part~\ref{ex:rushb}, our calculations are all done in expectation
-(or on average). There are 40 calls in 4 hours,
-which means that 400 tickets are sold to local
-businesses. So, on average, no rush tickets are available.
+	\bs
+	Given that customers arrive to the giveaway according to a Poisson process with a mean of 100 customers per hour, the number of customers that arrive during the two-hour period is Poisson distributed with a mean of 200. Let $N$ be the
+	number of customers arriving in a two-hour period. Then
+	\[ N ~ \text{Poisson}(\lambda = 200) \]
+	For part~\ref{ex:donuta}, the probability that there will be donuts remaining after the giveaway is 
+	\begin{align*}
+		P(N < 200) &= \sum_{n=0}^{199} \frac{\lambda^n e^{-\lambda}}{n!}\\
+		&= \sum_{n=0}^{199} \frac{200^n e^{-200}}{n!}\\
+		&\approx .49
+	\end{align*}
+	In R,
+	\begin{Verbatim}
+	> sum(dpois(0:199,200))
+	[1] 0.4905966
+	\end{Verbatim}  
+	
+	For part~\ref{ex:donutb}, our calculations are all done in expectation
+	(or on average). There are 200 customers in 2 hours,
+	which means that 200 donuts are given away. So, on average, no donuts are remaining.
 \end{solution}
 
 % this problem needs to be re-written, but it can be very similar
