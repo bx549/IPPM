@@ -245,136 +245,66 @@ E(\text{do not}) &= (-600)(.851) = -511
 The best decision is to take away prizes when a player tests positive.
 \end{solution}
 
-% this problem needs to be re-written. the main idea is that decisions
-% are made based on expected value and that we can perform a
-% sensitivity analysis and obtain a threshold on a decision, i.e. make
-% decision x if the probability of the state of nature is greater than
-% p.
-\item \emph{Decisions under risk and sensitivity analysis.}
-  Modern forest
-  management uses controlled fires to reduce fire hazards and to
-  stimulate new forest growth. Management has the option to postpone
-  or plan a burning. In a specific forest tract, if burning is
-  postponed, a general administrative cost of \$300 is incurred. If a
-  controlled burning is planned, there is a 50\% chance that good
-  weather will prevail and burning will cost \$3200. The results of
-  the burning may be either successful with probability .6 or marginal
-  with probability .4. Successful execution will result in an
-  estimated benefit of \$6000, and marginal execution will provide
-  only \$3000 in benefits. If the weather is poor, burning will be
-  canceled incurring a cost of \$1200 and no benefit.
-
-  \begin{enumerate}
-  \item On the basis of expected value, should a burning
-    be planned or postponed?
-  \item How does the decision change with the probability of good/poor
-    weather? \label{sen} In other words, you should perform a
-    sensitivity analysis.
-  \end{enumerate}
-
-\begin{solution}
-\bs
-A decision table for this problem is
-
-\begin{center}
-\begin{tabular}{rrr}
-    & $\frac{1}{2}$ & $\frac{1}{2}$ \\
-    & good weather & poor weather \\ \hline
-    postpone burn & -\$300 & -\$300 \\
-    plan burn & \$1600 & -\$1200
-\end{tabular}
-\end{center}
-
-Note that the payoff of \$1600 for a planned burn and resulting good weather is
-\[
--\$3200 + (.6)(\$6000) + (.4)(\$3000) = \$1600
-\]
-
-The expected payoff of each decision is
-\begin{align*}
-&E(\text{postpone}) = -\$300 \\
-&E(\text{plan}) = \left(\frac{1}{2}\right)(\$1600)
-   + \left(\frac{1}{2}\right)(-\$1200) = \$200
-\end{align*}
-Management should plan the burn. For part~\ref{sen}, it
-makes sense that as the probability of poor weather
-increases, the expected value of planning a burn will
-decrease. Specifically, let $p$ represent the probability
-of poor weather.
-\begin{align*}
-  E(\text{plan}) &= (1-p)1600 + p(-1200) \\
-  &= 1600 - 2800p
-\end{align*}
-$E(\text{plan})$ is decreasing in $p$. Management should
-plan a burn as long as
-\begin{align*}
-  E(\text{plan}) &\geq E(\text{postpone}) \\
-  1600 - 2800p &\geq -300 \\
-  -2800p &\geq -1900 \\
-  p &\leq \frac{19}{28} \approx .68
-\end{align*}
-Unless the probability of poor weather is greater than .68,
-planning to burn is the best decision. 
-\end{solution}
-
-=======
 % Emily - expected value and sensitivity analysis
-\item \emph {Decisions under risk and sensitivity analysis.} 
-	The employees at a popular outdoor furniture company predict that their 
-	sales will double this coming year. The company is already producing the 
-	maximum amount of furniture possible in their current facility. They are 
-	considering building another manufacturing facility to be able to meet the 
-	predicted increase in demand. The facility will cost \$500,000 to build. If 
-	the demand doubles as predicted, their income will increase by \$800,000. 
-	If the demand only slightly increases, their income will increase by \$250,000. 
-	If the facility is not built, the company will lose \$50,000 because of the 
-	time workers will have to spend talking to upset customers to explain why 
-	furniture pieces are out-of-stock. The change in demand will be determined by 
-	the weather that year because more people want to buy outdoor furniture if they 
-	can enjoy the good weather outside. There is a 0.55 chance of good weather, 
-	which will result in a double in demand. There is a 0.45 chance of poor 
-	weather, which will result in only a slight increase in demand.
+\item \emph {Decisions under risk and sensitivity analysis.}  The
+  owners of a popular outdoor furniture company predict that their
+  sales will double this coming year. The company is already producing
+  the maximum amount of furniture possible in their current
+  facility. They are considering expanding their manufacturing
+  facility to accommodate the predicted increase in demand. If
+  undertaken, the expansion will cost \$\num{500000}. If the demand
+  doubles as predicted, revenue will increase by \$\num{800000}.  If
+  the predicted increase in demand proves to be too optimistic,
+  revenue will increase by only \$\num{250000}.  If the expansion is
+  not undertaken, the company will lose \$\num{50000} due to
+  out-of-stock orders from agitated customers.  The change in demand
+  will be determined by next year's weather; more outdoor furniture is
+  sold when the weather is nice.  There is a 0.55 chance of good
+  weather, which will result in a doubling of demand. There is a 0.45
+  chance of poor weather, which will result in only a slight increase
+  in demand.
 
 \begin{enumerate}
-	\item Should the facility by built? Use expected value to make your decision.
-	
-	\item How does the decision change with the probability of good/poor
-	weather? Perform a sensitivity analysis to answer.
-	
+\item Should the manufacturing facility be expanded? The owners make
+  decisions based on expected value.
+\item How does the decision change with the probability of good/poor
+  weather? To answer this question, you should perform a sensitivity
+  analysis.
 \end{enumerate}
 
 \begin{solution}
-	\bs The decision table for this problem is
-	\begin{center}
-		\begin{tabular}{rrr}
-			& $\frac{55}{100}$ & $\frac{45}{100}$ \\
-			& good weather & poor weather \\ \hline
-			build facility & \$300,000 & -\$250,000 \\
-			do not build & -\$50,000 & -\$50,000
-		\end{tabular}
-	\end{center}
+\bs The decision table for this problem is
+\begin{center}
+\begin{tabular}{rrr}
+      & $0.55$ & $0.45$ \\
+      & good weather & poor weather \\ \hline
+      expansion & \$\num{300000} & -\$\num{250000} \\
+      no expansion & -\$\num{50000} & -\$\num{50000}
+\end{tabular}
+\end{center}
 
 The expected payoff of each decision is
 \begin{align*}
-&E(\text{do not build}) = -\$50,000 \\
-&E(\text{build}) = \left(\frac{55}{100}\right)(\$300,000)
-+ \left(\frac{45}{100}\right)(-\$250,000) = \$52,500
+&E(\text{expansion}) = 0.55 \times \$\num{300000}
+- 0.45 \times \$\num{250000} = \$\num{52500} \\
+&E(\text{no expansion}) = -\$\num{50000}
 \end{align*}
-The company should build the facility. As the probability of poor weather increases, the expected value of building the new facility decreases. 
-Let $p$ represent the probability of poor weather.
+The company should expand the facility. As the probability of poor
+weather increases, the expected value of the expansion
+decreases.  Let $p$ represent the probability of poor weather.
 \begin{align*}
-E(\text{build}) &= (1-p)300,000 + p(-250,000) \\
-&= 300,000 - 550,000p
+E(\text{expansion}) &= \num{300000}(1-p) - \num{250000}p \\
+&= \num{300000} - \num{550000}p
 \end{align*}
-The company should build that facility as long as
+The company should expand the facility as long as
 \begin{align*}
-E(\text{build}) &\geq E(\text{don't build}) \\
-300,000 - 550,000p &\geq -50,000 \\
--550,0000p &\geq -350,000 \\
+E(\text{expansion}) &\geq E(\text{no expansion}) \\
+\num{300000} - \num{550000}p &\geq -\num{50000} \\
+-\num{5500000}p &\geq -\num{350000} \\
 p &\leq \frac{7}{11} \approx .64
 \end{align*}
-Building the facility is the best decision unless the probability of poor weather is greater than .64.	
-
+Expanding the facility is the best decision unless the probability of
+poor weather is greater than .64.
 \end{solution}
 
 % written by Emily
@@ -418,8 +348,8 @@ and find a solution by elimination of dominated strategies.
 \endgroup
 \vspace{.1in}
 
-For A, ice cream strictly dominates souvenirs and for B, souvenirs strictly dominates
-clothing, leaving a $2 \times 2$ game.
+For A, ice cream strictly dominates souvenirs and for B, souvenirs
+strictly dominates clothing, leaving a $2 \times 2$ game.
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
@@ -433,222 +363,90 @@ clothing, leaving a $2 \times 2$ game.
 \endgroup
 \vspace{.1in}
 
-Now for B, souvenirs dominates ice cream. Then, A will choose to sell ice cream
-over clothing. So, the
-best strategies for A and B are to sell ice cream and souvenirs, respectively. 
-Using this pair of strategies, A will capture 40\% of the customers.
+Now for B, souvenirs dominates ice cream. Then, A will choose to sell
+ice cream over clothing. So, the best strategies for A and B are to
+sell ice cream and souvenirs, respectively.  Using this pair of
+strategies, A will capture 40\% of the customers.
 \end{solution}
 
-% this problem definitely needs to be re-written.  it is unfair to
-% students for whom english is a 2nd language.  the main idea is that
-% we have a 2x3 game, but for the column player, one strategy can be
-% eliminated by domination and so it's really a 2x2 game and we can
-% solve it by hand. it's OK to have one or two exercises that are
-% a little quirky.
-\item \emph{A two-person zero-sum game.}
-Two friends, Goldsen and Kershaw get into a battle of
-  words. Kershaw, hoping to make a little money on the argument,
-  suggests that they create words, or try to, according to the scheme
-  he outlines. Kershaw says the following to Goldsen:
+% written by Emily to replace Goldsen and Kershaw battle of words
+\item \emph{A two-person zero-sum game.}  A professional football
+  player believes that the team he plays for should be allocating more
+  money to the salaries of the players, so he wants his contract to be
+  changed to pay him more. His two options are to play in the upcoming
+  season or not play in the upcoming season and hope the team will
+  negotiate with him. The team knows that he is a valuable player but
+  does not want to pay him more or go through the process of
+  negotiations. The team has come up with three options to deal with
+  the situation: negotiate, refuse to negotiate and play the season
+  without him, or increase the player's salary by a set amount with no
+  other negotiations. Keep in mind that the player wants to maximize
+  his salary, and the team wants to minimize their costs, which means
+  keep salaries as low as possible. The utilities/payoffs to
+  the player and to the team are described next.
 
-\begin{quote}
-Suppose you choose either the letter \emph{a} or the letter
-  \emph{i}, and, independently and at the same time, I will choose
-  \emph{f}, \emph{t}, or \emph{x}. If the two letters chosen form a
-  word, I will pay you \$1, plus a \$3 bonus if the word is a noun or
-  pronoun. In the event that the letters chosen don't form a word, you
-  pay me \$2.
-\end{quote}
+  If the player plays and the team does not negotiate, the player's
+  salary will not change.  If the player does not play and the team
+  does not negotiate, the player will find a different job as a
+  broadcaster for a payoff of 1 because he is such a well-known
+  person. This is bad publicity for the team and hurts their jersey
+  sales.  If the player plays but the team still negotiates, the
+  player will end up with a payoff of 3.  If the player had
+  chosen to not play and the team negotiates, the negotiations will go
+  poorly and the player will end up with a payoff of -2 for having to
+  deal with costs related to poor publicity.  If the team decides
+  increase the player's salary with no negotiations, the player will
+  end up with a payoff of 2 no matter what he chooses to do.
 
-Formulate Kershaw's scheme as a 2--by--3 game and determine the best
-strategy for each player. Is this a fair game?
 
+  Formulate the 2-by-3 game and determine the best strategy for the
+  player and for the team.  Who is most likely to come out ahead in
+  this situation?
+  
 \begin{solution}
 \bs The game is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
 \renewcommand*{\arraystretch}{2}
-\begin{tabularx}{4in}{YYYYY}
-& & \multicolumn{3}{c}{Kershaw} \\
-& & \emph{f} & \emph{t} & \emph{x} \\ \cline{3-5}
-\multirow{2}{.5in}{Goldsen} & \gtcol{\emph{a}} & \gtcol{-2} & \gtcol{1} & \gtcol{4} \\ \cline{3-5}
-& \gtcol{\emph{i}} & \gtcol{1} & \gtcol{4} & \gtcol{-2} \\ \cline{3-5}
+\begin{tabularx}{4.5in}{YYYYY}
+& & \multicolumn{3}{c}{Team} \\
+& & negotiate & don't negotiate & increase salary \\ \cline{3-5}
+\multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} & \gtcol{2} \\ \cline{3-5}
+& \gtcol{don't play} & \gtcol{-2} & \gtcol{1} & \gtcol{2} \\ \cline{3-5}
 \end{tabularx}
 \endgroup
 \vspace{.1in}
 
-Note that there is no saddle point. Also note that Kershaw's strategy
-of \emph{t} is dominated by \emph{f}, so there is no reason that 
-he would choose \emph{t}. The reduced game is
+The team's strategy of a set
+increase is dominated by the strategy to not negotiate, so there is no
+reason that they would chose to offer a pre-determined
+increase without negotiations. The reduced game is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
 \renewcommand*{\arraystretch}{2}
 \begin{tabularx}{4in}{YYYY}
-& & \multicolumn{2}{c}{Kershaw} \\
-& & \emph{f} & \emph{x} \\ \cline{3-4}
-\multirow{2}{.5in}{Goldsen} & \gtcol{\emph{a}} & \gtcol{-2} & \gtcol{4} \\ \cline{3-4}
-& \gtcol{\emph{i}} & \gtcol{1} & \gtcol{-2} \\ \cline{3-4}
+      & & \multicolumn{2}{c}{Team} \\
+      & & {negotiate} & {don't negotiate} \\ \cline{3-4}
+      \multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} \\ \cline{3-4}
+      & \gtcol{don't play} & \gtcol{-2} & \gtcol{1} \\ \cline{3-4}
 \end{tabularx}
 \vspace{.1in}
 \endgroup
 
-Using our scheme outlined in class, Goldsen should play a mixture of
-\emph{a} and \emph{i} according to the odds 3:6 (or equivalenty
-1:2). Kershaw should mix \emph{f} and \emph{x} according to the odds
-6:3 (or equivalently 2:1). The value of the game is
+Since there is no saddle point, the best strategies for the player and
+for team are mixed. The player should mix the strategies ``play'' and
+``don't play'' in the ratio 1:1. The team should mix the strategies
+``negotiate'' and ``don't negotiate'' in the ratio 1:5.  Using the
+player's mixing ratios against the team's strategy of ``negotiate''
+the value of the game is computed as
 \[
-\frac{1 \times (-2) + 2 \times 1}{3} = 0,
+\frac{1 \times (3) + 1 \times (-2)}{2} = 1/2.
 \]
-and so this is a fair game. If Kershaw uses \emph{t}, Goldsen will 
-get, on average
-\[
-\frac{1 \times 1 + 2 \times 4}{3} = \$3.
-\]
+The player is more likely to come out ahead. 
 \end{solution}
-
-% written by Emily to replace Goldsen and Kershaw battle of words
-\item \emph{A two-person zero-sum game.}
-   A professional football player believes that the team he plays for should be allocating more money to the salaries of the players, so he wants his contract
-   to be changed to pay him more. His two options are to play in the upcoming season or not play in the upcoming season and hope the team will negotiate with him. The team knows that he is a valuable player but does not want to pay him more or go through the process of negotiations. The team has come up with three options to deal with the situation: negotiate, refuse to negotiate and play the season without him, or increase the player's salary by a set amount with no other negotiations. Keep in mind that the player wants to maximize his salary, and the team wants to minimize their costs, which means keep salaries as low as possible. The payouts are as follows (in millions of dollars):
   
-  
-  \begin{tabular}{l}
-  	If the player plays and the team does not negotiate, the player's \\
-  	salary will not change. \\
-  	If the player does not play and the team does not negotiate, the \\
-  	player will find a different job as a broadcaster for a pay\\
-  	increase of 1 because he is such a well-known person. This is \\
-  	bad publicity for the team and hurts their jersey sales. \\
-   	If the player plays but the team still negotiates, the \\
-   	player will end up with a pay increase of 3. \\
-   	If the player had chosen to not play and the team negotiates, \\
-   	the negotiations will go poorly and the player will end up \\
-   	kicked off the team and having to deal with costs related to \\
-   	poor publicity. \\
-    If the team decides to set an increase with no negotiations, \\
-    the player will end up with a positive 2 no matter what he \\
-    chooses to do.	
-  \end{tabular}
-
-  
-  Formulate the 2-by-3 decision matrix in terms of changes to the player's salary. 
-  Determine the best strategy for the player and for the team. 
-  Who is most likely to come out ahead in this situation?
-  
-  \begin{solution}
-  	\bs The game is
-  	
-  	\begingroup
-  	\setlength{\tabcolsep}{9pt}
-  	\renewcommand*{\arraystretch}{2}
-  	\begin{tabularx}{4in}{YYYYY}
-  		& & \multicolumn{3}{c}{Team} \\
-  		& & \emph{negotiate} & \emph{don't negotiate} & \emph{double salary} \\ \cline{3-5}
-  		\multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} & \gtcol{2} \\ \cline{3-5}
-  		& \gtcol{\emph{don't play}} & \gtcol{-2} & \gtcol{1} & \gtcol{2} \\ \cline{3-5}
-  	\end{tabularx}
-  	\endgroup
-  	\vspace{.1in}
-  	
-  	There is no saddle point in this game. The team's strategy
-  	of a set increase is dominated by the strategy to not negotiate, so there is no financial reason that 
-  	they would chose to offer a pre-determined increase without negotiations. The reduced game is
-  	
-  	\begingroup
-  	\setlength{\tabcolsep}{9pt}
-  	\renewcommand*{\arraystretch}{2}
-  	\begin{tabularx}{4in}{YYYY}
-  		& & \multicolumn{2}{c}{Team} \\
-  		& & {negotiate} & {don't negotiate} \\ \cline{3-4}
-  		\multirow{2}{.5in}{Player} & \gtcol{play} & \gtcol{3} & \gtcol{0} \\ \cline{3-4}
-  		& \gtcol{don't play} & \gtcol{-2} & \gtcol{1} \\ \cline{3-4}
-  	\end{tabularx}
-  	\vspace{.1in}
-  	\endgroup
-  	
-  	Using the scheme outlined in class, the player should play or not play according to the odds 1:1. The team should negotiate or not negotiate according to the odds 1:5. The value of the game is 
-  	\[
-  	\frac{1 \times (3) + 1 \times (-2)}{2} = 1/2,
-  	\]
-  	so the player is more likely to come out ahead. 
-
-  
-  \end{solution}
-  
-
-% I like this problem but it was mostly taken from another book, so
-% needs to be re-written. I added the last part of the question
-% ... the idea that as long as one player sticks to the optimal
-% strategy, then it makes no difference what the other player does. i
-% would like to keep that idea.
-\item \emph{Cops and Robbers.} A police officer must decide whether
-  to patrol the streets or hang out at the coffee shop.
-  Simultaneously, a robber must decide whether to prowl the streets or
-  stay in his hideaway. If the police officer patrols and the robber
-  prowls, then the officer will surely make an arrest with a payoff of
-  10 for the officer's reputation. If the officer is in the coffee
-  shop while the robber prowls, the payoff (in the form of damage to
-  the officer's reputation) is -1. If the robber stays hidden, then
-  the payoff to the officer is zero to patrol and 5 to hang out
-  in the coffee shop.
-\begin{enumerate}
-\item  Formulate this decision problem as a two--person
-  zero--sum game and determine the optimal strategies for the
-  officer and robber.
-\item Compute the value of the game. \label{val}
-\item Suppose that the robber, who did not take a course in game
-  theory, has a police radio. He overhears the officer, who did well
-  in her course on game theory, telling her partner of her mixed
-  strategy. That is to say, the robber knows the probabilities with
-  which the officer will patrol or get coffee (but he does not know
-  which pure strategy the officer will actually choose). The robber
-  thinks ``Hmmm. That officer is more likely to get coffee than to
-  patrol. Since I know this, I will prowl the streets and my chances
-  of not getting caught are improved.'' Is the robber's argument
-  valid? In other words, does the value of the game change if the
-  robber knows the officer's mixing probabilities (and the officer
-  sticks to them)? \label{knowledge}
-\end{enumerate}
-
-\begin{solution}
-\bs
-The game is
-
-\begingroup
-\setlength{\tabcolsep}{9pt}
-\renewcommand*{\arraystretch}{2}
-\begin{tabularx}{3.25in}{YYYY}
-& & \multicolumn{2}{c}{Robber} \\
-& & prowl & hide \\ \cline{3-4}
-\multirow{2}{.5in}{Officer} & \gtcol{patrol} & \gtcol{10} & \gtcol{0} \\ \cline{3-4}
-& \gtcol{coffee} & \gtcol{-1} & \gtcol{5} \\ \cline{3-4}
-\end{tabularx}
-\endgroup
-\vspace{.1in}
-
-Note that there is no saddle point, so the best strategy
-is a mixed one. According to our scheme given in class, the
-officer's best strategy is to randomize between patrolling and getting
-coffee in the ratio 6 to 10, while the robber should mix his
-strategy of prowling/hiding in the ratio 5 to 11. The corresponding
-probabilities are $(3/8,\,5/8)$ for the officer and $(5/16,\,11/16)$
-for the robber.
-
-Part \ref{val}. To compute the value of the game, note that
-when the officer patrols, she receives a payoff of 10 with
-probability 5/16 and payoff of zero with probability 11/16.
-The value of the game is
-\[ \frac{5 \times 10 + 11 \times 0}{16} = \frac{50}{16} = 3.125 \]
-On average the officer comes out ahead.
-
-Part \ref{knowledge}, the robber's thought process is not valid.
-The value of the game does not change as long as one player
-sticks to the optimal mixed strategy.
-\end{solution}
-
->>>>>>> Stashed changes
 % written by Emily to replace cops and robbers
 \item \emph{Marketing strategies.} Two peanut butter companies,
   Doodle's and Lola's, are deciding on their marketing strategy for
@@ -688,8 +486,7 @@ sticks to the optimal mixed strategy.
 \end{enumerate}
 
 \begin{solution}
-	\bs
-	The game is
+\bs The game is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}

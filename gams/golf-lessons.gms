@@ -30,10 +30,3 @@ limit(j).. sum(i, x(i,j)) =l= maxhours;
 
 model auction /all/;
 solve auction using lp maximizing z;
-
-$ontext
-file results /results.dat/;
-put results;
-loop(i, put i.tl, @12, x.l(i) /);
-put "profit", @12, z.l /;
-$offtext
