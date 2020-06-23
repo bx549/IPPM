@@ -1,7 +1,6 @@
 \chapter{Data Analysis}
 \label{data-analysis}
 
-
 \section{Descriptive Statistics}
 
 Point estimate of a population proportion. Consider the
@@ -40,18 +39,31 @@ se <- sqrt((phat*(1-phat))/n)
 
 %re-written
 \item \emph{Point estimate of a population mean.} Suppose the
-  following data points are a sample of a golfer's scores over his last 20 rounds.
-  Construct a point estimate of his average score. What is the standard error of your point estimate? You can do
-  this problem either by hand or use the software of your choice. 
+  following data points are a sample of a golfer's scores over his
+  last 20 rounds.  Construct a point estimate of his average
+  score. What is the standard error of your point estimate? You can do
+  this problem either by hand or use the software of your choice.
 \begin{verbatim}
 73,69,65,70,67,67,78,72,74,71,70,69,70,67,68,73,70,77,72,69
 \end{verbatim}
   
 %re-written
-\item {Standard error when estimating a proportion.} In a survey, a
-  random sample of \num{1200} students are asked whether they prefer online or in-person classes. 
-  Out of the \num{1200} students, \num{424} said they prefer online classes. Compute a point estimate 
-  of the overall proportion of students that prefer online classes and calculate the standard error of your estimate. 
+\item \emph{Standard error when estimating a proportion.} In a survey, a
+  random sample of \num{1200} students are asked whether they prefer
+  online or in-person classes.  Out of the \num{1200} students,
+  \num{424} said they prefer online classes. Compute a point estimate
+  of the overall proportion of students that prefer online classes and
+  calculate the standard error of your estimate.
+
+% this problem is OK
+\item \emph{The Lognormal distribution.}  The file
+  \texttt{component-lifetimes.txt} contains the time to failure for
+  \num{1345} components (in hours). The times are known to come from a
+  Lognormal distribution. Estimate the parameters of the failure time
+  distribution. Use the parameters to estimate the mean time to
+  failure and also to estimate the probability that a component lasts
+  longer than 10,000 hours.
+
 
 \subsubsection*{Descriptive Graphics}
 
