@@ -12,9 +12,6 @@ The cumulative distribution function (CDF) is denoted
   \]
 
 
-\pgfmathdeclarefunction{gauss}{2}{%
-  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
-}
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
