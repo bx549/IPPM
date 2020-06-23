@@ -282,42 +282,33 @@ For part~\ref{ex:donuta}, present your answer as an expression for the probabili
 
 % this problem needs to be re-written, but it can be very similar
 \item \emph{College expenses.}
-  A freshman student receives a bank deposit of
-  \$100 a month from home to cover incidentals. Withdrawal checks of
-  \$20 each occur randomly during the month and are spaced according to
-  an exponential distribution with a mean value of 1 week.  Determine
-  the probability that the student will run out of incidental money
-  before the end of the fourth week.
+A college student has a part-time job assisting with research on campus. The student receives monthly paychecks of \$150 that are deposited into an account to cover her expenses at college. \$30 is withdrawn from the account randomly throughout the month, and the time between withdrawals is exponential with a mean of five days. Determine the probability that the student will run out of money in the account after 30 days.
 
 \begin{solution}
-\bs
-Let $X$ be a random variable that represents the time between
-checks. The mean time between checks, that is to say the
-expected value of $X$ ($E(X)$), is one week. We know that for
-the Exponential distribution
-\[ E(X) = \frac{1}{\lambda} \]
-where $\lambda$ is the rate (in units of checks
-per week). So,
-\[ X \sim \text{Exp}(\lambda = 1~\text{check per week}) \]
-If the time between checks is distributed Exponential with
-rate $\lambda$, then the number of checks written in $t$ weeks
-is Poisson with mean $\lambda t$. Let $N$ be the number of checks
-written in 4 weeks.
-\[ N \sim \text{Poisson}(\lambda = \lambda \times 4 = 4) \]
-Now, the probability that the student runs out of money is
-\begin{align*}
-  P(N \geq 5) &= 1 - P(N \leq 4) \\
-              &= 1 - \sum_{n=0}^{4} \frac{\lambda^n e^{-\lambda}}{n!}\\
-              &= .37
-\end{align*}
-You may have defined the event that the student runs out of money as
-$P(N = 5)$. In other words, that the student writes exactly five
-checks.  This is incorrect because we are modeling the student's
-check-writing activity as a Poisson process. In other words, the
-(unstated) assumption is that the number of checks written is
-independent of the available funds. (Probably closer to reality?)
+	\bs
+	Let $X$ be a random variable that represents the time between
+	withdrawals. The mean time between withdrawals, that is to say the
+	expected value of $X$ ($E(X)$), is five days. We know that for
+	the Exponential distribution
+	\[ E(X) = \frac{1}{\lambda} \]
+	where $\lambda$ is the rate (in units of withdrawals
+	per day). So,
+	\[ X \sim \text{Exp}(\lambda = 1/5~\text{withdrawals per day}) \]
+	If the time between withdrawals is distributed Exponential with
+	rate $\lambda$, then the number of withdrawals in $t$ days
+	is Poisson with mean $\lambda t$. Let $N$ be the number of withdrawals in 30 days.
+	\[ N \sim \text{Poisson}(\lambda = \lambda \times 30 = 6) \]
+	Now, the probability that the student runs out of money is
+	\begin{align*}
+		P(N \geq 6) &= 1 - P(N \leq 5) \\
+		&= 1 - \sum_{n=0}^{5} \frac{\lambda^n e^{-\lambda}}{n!}\\
+		&= .55
+	\end{align*}
+	You may have defined the event that the student runs out of money as
+	$P(N = 5)$. In other words, that there are exactly five withdrawals.  This is incorrect because we are modeling the withdrawal activity as a Poisson process. In other words, the
+	(unstated) assumption is that the number of withdrawals is
+	independent of the available funds. (Probably closer to reality?)
 \end{solution}
-
 % this problem needs to be re-written, but it can be very similar.
 \item \emph{Stocking an item in inventory.}
 Demand for an item occurs according to a Poisson distribution with
