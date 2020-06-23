@@ -2,6 +2,8 @@
 
 \section{Modeling with Probability Distributions}
 
+
+\subsubsection*{Poisson Distribution}
 % use this section to illustrate modeling with a poisson rv
 At a facility that manufactures recreational sports
   vehicles (ATVs), each vehicle is subjected to a final
@@ -33,6 +35,104 @@ For part \ref{atv3}, management's goal is that $P(X=0)=0.5$, or
 \[ P(X=0) = \frac{e^{-\lambda}\lambda^0}{0!} = e^{-\lambda}=0.5 \]
 Then
 \[ \lambda = -\ln{0.5} = 0.693 \]
+
+\subsubsection*{Normal Distribution}
+% discussion on the Normal distribution
+A refinery makes two grades of gasoline, regular and premium.  The
+advertised octane ratings are 87 for regular gasoline and 89 for
+premium gasoline.  The quality engineer at the refinery asks for 10
+samples from one of the two types of gasoline. She does not know for
+sure whether the samples are from the regular batch or the premium
+batch. She devises the hypothesis test
+\begin{align*}
+H_0: \mu &\leq 87 \\
+H_1: \mu &> 87
+\end{align*}
+and sets the confidence level to be 0.995. Suppose that the mean of
+the 10 samples is 88.3 and the standard deviation is 1.0. What is her
+conclusion for the hypothesis test?
+
+Suppose that a gas station owner has his own octane test
+kit and rule for accepting a tanker-truck of premium gasoline.
+The owner knows from past shipments that the distributions
+of octane ratings are
+\begin{align*}
+X_{\text{regular}} &\sim N(87,1) \\
+X_{\text{premium}} &\sim N(89,1)
+\end{align*}
+Although the owner may not think about it explicitly, his hypothesis
+test is
+\begin{align*}
+H_0: \mu &= 87 \\
+H_1: \mu &= 89
+\end{align*}
+The owner takes one sample from the tanker-truck. If the octane
+measurement is greater than 88.5, then he will accept the shipment as
+premium gasoline. What is the probability that the owner accepts a
+shipment of regular gasoline as premium (i.e. what is $\alpha$)? What
+is the probability that he declines a shipment of premium gasoline,
+claiming that he thinks it is regular (i.e. what is $\beta$)?  Use the
+Normal distribution for this problem. The following diagram may help.
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, domain=0:12, samples=100,
+  height=5cm, width=15cm,
+  axis x line=bottom,
+  axis y line=none,
+  xtick=\empty, ytick=\empty,
+  extra x ticks={4,6,7},
+  extra x tick labels={87,88.5,89},
+  enlargelimits=false, clip=false
+  ]
+  
+  \addplot [fill, pattern=north west lines, domain=0:6] {gauss(7,1)} \closedcycle;
+  \addplot [fill, draw=none, domain=6:12] {gauss(4,1)} \closedcycle;
+  \addplot [thick] {gauss(4,1)};
+  \addplot [thick] {gauss(7,1)};
+
+  \draw [ultra thin] (4,0) -- (4,.3989);
+  \draw [ultra thin] (7,0) -- (7,.3989);
+
+  \draw (4,.42) node[anchor=south] {$H_0$};
+  \draw (7,.42) node[anchor=south] {$H_1$};
+
+  \draw (4.9,.15) node[anchor=east] (beta) {$\beta$};
+  \draw (5.4,.03) node (beta2) {};
+  \draw[-] (beta) -- (beta2);
+
+  \draw (6.5,.15) node[anchor=west] (alpha) {$\alpha$};
+  \draw (6.1,.005) node (alpha2) {};
+  \draw[-] (alpha) -- (alpha2);
+  
+\end{axis}
+\end{tikzpicture}
+
+For the quality engineer, the test statistic is
+\[
+t_0 = \left( \overline{X} - \mu_0 \right)\frac{\sqrt{n}}{S} 
+= \left(88.3 - 87\right) \frac{\sqrt{10}}{1} 
+ = 4.11
+\]
+and since $t_0 > t_{\alpha,n-1}=3.25$ ($\alpha=0.005$) she will
+reject $H_0$ and conclude that the samples are from the premium
+batch of gasoline.
+
+For the station owner,
+\begin{align*}
+\alpha &= P(X > 88.5 \mid H_0) \\
+&= P\left( Z > \frac{88.5-87}{1} \right) \\
+&= 1 - P(Z < 1.5) \\
+&= 0.067
+\end{align*}
+and
+\begin{align*}
+\beta &= P(X < 88.5 \mid H_1) \\
+&= P\left( Z < \frac{88.5-89}{1} \right) \\
+&= P(Z < -0.5) \\
+&= 0.309
+\end{align*}
+
 
 \section{Stochastic Processes}
 
