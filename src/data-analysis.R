@@ -1,6 +1,6 @@
 ## scratch file for chapter on data analysis
 
-## Exercise: Lognormal distribution
+## Exercise: Lognormal distribution parameter estimation
 Lifetimes <- read.table("../data/component-lifetimes.txt", header=T)
 
 (mu <- mean(log(Lifetimes$t)))
