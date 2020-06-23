@@ -153,3 +153,32 @@ message("net dollar position = ",  net)
 # plot the forecasted price and the actual price
 Bit$fcst <- fcst
 p + geom_line(aes(x=Date, y=fcst), color="blue")
+
+## Exercise: Logistic regression
+Med <- read.csv("../data/harrell.csv")
+
+fm <- glm(response ~ age + gender, family=binomial(link="logit"), data=Med)
+summary(fm)
+
+invlogit <- function(x) 1/(1+exp(-x)) # helper function
+
+beta0 <- coef(fm)[1]  # pull out the coefficients
+beta1 <- coef(fm)[2]
+beta2 <- coef(fm)[3]
+
+unname(invlogit(beta0 + beta1*42 + beta2))  # 42 yr-old male
+unname(invlogit(beta0 + beta1*52 + beta2))  # 52 yr-old male
+
+## compute probability of response as a function of age
+## for males and for females and plot.
+Med <- mutate(Med,
+            p.male = invlogit(beta0 + beta1*age + beta2),
+            p.female = invlogit(beta0 + beta1*age)
+            )
+
+ggplot(Med) +
+    geom_jitter(aes(x=age, y=response, color=gender), height=.01, width=.01) +
+    geom_line(aes(x=age, y=p.male, color="male")) +
+    geom_line(aes(x=age, y=p.female, color="female")) +
+    labs(x="Age", y="Probability of response to treatment") +
+    scale_color_manual(name="Gender", values=c(male="blue",female="magenta"))

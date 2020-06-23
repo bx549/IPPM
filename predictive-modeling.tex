@@ -345,6 +345,31 @@ x_3 = \begin{cases} 0 \quad \text{if season is winter} \\
   part~\ref{bb} \label{cc}
 \end{enumerate}
 
+% I need to check if this problem needs to be re-written.  The data is
+% from harrell's book, but we may be able to use it. the idea is to
+% fit a logistic regression model with one numeric predictor and one
+% categorical predictor and view the response on the probability scale
+% graphically.
+\item \emph{Logistic regression.} The file \texttt{harrell.csv}
+contains data on 40 people. The variables are \texttt{age} in years,
+\texttt{gender}, a categorical variable with two levels, \texttt{female}
+and \texttt{male}, and \texttt{response}, a 0/1 indicator variable for
+whether the person responded to a medical treatment (1 means that the
+person responded). Fit a logistic regression model with
+\texttt{response} as the dependent variable and \texttt{age} and
+\texttt{gender} as the independent variables.
+
+\begin{enumerate}
+\item How does the probability of response change for a 42-year-old male
+compared to a 52-year-old male?
+\item Which gender has a higher probability of response to the medical
+treatment?
+\item What is the effect on the odds of response for a one--year
+increase in age?
+\item Make a plot of the probability of response as a function
+of age, with one curve for females and one curve for males.
+\end{enumerate}
+
 \subsubsection*{Classification}
 
 \subsection*{Time Series}
