@@ -2,7 +2,6 @@
 
 \section{Modeling with Probability Distributions}
 
-
 \subsubsection*{Poisson Distribution}
 % use this section to illustrate modeling with a poisson rv
 At a facility that manufactures recreational sports
@@ -138,13 +137,13 @@ and
 
 % Use this section to introduce the idea of a Poisson Process.
 % add explanatory material.
-\emph{A Poisson Process.} A statistician has observed the behavior of a Hollywood celebrity for
-about one year and has noted that between the hours of 8pm and 11pm
-this celebrity generates, on average, three tweets per hour and that
-the rate is approximately the same within each one-hour period.  We
-can count the \emph{number} of tweets that occur in a time interval
-$t$. We can also measure the \emph{time} between tweets. Here is a
-depiction of the tweets from last night.
+\emph{A Poisson Process.} A statistician has observed the behavior of
+a Hollywood celebrity for about one year and has noted that between
+the hours of 8pm and 11pm this celebrity generates, on average, three
+tweets per hour and that the rate is approximately the same within
+each one-hour period.  We can count the \emph{number} of tweets that
+occur in a time interval $t$. We can also measure the \emph{time}
+between tweets. Here is a depiction of the tweets from last night.
 
 \vspace{.2in}
 \begin{center}
@@ -202,8 +201,8 @@ Recall that for the Exponential distribution
 
 Questions.
 \begin{enumerate}
-  \item What is the probability that the celebrity sends out five
-  or more tweets in one hour?
+\item What is the probability that the celebrity sends out five or
+  more tweets in one hour?
 \item What is the probability that the celebrity sends out
   no tweets between 9pm and 11pm?
 \end{enumerate}
@@ -213,6 +212,7 @@ Questions.
 \section{Exercises}
 
 \begin{enumerate}
+  
 \subsubsection*{Modeling with Probability Distributions.}
 
 % this problem is OK
@@ -249,66 +249,86 @@ So, the (average) effect of the warranty on profit is -\$5.90.
 \end{solution}
 
 % this problem has been re-written
-\item \emph{Donut giveaway.}
-A professional baseball team has just won a game that secured them a berth in the league’s playoffs. To celebrate, a local donut shop will be giving away up to 200 free donuts during a two-hour period on the morning following the victory. All 200 donuts will be baked and decorated with a baseball theme before the giveaway starts. If there are any donuts remaining after the giveaway, they will be sold at a discounted price. Assume that customers will arrive at the giveaway according to a Poisson process at a mean rate of 100 customers per hour. Also, note that there is a limit of one donut per customer.
+\item \emph{Donut giveaway.}  A professional baseball team has just
+  won a game that secured them a berth in the league’s playoffs. To
+  celebrate, a local donut shop will be giving away up to 200 free
+  donuts during a two-hour period on the morning following the
+  victory. All 200 donuts will be baked and decorated with a baseball
+  theme before the giveaway starts. If there are any donuts remaining
+  after the giveaway, they will be sold at a discounted price. Assume
+  that customers will arrive at the giveaway according to a Poisson
+  process at a mean rate of 100 customers per hour. Also, note that
+  there is a limit of one donut per customer.
 \begin{enumerate}
 	\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
 	\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
 \end{enumerate}
 
-For part~\ref{ex:donuta}, present your answer as an expression for the probability that there will be donuts remaining. Then, use software, such as R, to compute a numerical answer.
+For part~\ref{ex:donuta}, present your answer as an expression for the
+probability that there will be donuts remaining. Then, use software,
+such as R, to compute a numerical answer.
 
 \begin{solution}
-	\bs
-	Given that customers arrive to the giveaway according to a Poisson process with a mean of 100 customers per hour, the number of customers that arrive during the two-hour period is Poisson distributed with a mean of 200. Let $N$ be the
-	number of customers arriving in a two-hour period. Then
-	\[ N ~ \text{Poisson}(\lambda = 200) \]
-	For part~\ref{ex:donuta}, the probability that there will be donuts remaining after the giveaway is 
-	\begin{align*}
-		P(N < 200) &= \sum_{n=0}^{199} \frac{\lambda^n e^{-\lambda}}{n!}\\
-		&= \sum_{n=0}^{199} \frac{200^n e^{-200}}{n!}\\
-		&\approx .49
-	\end{align*}
-	In R,
-	\begin{Verbatim}
-	> sum(dpois(0:199,200))
-	[1] 0.4905966
-	\end{Verbatim}  
-	
-	For part~\ref{ex:donutb}, our calculations are all done in expectation
-	(or on average). There are 200 customers in 2 hours,
-	which means that 200 donuts are given away. So, on average, no donuts are remaining.
+  \bs Given that customers arrive to the giveaway according to a
+  Poisson process with a mean of 100 customers per hour, the number of
+  customers that arrive during the two-hour period is Poisson
+  distributed with a mean of 200. Let $N$ be the number of customers
+  arriving in a two-hour period. Then
+\[ N ~ \text{Poisson}(\lambda = 200) \]
+For part~\ref{ex:donuta}, the probability that there will be donuts remaining after the giveaway is 
+\begin{align*}
+      P(N < 200) &= \sum_{n=0}^{199} \frac{\lambda^n e^{-\lambda}}{n!}\\
+      &= \sum_{n=0}^{199} \frac{200^n e^{-200}}{n!}\\
+      &\approx .49
+\end{align*}
+In R,
+\begin{Verbatim}
+> sum(dpois(0:199,200))
+[1] 0.4905966
+\end{Verbatim}  
+
+For part~\ref{ex:donutb}, our calculations are all done in expectation
+(or on average). There are 200 customers in 2 hours, which means that
+200 donuts are given away. So, on average, no donuts are remaining.
 \end{solution}
 
-% this problem needs to be re-written, but it can be very similar
-\item \emph{College expenses.}
-A college student has a part-time job assisting with research on campus. The student receives monthly paychecks of \$150 that are deposited into an account to cover her expenses at college. \$30 is withdrawn from the account randomly throughout the month, and the time between withdrawals is exponential with a mean of five days. Determine the probability that the student will run out of money in the account after 30 days.
+% needs to be re-written
+\item \emph{College expenses.}  A college student has a part-time job
+  assisting with research on campus. The student receives monthly
+  paychecks of \$150 that are deposited into an account to cover her
+  expenses at college. \$30 is withdrawn from the account randomly
+  throughout the month, and the time between withdrawals is
+  exponential with a mean of five days. Determine the probability that
+  the student will run out of money in the account after 30 days.
 
 \begin{solution}
-	\bs
-	Let $X$ be a random variable that represents the time between
-	withdrawals. The mean time between withdrawals, that is to say the
-	expected value of $X$ ($E(X)$), is five days. We know that for
-	the Exponential distribution
-	\[ E(X) = \frac{1}{\lambda} \]
-	where $\lambda$ is the rate (in units of withdrawals
-	per day). So,
-	\[ X \sim \text{Exp}(\lambda = 1/5~\text{withdrawals per day}) \]
-	If the time between withdrawals is distributed Exponential with
-	rate $\lambda$, then the number of withdrawals in $t$ days
-	is Poisson with mean $\lambda t$. Let $N$ be the number of withdrawals in 30 days.
-	\[ N \sim \text{Poisson}(\lambda = \lambda \times 30 = 6) \]
-	Now, the probability that the student runs out of money is
-	\begin{align*}
-		P(N \geq 6) &= 1 - P(N \leq 5) \\
-		&= 1 - \sum_{n=0}^{5} \frac{\lambda^n e^{-\lambda}}{n!}\\
-		&= .55
-	\end{align*}
-	You may have defined the event that the student runs out of money as
-	$P(N = 5)$. In other words, that there are exactly five withdrawals.  This is incorrect because we are modeling the withdrawal activity as a Poisson process. In other words, the
-	(unstated) assumption is that the number of withdrawals is
-	independent of the available funds. (Probably closer to reality?)
+\bs
+Let $X$ be a random variable that represents the time between
+withdrawals. The mean time between withdrawals, that is to say the
+expected value of $X$ ($E(X)$), is five days. We know that for
+the Exponential distribution
+\[ E(X) = \frac{1}{\lambda} \]
+where $\lambda$ is the rate (in units of withdrawals
+per day). So,
+\[ X \sim \text{Exp}(\lambda = 1/5~\text{withdrawals per day}) \]
+If the time between withdrawals is distributed Exponential with
+rate $\lambda$, then the number of withdrawals in $t$ days
+is Poisson with mean $\lambda t$. Let $N$ be the number of withdrawals in 30 days.
+\[ N \sim \text{Poisson}(\lambda = \lambda \times 30 = 6) \]
+Now, the probability that the student runs out of money is
+\begin{align*}
+      P(N \geq 6) &= 1 - P(N \leq 5) \\
+      &= 1 - \sum_{n=0}^{5} \frac{\lambda^n e^{-\lambda}}{n!}\\
+      &= .55
+\end{align*}
+You may have defined the event that the student runs out of money as
+$P(N = 5)$. In other words, that there are exactly five withdrawals.
+This is incorrect because we are modeling the withdrawal activity as a
+Poisson process. In other words, the (unstated) assumption is that the
+number of withdrawals is independent of the available funds. (Probably
+closer to reality?)
 \end{solution}
+
 % this problem needs to be re-written, but it can be very similar.
 \item \emph{Stocking an item in inventory.}
 Demand for an item occurs according to a Poisson distribution with

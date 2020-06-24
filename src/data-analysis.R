@@ -13,10 +13,11 @@ Lifetimes <- read.table("../data/component-lifetimes.txt", header=T)
 (p <- 1 - pnorm((log(10000)-mu)/sigma))
 
 ## histogram and fitted distribution
+## put in section 4.2 graphics?
 
 
 
-## Exercise
+## Exercise: College students and driving speed
 Speed <- read.csv("../data/speed_gender_height.csv")
 ggplot(Speed) + geom_boxplot(aes(x=gender, y=speed), na.rm=TRUE)
 

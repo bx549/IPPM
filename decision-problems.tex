@@ -2,32 +2,6 @@
 
 \section{Games Against Nature}
 
-% this is a test
-% this portion will come later in the section.
-% we explain how to use Baye's formula to update a belief.
-% need to change the problem context and add explanatory prose.
-\emph{Updating a prior belief with new information.}
-Your prior probability that a certain coin is biased to always land
-heads up is 0.1. Now you toss the coin three times and observe that it
-lands heads up every time. What is your posterior probability that the
-coin is biased to always land heads up?  Use Baye's formula to compute
-the posterior probability. Use the Binomial distribution to compute
-the likelihood.
-
-Let $B$ indicate that the coin is biased, and let $3H$ indicate an
-outcome of three heads. We are given (or can determine)
-\[
-P(B) = 0.1, \quad P(3H \mid \overline{B}) = \left(\frac{1}{2}\right)^3, \quad P(3H \mid B) = 1
-\]
-We can use Baye's Theorem to compute the posterior probability.
-\begin{align*}
-P(B \mid 3H) &= \frac{P(B~\text{and}~3H)}{P(3H)} \\
-&= \frac{P(3H \mid B)P(B)}{P(3H \mid B)P(B) + P(3H \mid \overline{B})P(\overline{B})} \\
-&= \frac{(1)(0.1)}{(1)(0.1) + \left(\frac{1}{8}\right)(.9)} \\
-&\approx 0.47
-\end{align*}
-
-
 \section{Games Against an Opponent}
 
 % this will be the last portion of this section, where we bring together
