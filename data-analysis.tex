@@ -55,6 +55,8 @@ se <- sqrt((phat*(1-phat))/n)
   of the overall proportion of students that prefer online classes and
   calculate the standard error of your estimate.
 
+
+
 % this problem is OK
 \item \emph{Lognormal distribution parameter estimation.}  The file
   \texttt{component-lifetimes.txt} contains the time to failure for
@@ -64,6 +66,42 @@ se <- sqrt((phat*(1-phat))/n)
   failure and also to estimate the probability that a component lasts
   longer than 10,000 hours.
 
+% this problem is OK
+\item \emph{Required sample size.} The following data are observations
+  from a past study of hummingbird migration rates in miles flown per
+  day. These observations are from 30 different birds. A researcher
+  would like to construct a two-sided, 95\% confidence interval for
+  the average rate (in miles per day). The researcher would like for
+  the width of the confidence interval to be no larger than 1 day. It
+  is very expensive to attach identifiers to the birds, and so the
+  researcher has asked you to determine the smallest sample size that
+  will achieve the desired confidence interval. What sample size do
+  you suggest?
+\begin{Verbatim}[samepage=true]
+17,17,22,18,19,21,21,23,21,25,
+19,21,19,20,20,21,19,20,18,17,
+18,20,19,23,18,22,18,22,18,24
+\end{Verbatim}
+
+\begin{solution}
+\bs The width of a confidence interval is
+2 times the half-width
+\[
+L = 2 \times z_{\alpha/2} \times s/\sqrt{n}
+\]
+and the researcher would like $L\leq 1$. We can use the data to
+estimate a standard deviation $\hat{s} = 2.133$. We do not know $n$. In
+fact, that is the question we are trying to answer. You can assume
+that you will have a sample size at least as big as, say, 30
+birds. Using $n=30$ and the tabulated values for the Normal
+distribution, we find that $z_{\alpha/2} = z_{.025} = 1.96$.  Then the
+required sample size is
+\[
+n \geq 4 \times (z_{\alpha/2} \times \hat{s})^2 = 
+4 \times (1.96 \times 2.133)^2 = 69.9
+\]
+We would recommend a sample size no smaller than 70 observations.
+\end{solution}
 
 \subsubsection*{Descriptive Graphics}
 
