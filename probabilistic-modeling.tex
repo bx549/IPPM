@@ -2,6 +2,7 @@
 
 \section{Modeling with Probability Distributions}
 
+\subsubsection*{Poisson Distribution}
 % use this section to illustrate modeling with a poisson rv
 At a facility that manufactures recreational sports
   vehicles (ATVs), each vehicle is subjected to a final
@@ -34,17 +35,115 @@ For part \ref{atv3}, management's goal is that $P(X=0)=0.5$, or
 Then
 \[ \lambda = -\ln{0.5} = 0.693 \]
 
+\subsubsection*{Normal Distribution}
+% discussion on the Normal distribution
+A refinery makes two grades of gasoline, regular and premium.  The
+advertised octane ratings are 87 for regular gasoline and 89 for
+premium gasoline.  The quality engineer at the refinery asks for 10
+samples from one of the two types of gasoline. She does not know for
+sure whether the samples are from the regular batch or the premium
+batch. She devises the hypothesis test
+\begin{align*}
+H_0: \mu &\leq 87 \\
+H_1: \mu &> 87
+\end{align*}
+and sets the confidence level to be 0.995. Suppose that the mean of
+the 10 samples is 88.3 and the standard deviation is 1.0. What is her
+conclusion for the hypothesis test?
+
+Suppose that a gas station owner has his own octane test
+kit and rule for accepting a tanker-truck of premium gasoline.
+The owner knows from past shipments that the distributions
+of octane ratings are
+\begin{align*}
+X_{\text{regular}} &\sim N(87,1) \\
+X_{\text{premium}} &\sim N(89,1)
+\end{align*}
+Although the owner may not think about it explicitly, his hypothesis
+test is
+\begin{align*}
+H_0: \mu &= 87 \\
+H_1: \mu &= 89
+\end{align*}
+The owner takes one sample from the tanker-truck. If the octane
+measurement is greater than 88.5, then he will accept the shipment as
+premium gasoline. What is the probability that the owner accepts a
+shipment of regular gasoline as premium (i.e. what is $\alpha$)? What
+is the probability that he declines a shipment of premium gasoline,
+claiming that he thinks it is regular (i.e. what is $\beta$)?  Use the
+Normal distribution for this problem. The following diagram may help.
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, domain=0:12, samples=100,
+  height=5cm, width=15cm,
+  axis x line=bottom,
+  axis y line=none,
+  xtick=\empty, ytick=\empty,
+  extra x ticks={4,6,7},
+  extra x tick labels={87,88.5,89},
+  enlargelimits=false, clip=false
+  ]
+  
+  \addplot [fill, pattern=north west lines, domain=0:6] {gauss(7,1)} \closedcycle;
+  \addplot [fill, draw=none, domain=6:12] {gauss(4,1)} \closedcycle;
+  \addplot [thick] {gauss(4,1)};
+  \addplot [thick] {gauss(7,1)};
+
+  \draw [ultra thin] (4,0) -- (4,.3989);
+  \draw [ultra thin] (7,0) -- (7,.3989);
+
+  \draw (4,.42) node[anchor=south] {$H_0$};
+  \draw (7,.42) node[anchor=south] {$H_1$};
+
+  \draw (4.9,.15) node[anchor=east] (beta) {$\beta$};
+  \draw (5.4,.03) node (beta2) {};
+  \draw[-] (beta) -- (beta2);
+
+  \draw (6.5,.15) node[anchor=west] (alpha) {$\alpha$};
+  \draw (6.1,.005) node (alpha2) {};
+  \draw[-] (alpha) -- (alpha2);
+  
+\end{axis}
+\end{tikzpicture}
+
+For the quality engineer, the test statistic is
+\[
+t_0 = \left( \overline{X} - \mu_0 \right)\frac{\sqrt{n}}{S} 
+= \left(88.3 - 87\right) \frac{\sqrt{10}}{1} 
+ = 4.11
+\]
+and since $t_0 > t_{\alpha,n-1}=3.25$ ($\alpha=0.005$) she will
+reject $H_0$ and conclude that the samples are from the premium
+batch of gasoline.
+
+For the station owner,
+\begin{align*}
+\alpha &= P(X > 88.5 \mid H_0) \\
+&= P\left( Z > \frac{88.5-87}{1} \right) \\
+&= 1 - P(Z < 1.5) \\
+&= 0.067
+\end{align*}
+and
+\begin{align*}
+\beta &= P(X < 88.5 \mid H_1) \\
+&= P\left( Z < \frac{88.5-89}{1} \right) \\
+&= P(Z < -0.5) \\
+&= 0.309
+\end{align*}
+
+
 \section{Stochastic Processes}
 
 % Use this section to introduce the idea of a Poisson Process.
 % add explanatory material.
-\emph{A Poisson Process.} A statistician has observed the behavior of a Hollywood celebrity for
-about one year and has noted that between the hours of 8pm and 11pm
-this celebrity generates, on average, three tweets per hour and that
-the rate is approximately the same within each one-hour period.  We
-can count the \emph{number} of tweets that occur in a time interval
-$t$. We can also measure the \emph{time} between tweets. Here is a
-depiction of the tweets from last night.
+\emph{A Poisson Process.} A statistician has observed the behavior of
+a Hollywood celebrity for about one year and has noted that between
+the hours of 8pm and 11pm this celebrity generates, on average, three
+tweets per hour and that the rate is approximately the same within
+each one-hour period.  We can count the \emph{number} of tweets that
+occur in a time interval $t$. We can also measure the \emph{time}
+between tweets. Here is a depiction of the tweets from last night.
 
 \vspace{.2in}
 \begin{center}
@@ -102,8 +201,8 @@ Recall that for the Exponential distribution
 
 Questions.
 \begin{enumerate}
-  \item What is the probability that the celebrity sends out five
-  or more tweets in one hour?
+\item What is the probability that the celebrity sends out five or
+  more tweets in one hour?
 \item What is the probability that the celebrity sends out
   no tweets between 9pm and 11pm?
 \end{enumerate}
@@ -113,6 +212,7 @@ Questions.
 \section{Exercises}
 
 \begin{enumerate}
+  
 \subsubsection*{Modeling with Probability Distributions.}
 
 % this problem is OK
@@ -148,88 +248,85 @@ Taking the warranty into account, the average profit per battery is
 So, the (average) effect of the warranty on profit is -\$5.90.
 \end{solution}
 
-% this problem needs to be re-written
-\item \emph{Selling tickets.}
-  The Springdale High School band is performing a benefit concert
-  in its new 400-seat auditorium. Local businesses buy the tickets in
-  blocks of 10 and donate them to youth organizations. Tickets go on
-  sale to business entities for four hours only the day before the
-  concert. The process of placing orders for tickets is Poisson with a
-  mean 10 calls per hour.  Any (blocks of) tickets remaining after the
-  box office is closed are sold at a discount as ``rush tickets'' one hour
-  before the concert starts. Determine the following:
+% this problem has been re-written
+\item \emph{Donut giveaway.}  A professional baseball team has just
+  won a game that secured them a berth in the league’s playoffs. To
+  celebrate, a local donut shop will be giving away up to 200 free
+  donuts during a two-hour period on the morning following the
+  victory. All 200 donuts will be baked and decorated with a baseball
+  theme before the giveaway starts. If there are any donuts remaining
+  after the giveaway, they will be sold at a discounted price. Assume
+  that customers will arrive at the giveaway according to a Poisson
+  process at a mean rate of 100 customers per hour. Also, note that
+  there is a limit of one donut per customer.
 \begin{enumerate}
-\item The probability that it will be possible to buy rush tickets. \label{ex:rusha}
-\item  The average number of rush tickets available. \label{ex:rushb}
+	\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
+	\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
 \end{enumerate}
 
-For part~\ref{ex:rusha}, you should first write down the expression
-for the probability that it will be possible to buy ``rush''
-tickets. To compute the numerical answer, you will want to use
-software such as R.
+For part~\ref{ex:donuta}, present your answer as an expression for the
+probability that there will be donuts remaining. Then, use software,
+such as R, to compute a numerical answer.
 
 \begin{solution}
-\bs
-First note that the number of calls in one hour is distributed
-Poisson with mean 10. Consequently, the number of calls in a 4--hour
-period is distributed Poisson with mean 40. Let $N$ be the
-number of calls in a 4--hour period. Then
-\[ N ~ \text{Poisson}(\lambda = 40) \]
-For part~\ref{ex:rusha}, the probability that tickets remain after they
-are offered to the local businesses is
+  \bs Given that customers arrive to the giveaway according to a
+  Poisson process with a mean of 100 customers per hour, the number of
+  customers that arrive during the two-hour period is Poisson
+  distributed with a mean of 200. Let $N$ be the number of customers
+  arriving in a two-hour period. Then
+\[ N ~ \text{Poisson}(\lambda = 200) \]
+For part~\ref{ex:donuta}, the probability that there will be donuts remaining after the giveaway is 
 \begin{align*}
-  P(N < 40) &= \sum_{n=0}^{39} \frac{\lambda^n e^{-\lambda}}{n!}\\
-            &= \sum_{n=0}^{39} \frac{40^n e^{-40}}{n!}\\
-            &\approx .48
+      P(N < 200) &= \sum_{n=0}^{199} \frac{\lambda^n e^{-\lambda}}{n!}\\
+      &= \sum_{n=0}^{199} \frac{200^n e^{-200}}{n!}\\
+      &\approx .49
 \end{align*}
 In R,
 \begin{Verbatim}
-> sum(dpois(0:39,40))
-[1] 0.4789711
+> sum(dpois(0:199,200))
+[1] 0.4905966
 \end{Verbatim}  
 
-For part~\ref{ex:rushb}, our calculations are all done in expectation
-(or on average). There are 40 calls in 4 hours,
-which means that 400 tickets are sold to local
-businesses. So, on average, no rush tickets are available.
+For part~\ref{ex:donutb}, our calculations are all done in expectation
+(or on average). There are 200 customers in 2 hours, which means that
+200 donuts are given away. So, on average, no donuts are remaining.
 \end{solution}
 
-% this problem needs to be re-written, but it can be very similar
-\item \emph{College expenses.}
-  A freshman student receives a bank deposit of
-  \$100 a month from home to cover incidentals. Withdrawal checks of
-  \$20 each occur randomly during the month and are spaced according to
-  an exponential distribution with a mean value of 1 week.  Determine
-  the probability that the student will run out of incidental money
-  before the end of the fourth week.
+% needs to be re-written
+\item \emph{College expenses.}  A college student has a part-time job
+  assisting with research on campus. The student receives monthly
+  paychecks of \$150 that are deposited into an account to cover her
+  expenses at college. \$30 is withdrawn from the account randomly
+  throughout the month, and the time between withdrawals is
+  exponential with a mean of five days. Determine the probability that
+  the student will run out of money in the account after 30 days.
 
 \begin{solution}
 \bs
 Let $X$ be a random variable that represents the time between
-checks. The mean time between checks, that is to say the
-expected value of $X$ ($E(X)$), is one week. We know that for
+withdrawals. The mean time between withdrawals, that is to say the
+expected value of $X$ ($E(X)$), is five days. We know that for
 the Exponential distribution
 \[ E(X) = \frac{1}{\lambda} \]
-where $\lambda$ is the rate (in units of checks
-per week). So,
-\[ X \sim \text{Exp}(\lambda = 1~\text{check per week}) \]
-If the time between checks is distributed Exponential with
-rate $\lambda$, then the number of checks written in $t$ weeks
-is Poisson with mean $\lambda t$. Let $N$ be the number of checks
-written in 4 weeks.
-\[ N \sim \text{Poisson}(\lambda = \lambda \times 4 = 4) \]
+where $\lambda$ is the rate (in units of withdrawals
+per day). So,
+\[ X \sim \text{Exp}(\lambda = 1/5~\text{withdrawals per day}) \]
+If the time between withdrawals is distributed Exponential with
+rate $\lambda$, then the number of withdrawals in $t$ days
+is Poisson with mean $\lambda t$. Let $N$ be the number of withdrawals in 30 days.
+\[ N \sim \text{Poisson}(\lambda = \lambda \times 30 = 6) \]
 Now, the probability that the student runs out of money is
 \begin{align*}
-  P(N \geq 5) &= 1 - P(N \leq 4) \\
-              &= 1 - \sum_{n=0}^{4} \frac{\lambda^n e^{-\lambda}}{n!}\\
-              &= .37
+      P(N \geq 6) &= 1 - P(N \leq 5) \\
+      &= 1 - \sum_{n=0}^{5} \frac{\lambda^n e^{-\lambda}}{n!}\\
+      &= .55
 \end{align*}
 You may have defined the event that the student runs out of money as
-$P(N = 5)$. In other words, that the student writes exactly five
-checks.  This is incorrect because we are modeling the student's
-check-writing activity as a Poisson process. In other words, the
-(unstated) assumption is that the number of checks written is
-independent of the available funds. (Probably closer to reality?)
+$P(N = 5)$. In other words, that there are exactly five withdrawals.
+This is incorrect because we are modeling the withdrawal activity as a
+Poisson process. In other words, the (unstated) assumption is that the
+number of withdrawals is independent of the available funds. (Probably
+closer to reality?)
 \end{solution}
 
 % this problem needs to be re-written, but it can be very similar.

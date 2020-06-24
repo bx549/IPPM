@@ -3,7 +3,8 @@
 \usepackage[letterpaper, top=1in, bottom=1.25in, left=1.25in, right=1.25in]{geometry}
 \usepackage[pdftex]{graphicx}
 \usepackage{amsmath,amssymb,latexsym}
-\usepackage{biblatex,tipa,textcomp}
+\usepackage[style=numeric,sorting=nty]{biblatex}
+\usepackage{tipa,textcomp}
 \usepackage{fancyhdr,tabularx,tabulary}
 \usepackage{paralist,comment,fancyvrb}
 \usepackage{multirow,url,calc}
@@ -13,6 +14,8 @@
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage{color,colortbl}
 \usepackage{draftwatermark}
+
+\addbibresource{bibdata.bib}
 
 \newcommand{\mtilde}{$\mathtt{\sim}$}
 \usepackage{listings}% http://ctan.org/pkg/listings
@@ -24,7 +27,13 @@
 \SetWatermarkScale{3}
 
 \usetikzlibrary{arrows.meta}
+\usetikzlibrary{patterns}
 \pgfplotsset{compat=1.12}
+
+% use with tikz to create Normal distribution
+\pgfmathdeclarefunction{gauss}{2}{%
+  \pgfmathparse{1/(#2*sqrt(2*pi))*exp(-((x-#1)^2)/(2*#2^2))}%
+}
 
 \graphicspath{ {images/} }
 \includexmp{metadata/CC_Attribution_4.0_International}
@@ -41,8 +50,6 @@
 
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{1}
-
-\addbibresource{bibdata.bib}
 
 \begin{document}
 \chapter*{\Huge \center An Introduction to Prescriptive
@@ -83,8 +90,5 @@ within.
 \include{predictive-modeling}
 \include{appendix}
 
-\nocite{Anderson:2015pnas} % example
-
-\chapter{References}
 \printbibliography
 \end{document}
