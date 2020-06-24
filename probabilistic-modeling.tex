@@ -214,7 +214,7 @@ Questions.
 \subsubsection*{Modeling with Probability Distributions.}
 
 % this problem is OK
-% Geometrix
+% Geometric
 \item \emph{Searching for an item.} Albert has \num{1176} Pok\'{e}mon
   cards in total.  Pok\'{e}mon EX is a special type of card, and
   Albert has 39 EX-type cards.  He is looking for an EX-type card, but
@@ -472,7 +472,7 @@ P(X \geq 2) = 1 - P(X \leq 1) &= 1 - P(X=0) - P(X=1) \\
 \end{solution}
 
 % this problem is OK
-% a poisson process, memoryless property of exponential distribution
+% a poisson process, memory-less property of exponential distribution
 \item A dump truck at a mine takes ore to the railroad after 10
   one-ton scoops have been loaded into the truck.  The one-ton scoops
   are loaded from a large diesel-powered shovel independently and at a
@@ -485,7 +485,7 @@ P(X \geq 2) = 1 - P(X \leq 1) &= 1 - P(X=0) - P(X=1) \\
 \item It takes the dump truck 18 minutes to travel to the railroad,
   unload, and return. Suppose the truck returns and finds that no
   scoop is ready to be loaded. What is the probability that the next
-  scoop is ready within 5 minutes? \label{item:truck}
+  scoop is ready within 5 minutes? \label{item:2}
 \end{enumerate}
 
 \begin{solution}
@@ -500,7 +500,7 @@ P(X \geq 2) = 1 - P(X \leq 1) &= 1 - P(X=0) - P(X=1) \\
 \[
 P(X \leq 9) = \sum_{x=0}^9 \frac{e^{-\lambda}\lambda^x}{x!} = .83.
 \]
-For part~\label{item:truck}, we can invoke the memoryless property of the
+For part \ref{item:2}, we can invoke the memoryless property of the
 Exponential distribution. The remaining time until the next arrival is
 disitributed Exponential with rate 7 scoops per hour, regardless of how
 much time has elapsed since the last arrival. Let $Y$ be the time
