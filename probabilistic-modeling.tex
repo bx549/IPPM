@@ -348,42 +348,41 @@ For part~\ref{ex:donutb}, our calculations are all done in expectation
 200 donuts are given away. So, on average, no donuts are remaining.
 \end{solution}
 
-% needs to be re-written
+% re-written by hannah
 % Poisson distrubtion
-\item \emph{College expenses.}  A college student has a part-time job
-  assisting with research on campus. The student receives monthly
-  paychecks of \$150 that are deposited into an account to cover her
-  expenses at college. \$30 is withdrawn from the account randomly
-  throughout the month, and the time between withdrawals is
-  exponential with a mean of five days. Determine the probability that
-  the student will run out of money in the account after 30 days.
+\item \emph{Startup expenses.}  Two friends are starting a small
+  business selling ice cream. They applied for a grant and have
+  received \$\num{1800} to help cover any startup expenses. The
+  friends will incur expenses of \$300 randomly throughout the first
+  year, and the time between payments for these expenses is
+  exponential with a mean of 2 months. Determine the probability that
+  the friends will run out of grant money before the end of the year.
 
 \begin{solution}
-\bs
-Let $X$ be a random variable that represents the time between
-withdrawals. The mean time between withdrawals, that is to say the
-expected value of $X$ ($E(X)$), is five days. We know that for
-the Exponential distribution
+  \bs Let $X$ be a random variable that represents the time between
+  payments. The mean time between payments, that is to say the
+  expected value of $X$ ($E(X)$), is two months. We know that for the
+  Exponential distribution
 \[ E(X) = \frac{1}{\lambda} \]
-where $\lambda$ is the rate (in units of withdrawals
-per day). So,
-\[ X \sim \text{Exp}(\lambda = 1/5~\text{withdrawals per day}) \]
-If the time between withdrawals is distributed Exponential with
-rate $\lambda$, then the number of withdrawals in $t$ days
-is Poisson with mean $\lambda t$. Let $N$ be the number of withdrawals in 30 days.
-\[ N \sim \text{Poisson}(\lambda = \lambda \times 30 = 6) \]
-Now, the probability that the student runs out of money is
+where $\lambda$ is the rate (in units of payments
+per month). So,
+\[ X \sim \text{Exp}(\lambda = 1/2~\text{payments per month}) \] If
+the time between payments is distributed Exponential with rate
+$\lambda$, then the number of payments in $t$ months is Poisson with
+mean $\lambda t$. Let $N$ be the number of payments in 12 months.
+\[ N \sim \text{Poisson}(\lambda t = \lambda \times 12 = 6) \]
+Now, the probability that the friends runs out of money is
 \begin{align*}
       P(N \geq 6) &= 1 - P(N \leq 5) \\
       &= 1 - \sum_{n=0}^{5} \frac{\lambda^n e^{-\lambda}}{n!}\\
-      &= .55
+      &= 0.55
 \end{align*}
-You may have defined the event that the student runs out of money as
-$P(N = 5)$. In other words, that there are exactly five withdrawals.
-This is incorrect because we are modeling the withdrawal activity as a
-Poisson process. In other words, the (unstated) assumption is that the
-number of withdrawals is independent of the available funds. (Probably
-closer to reality?)
+You may have defined the event that the friends runs out of
+money as $P(N = 6)$. In other words, that there are exactly
+six payments during the first year.  This is incorrect because
+we are modeling the spending activity as a Poisson process. In
+other words, the (unstated) assumption is that the number of
+payments is independent of the available funds.
 \end{solution}
 
 % this problem needs to be re-written, but it can be very similar.
