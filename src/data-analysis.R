@@ -16,7 +16,6 @@ Lifetimes <- read.table("../data/component-lifetimes.txt", header=T)
 ## put in section 4.2 graphics?
 
 
-
 ## Exercise: College students and driving speed
 Speed <- read.csv("../data/speed_gender_height.csv")
 ggplot(Speed) + geom_boxplot(aes(x=gender, y=speed), na.rm=TRUE)
@@ -25,5 +24,4 @@ ggplot(Speed) + geom_point(aes(x=height, y=speed, color=gender), na.rm=TRUE)
 
 fm <- lm(speed ~ height + gender, data = Speed)
 summary(fm)
-
 
