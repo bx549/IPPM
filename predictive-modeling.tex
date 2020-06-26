@@ -186,7 +186,7 @@ RSS <- sum( (y - y.hat)^2 )
 \subsubsection*{Regression}
   
 % this problem is OK
-\item \emph{Linear regression with a single predictor variable.}
+\item \emph{Old Faithful.}
 In the \texttt{datasets} package in R there is a data set named
 \text{faithful} that
 contains data on the Old Faithful geyser in Yellowstone National Park,
@@ -230,8 +230,23 @@ at the R prompt. Use this data to perform the following exercises.
   \end{enumerate}
 \end{enumerate}
 
+% this problem needs to be re-written.
+% the questions are good, but we cannot use this data set.
+\item \emph{VO2 max.} VO2 max is a measurement of the maximum amount
+  of oxygen a person can utilize during intense exercise. The file
+\texttt{vo2max-aerobic-fitness.csv} contains 20 observations of
+VO2 max for people of various ages.
+\begin{enumerate}
+\item Fit a regression model with VO2 max as the response
+variable and age as the predictor variable.
+\item Plot the data and overlay the fitted regression line.
+\item Provide an interpretation for the coefficient on age.
+\item In your own words, state your interpretation of the $p$-value
+for the coefficient on age.
+\end{enumerate}
+  
 % written by braeden
-\item \emph{Using multiple linear regression to summarize a dataset.}
+\item \emph{Fuel efficiency.}
   For this problem we will be using a dataset called \texttt{mtcars}
   from the \texttt{datasets} package in R. This dataset contains data
   about different types of cars.  Fit a linear regression model using

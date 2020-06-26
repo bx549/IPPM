@@ -2,7 +2,6 @@
 
 \section{Modeling with Probability Distributions}
 
-\subsubsection*{Poisson Distribution}
 % use this section to illustrate modeling with a poisson rv
 At a facility that manufactures recreational sports
   vehicles (ATVs), each vehicle is subjected to a final
@@ -35,7 +34,6 @@ For part \ref{atv3}, management's goal is that $P(X=0)=0.5$, or
 Then
 \[ \lambda = -\ln{0.5} = 0.693 \]
 
-\subsubsection*{Normal Distribution}
 % discussion on the Normal distribution
 A refinery makes two grades of gasoline, regular and premium.  The
 advertised octane ratings are 87 for regular gasoline and 89 for
@@ -216,6 +214,63 @@ Questions.
 \subsubsection*{Modeling with Probability Distributions.}
 
 % this problem is OK
+% Geometric
+\item \emph{Searching for an item.} Albert has \num{1176} Pok\'{e}mon
+  cards in total.  Pok\'{e}mon EX is a special type of card, and
+  Albert has 39 EX-type cards.  He is looking for an EX-type card, but
+  all of the cards are completely mixed up and stored in a shoe
+  box. His mother is calling him for dinner.  What is the probability
+  that Albert will have to look through no more than 25 cards before
+  he finds an EX-type card?
+
+\begin{solution}
+\bs Consider finding an EX-type card to be a ``success''. Let $X$ be a
+random variable that represents the number of cards that Albert has to
+handle up to and including the first success. Then
+\[
+X \sim \text{Geometric}(p=\frac{39}{1176})
+\]
+and
+\[
+P(X \leq 25) = 1 - (1 - p)^{25} \approx 0.57.
+\]
+\end{solution}
+
+% this problem is OK
+% Binomial, odds, probabilities
+\item \emph{Playing Pok\`{e}mon.} Albert is playing
+  Pok\'{e}mon cards with his friend. It's Albert's turn, and he
+  decides to use Marowak. The card says the following.
+\begin{quote}
+\emph{Flip a coin four times. The amount of damage done to your opponent's
+Pok\'{e}mon is the number of heads times 40.}
+\end{quote}
+What are the odds that Marowak will do at least 120 damage to the
+opponent? One approach to answer this question is to use the Binomial
+distribution to compute the probability of doing at least 120 damage
+and then convert from probability to odds. You can take another
+approach if you prefer. In any case, assume that the coin is fair,
+i.e.\ the probability of getting heads on any particular toss is 1/2.
+
+\begin{solution}
+\bs
+In order to do at least 120 damage, we need either three or four heads
+out of the four coin tosses. Let $X$ represent the number of heads obtained
+in four tosses of a fair coin. Then $X \sim \text{Binomial}(p=1/2,n=4)$.
+\begin{align*}
+P(X=3) + P(X=4) &= {4 \choose 3} p^3 (1-p)^1 + {4 \choose 4} p^4 (1-p)^0 \\
+&= \frac{1}{4} + \frac{1}{16} \\
+&= \frac{5}{16}
+\end{align*}
+The odds are
+\[
+\frac{p}{1-p} = \frac{\frac{5}{16}}{1-\frac{5}{16}} = \frac{5}{11}
+\]
+or 5 to 11.
+\end{solution}
+
+% this problem is OK
+% Exponential distribution
 \item \emph{Evaluating a warranty.}
   A manufacturer of automotive batteries offers a one-year
   warranty. If the battery fails for any reason during the warranty
@@ -249,6 +304,7 @@ So, the (average) effect of the warranty on profit is -\$5.90.
 \end{solution}
 
 % this problem has been re-written
+% Poisson distribution
 \item \emph{Donut giveaway.}  A professional baseball team has just
   won a game that secured them a berth in the league’s playoffs. To
   celebrate, a local donut shop will be giving away up to 200 free
@@ -288,48 +344,49 @@ In R,
 \end{Verbatim}  
 
 For part~\ref{ex:donutb}, our calculations are all done in expectation
-(or on average). There are 200 customers in 2 hours, which means that
-200 donuts are given away. So, on average, no donuts are remaining.
+(that is to say, on average). There are 200 customers in 2 hours,
+which means that 200 donuts are given away. So, on average, no donuts
+are remaining.
 \end{solution}
 
-% needs to be re-written
-\item \emph{College expenses.}  A college student has a part-time job
-  assisting with research on campus. The student receives monthly
-  paychecks of \$150 that are deposited into an account to cover her
-  expenses at college. \$30 is withdrawn from the account randomly
-  throughout the month, and the time between withdrawals is
-  exponential with a mean of five days. Determine the probability that
-  the student will run out of money in the account after 30 days.
+% re-written by hannah
+% Poisson distribution
+\item \emph{Startup expenses.}  Two friends are starting a small
+  business selling ice cream. They applied for a grant and have
+  received \$\num{1800} to help cover any startup expenses. The
+  friends will incur expenses of \$300 randomly throughout the first
+  year, and the time between payments for these expenses is
+  exponential with a mean of 2 months. Determine the probability that
+  the friends will run out of grant money before the end of the year.
 
 \begin{solution}
-\bs
-Let $X$ be a random variable that represents the time between
-withdrawals. The mean time between withdrawals, that is to say the
-expected value of $X$ ($E(X)$), is five days. We know that for
-the Exponential distribution
-\[ E(X) = \frac{1}{\lambda} \]
-where $\lambda$ is the rate (in units of withdrawals
-per day). So,
-\[ X \sim \text{Exp}(\lambda = 1/5~\text{withdrawals per day}) \]
-If the time between withdrawals is distributed Exponential with
-rate $\lambda$, then the number of withdrawals in $t$ days
-is Poisson with mean $\lambda t$. Let $N$ be the number of withdrawals in 30 days.
-\[ N \sim \text{Poisson}(\lambda = \lambda \times 30 = 6) \]
-Now, the probability that the student runs out of money is
+  \bs Let $X$ be a random variable that represents the time between
+  payments. The mean time between payments, that is to say the
+  expected value of $X$ ($E(X)$), is two months. We know that for the
+  Exponential distribution
+  \[ E(X) = \frac{1}{\lambda} \] where $\lambda$ is the rate (in units
+  of payments per month). So,
+  \[ X \sim \text{Exp}(\lambda = 1/2~\text{payments per month}) \] If
+  the time between payments is distributed Exponential with rate
+  $\lambda$, then the number of payments in $t$ months is Poisson with
+  mean $\lambda t$. Let $N$ be the number of payments in 12 months.
+  \[ N \sim \text{Poisson}(\lambda t = \lambda \times 12 = 6) \] Now,
+  the probability that the friends runs out of money is
 \begin{align*}
       P(N \geq 6) &= 1 - P(N \leq 5) \\
       &= 1 - \sum_{n=0}^{5} \frac{\lambda^n e^{-\lambda}}{n!}\\
-      &= .55
+      &= 0.55
 \end{align*}
-You may have defined the event that the student runs out of money as
-$P(N = 5)$. In other words, that there are exactly five withdrawals.
-This is incorrect because we are modeling the withdrawal activity as a
-Poisson process. In other words, the (unstated) assumption is that the
-number of withdrawals is independent of the available funds. (Probably
-closer to reality?)
+You may have defined the event that the friends runs out of
+money as $P(N = 6)$. In other words, that there are exactly
+six payments during the first year.  This is incorrect because
+we are modeling the spending activity as a Poisson process. In
+other words, the (unstated) assumption is that the number of
+payments is independent of the available funds.
 \end{solution}
 
 % this problem needs to be re-written, but it can be very similar.
+% Poisson distribution
 \item \emph{Stocking an item in inventory.}
 Demand for an item occurs according to a Poisson distribution with
 mean 3 per day. The maximum stock level is 25 items, which occurs on
@@ -382,8 +439,110 @@ Using R,
 \end{Verbatim}
 \end{solution}
 
+% this problem needs to be re-written.
+% Poisson distribution
+\item \emph{Making cookies.} A baker blends 800 chocolate chips into a
+  dough mix and, from this, makes 500 cookies.
+\begin{enumerate}
+\item Find the probability that a randomly picked cookie will have 
+exactly three chocolate chips. \label{a}
+\item Find the probability that a randomly picked cookie will have
+  at least two chocolate chips. \label{b}
+\end{enumerate}
+Assume that the chocolate chips are mixed thoroughly,
+and in a random fashion. Let $X$ be a random variable that represents
+the number of chips in a cookie, and assume that $X$ follows a 
+Poisson distribution.
+
+\begin{solution}
+\bs For part~\ref{a}, we want to know $P(X=3)$.  With 800 chips
+randomly mixed into 500 cookies, there will be, on average, $800/500 =
+1.6$ chips per cookie.  Then $X \sim \text{Poisson}(\lambda = 1.6)$.
+\[
+P(X=3) = \frac{e^{-\lambda}\lambda^3}{3!} = \frac{e^{-1.6}1.6^3}{6} = 0.138
+\]
+For part~\ref{b}, the probability that a cookie has at least two
+chips is
+\begin{align*}
+P(X \geq 2) = 1 - P(X \leq 1) &= 1 - P(X=0) - P(X=1) \\
+&= 1 - \frac{e^{-1.6}\times 1.6^0}{0!} - \frac{e^{-1.6}\times 1.6^1}{1!} \\
+&= 0.475
+\end{align*}
+\end{solution}
+
+% this problem is OK
+% a poisson process, memory-less property of exponential distribution
+\item A dump truck at a mine takes ore to the railroad after 10
+  one-ton scoops have been loaded into the truck.  The one-ton scoops
+  are loaded from a large diesel-powered shovel independently and at a
+  mean rate of seven scoops per hour.  The time between scoops from the
+  shovel can be considered to follow an Exponential distribution.
+
+\begin{enumerate}
+\item Find the probability that the time between consecutive trips to
+  the railroad will be at least one hour.
+\item It takes the dump truck 18 minutes to travel to the railroad,
+  unload, and return. Suppose the truck returns and finds that no
+  scoop is ready to be loaded. What is the probability that the next
+  scoop is ready within 5 minutes? \label{item:2}
+\end{enumerate}
+
+\begin{solution}
+  \bs The time between scoop arrivals is distributed Exponential, so
+  we know that the number of arrivals in a time interval is
+  distributed Poisson. In particular, the number of arrivals in a
+  one-hour period follows a Poisson distribution with mean
+  $\lambda=7$. In order for the time between consecutive trips to the
+  railroad to take at least one hour, we require that the number of
+  arrivals in one hour is nine or less. Let $X$ be the number of
+  (scoop) arrivals in a one hour period.
+\[
+P(X \leq 9) = \sum_{x=0}^9 \frac{e^{-\lambda}\lambda^x}{x!} = .83.
+\]
+For part \ref{item:2}, we can invoke the memoryless property of the
+Exponential distribution. The remaining time until the next arrival is
+disitributed Exponential with rate 7 scoops per hour, regardless of how
+much time has elapsed since the last arrival. Let $Y$ be the time
+until the next arrival, and don't forget to convert from minutes to
+hours.
+\[
+P(Y \leq 5) = 1 - e^{-7\times \frac{5}{60}} = .44
+\]
+\end{solution}
+
 % this problem needs to be re-written
-\item \emph{Lognormal distribution.} The prices of stocks are often modeled
+% normal distribution
+\item Normal distribution. A final exam is constructed so that the
+  test scores $x$ are approximately normally distributed, with
+  parameters $\mu$ and $\sigma$. The instructor (who is nicer than me)
+  assigns letter grades to the test scores as shown in the table
+  below. This is known as ``grading on the curve''. What fraction of
+  the class gets A, B, C, D, F?
+
+\begin{tabular}{lc}
+test score & letter grade \\ \hline
+$\mu+\sigma < x$ & A \\
+$\mu < x < \mu+\sigma$ & B \\
+$\mu-\sigma < x < \mu$ & C \\
+$\mu-2\sigma < x < \mu-\sigma$ & D \\
+$x < \mu-2\sigma$ & F
+\end{tabular}
+
+\vspace{.1in}
+\begin{solution}
+\bs
+\begin{align*}
+\text{A}&\quad 1-P(X<\mu+\sigma)=1-\Phi(1) = .159 \\
+\text{B}&\quad P(X<\mu+\sigma)-P(X<\mu)=\Phi(1)-\Phi(0) = .341 \\
+\text{C}&\quad P(X<\mu)-P(X<\mu-\sigma)=\Phi(0)-\Phi(-1)=.341 \\
+\text{D}&\quad P(X<\mu-\sigma)-P(X<\mu-2\sigma)=\Phi(-1)-\Phi(-2)=.136 \\
+\text{F}&\quad P(X<\mu-2\sigma)=\Phi(-2) = .023
+\end{align*}
+\end{solution}
+
+% this problem needs to be re-written
+% Lognormal distribution
+\item \emph{Stock prices.} The prices of stocks are often modeled
   with a lognormal distribution. An investor is considering purchasing
   stock in one of two companies, A or B. The price of a share of stock
   today is \$1 for both companies. For company A, the value of the

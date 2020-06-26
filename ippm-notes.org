@@ -7,6 +7,7 @@ Prescriptive Modeling
 - Inventory Models  (Emily)
 
 Probabilistic Modeling
+- Modeling with Probability Distributions (R)
 - Stochastic Processes (R) (Hannah)
 - Queueing Models (Hannah)
 
@@ -15,16 +16,17 @@ Decision Problems
 - Games against an Opponent (Emily)
 
 Data Analysis
-- Summarizing Data (R) (Braeden)
-- Visualizing Data (R) (Braeden)
+- Descriptive Statistics (R) (Braeden)
+- Descriptive Graphics (R) (Braeden)
 
 Predictive Modeling 
-- Linear Regression (R) (Braeden)
+- Regression (R) (Braeden)
+- Classification (R)
 - Time Series  (R) 
 
-Learn to use LaTeX/git (Everyone)
-
-Learn to use Jupyter Notebook (Braeden)
+Appendix
+- A Primer on Probability
+- Tabulated Values of the Standard Normal Distribution
 
 The book will discuss the application of modeling techniques to to
 problems in the areas of

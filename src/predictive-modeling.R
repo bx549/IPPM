@@ -182,3 +182,17 @@ ggplot(Med) +
     geom_line(aes(x=age, y=p.female, color="female")) +
     labs(x="Age", y="Probability of response to treatment") +
     scale_color_manual(name="Gender", values=c(male="blue",female="magenta"))
+
+
+## Exercise: VO2 max
+VO2 <- read.csv("../data/vo2max-aerobic-fitness.csv")
+
+fm <- lm(VO2max ~ Age, data=VO2)
+summary(fm)
+
+# plot the data and overlay the fitted regression line
+ggplot(VO2, aes(x=Age, y=VO2max)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE, color="red")
+
+
