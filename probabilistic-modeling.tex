@@ -387,56 +387,44 @@ payments is independent of the available funds.
 
 % this problem needs to be re-written, but it can be very similar.
 % Poisson distribution
-\item \emph{Stocking an item in inventory.}
-Demand for an item occurs according to a Poisson distribution with
-mean 3 per day. The maximum stock level is 25 items, which occurs on
-each Monday immediately after a new order is received. The order size
-depends on the number of units left at the end of the week on Saturday
-(business is closed on Sundays). Determine the following:
+\item \emph{Stocking a vending machine.}
+A university cafeteria has a vending machine that is stocked with a variety of juices and sodas. A vending machine attendant replenishes inventory weekly so that there are 180 beverages in stock at the beginning of each week. The cafeteria is open 24 hours, 7 days a week, and it is expected that the beverages will be purchased according to a Poisson distribution with a mean of 1 hour between purchases.
 \begin{enumerate}
-\item The average weekly size of the order. \label{ex:asize}
-\item The probability of shortage at the start of business on Friday. \label{ex:pshort}
-\item The probability that the weekly order size exceeds 10 units. \label{ex:pex}
+	\item What is the probability that there are no beverages remaining in the vending machine when the attendant arrives? \label{ex:pout}
+	\item On average, how many beverages will be remaining in the vending machine when the attendant arrives? \label{ex:qremain}
+	\item What is the probability that the attendant will replenish 150 or more beverages? \label{ex:preplenish}
 \end{enumerate}
 
 \begin{solution}
-\bs
-For part~\ref{ex:asize}, the distribution of demand over six days is
-Poisson with mean 18 items. So, the average weekly size
-of the order is 18 items.
-
-For part~\ref{ex:pshort}, shortage at the start of business on Friday means
-that all 25 items sold during Monday through Thursday. Let
-$D4$ be a random variable that represents demand over the
-first four days of the week.
-\[ D4 \sim \text{Poisson}(\lambda = 12) \]
-The probability of shortage at the start of the day on Friday is
-\begin{align*}
-  P(D4 \geq 25) &= 1 - P(D4 \leq 24)\\
-                &= 1 - \sum_{n=0}^{24} \frac{12^n e^{-12}}{n!}\\
-                &\approx 0.0007
-\end{align*}
-In R,
-\begin{Verbatim}
-> 1 - sum(dpois(0:24,12))
-[1] 0.0006856332
-\end{Verbatim}
-
-For part~\ref{ex:pex}, the order size will exceed 10 units whenever more than
-10 items are sold during the six days of the week. Let $D6$ be
-the demand over one week, then
-\[ D6 \sim \text{Poisson}(\lambda = 18) \]
-and the probability that the order size exceeds 10 units is
-\begin{align*}
-  P(D6 > 10) &= 1 - P(D6 \leq 10) \\
-             &= 1 - \sum_{n=0}^{10} \frac{18^n e^{-18}}{n!}\\
-             &\approx .97
-\end{align*}
-Using R,
-\begin{Verbatim}
-> 1 - sum(dpois(0:10,18))
-[1] 0.9696337
-\end{Verbatim}
+	\bs
+	For part~\ref{ex:pout}, there will be no beverages remaining in the vending machine if 180 or more beverages are purchased before the end of the week. Because the beverages are purchased according to a Poisson distribution with a mean of one hour between purchases, the rate $\lambda$ that beverages are purchased is 24 beverages per day. Therefore, the number of purchases in 7 days is Poisson with mean $\lambda t$. Let $N$ be the number of purchases in 7 days.
+	\[ N \sim \text{Poisson}(\lambda = \lambda \times 7 = 168) \]
+	Let
+	$D$ be a random variable that represents demand for beverages during one week.
+	\begin{align*}
+		P(D \geq 180) &= 1 - P(D \leq 179)\\
+		&= 1 - \sum_{n=0}^{179} \frac{168^n e^{-168}}{n!}\\
+		&\approx 0.19
+	\end{align*}
+	In R,
+	\begin{Verbatim}
+	> 1 - sum(dpois(0:179,168))
+	[1] 0.1866995
+	\end{Verbatim}
+	
+	For part~\ref{ex:qremain}, the expected number of purchases from the vending machine each week is 168 beverages. Therefore, the expected number of beverages remaining at the end of the week is $180-168=12$ beverages.
+	
+	For part~\ref{ex:preplenish}, 150 or more beverages will be replenished if 150 or more beverages are purchased before the end of the week. The probability that 150 or more beverages are purchased during a week is 
+	\begin{align*}
+		P(D \geq 150) &= 1 - P(D \leq 149)\\
+		&= 1 - \sum_{n=0}^{149} \frac{168^n e^{-168}}{n!}\\
+		&\approx 0.93
+	\end{align*}
+	In R,
+	\begin{Verbatim}
+	> 1 - sum(dpois(0:149,168))
+	[1] 0.9253016
+	\end{Verbatim}
 \end{solution}
 
 % this problem needs to be re-written.
