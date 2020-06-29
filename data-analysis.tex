@@ -151,6 +151,11 @@ each value occurred.
   longer than \num{10000} hours.
 \end{enumerate}
 
+% tag-and-recapture example? but not fish, maybe a wolf or lynx population in MN?
+\item \emph{Estimation of the size of a population.}
+
+
+
 % this problem is OK
 \item \emph{Confidence interval for a mean.} Restaurants are making
   more use of their data on service times for planning purposes.  The
@@ -164,6 +169,80 @@ each value occurred.
 \item Do you think that the Central Limit Theorem applies to this
   data? Why or why not?
 \end{enumerate}
+
+% this problem is OK
+\item \emph{Validation of a simulation model.} A simulation model of a
+  job shop was developed to investigate different scheduling rules. To
+  validate the model, the scheduling rule currently used was
+  incorporated into the model and the resulting output was compared
+  against observed system behavior. By searching the previous year’s
+  records, it was estimated that the average number of jobs in the
+  shop was 22.5 on a given day. Seven independent replications of the
+  simulation model were run, each for 30 days of simulated time, with the
+  following results for average number of (simulated) jobs in the shop
+\[
+18.9 \quad
+22.0 \quad
+19.4 \quad
+22.1 \quad
+19.8 \quad 
+21.9 \quad
+20.2.\quad
+\]
+One metric that can be used to validate the simulation model is to
+construct a 95\% confidence interval for the true mean number of
+(simulated) jobs in the (simulated) shop. If the confidence interval
+contains the value 22.5, then, the model captures the average
+work-in-process for the job shop\footnote{You would want to know that the
+baseline simulation model is accurate before simulating any proposed
+changes to the scheduling rules.}. Construct the confidence interval
+and comment on the result.
+
+\begin{solution}
+  \bs Using the simulation output, we can construct a 95\% confidence
+  interval for the mean number of jobs in the shop. If the the CI
+  contains 22.5, then we will conclude that the simulation output
+  is consistent with the real system behavior (with a confidence level
+  of 95\%). Note that we have $n=7$ observations, so we should use the
+  $t$ distribution. The confidence interval is
+  \[ \bar{X} \pm t_{1-\alpha/a,n-1} \times \frac{S}{\sqrt{n}} \]
+ Using the simulation output and the $t$ distribution we have
+  \[  20.614 \pm 2.447 \times \frac{1.356}{\sqrt{7}}  \]
+  The resulting CI is (19.36, 21.87), and we conclude that the
+  simulation output is not consistent with system behavior.
+\end{solution}
+
+
+\item \emph{Comparison of system configurations.}
+
+
+\item \emph{Confidence interval for a proportion.} 
+
+
+% this problem needs a different data set
+\item \emph{Bootstrap confidence interval.} The data file
+  \texttt{clinical-trial.txt} contains data on 20 patients. 10
+  patients were randomly assigned to receive Medicine A, and 10 were
+  randomly assigned to receive Medicine B. The data represents the
+  responses of the patients to their assigned medicines. Use the
+  bootstrap technique to determine whether or not there is a
+  difference in the median response between the two medicines.  In
+  order to do this, you should take $B$ bootstrap samples of the data
+  (where $B \geq 200$). For each bootstrap sample, compute the
+  difference in median response between the two medicines. That is to
+  say, for each bootstrap $i$ sample you will compute
+  \[
+  \text{median}(A_i) - \text{median}(B_i)
+  \]
+  where $\text{median}(A_i)$ is the median of the data associated with
+  medicine A in the $i$th bootstrap sample ($i$ goes from 1 to
+  $B$). Determine a 95\% confidence interval for the difference in
+  median response by taking the .025 and .975 quantiles of the
+  bootstrap replicates. If your confidence interval does not contain
+  zero, then you should conclude that there is a difference. If that
+  is the case, then state the direction of the difference. That is,
+  state which medicine has a higher median response. \label{ex:boot}
+
 
 % this problem is OK
 \item \emph{Required sample size.} The following data are observations
@@ -183,23 +262,26 @@ each value occurred.
 \end{Verbatim}
 
 \begin{solution}
-\bs The width of a confidence interval is
+\bs The width $W$ of a confidence interval is
 2 times the half-width
 \[
-L = 2 \times z_{\alpha/2} \times s/\sqrt{n}
+W = 2 \times z_{\alpha/2} \times \frac{S}{\sqrt{n}}
 \]
-and the researcher would like $L\leq 1$. We can use the data to
-estimate a standard deviation $\hat{s} = 2.133$. We do not know $n$. In
+and the researcher would like $W\leq 1$. We can use the data to
+estimate a standard deviation $S = 2.133$. We do not know $n$. In
 fact, that is the question we are trying to answer. You can assume
 that you will have a sample size at least as big as, say, 30
 birds. Using $n=30$ and the tabulated values for the Normal
-distribution, we find that $z_{\alpha/2} = z_{.025} = 1.96$.  Then the
-required sample size is
+distribution, we find that $z_{\alpha/2} = z_{.025} = 1.96$.  Then,
+solving for $n$, the required sample size is
 \[
-n \geq 4 \times (z_{\alpha/2} \times \hat{s})^2 = 
+n \geq 4 \times (z_{\alpha/2} \times S)^2 = 
 4 \times (1.96 \times 2.133)^2 = 69.9
 \]
 We would recommend a sample size no smaller than 70 observations.
+Note that you will want to use the 30 observations that you already
+have, so a confidence interval of width 1 day will require 
+approximately 40 additional observations.
 \end{solution}
 
 \subsubsection*{Descriptive Graphics}
