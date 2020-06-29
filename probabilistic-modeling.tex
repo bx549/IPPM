@@ -316,8 +316,8 @@ So, the (average) effect of the warranty on profit is -\$5.90.
   process at a mean rate of 100 customers per hour. Also, note that
   there is a limit of one donut per customer.
 \begin{enumerate}
-	\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
-	\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
+\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
+\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
 \end{enumerate}
 
 For part~\ref{ex:donuta}, present your answer as an expression for the
@@ -385,46 +385,63 @@ other words, the (unstated) assumption is that the number of
 payments is independent of the available funds.
 \end{solution}
 
-% this problem needs to be re-written, but it can be very similar.
-% Poisson distribution
-\item \emph{Stocking a vending machine.}
-A university cafeteria has a vending machine that is stocked with a variety of juices and sodas. A vending machine attendant replenishes inventory weekly so that there are 180 beverages in stock at the beginning of each week. The cafeteria is open 24 hours, 7 days a week, and it is expected that the beverages will be purchased according to a Poisson distribution with a mean of 1 hour between purchases.
+% re-written by hannah
+% poisson distribution
+\item \emph{Stocking a vending machine.}  A university cafeteria has a
+  vending machine that is stocked with a variety of juices and
+  sodas. A vending machine attendant replenishes inventory weekly so
+  that there are 180 beverages in stock at the beginning of each
+  week. The cafeteria is open 24 hours, 7 days a week, and it is
+  expected that the beverages will be purchased according to a Poisson
+  distribution with a mean of 1 hour between purchases.
 \begin{enumerate}
-	\item What is the probability that there are no beverages remaining in the vending machine when the attendant arrives? \label{ex:pout}
-	\item On average, how many beverages will be remaining in the vending machine when the attendant arrives? \label{ex:qremain}
-	\item What is the probability that the attendant will replenish 150 or more beverages? \label{ex:preplenish}
+\item What is the probability that there are no beverages remaining in
+  the vending machine when the attendant arrives? \label{ex:pout}
+\item On average, how many beverages will be remaining in the vending
+  machine when the attendant arrives? \label{ex:qremain}
+\item What is the probability that the attendant will replenish 150 or
+  more beverages? \label{ex:preplenish}
 \end{enumerate}
 
 \begin{solution}
-	\bs
-	For part~\ref{ex:pout}, there will be no beverages remaining in the vending machine if 180 or more beverages are purchased before the end of the week. Because the beverages are purchased according to a Poisson distribution with a mean of one hour between purchases, the rate $\lambda$ that beverages are purchased is 24 beverages per day. Therefore, the number of purchases in 7 days is Poisson with mean $\lambda t$. Let $N$ be the number of purchases in 7 days.
-	\[ N \sim \text{Poisson}(\lambda = \lambda \times 7 = 168) \]
-	Let
-	$D$ be a random variable that represents demand for beverages during one week.
-	\begin{align*}
-		P(D \geq 180) &= 1 - P(D \leq 179)\\
-		&= 1 - \sum_{n=0}^{179} \frac{168^n e^{-168}}{n!}\\
-		&\approx 0.19
-	\end{align*}
-	In R,
-	\begin{Verbatim}
-	> 1 - sum(dpois(0:179,168))
-	[1] 0.1866995
-	\end{Verbatim}
+  \bs For part~\ref{ex:pout}, there will be no beverages remaining in
+  the vending machine if demand for beverages is at least 180.
+  Because the beverages are purchased according to a Poisson
+  distribution with a mean of one hour between purchases, the rate
+  $\lambda$ that beverages are purchased is 24 beverages per
+  day. Therefore, the number of purchases in seven days is Poisson
+  with mean $\lambda t$. Let $N$ be a random variable that represents
+  the number of purchases in one week (seven days).
+  \[ N \sim \text{Poisson}(\lambda = \lambda \times 7 = 168) \] 
+\begin{align*}
+      P(N \geq 180) &= 1 - P(N \leq 179)\\
+      &= 1 - \sum_{i=0}^{179} \frac{168^i e^{-168}}{i!}\\
+      &\approx 0.19
+\end{align*}
+In R,
+\begin{Verbatim}
+> 1 - sum(dpois(0:179,168))
+[1] 0.1866995
+\end{Verbatim}
+
+For part~\ref{ex:qremain}, the expected number of purchases from the
+vending machine each week is 168 beverages. Therefore, the expected
+number of beverages remaining at the end of the week is $180-168=12$.
 	
-	For part~\ref{ex:qremain}, the expected number of purchases from the vending machine each week is 168 beverages. Therefore, the expected number of beverages remaining at the end of the week is $180-168=12$ beverages.
-	
-	For part~\ref{ex:preplenish}, 150 or more beverages will be replenished if 150 or more beverages are purchased before the end of the week. The probability that 150 or more beverages are purchased during a week is 
-	\begin{align*}
-		P(D \geq 150) &= 1 - P(D \leq 149)\\
-		&= 1 - \sum_{n=0}^{149} \frac{168^n e^{-168}}{n!}\\
-		&\approx 0.93
-	\end{align*}
-	In R,
-	\begin{Verbatim}
-	> 1 - sum(dpois(0:149,168))
-	[1] 0.9253016
-	\end{Verbatim}
+For part~\ref{ex:preplenish}, 150 or more beverages will be
+replenished if 150 or more beverages are purchased before the end of
+the week. The probability that 150 or more beverages are purchased
+during a week is
+\begin{align*}
+      P(N \geq 150) &= 1 - P(N \leq 149)\\
+      &= 1 - \sum_{i=0}^{149} \frac{168^i e^{-168}}{i!}\\
+      &\approx 0.93
+\end{align*}
+In R,
+\begin{Verbatim}
+> 1 - sum(dpois(0:149,168))
+[1] 0.9253016
+\end{Verbatim}
 \end{solution}
 
 % this problem needs to be re-written.
