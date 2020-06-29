@@ -1,0 +1,257 @@
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 06/22/20 10:13:25 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   1  sets
+   2  i 'ingredients' /1,2,3,4/;
+   3  parameters
+   4  a(i)'cost of ingredient i'
+   5  / 1 3
+   6    2 0.75
+   7    3 1.8
+   8    4 0.6/
+   9  b(i) 'protein content of ingredient i'
+  10  / 1 125
+  11    2 12
+  12    3 14
+  13    4 32/
+  14  c(i) 'fat content of ingredient i'
+  15  / 1 60
+  16    2 4
+  17    3 1.5
+  18    4 8/
+  19  d(i) 'fiber content of ingredient i'
+  20  / 1 0
+  21    2 9
+  22    3 12
+  23    4 17/;
+  24   
+  25  variables
+  26  x(i) 'fraction of mixture of ingredient i'
+  27  z    'cost per pound of dog food'
+  28  positive variables x;
+  29   
+  30  equations
+  31  fat 'upper bound on total fat content',
+  32  protein 'lower bound on total protein content',
+  33  fiberlow 'lower bound on total fiber content',
+  34  fiberup 'upper bound on total fiber content',
+  35  minimum(i) 'minimum fraction of each ingredient i',
+  36  total 'sum of fractions must equal 1',
+  37  cost 'objective function';
+  38   
+  39  fat.. sum(i,x(i)*c(i)) =l= 40;
+  40  protein.. sum(i,x(i)*b(i)) =g= 80;
+  41  fiberlow.. sum(i,x(i)*d(i)) =g= 4;
+  42  fiberup.. sum(i,x(i)*d(i)) =l= 10;
+  43  minimum(i).. x(i) =g= .1;
+  44  total..sum(i,x(i)) =e= 1;
+  45  cost.. z =e= sum(i,x(i)*a(i));
+  46   
+  47  model mixture /all/;
+  48  solve mixture using lp minimizing z;
+  49   
+  50   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 06/22/20 10:13:25 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE mixture Using LP From line 48
+
+
+---- fat  =L=  upper bound on total fat content
+
+fat..  60*x(1) + 4*x(2) + 1.5*x(3) + 8*x(4) =L= 40 ; (LHS = 0)
+     
+
+---- protein  =G=  lower bound on total protein content
+
+protein..  125*x(1) + 12*x(2) + 14*x(3) + 32*x(4) =G= 80 ;
+     
+      (LHS = 0, INFES = 80 ****)
+     
+
+---- fiberlow  =G=  lower bound on total fiber content
+
+fiberlow..  9*x(2) + 12*x(3) + 17*x(4) =G= 4 ; (LHS = 0, INFES = 4 ****)
+     
+
+---- fiberup  =L=  upper bound on total fiber content
+
+fiberup..  9*x(2) + 12*x(3) + 17*x(4) =L= 10 ; (LHS = 0)
+     
+
+---- minimum  =G=  minimum fraction of each ingredient i
+
+minimum(1)..  x(1) =G= 0.1 ; (LHS = 0, INFES = 0.1 ****)
+     
+minimum(2)..  x(2) =G= 0.1 ; (LHS = 0, INFES = 0.1 ****)
+     
+minimum(3)..  x(3) =G= 0.1 ; (LHS = 0, INFES = 0.1 ****)
+     
+REMAINING ENTRY SKIPPED
+
+
+---- total  =E=  sum of fractions must equal 1
+
+total..  x(1) + x(2) + x(3) + x(4) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+
+---- cost  =E=  objective function
+
+cost..  - 3*x(1) - 0.75*x(2) - 1.8*x(3) - 0.6*x(4) + z =E= 0 ; (LHS = 0)
+     
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 06/22/20 10:13:25 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE mixture Using LP From line 48
+
+
+---- x  fraction of mixture of ingredient i
+
+x(1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       60       fat
+      125       protein
+        1       minimum(1)
+        1       total
+       -3       cost
+
+x(2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        4       fat
+       12       protein
+        9       fiberlow
+        9       fiberup
+        1       minimum(2)
+        1       total
+       -0.75    cost
+
+x(3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1.5     fat
+       14       protein
+       12       fiberlow
+       12       fiberup
+        1       minimum(3)
+        1       total
+       -1.8     cost
+
+REMAINING ENTRY SKIPPED
+
+---- z  cost per pound of dog food
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       cost
+
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 06/22/20 10:13:25 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE mixture Using LP From line 48
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           7     SINGLE EQUATIONS           10
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            5
+NON ZERO ELEMENTS            27
+
+
+GENERATION TIME      =        0.109 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+
+
+EXECUTION TIME       =        0.109 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 06/22/20 10:13:25 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE mixture Using LP From line 48
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   mixture             OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  MINOS               FROM LINE  48
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE                2.0718
+
+ RESOURCE USAGE, LIMIT          0.047      1000.000
+ ITERATION COUNT, LIMIT         4    2000000000
+
+GAMS/MINOS       28.2.0 r750fa45 Released Aug 19, 2019 WEI x86 64bit/MS Win
+M I N O S  5.6      (Jul 2016)
+
+    GAMS/MINOS 5.6, Large Scale Nonlinear Solver
+    B. A. Murtagh, University of New South Wales
+    P. E. Gill, University of California at San Diego,
+    W. Murray, M. A. Saunders, and M. H. Wright,
+    Systems Optimization Laboratory, Stanford University
+
+ Work space allocated           --     0.77 Mb
+
+ EXIT - Optimal Solution found, objective:        2.071774
+
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- EQU fat            -INF     35.913    40.000      .         
+---- EQU protein       80.000    80.000     +INF      0.026      
+---- EQU fiberlow       4.000     6.231     +INF       .         
+---- EQU fiberup        -INF      6.231    10.000      .         
+
+  fat  upper bound on total fat content
+  protein  lower bound on total protein content
+  fiberlow  lower bound on total fiber content
+  fiberup  upper bound on total fiber content
+
+---- EQU minimum  minimum fraction of each ingredient i
+
+     LOWER     LEVEL     UPPER    MARGINAL
+
+1     0.100     0.557     +INF       .         
+2     0.100     0.100     +INF      0.666      
+3     0.100     0.100     +INF      1.665      
+4     0.100     0.243     +INF       .         
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- EQU total          1.000     1.000     1.000    -0.226      
+---- EQU cost            .         .         .        1.000      
+
+  total  sum of fractions must equal 1
+  cost  objective function
+
+---- VAR x  fraction of mixture of ingredient i
+
+     LOWER     LEVEL     UPPER    MARGINAL
+
+1      .        0.557     +INF       .         
+2      .        0.100     +INF       .         
+3      .        0.100     +INF       .         
+4      .        0.243     +INF       .         
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- VAR z              -INF      2.072     +INF       .         
+
+  z  cost per pound of dog food
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.000 SECONDS      2 MB  28.2.0 r750fa45 WEX-WEI
+
+
+USER: GAMS Development Corporation, USA              G871201/0000CA-ANY
+      Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Hannah Kleist\Documents\gamsdir\projdir\dog-food-a.gms
+Output     C:\Users\Hannah Kleist\Documents\gamsdir\projdir\dog-food-a.lst

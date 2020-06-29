@@ -54,7 +54,3 @@ se <- sd(Service$t)/sqrt(n)
 cp <- qnorm(1 - alpha/2) # critical point using std normal distribution
 
 xbar + c(-1,1) * cp * se # a 95% confidence interval
-
-
-
-
