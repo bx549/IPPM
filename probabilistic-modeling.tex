@@ -568,33 +568,33 @@ In R,
 
 % this problem needs to be re-written.
 % Poisson distribution
-\item \emph{Making cookies.} A baker blends 800 chocolate chips into a
-  dough mix and, from this, makes 500 cookies.
+\item \emph{Car dealership.} A car dealership keeps 200 used cars that are for sale in an uncovered parking lot. In the city where the dealership is located, hailstorms occur randomly throughout the month of June according to a Poisson distribution with a mean of 4 hailstorms. During a hailstorm, the number of cars that are damaged follows a Poisson distribution with a mean of eight damaged cars per 10 cars in the parking lot.
 \begin{enumerate}
-\item Find the probability that a randomly picked cookie will have 
-exactly three chocolate chips. \label{a}
-\item Find the probability that a randomly picked cookie will have
-  at least two chocolate chips. \label{b}
+	\item Determine the probability that there will be exactly 5 hailstorms at the dealership in June. \label{a}
+	\item During a hailstorm, determine the probability that 170 or more cars will be damaged. \label{b}
 \end{enumerate}
-Assume that the chocolate chips are mixed thoroughly,
-and in a random fashion. Let $X$ be a random variable that represents
-the number of chips in a cookie, and assume that $X$ follows a 
-Poisson distribution.
 
 \begin{solution}
-\bs For part~\ref{a}, we want to know $P(X=3)$.  With 800 chips
-randomly mixed into 500 cookies, there will be, on average, $800/500 =
-1.6$ chips per cookie.  Then $X \sim \text{Poisson}(\lambda = 1.6)$.
-\[
-P(X=3) = \frac{e^{-\lambda}\lambda^3}{3!} = \frac{e^{-1.6}1.6^3}{6} = 0.138
-\]
-For part~\ref{b}, the probability that a cookie has at least two
-chips is
-\begin{align*}
-P(X \geq 2) = 1 - P(X \leq 1) &= 1 - P(X=0) - P(X=1) \\
-&= 1 - \frac{e^{-1.6}\times 1.6^0}{0!} - \frac{e^{-1.6}\times 1.6^1}{1!} \\
-&= 0.475
-\end{align*}
+	\bs For part~\ref{a}, let $X$ be a random variable that represents the number of hailstorms in June. The number of hailstorms in June follows a Poisson distribution with a mean of 4 hailstorms. Therefore, $X \sim \text{Poisson}(\lambda = 4)$.
+	
+	The probability that there are exactly 5 hailstorms is 
+	\[
+	P(X=5) = \frac{e^{-\lambda}\lambda^5}{5!} = \frac{e^{-4}4^5}{120} \approx 0.16
+	\]
+	For part~\ref{b},the rate that cars are damaged is Poisson with a mean of 8 damaged cars per 10 cars in the parking lot. Let $N$ be the number of damaged cars in the parking lot when 200 cars are present.
+	\[ N \sim \text{Poisson}(\lambda = 160) \] 
+	
+	The probability that 170 or more cars will be damaged in a hailstorm is 
+	\begin{align*}
+		P(N \geq 170) &= 1 - P(N \leq 169) \\
+		&= 1 - \sum_{n=0}^{169} \frac{\lambda^n e^{-\lambda}}{n!}\\
+		&\approx 0.22
+	\end{align*}
+	Using R,
+	\begin{Verbatim}
+	> 1 - sum(dpois(0:169,160))
+	[1] 0.2245714
+	\end{Verbatim}
 \end{solution}
 
 % this problem is OK
@@ -639,32 +639,28 @@ P(Y \leq 5) = 1 - e^{-7\times \frac{5}{60}} = .44
 
 % this problem needs to be re-written
 % normal distribution
-\item Normal distribution. A final exam is constructed so that the
-  test scores $x$ are approximately normally distributed, with
-  parameters $\mu$ and $\sigma$. The instructor (who is nicer than me)
-  assigns letter grades to the test scores as shown in the table
-  below. This is known as ``grading on the curve''. What fraction of
-  the class gets A, B, C, D, F?
+\item Normal distribution. High blood pressure is an underlying health condition that makes people more susceptible to severe illness. A company conducted blood pressure screenings to determine the risk its employees have for severe illness. The systolic blood pressure $x$ of 220 employees was measured, and the mean blood pressure was 135 with a standard deviation of 20. The company doctor has created the following guidelines for determining which employees are at highest risk.
 
 \begin{tabular}{lc}
-test score & letter grade \\ \hline
-$\mu+\sigma < x$ & A \\
-$\mu < x < \mu+\sigma$ & B \\
-$\mu-\sigma < x < \mu$ & C \\
-$\mu-2\sigma < x < \mu-\sigma$ & D \\
-$x < \mu-2\sigma$ & F
+	systolic blood pressure & risk \\ \hline
+	$\mu+1.5\sigma < x$ & very high \\
+	$\mu < x < \mu+1.5\sigma$ & high \\
+	$\mu-\sigma < x < \mu$ & average \\
+	$x < \mu-\sigma$ & low
 \end{tabular}
+
+Determine how many employees fall into each of the four categories.
 
 \vspace{.1in}
 \begin{solution}
-\bs
-\begin{align*}
-\text{A}&\quad 1-P(X<\mu+\sigma)=1-\Phi(1) = .159 \\
-\text{B}&\quad P(X<\mu+\sigma)-P(X<\mu)=\Phi(1)-\Phi(0) = .341 \\
-\text{C}&\quad P(X<\mu)-P(X<\mu-\sigma)=\Phi(0)-\Phi(-1)=.341 \\
-\text{D}&\quad P(X<\mu-\sigma)-P(X<\mu-2\sigma)=\Phi(-1)-\Phi(-2)=.136 \\
-\text{F}&\quad P(X<\mu-2\sigma)=\Phi(-2) = .023
-\end{align*}
+	\bs
+	\begin{align*}
+		\text{very high}&\quad 220\times(1-P(X<\mu+1.5\sigma))=220\times(1-\Phi(1.5)) \approx 15 \\
+		\text{high}&\quad 
+		220\times (P(X<\mu+1.5\sigma)-P(X<\mu))=220\times(\Phi(1.5)-\Phi(0)) \approx 95 \\
+		\text{average}&\quad 220\times(P(X<\mu)-P(X<\mu-\sigma))=220\times(\Phi(0)-\Phi(-1))\approx 75 \\
+		\text{low}&\quad 220\times(P(X<\mu-\sigma))=220\times\Phi(-1) \approx 35
+	\end{align*}
 \end{solution}
 
 % this problem needs to be re-written
