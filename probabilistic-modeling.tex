@@ -925,4 +925,75 @@ grocery store.
 
 \subsubsection*{Probabilistic Inventory Models}
 
+% the context of this problem needs to be re-written
+% it is problem 27 ch 10 of IMS
+\item A perishable dairy product is ordered daily at a 
+  particular supermarket. The product costs
+  \$1.19 per unit and sells for \$1.65 per unit. If units are unsold at
+  the end of the day, the supplier takes them back at a rebate of
+  \$1 per unit. Assume that daily demand is approximately normally
+  distributed with $\mu = 150$ and $\sigma = 30$. 
+
+\begin{enumerate}
+\item What is your recommended daily order quantity for the
+  supermarket?
+\item What is the probability that the supermarket will sell all the
+  units it orders?
+\item In problems such as these, why would the supplier offer a rebate
+  as high as \$1? For example, why not offer a nominal rebate of, say,
+  25 cents per unit? What happens to the supermarket order quantity as
+  the rebate is reduced? \label{rebate}
+\end{enumerate}
+
+\begin{solution}
+\bs Let $D$ be the daily demand for the item. We know that
+$D \sim \mathcal{N}\left(\mu=150,~\sigma=30\right)$. The penalty
+for ordering too few items is $c_u=.46$ and the penalty for
+ordering too many items is $c_o=.19$. We want to find the
+order quantity $Q^{\ast}$ such that
+\[ P\left(D \leq Q^{\ast}\right) < \frac{c_u}{c_u+c_o} = \frac{.46}{.65} = 0.708 \]
+Standardizing,
+\[ P\left(z \leq \frac{Q^{\ast}-150}{30}\right) = 0.708 \]
+implies that
+\begin{align*}
+\frac{Q^{\ast}-150}{30} &= 0.55 \\
+Q^{\ast} &= 150 + 0.55(30)\\
+Q^{\ast} &= 166.5
+\end{align*}
+The supermarket should order 166 (or 167) units.  
+For part b) the probability that all units will sell is
+\begin{align*}
+  P\left(D \geq 166 \right) &= 1 - P\left(D \leq 166 \right)\\
+                            &= 1 - P\left( z \leq \frac{166-150}{30} \right) \\
+                            &= 1 - P\left( z \leq .5333\right)\\
+                            &= 1 - .70 \\
+                            &= 0.30
+\end{align*}
+
+Regarding part~\ref{rebate}, if the rebate is \$.25 then the cost of being
+under--stocked $c_u=0.46$ is less than the cost of being over--stocked
+$c_o=0.94$. In this case the supermarket will order fewer items. Let's
+see what happens to the supplier's revenue when the rebate is \$.25.
+We want the order quantity $Q^{\ast}$ such that
+\begin{align*}
+  P\left(D \leq Q^{\ast}\right) = \frac{.46}{1.4} &= .329 \\
+  P\left(z \leq \frac{Q^{\ast}-150}{30}\right) &= .329
+\end{align*}
+which implies that
+\begin{align*}
+  \frac{Q^{\ast}- 150}{30} &= -0.44\\
+  Q^{\ast} &= 150 - 0.44(30) = 136.8
+\end{align*}
+or about 137 units. The expected revenue to the supplier when
+$Q=166$ is
+\[ 166(\$1.19) - 16(\$1.00) = \$181.54, \]
+and the expected revenue when $Q=137$ is
+\[ 137(\$1.19) = \$163.03. \]
+As the rebate is reduced the supermarket will order fewer
+items. A related question is ``What is the rebate that will
+maximize the supplier's revenue?''.
+\end{solution}
+
+
+
 \end{enumerate}
