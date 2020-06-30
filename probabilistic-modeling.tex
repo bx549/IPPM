@@ -2,6 +2,33 @@
 
 \section{Modeling with Probability Distributions}
 
+% a discussion on binomial distribution.
+The normal rate of infection of a certain disease in cattle is
+25\%.  Each animal becomes infected (or not) independently of other
+animals.  A team of veterinarians would like to test a new
+vaccine. Which of the following two scenarios, \ref{sc1} or \ref{sc2},
+provides more evidence that the vaccine is effective.  \emph{Hint:}
+Compute the probability that each scenario would occur under the
+hypothesis that the vaccine has no effect whatsoever.
+\begin{enumerate}[A)]
+\item 10 animals are vaccinated and none of them become infected. \label{sc1}
+\item 17 animals are vaccinated. At most one of the animals becomes infected. \label{sc2}
+\end{enumerate}
+
+Let $X$ be the number of animals infected under the assumption that
+the vaccine is worthless.  Under scenario \ref{sc1},
+\[ X \sim \text{Binomial}(n=10,p=.25) \]
+\[ P(X = 0) = {10 \choose 0} .25^0 .75^{10} = .0563 \]
+Under scenario \ref{sc2}, 
+\[ X \sim \text{Binomial}(n=17,p=.25) \]
+\begin{align*} P(X \leq 1) &= P(X=0) + P(X=1) \\
+                 &= \sum_{x=0}^1 {17 \choose x} .25^x .75^{17-x} \\
+                 &= .0501
+\end{align*}
+In the absence of a working vaccine, scenario \ref{sc2} is less likely to occur,
+and so it provides a better test of the effectiveness of the vaccine.
+
+
 % use this section to illustrate modeling with a poisson rv
 At a facility that manufactures recreational sports
   vehicles (ATVs), each vehicle is subjected to a final
@@ -33,6 +60,37 @@ For part \ref{atv3}, management's goal is that $P(X=0)=0.5$, or
 \[ P(X=0) = \frac{e^{-\lambda}\lambda^0}{0!} = e^{-\lambda}=0.5 \]
 Then
 \[ \lambda = -\ln{0.5} = 0.693 \]
+
+%% using poisson distribution and binomial distribution, and independence
+The number of bacteria colonies of a certain type in samples of
+polluted water has a Poisson distribution with a mean of 2 per cubic
+centimeter. If four 1--cubic--centimeter samples are independently
+selected from this water, find the probability that at least one
+sample will contain one or more bacteria colonies.
+
+Let $X$ be a random variable that represents the number of bacteria
+colonies in a 1 cm$^3$ sample of the polluted water. From the problem
+description,
+\[ X \sim \text{Poisson}(\lambda = 2) \]
+First let's find the probability that any particular sample will contain
+at least one colony.
+\begin{align*}
+  P(X \geq 1) &= 1 - P(X=0)\\
+              &= 1 - \frac{e^{-\lambda}\lambda^0}{0!}\\
+              &= 1 - e^{-2}\\
+  &= .865
+\end{align*}
+Now, the four samples are independent and the the probability that
+a sample contains one or more colonies is the same for each sample.
+Let $Y$ be a random variable that represents the number of samples
+that contain one or more colonies. Then
+\[ Y ~ \sim \text{Binomial}(n=4, p=0.865) \]
+and we want to know $P(Y \geq 1)$.
+\begin{align*}
+  P(Y \geq 1) &= 1 - P(Y = 0)\\
+              &= 1 - {4 \choose 0} (.865)^0 (1 - .865)^4 \\
+  &= 0.9997
+\end{align*}
 
 % discussion on the Normal distribution
 A refinery makes two grades of gasoline, regular and premium.  The
@@ -214,7 +272,7 @@ Questions.
 \subsubsection*{Modeling with Probability Distributions.}
 
 % this problem is OK
-% Geometric
+% geometric distribution
 \item \emph{Searching for an item.} Albert has \num{1176} Pok\'{e}mon
   cards in total.  Pok\'{e}mon EX is a special type of card, and
   Albert has 39 EX-type cards.  He is looking for an EX-type card, but
@@ -269,8 +327,42 @@ The odds are
 or 5 to 11.
 \end{solution}
 
+% this problem needs to be re-written
+% binomial distribution
+\item A power utility can supply electricity to a city
+from $n$ different power plants. Each power plant fails with
+probability $p$, independent of the others.
+\begin{enumerate}
+\item Suppose that any one plant can produce enough electricity to
+supply the entire city. What is the probability that the city will
+experience a black-out? \label{p1}
+\item Suppose that two power plants are necessary to keep the city
+from a black-out. Find the probability that the city will
+experience a black-out. Simplify your answer for full credit.
+\label{p2}
+\end{enumerate}
+
+\begin{solution}
+\bs
+For part~\ref{p1}, all $n$ plants must fail for the city to
+have a black-out. Since failures are independent, the probability
+of a black-out is $p^n$.
+
+For part~\ref{p2}, let $X$ be the number of failed plants. $X$
+has a Binomial distribution with parameters $n$ and $p$. The probability
+of a black-out is
+\begin{align*}
+  P(X \geq n-1) &= \sum_{i=n-1}^n {n \choose i} p^i (1-p)^{n-i} \\
+                &= {n \choose n-1} p^{n-1} (1-p)^{n-(n-1)} + {n \choose n} p^n (1-p)^{n-n} \\
+                &= np^{n-1}(1-p) + p^n \\
+                &= np^{n-1} - np^{n-1}p + p^n\\
+                &= np^{n-1} - np^n + p^n\\
+                &= np^{n-1} + (1-n)p^n
+\end{align*}
+\end{solution}
+
 % this problem is OK
-% Exponential distribution
+% exponential distribution
 \item \emph{Evaluating a warranty.}
   A manufacturer of automotive batteries offers a one-year
   warranty. If the battery fails for any reason during the warranty
@@ -303,6 +395,36 @@ Taking the warranty into account, the average profit per battery is
 So, the (average) effect of the warranty on profit is -\$5.90.
 \end{solution}
 
+% memoryless property of the Exponential distribution this problem is
+% from Ross. It's a thought experiment. The actual numbers don't
+% matter as long as the rates are the same. Can we find a different
+% scenario that illustrates the same idea: the memoryless property
+\item \emph{Memoryless property of the Exponential distribution.}
+  There are two clerks at the local post office. You enter the post
+  office to find that both clerks are busy (i.e. each clerk is serving
+  a customer), but that no one is in line.  So, you are first in line
+  and you are to be served by the first available clerk. Customers
+  depart the post office as soon as they are finished being served by
+  a clerk. If the service time distribution for each clerk is
+  Exponential with rate $\lambda$, what is the probability that you
+  are the last of the three customers to depart the post office?
+
+\begin{solution}
+\bs
+By the memoryless property of the Exponential distribution, the
+remaining time for each customer currently being served is identical.
+In particular, if we let $Y$ be the remaining time of a customer, then
+the distribution of remaining time is
+\[ P(Y \leq y) = 1 - e^{-\lambda y} \] Since the two customers have
+the same distribution for remaining time, the probability that
+customer 1 departs before customer 2 is 1/2 (likewise for
+customer 2 departing before customer 1). When you enter service, the
+memoryless property still applies.  Regardless of how long the
+other customer has been in service, you have the same distribution
+for remaining time. So, the probability that you are the last to depart
+is 1/2.
+\end{solution}
+
 % this problem has been re-written
 % Poisson distribution
 \item \emph{Donut giveaway.}  A professional baseball team has just
@@ -316,8 +438,8 @@ So, the (average) effect of the warranty on profit is -\$5.90.
   process at a mean rate of 100 customers per hour. Also, note that
   there is a limit of one donut per customer.
 \begin{enumerate}
-	\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
-	\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
+\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
+\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
 \end{enumerate}
 
 For part~\ref{ex:donuta}, present your answer as an expression for the
@@ -385,89 +507,94 @@ other words, the (unstated) assumption is that the number of
 payments is independent of the available funds.
 \end{solution}
 
-% this problem needs to be re-written, but it can be very similar.
-% Poisson distribution
-\item \emph{Stocking an item in inventory.}
-Demand for an item occurs according to a Poisson distribution with
-mean 3 per day. The maximum stock level is 25 items, which occurs on
-each Monday immediately after a new order is received. The order size
-depends on the number of units left at the end of the week on Saturday
-(business is closed on Sundays). Determine the following:
+% re-written by hannah
+% poisson distribution
+\item \emph{Stocking a vending machine.}  A university cafeteria has a
+  vending machine that is stocked with a variety of juices and
+  sodas. A vending machine attendant replenishes inventory weekly so
+  that there are 180 beverages in stock at the beginning of each
+  week. The cafeteria is open 24 hours, 7 days a week, and it is
+  expected that the beverages will be purchased according to a Poisson
+  distribution with a mean of 1 hour between purchases.
 \begin{enumerate}
-\item The average weekly size of the order. \label{ex:asize}
-\item The probability of shortage at the start of business on Friday. \label{ex:pshort}
-\item The probability that the weekly order size exceeds 10 units. \label{ex:pex}
+\item What is the probability that there are no beverages remaining in
+  the vending machine when the attendant arrives? \label{ex:pout}
+\item On average, how many beverages will be remaining in the vending
+  machine when the attendant arrives? \label{ex:qremain}
+\item What is the probability that the attendant will replenish 150 or
+  more beverages? \label{ex:preplenish}
 \end{enumerate}
 
 \begin{solution}
-\bs
-For part~\ref{ex:asize}, the distribution of demand over six days is
-Poisson with mean 18 items. So, the average weekly size
-of the order is 18 items.
-
-For part~\ref{ex:pshort}, shortage at the start of business on Friday means
-that all 25 items sold during Monday through Thursday. Let
-$D4$ be a random variable that represents demand over the
-first four days of the week.
-\[ D4 \sim \text{Poisson}(\lambda = 12) \]
-The probability of shortage at the start of the day on Friday is
+  \bs For part~\ref{ex:pout}, there will be no beverages remaining in
+  the vending machine if demand for beverages is at least 180.
+  Because the beverages are purchased according to a Poisson
+  distribution with a mean of one hour between purchases, the rate
+  $\lambda$ that beverages are purchased is 24 beverages per
+  day. Therefore, the number of purchases in seven days is Poisson
+  with mean $\lambda t$. Let $N$ be a random variable that represents
+  the number of purchases in one week (seven days).
+  \[ N \sim \text{Poisson}(\lambda = \lambda \times 7 = 168) \] 
 \begin{align*}
-  P(D4 \geq 25) &= 1 - P(D4 \leq 24)\\
-                &= 1 - \sum_{n=0}^{24} \frac{12^n e^{-12}}{n!}\\
-                &\approx 0.0007
+      P(N \geq 180) &= 1 - P(N \leq 179)\\
+      &= 1 - \sum_{i=0}^{179} \frac{168^i e^{-168}}{i!}\\
+      &\approx 0.19
 \end{align*}
 In R,
 \begin{Verbatim}
-> 1 - sum(dpois(0:24,12))
-[1] 0.0006856332
+> 1 - sum(dpois(0:179,168))
+[1] 0.1866995
 \end{Verbatim}
 
-For part~\ref{ex:pex}, the order size will exceed 10 units whenever more than
-10 items are sold during the six days of the week. Let $D6$ be
-the demand over one week, then
-\[ D6 \sim \text{Poisson}(\lambda = 18) \]
-and the probability that the order size exceeds 10 units is
+For part~\ref{ex:qremain}, the expected number of purchases from the
+vending machine each week is 168 beverages. Therefore, the expected
+number of beverages remaining at the end of the week is $180-168=12$.
+	
+For part~\ref{ex:preplenish}, 150 or more beverages will be
+replenished if 150 or more beverages are purchased before the end of
+the week. The probability that 150 or more beverages are purchased
+during a week is
 \begin{align*}
-  P(D6 > 10) &= 1 - P(D6 \leq 10) \\
-             &= 1 - \sum_{n=0}^{10} \frac{18^n e^{-18}}{n!}\\
-             &\approx .97
+      P(N \geq 150) &= 1 - P(N \leq 149)\\
+      &= 1 - \sum_{i=0}^{149} \frac{168^i e^{-168}}{i!}\\
+      &\approx 0.93
 \end{align*}
-Using R,
+In R,
 \begin{Verbatim}
-> 1 - sum(dpois(0:10,18))
-[1] 0.9696337
+> 1 - sum(dpois(0:149,168))
+[1] 0.9253016
 \end{Verbatim}
 \end{solution}
 
 % this problem needs to be re-written.
 % Poisson distribution
-\item \emph{Making cookies.} A baker blends 800 chocolate chips into a
-  dough mix and, from this, makes 500 cookies.
+\item \emph{Car dealership.} A car dealership keeps 200 used cars that are for sale in an uncovered parking lot. In the city where the dealership is located, hailstorms occur randomly throughout the month of June according to a Poisson distribution with a mean of 4 hailstorms. During a hailstorm, the number of cars that are damaged follows a Poisson distribution with a mean of eight damaged cars per 10 cars in the parking lot.
 \begin{enumerate}
-\item Find the probability that a randomly picked cookie will have 
-exactly three chocolate chips. \label{a}
-\item Find the probability that a randomly picked cookie will have
-  at least two chocolate chips. \label{b}
+	\item Determine the probability that there will be exactly 5 hailstorms at the dealership in June. \label{a}
+	\item During a hailstorm, determine the probability that 170 or more cars will be damaged. \label{b}
 \end{enumerate}
-Assume that the chocolate chips are mixed thoroughly,
-and in a random fashion. Let $X$ be a random variable that represents
-the number of chips in a cookie, and assume that $X$ follows a 
-Poisson distribution.
 
 \begin{solution}
-\bs For part~\ref{a}, we want to know $P(X=3)$.  With 800 chips
-randomly mixed into 500 cookies, there will be, on average, $800/500 =
-1.6$ chips per cookie.  Then $X \sim \text{Poisson}(\lambda = 1.6)$.
-\[
-P(X=3) = \frac{e^{-\lambda}\lambda^3}{3!} = \frac{e^{-1.6}1.6^3}{6} = 0.138
-\]
-For part~\ref{b}, the probability that a cookie has at least two
-chips is
-\begin{align*}
-P(X \geq 2) = 1 - P(X \leq 1) &= 1 - P(X=0) - P(X=1) \\
-&= 1 - \frac{e^{-1.6}\times 1.6^0}{0!} - \frac{e^{-1.6}\times 1.6^1}{1!} \\
-&= 0.475
-\end{align*}
+	\bs For part~\ref{a}, let $X$ be a random variable that represents the number of hailstorms in June. The number of hailstorms in June follows a Poisson distribution with a mean of 4 hailstorms. Therefore, $X \sim \text{Poisson}(\lambda = 4)$.
+	
+	The probability that there are exactly 5 hailstorms is 
+	\[
+	P(X=5) = \frac{e^{-\lambda}\lambda^5}{5!} = \frac{e^{-4}4^5}{120} \approx 0.16
+	\]
+	For part~\ref{b},the rate that cars are damaged is Poisson with a mean of 8 damaged cars per 10 cars in the parking lot. Let $N$ be the number of damaged cars in the parking lot when 200 cars are present.
+	\[ N \sim \text{Poisson}(\lambda = 160) \] 
+	
+	The probability that 170 or more cars will be damaged in a hailstorm is 
+	\begin{align*}
+		P(N \geq 170) &= 1 - P(N \leq 169) \\
+		&= 1 - \sum_{n=0}^{169} \frac{\lambda^n e^{-\lambda}}{n!}\\
+		&\approx 0.22
+	\end{align*}
+	Using R,
+	\begin{Verbatim}
+	> 1 - sum(dpois(0:169,160))
+	[1] 0.2245714
+	\end{Verbatim}
 \end{solution}
 
 % this problem is OK
@@ -512,32 +639,28 @@ P(Y \leq 5) = 1 - e^{-7\times \frac{5}{60}} = .44
 
 % this problem needs to be re-written
 % normal distribution
-\item Normal distribution. A final exam is constructed so that the
-  test scores $x$ are approximately normally distributed, with
-  parameters $\mu$ and $\sigma$. The instructor (who is nicer than me)
-  assigns letter grades to the test scores as shown in the table
-  below. This is known as ``grading on the curve''. What fraction of
-  the class gets A, B, C, D, F?
+\item Normal distribution. High blood pressure is an underlying health condition that makes people more susceptible to severe illness. A company conducted blood pressure screenings to determine the risk its employees have for severe illness. The systolic blood pressure $x$ of 220 employees was measured, and the mean blood pressure was 135 with a standard deviation of 20. The company doctor has created the following guidelines for determining which employees are at highest risk.
 
 \begin{tabular}{lc}
-test score & letter grade \\ \hline
-$\mu+\sigma < x$ & A \\
-$\mu < x < \mu+\sigma$ & B \\
-$\mu-\sigma < x < \mu$ & C \\
-$\mu-2\sigma < x < \mu-\sigma$ & D \\
-$x < \mu-2\sigma$ & F
+	systolic blood pressure & risk \\ \hline
+	$\mu+1.5\sigma < x$ & very high \\
+	$\mu < x < \mu+1.5\sigma$ & high \\
+	$\mu-\sigma < x < \mu$ & average \\
+	$x < \mu-\sigma$ & low
 \end{tabular}
+
+Determine how many employees fall into each of the four categories.
 
 \vspace{.1in}
 \begin{solution}
-\bs
-\begin{align*}
-\text{A}&\quad 1-P(X<\mu+\sigma)=1-\Phi(1) = .159 \\
-\text{B}&\quad P(X<\mu+\sigma)-P(X<\mu)=\Phi(1)-\Phi(0) = .341 \\
-\text{C}&\quad P(X<\mu)-P(X<\mu-\sigma)=\Phi(0)-\Phi(-1)=.341 \\
-\text{D}&\quad P(X<\mu-\sigma)-P(X<\mu-2\sigma)=\Phi(-1)-\Phi(-2)=.136 \\
-\text{F}&\quad P(X<\mu-2\sigma)=\Phi(-2) = .023
-\end{align*}
+	\bs
+	\begin{align*}
+		\text{very high}&\quad 220\times(1-P(X<\mu+1.5\sigma))=220\times(1-\Phi(1.5)) \approx 15 \\
+		\text{high}&\quad 
+		220\times (P(X<\mu+1.5\sigma)-P(X<\mu))=220\times(\Phi(1.5)-\Phi(0)) \approx 95 \\
+		\text{average}&\quad 220\times(P(X<\mu)-P(X<\mu-\sigma))=220\times(\Phi(0)-\Phi(-1))\approx 75 \\
+		\text{low}&\quad 220\times(P(X<\mu-\sigma))=220\times\Phi(-1) \approx 35
+	\end{align*}
 \end{solution}
 
 % this problem needs to be re-written
@@ -594,6 +717,7 @@ P(X_B > \$1.20) &= P(\ln(X_B) > \ln(1.20)) \\
 \end{solution}
 
 \subsubsection*{Stochastic Processes}
+
 
 \subsubsection*{Queueing Models}
 

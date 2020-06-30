@@ -54,3 +54,23 @@ se <- sd(Service$t)/sqrt(n)
 cp <- qnorm(1 - alpha/2) # critical point using std normal distribution
 
 xbar + c(-1,1) * cp * se # a 95% confidence interval
+
+
+## clinical trial data
+Trial <- read.csv("../data/clinical-trial.txt", header=T)
+
+median(Trial$Medicine.A) - median(Trial$Medicine.B)  # point estimate
+
+B <- 200         # number of bootstrap replicates
+s <- numeric(B)  # will hold the bootstrap replicates
+n <- nrow(Trial)
+
+for (i in 1:B) {
+    medA <- sample(Trial$Medicine.A, n, replace=T)
+    medB <- sample(Trial$Medicine.B, n, replace=T)
+    s[i] <- median(medA) - median(medB)
+}
+
+sd(s)  # bootstrap estimate of std error
+quantile(s, probs=c(.025,.975))  # 95% boostrap CI
+

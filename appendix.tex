@@ -12,14 +12,71 @@
   and the outcome of each robbery is independent of that of the
   others. What is the probability that you end up in jail?
 
-\bs Since the outcome of each robbery is independent, the probability
-of \emph{not} ending up in jail is the probability that you never get caught.
+  Since the outcome of each robbery is independent, the probability of
+  \emph{not} ending up in jail is the probability that you never get
+  caught.
 \[
-P(\text{don't get caught}) = \left(\frac{2}{3}\right)\left(\frac{2}{3}\right)\left(\frac{2}{3}\right)\left(\frac{2}{3}\right) = \frac{16}{81}
+P(\text{don't get caught}) = 
+\left(\frac{2}{3}\right)\left(\frac{2}{3}\right)\left(\frac{2}{3}\right)\left(\frac{2}{3}\right) = 
+\frac{16}{81}
 \]
 and so the probability of ending up in jail is $1 - \frac{16}{81} \approx 0.8$.
 
-% 
+%% probability and independence of events
+Suppose that the probability of exposure to the flu during an epidemic
+is 0.6. Experience has shown that a serum is 80\% successful in
+preventing an inoculated person from acquiring the flu, if exposed. A
+person not inoculated faces a probability of 0.9 of acquiring the flu
+if exposed. Two persons, one inoculated and one not, are capable of
+performing a highly specialized task in a business.  Assume that they
+are not at the same location, are not in contact with the same people,
+and cannot expose each other. What is the probability that at least
+one will get the flu?
+
+Let $A$ be the event that the inoculated person gets the flu, and let $B$
+be the event that the person who is not inoculated gets the flu. The probability
+that at least one of them gets the flu is
+\[ P(A \cup B) \]
+From the problem description we can safely say
+that the events $A$ and $B$ are independent. Also note that a
+person's exposure to the flu is independent of inoculation, so that
+\[ P(A) = (.6)(.2) = .12 \qquad \text{and} \qquad P(B) = (.6)(.9) = .54 \]
+Then,
+\begin{align*}
+  P(A \cup B) &= P(A) + P(B) - P(A \cap B)\\
+              &= P(A) + P(B) - P(A)P(B)\\
+              &= .12 + .54 - (.12)(.54)\\
+              &= .5952
+\end{align*}
+
+\emph{Conditional probability}.
+In a population of 100,000 females, 89.835\% can expect
+to live to age 60, while 57.062\% can expect to live to age
+80. Given that a woman is 60, what is the probability that she lives
+to age 80?
+
+We can use the definition of conditional
+probability. Let $E$ be the event that a woman lives to be 60, and
+let $F$ be the event that a woman lives to be 80.
+\[
+P(F \mid E) = \frac{P(F,E)}{P(E)} = \frac{P(E \mid F)P(F)}{P(E)} = \frac{1 \times .5706}{.8984} = .6352
+\]
+
+Also, read this answer that was taken from Grinstead and Snell. It
+nicely describes the idea of conditional probability.
+
+\begin{quote}
+  The original sample space can be thought of as a set of 100,000
+  females. The events E and F are the subsets of the sample space
+  consisting of all women who live at least 60 years, and at least 80
+  years, respectively. We consider E to be the new sample space, and
+  note that F is a subset of E. Thus, the size of E is 89,835, and the
+  size of F is 57,062.  So, the probability in question equals
+  57,062/89,835 = .6352. Thus, a woman who is 60 has a 63.52\% chance
+  of living to age 80.
+\end{quote}
+
+
 \emph{Baye's formula.}
 An automobile manufacturer makes cars with three types of
   engines. Of all cars made by this manufacturer, 45\% are hybrids
