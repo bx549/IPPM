@@ -1,15 +1,17 @@
 An Introduction to Prescriptive and Predictive Modeling
 
-Prescriptive Modeling 
+Prescriptive Modeling (Deterministic Models)
 - Linear Programming  (GAMS)  (Hannah)
 - Integer Programming (GAMS)  (Hannah)
-- Dynamic Programming 
-- Inventory Models  (Emily)
+- Deterministic Dynamic Programming 
+- Deterministic Inventory Models  (Emily)
 
-Probabilistic Modeling
+Probabilistic Modeling (Probabilistic Models)
 - Modeling with Probability Distributions (R)
 - Stochastic Processes (R) (Hannah)
 - Queueing Models (Hannah)
+- Stochastic Dynamic Programming
+- Probabilistic Inventory Models  (Emily)
 
 Decision Problems
 - Games against Nature (Emily)
