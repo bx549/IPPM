@@ -2,6 +2,33 @@
 
 \section{Modeling with Probability Distributions}
 
+% a discussion on binomial distribution.
+The normal rate of infection of a certain disease in cattle is
+25\%.  Each animal becomes infected (or not) independently of other
+animals.  A team of veterinarians would like to test a new
+vaccine. Which of the following two scenarios, \ref{sc1} or \ref{sc2},
+provides more evidence that the vaccine is effective.  \emph{Hint:}
+Compute the probability that each scenario would occur under the
+hypothesis that the vaccine has no effect whatsoever.
+\begin{enumerate}[A)]
+\item 10 animals are vaccinated and none of them become infected. \label{sc1}
+\item 17 animals are vaccinated. At most one of the animals becomes infected. \label{sc2}
+\end{enumerate}
+
+Let $X$ be the number of animals infected under the assumption that
+the vaccine is worthless.  Under scenario \ref{sc1},
+\[ X \sim \text{Binomial}(n=10,p=.25) \]
+\[ P(X = 0) = {10 \choose 0} .25^0 .75^{10} = .0563 \]
+Under scenario \ref{sc2}, 
+\[ X \sim \text{Binomial}(n=17,p=.25) \]
+\begin{align*} P(X \leq 1) &= P(X=0) + P(X=1) \\
+                 &= \sum_{x=0}^1 {17 \choose x} .25^x .75^{17-x} \\
+                 &= .0501
+\end{align*}
+In the absence of a working vaccine, scenario \ref{sc2} is less likely to occur,
+and so it provides a better test of the effectiveness of the vaccine.
+
+
 % use this section to illustrate modeling with a poisson rv
 At a facility that manufactures recreational sports
   vehicles (ATVs), each vehicle is subjected to a final
@@ -33,6 +60,37 @@ For part \ref{atv3}, management's goal is that $P(X=0)=0.5$, or
 \[ P(X=0) = \frac{e^{-\lambda}\lambda^0}{0!} = e^{-\lambda}=0.5 \]
 Then
 \[ \lambda = -\ln{0.5} = 0.693 \]
+
+%% using poisson distribution and binomial distribution, and independence
+The number of bacteria colonies of a certain type in samples of
+polluted water has a Poisson distribution with a mean of 2 per cubic
+centimeter. If four 1--cubic--centimeter samples are independently
+selected from this water, find the probability that at least one
+sample will contain one or more bacteria colonies.
+
+Let $X$ be a random variable that represents the number of bacteria
+colonies in a 1 cm$^3$ sample of the polluted water. From the problem
+description,
+\[ X \sim \text{Poisson}(\lambda = 2) \]
+First let's find the probability that any particular sample will contain
+at least one colony.
+\begin{align*}
+  P(X \geq 1) &= 1 - P(X=0)\\
+              &= 1 - \frac{e^{-\lambda}\lambda^0}{0!}\\
+              &= 1 - e^{-2}\\
+  &= .865
+\end{align*}
+Now, the four samples are independent and the the probability that
+a sample contains one or more colonies is the same for each sample.
+Let $Y$ be a random variable that represents the number of samples
+that contain one or more colonies. Then
+\[ Y ~ \sim \text{Binomial}(n=4, p=0.865) \]
+and we want to know $P(Y \geq 1)$.
+\begin{align*}
+  P(Y \geq 1) &= 1 - P(Y = 0)\\
+              &= 1 - {4 \choose 0} (.865)^0 (1 - .865)^4 \\
+  &= 0.9997
+\end{align*}
 
 % discussion on the Normal distribution
 A refinery makes two grades of gasoline, regular and premium.  The
@@ -214,7 +272,7 @@ Questions.
 \subsubsection*{Modeling with Probability Distributions.}
 
 % this problem is OK
-% Geometric
+% geometric distribution
 \item \emph{Searching for an item.} Albert has \num{1176} Pok\'{e}mon
   cards in total.  Pok\'{e}mon EX is a special type of card, and
   Albert has 39 EX-type cards.  He is looking for an EX-type card, but
@@ -269,8 +327,42 @@ The odds are
 or 5 to 11.
 \end{solution}
 
+% this problem needs to be re-written
+% binomial distribution
+\item A power utility can supply electricity to a city
+from $n$ different power plants. Each power plant fails with
+probability $p$, independent of the others.
+\begin{enumerate}
+\item Suppose that any one plant can produce enough electricity to
+supply the entire city. What is the probability that the city will
+experience a black-out? \label{p1}
+\item Suppose that two power plants are necessary to keep the city
+from a black-out. Find the probability that the city will
+experience a black-out. Simplify your answer for full credit.
+\label{p2}
+\end{enumerate}
+
+\begin{solution}
+\bs
+For part~\ref{p1}, all $n$ plants must fail for the city to
+have a black-out. Since failures are independent, the probability
+of a black-out is $p^n$.
+
+For part~\ref{p2}, let $X$ be the number of failed plants. $X$
+has a Binomial distribution with parameters $n$ and $p$. The probability
+of a black-out is
+\begin{align*}
+  P(X \geq n-1) &= \sum_{i=n-1}^n {n \choose i} p^i (1-p)^{n-i} \\
+                &= {n \choose n-1} p^{n-1} (1-p)^{n-(n-1)} + {n \choose n} p^n (1-p)^{n-n} \\
+                &= np^{n-1}(1-p) + p^n \\
+                &= np^{n-1} - np^{n-1}p + p^n\\
+                &= np^{n-1} - np^n + p^n\\
+                &= np^{n-1} + (1-n)p^n
+\end{align*}
+\end{solution}
+
 % this problem is OK
-% Exponential distribution
+% exponential distribution
 \item \emph{Evaluating a warranty.}
   A manufacturer of automotive batteries offers a one-year
   warranty. If the battery fails for any reason during the warranty
@@ -301,6 +393,36 @@ Now, imagine that the manufacturer has, over time,
 Taking the warranty into account, the average profit per battery is
 \[ \$25 - 0.118\times \$50 = \$19.10 \]
 So, the (average) effect of the warranty on profit is -\$5.90.
+\end{solution}
+
+% memoryless property of the Exponential distribution this problem is
+% from Ross. It's a thought experiment. The actual numbers don't
+% matter as long as the rates are the same. Can we find a different
+% scenario that illustrates the same idea: the memoryless property
+\item \emph{Memoryless property of the Exponential distribution.}
+  There are two clerks at the local post office. You enter the post
+  office to find that both clerks are busy (i.e. each clerk is serving
+  a customer), but that no one is in line.  So, you are first in line
+  and you are to be served by the first available clerk. Customers
+  depart the post office as soon as they are finished being served by
+  a clerk. If the service time distribution for each clerk is
+  Exponential with rate $\lambda$, what is the probability that you
+  are the last of the three customers to depart the post office?
+
+\begin{solution}
+\bs
+By the memoryless property of the Exponential distribution, the
+remaining time for each customer currently being served is identical.
+In particular, if we let $Y$ be the remaining time of a customer, then
+the distribution of remaining time is
+\[ P(Y \leq y) = 1 - e^{-\lambda y} \] Since the two customers have
+the same distribution for remaining time, the probability that
+customer 1 departs before customer 2 is 1/2 (likewise for
+customer 2 departing before customer 1). When you enter service, the
+memoryless property still applies.  Regardless of how long the
+other customer has been in service, you have the same distribution
+for remaining time. So, the probability that you are the last to depart
+is 1/2.
 \end{solution}
 
 % this problem has been re-written
@@ -595,6 +717,7 @@ P(X_B > \$1.20) &= P(\ln(X_B) > \ln(1.20)) \\
 \end{solution}
 
 \subsubsection*{Stochastic Processes}
+
 
 \subsubsection*{Queueing Models}
 
