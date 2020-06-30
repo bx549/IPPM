@@ -1,7 +1,6 @@
 \chapter{Data Analysis}
 \label{data-analysis}
 
-
 \section{Descriptive Statistics}
 
 Point estimate of a population proportion. Consider the
@@ -30,6 +29,71 @@ se <- sqrt((phat*(1-phat))/n)
 [1] 0.0212373
 \end{Verbatim}
 
+\emph{Confidence Interval using the $t$ Distribution.}
+An article in the \emph{Journal of Heat Transfer} describes a
+method of measuring the thermal conductivity of high-purity iron.
+Using a temperature of $100^{\circ}$F and a power input of
+550 W. The following 10 measurements of thermal conductivity
+(in Btu/hr -- ft -- ${}^{\circ}$F) were determined.
+\begin{align*}
+  41.60,~41.48,~&42.34,~41.95,~41.86\\
+  42.18,~41.72,~&42.26,~41.81,~42.04
+\end{align*}
+A point estimate of the population mean thermal conductivity
+(at $100^{\circ}$F and 550 W) is the sample mean
+\[
+  \mean{X} = 41.924
+\]
+The standard error of the sample mean (i.e. the standard error
+of the point estimate) is
+\[
+  \text{se}(\mean{X}) = \frac{S}{\sqrt{n}} = \frac{0.284}{\sqrt{10}} = 0.0898
+\]
+where $S$ is the sample standard deviation. Notice that the standard
+error is about 0.2 percent of the sample mean, indicating a relatively
+precise point estimate of thermal conductivity. Occasionally you will
+hear people refer to the coefficient of variation (CV).
+\[
+  \text{CV} = \frac{S}{\mean{X}}
+\]
+The CV is another measure of the spread of the data. \emph{Question:}
+What are the units of the CV?
+
+Now suppose we want to construct a 95\% confidence interval for the
+population mean thermal conductivity $\mu$. So, our confidence level
+will be $1-\alpha=.95$, and $\alpha=.05$. Since there are only 10
+sample data points, we will use the $t$ distribution. From our
+discussion in class we know that a $(1-\alpha)$\% confidence interval
+for $\mu$ is
+\[ \mean{X} \pm t_{\alpha/2,n-1}\frac{S}{\sqrt{n}} \]
+From the tabulated values of the $t$ distribution, we see that
+$t_{\alpha/2,n-1} = t_{.025,9} = 2.262$. A 95\% confidence interval for $\mu$ is
+\[  41.924 \pm 2.263 \times \frac{0.284}{\sqrt{10}} \]
+or (41.721, 42.127).
+
+Using R, we could do the following
+
+\vspace{.1in}
+\begin{Verbatim}[samepage=true]
+> x <- c(41.60,41.48,42.34,41.95,41.86,42.18,41.72,42.26,41.81,42.04)
+> alpha <- .05
+> n <- length(x)
+> xbar <- mean(x)
+> se <- sd(x)/sqrt(n)
+> cp <- qt(1-alpha/2,n-1)
+
+> xbar + c(-1,1)*cp*se
+[1] 41.72076 42.12724
+\end{Verbatim}
+\vspace{.1in}
+To use the Normal distribution instead of the $t$ distribution, obtain the
+critical point as
+\begin{Verbatim}
+> cp <- qnorm(1-alpha/2)
+\end{Verbatim}
+
+\emph{Question:} When I got the critical point in R, why did I use
+\texttt{qnorm(1-alpha/2)} and not \texttt{qnorm(alpha/2)}?
 
 \section{Descriptive Graphics}
 
@@ -38,20 +102,186 @@ se <- sqrt((phat*(1-phat))/n)
 \begin{enumerate}
 \subsubsection*{Descriptive Statistics}
 
-%re-written
+% this problem needs a different data set. The questions are fine, but
+% we cannot use this data set.
+\item \emph{Summarizing a data set with statistics.} Each time a
+  particular supermarket receives a shipment of peaches, the manager
+  chooses one box at random and counts the number of spoiled peaches
+  in the box. (Each box contains 48 peaches.) The file
+  \texttt{fruit-spoilage.txt} contains data on the number of spoiled
+  peaches for 55 such boxes.
+
+\begin{enumerate}
+\item From the data set of 55 observations, determine the following
+summary statistics: minimum, maximum, mean, median, mode, first quartile,
+third quartile, and standard deviation. To be clear, from this data set
+you are computing sample statistics; the true underlying distribution
+of the number of spoiled peaches is unknown.
+\item Create a table the shows the distinct values of the number of 
+spoiled peaches and their counts, i.e. the number of times that
+each value occurred.
+\end{enumerate}
+
+% re-written
 \item \emph{Point estimate of a population mean.} Suppose the
-  following data points are a sample of a golfer's scores over his last 20 rounds.
-  Construct a point estimate of his average score. What is the standard error of your point estimate? You can do
-  this problem either by hand or use the software of your choice. 
+  following data points are a sample of a golfer's scores over his
+  last 20 rounds. Construct a point estimate of his average
+  score. What is the standard error of your point estimate?
 \begin{verbatim}
 73,69,65,70,67,67,78,72,74,71,70,69,70,67,68,73,70,77,72,69
 \end{verbatim}
   
-%re-written
-\item {Standard error when estimating a proportion.} In a survey, a
-  random sample of \num{1200} students are asked whether they prefer online or in-person classes. 
-  Out of the \num{1200} students, \num{424} said they prefer online classes. Compute a point estimate 
-  of the overall proportion of students that prefer online classes and calculate the standard error of your estimate. 
+% re-written
+\item \emph{Standard error when estimating a proportion.} In a survey, a
+  random sample of \num{1200} students are asked whether they prefer
+  online or in-person classes.  Out of the \num{1200} students,
+  \num{424} said they prefer online classes. Compute a point estimate
+  of the overall proportion of students that prefer online classes and
+  calculate the standard error of your estimate.
+
+% this problem is OK
+\item \emph{Lognormal distribution parameter estimation.}  The file
+  \texttt{component-lifetimes.txt} contains the time to failure for
+  \num{1345} components (in hours). The times are known to come from a
+  Lognormal distribution. 
+\begin{enumerate}
+\item Estimate the parameters of the failure time distribution. 
+\item Use the parameters to estimate the mean time to failure. 
+\item Use the parameters to estimate the probability that a component lasts
+  longer than \num{10000} hours.
+\end{enumerate}
+
+% tag-and-recapture example? but not fish, maybe a wolf or lynx population in MN?
+\item \emph{Estimation of the size of a population.}
+
+
+
+% this problem is OK
+\item \emph{Confidence interval for a mean.} Restaurants are making
+  more use of their data on service times for planning purposes.  The
+  data in the file \texttt{restaurant-service-times.txt} contains 220
+  observations on the time in minutes from seating until departure in
+  one particular restaurant. 
+\begin{enumerate}
+\item Construct a 95\% confidence interval for the true mean service
+  time. Remember that this data is just a sample from a larger
+  population, the true distribution of which is unknown.
+\item Do you think that the Central Limit Theorem applies to this
+  data? Why or why not?
+\end{enumerate}
+
+% this problem is OK
+\item \emph{Validation of a simulation model.} A simulation model of a
+  job shop was developed to investigate different scheduling rules. To
+  validate the model, the scheduling rule currently used was
+  incorporated into the model and the resulting output was compared
+  against observed system behavior. By searching the previous year’s
+  records, it was estimated that the average number of jobs in the
+  shop was 22.5 on a given day. Seven independent replications of the
+  simulation model were run, each for 30 days of simulated time, with the
+  following results for average number of (simulated) jobs in the shop
+\[
+18.9 \quad
+22.0 \quad
+19.4 \quad
+22.1 \quad
+19.8 \quad 
+21.9 \quad
+20.2.\quad
+\]
+One metric that can be used to validate the simulation model is to
+construct a 95\% confidence interval for the true mean number of
+(simulated) jobs in the (simulated) shop. If the confidence interval
+contains the value 22.5, then, the model captures the average
+work-in-process for the job shop\footnote{You would want to know that the
+baseline simulation model is accurate before simulating any proposed
+changes to the scheduling rules.}. Construct the confidence interval
+and comment on the result.
+
+\begin{solution}
+  \bs Using the simulation output, we can construct a 95\% confidence
+  interval for the mean number of jobs in the shop. If the the CI
+  contains 22.5, then we will conclude that the simulation output
+  is consistent with the real system behavior (with a confidence level
+  of 95\%). Note that we have $n=7$ observations, so we should use the
+  $t$ distribution. The confidence interval is
+  \[ \bar{X} \pm t_{1-\alpha/a,n-1} \times \frac{S}{\sqrt{n}} \]
+ Using the simulation output and the $t$ distribution we have
+  \[  20.614 \pm 2.447 \times \frac{1.356}{\sqrt{7}}  \]
+  The resulting CI is (19.36, 21.87), and we conclude that the
+  simulation output is not consistent with system behavior.
+\end{solution}
+
+
+\item \emph{Confidence interval for a proportion.} 
+
+\item \emph{Comparison of system configurations.}
+
+
+% this problem needs a different data set
+\item \emph{Bootstrap confidence interval.} The data file
+  \texttt{clinical-trial.txt} contains data on 20 patients. 10
+  patients were randomly assigned to receive Medicine A, and 10 were
+  randomly assigned to receive Medicine B. The data represents the
+  responses of the patients to their assigned medicines. Use the
+  bootstrap technique to determine whether or not there is a
+  difference in the median response between the two medicines.  In
+  order to do this, you should take $B$ bootstrap samples of the data
+  (where $B \geq 200$). For each bootstrap sample, compute the
+  difference in median response between the two medicines. That is to
+  say, for each bootstrap $i$ sample you will compute
+  \[
+  \text{median}(A_i) - \text{median}(B_i)
+  \]
+  where $\text{median}(A_i)$ is the median of the data associated with
+  medicine A in the $i$th bootstrap sample ($i$ goes from 1 to
+  $B$). Determine a 95\% confidence interval for the difference in
+  median response by taking the .025 and .975 quantiles of the
+  bootstrap replicates. If your confidence interval does not contain
+  zero, then you should conclude that there is a difference. If that
+  is the case, then state the direction of the difference. That is,
+  state which medicine has a higher median response. \label{ex:boot}
+
+
+% this problem is OK
+\item \emph{Required sample size.} The following data are observations
+  from a past study of hummingbird migration rates in miles flown per
+  day. These observations are from 30 different birds. A researcher
+  would like to construct a two-sided, 95\% confidence interval for
+  the average rate (in miles per day). The researcher would like for
+  the width of the confidence interval to be no larger than 1 day. It
+  is very expensive to attach identifiers to the birds, and so the
+  researcher has asked you to determine the smallest sample size that
+  will achieve the desired confidence interval. What sample size do
+  you suggest?
+\begin{Verbatim}[samepage=true]
+17,17,22,18,19,21,21,23,21,25,
+19,21,19,20,20,21,19,20,18,17,
+18,20,19,23,18,22,18,22,18,24
+\end{Verbatim}
+
+\begin{solution}
+\bs The width $W$ of a confidence interval is
+2 times the half-width
+\[
+W = 2 \times z_{\alpha/2} \times \frac{S}{\sqrt{n}}
+\]
+and the researcher would like $W\leq 1$. We can use the data to
+estimate a standard deviation $S = 2.133$. We do not know $n$. In
+fact, that is the question we are trying to answer. You can assume
+that you will have a sample size at least as big as, say, 30
+birds. Using $n=30$ and the tabulated values for the Normal
+distribution, we find that $z_{\alpha/2} = z_{.025} = 1.96$.  Then,
+solving for $n$, the required sample size is
+\[
+n \geq 4 \times (z_{\alpha/2} \times S)^2 = 
+4 \times (1.96 \times 2.133)^2 = 69.9
+\]
+We would recommend a sample size no smaller than 70 observations.
+Note that you will want to use the 30 observations that you already
+have, so a confidence interval of width 1 day will require 
+approximately 40 additional observations.
+\end{solution}
 
 \subsubsection*{Descriptive Graphics}
 

@@ -2,6 +2,33 @@
 
 \section{Modeling with Probability Distributions}
 
+% a discussion on binomial distribution.
+The normal rate of infection of a certain disease in cattle is
+25\%.  Each animal becomes infected (or not) independently of other
+animals.  A team of veterinarians would like to test a new
+vaccine. Which of the following two scenarios, \ref{sc1} or \ref{sc2},
+provides more evidence that the vaccine is effective.  \emph{Hint:}
+Compute the probability that each scenario would occur under the
+hypothesis that the vaccine has no effect whatsoever.
+\begin{enumerate}[A)]
+\item 10 animals are vaccinated and none of them become infected. \label{sc1}
+\item 17 animals are vaccinated. At most one of the animals becomes infected. \label{sc2}
+\end{enumerate}
+
+Let $X$ be the number of animals infected under the assumption that
+the vaccine is worthless.  Under scenario \ref{sc1},
+\[ X \sim \text{Binomial}(n=10,p=.25) \]
+\[ P(X = 0) = {10 \choose 0} .25^0 .75^{10} = .0563 \]
+Under scenario \ref{sc2}, 
+\[ X \sim \text{Binomial}(n=17,p=.25) \]
+\begin{align*} P(X \leq 1) &= P(X=0) + P(X=1) \\
+                 &= \sum_{x=0}^1 {17 \choose x} .25^x .75^{17-x} \\
+                 &= .0501
+\end{align*}
+In the absence of a working vaccine, scenario \ref{sc2} is less likely to occur,
+and so it provides a better test of the effectiveness of the vaccine.
+
+
 % use this section to illustrate modeling with a poisson rv
 At a facility that manufactures recreational sports
   vehicles (ATVs), each vehicle is subjected to a final
@@ -34,17 +61,145 @@ For part \ref{atv3}, management's goal is that $P(X=0)=0.5$, or
 Then
 \[ \lambda = -\ln{0.5} = 0.693 \]
 
+%% using poisson distribution and binomial distribution, and independence
+The number of bacteria colonies of a certain type in samples of
+polluted water has a Poisson distribution with a mean of 2 per cubic
+centimeter. If four 1--cubic--centimeter samples are independently
+selected from this water, find the probability that at least one
+sample will contain one or more bacteria colonies.
+
+Let $X$ be a random variable that represents the number of bacteria
+colonies in a 1 cm$^3$ sample of the polluted water. From the problem
+description,
+\[ X \sim \text{Poisson}(\lambda = 2) \]
+First let's find the probability that any particular sample will contain
+at least one colony.
+\begin{align*}
+  P(X \geq 1) &= 1 - P(X=0)\\
+              &= 1 - \frac{e^{-\lambda}\lambda^0}{0!}\\
+              &= 1 - e^{-2}\\
+  &= .865
+\end{align*}
+Now, the four samples are independent and the the probability that
+a sample contains one or more colonies is the same for each sample.
+Let $Y$ be a random variable that represents the number of samples
+that contain one or more colonies. Then
+\[ Y ~ \sim \text{Binomial}(n=4, p=0.865) \]
+and we want to know $P(Y \geq 1)$.
+\begin{align*}
+  P(Y \geq 1) &= 1 - P(Y = 0)\\
+              &= 1 - {4 \choose 0} (.865)^0 (1 - .865)^4 \\
+  &= 0.9997
+\end{align*}
+
+% discussion on the Normal distribution
+A refinery makes two grades of gasoline, regular and premium.  The
+advertised octane ratings are 87 for regular gasoline and 89 for
+premium gasoline.  The quality engineer at the refinery asks for 10
+samples from one of the two types of gasoline. She does not know for
+sure whether the samples are from the regular batch or the premium
+batch. She devises the hypothesis test
+\begin{align*}
+H_0: \mu &\leq 87 \\
+H_1: \mu &> 87
+\end{align*}
+and sets the confidence level to be 0.995. Suppose that the mean of
+the 10 samples is 88.3 and the standard deviation is 1.0. What is her
+conclusion for the hypothesis test?
+
+Suppose that a gas station owner has his own octane test
+kit and rule for accepting a tanker-truck of premium gasoline.
+The owner knows from past shipments that the distributions
+of octane ratings are
+\begin{align*}
+X_{\text{regular}} &\sim N(87,1) \\
+X_{\text{premium}} &\sim N(89,1)
+\end{align*}
+Although the owner may not think about it explicitly, his hypothesis
+test is
+\begin{align*}
+H_0: \mu &= 87 \\
+H_1: \mu &= 89
+\end{align*}
+The owner takes one sample from the tanker-truck. If the octane
+measurement is greater than 88.5, then he will accept the shipment as
+premium gasoline. What is the probability that the owner accepts a
+shipment of regular gasoline as premium (i.e. what is $\alpha$)? What
+is the probability that he declines a shipment of premium gasoline,
+claiming that he thinks it is regular (i.e. what is $\beta$)?  Use the
+Normal distribution for this problem. The following diagram may help.
+
+\begin{tikzpicture}
+\begin{axis}[
+  no markers, domain=0:12, samples=100,
+  height=5cm, width=15cm,
+  axis x line=bottom,
+  axis y line=none,
+  xtick=\empty, ytick=\empty,
+  extra x ticks={4,6,7},
+  extra x tick labels={87,88.5,89},
+  enlargelimits=false, clip=false
+  ]
+  
+  \addplot [fill, pattern=north west lines, domain=0:6] {gauss(7,1)} \closedcycle;
+  \addplot [fill, draw=none, domain=6:12] {gauss(4,1)} \closedcycle;
+  \addplot [thick] {gauss(4,1)};
+  \addplot [thick] {gauss(7,1)};
+
+  \draw [ultra thin] (4,0) -- (4,.3989);
+  \draw [ultra thin] (7,0) -- (7,.3989);
+
+  \draw (4,.42) node[anchor=south] {$H_0$};
+  \draw (7,.42) node[anchor=south] {$H_1$};
+
+  \draw (4.9,.15) node[anchor=east] (beta) {$\beta$};
+  \draw (5.4,.03) node (beta2) {};
+  \draw[-] (beta) -- (beta2);
+
+  \draw (6.5,.15) node[anchor=west] (alpha) {$\alpha$};
+  \draw (6.1,.005) node (alpha2) {};
+  \draw[-] (alpha) -- (alpha2);
+  
+\end{axis}
+\end{tikzpicture}
+
+For the quality engineer, the test statistic is
+\[
+t_0 = \left( \overline{X} - \mu_0 \right)\frac{\sqrt{n}}{S} 
+= \left(88.3 - 87\right) \frac{\sqrt{10}}{1} 
+ = 4.11
+\]
+and since $t_0 > t_{\alpha,n-1}=3.25$ ($\alpha=0.005$) she will
+reject $H_0$ and conclude that the samples are from the premium
+batch of gasoline.
+
+For the station owner,
+\begin{align*}
+\alpha &= P(X > 88.5 \mid H_0) \\
+&= P\left( Z > \frac{88.5-87}{1} \right) \\
+&= 1 - P(Z < 1.5) \\
+&= 0.067
+\end{align*}
+and
+\begin{align*}
+\beta &= P(X < 88.5 \mid H_1) \\
+&= P\left( Z < \frac{88.5-89}{1} \right) \\
+&= P(Z < -0.5) \\
+&= 0.309
+\end{align*}
+
+
 \section{Stochastic Processes}
 
 % Use this section to introduce the idea of a Poisson Process.
 % add explanatory material.
-\emph{A Poisson Process.} A statistician has observed the behavior of a Hollywood celebrity for
-about one year and has noted that between the hours of 8pm and 11pm
-this celebrity generates, on average, three tweets per hour and that
-the rate is approximately the same within each one-hour period.  We
-can count the \emph{number} of tweets that occur in a time interval
-$t$. We can also measure the \emph{time} between tweets. Here is a
-depiction of the tweets from last night.
+\emph{A Poisson Process.} A statistician has observed the behavior of
+a Hollywood celebrity for about one year and has noted that between
+the hours of 8pm and 11pm this celebrity generates, on average, three
+tweets per hour and that the rate is approximately the same within
+each one-hour period.  We can count the \emph{number} of tweets that
+occur in a time interval $t$. We can also measure the \emph{time}
+between tweets. Here is a depiction of the tweets from last night.
 
 \vspace{.2in}
 \begin{center}
@@ -102,8 +257,8 @@ Recall that for the Exponential distribution
 
 Questions.
 \begin{enumerate}
-  \item What is the probability that the celebrity sends out five
-  or more tweets in one hour?
+\item What is the probability that the celebrity sends out five or
+  more tweets in one hour?
 \item What is the probability that the celebrity sends out
   no tweets between 9pm and 11pm?
 \end{enumerate}
@@ -113,9 +268,102 @@ Questions.
 \section{Exercises}
 
 \begin{enumerate}
+  
 \subsubsection*{Modeling with Probability Distributions.}
 
 % this problem is OK
+% geometric distribution
+\item \emph{Searching for an item.} Albert has \num{1176} Pok\'{e}mon
+  cards in total.  Pok\'{e}mon EX is a special type of card, and
+  Albert has 39 EX-type cards.  He is looking for an EX-type card, but
+  all of the cards are completely mixed up and stored in a shoe
+  box. His mother is calling him for dinner.  What is the probability
+  that Albert will have to look through no more than 25 cards before
+  he finds an EX-type card?
+
+\begin{solution}
+\bs Consider finding an EX-type card to be a ``success''. Let $X$ be a
+random variable that represents the number of cards that Albert has to
+handle up to and including the first success. Then
+\[
+X \sim \text{Geometric}(p=\frac{39}{1176})
+\]
+and
+\[
+P(X \leq 25) = 1 - (1 - p)^{25} \approx 0.57.
+\]
+\end{solution}
+
+% this problem is OK
+% Binomial, odds, probabilities
+\item \emph{Playing Pok\`{e}mon.} Albert is playing
+  Pok\'{e}mon cards with his friend. It's Albert's turn, and he
+  decides to use Marowak. The card says the following.
+\begin{quote}
+\emph{Flip a coin four times. The amount of damage done to your opponent's
+Pok\'{e}mon is the number of heads times 40.}
+\end{quote}
+What are the odds that Marowak will do at least 120 damage to the
+opponent? One approach to answer this question is to use the Binomial
+distribution to compute the probability of doing at least 120 damage
+and then convert from probability to odds. You can take another
+approach if you prefer. In any case, assume that the coin is fair,
+i.e.\ the probability of getting heads on any particular toss is 1/2.
+
+\begin{solution}
+\bs
+In order to do at least 120 damage, we need either three or four heads
+out of the four coin tosses. Let $X$ represent the number of heads obtained
+in four tosses of a fair coin. Then $X \sim \text{Binomial}(p=1/2,n=4)$.
+\begin{align*}
+P(X=3) + P(X=4) &= {4 \choose 3} p^3 (1-p)^1 + {4 \choose 4} p^4 (1-p)^0 \\
+&= \frac{1}{4} + \frac{1}{16} \\
+&= \frac{5}{16}
+\end{align*}
+The odds are
+\[
+\frac{p}{1-p} = \frac{\frac{5}{16}}{1-\frac{5}{16}} = \frac{5}{11}
+\]
+or 5 to 11.
+\end{solution}
+
+% this problem needs to be re-written
+% binomial distribution
+\item \emph{System reliability.} 
+A power utility can supply electricity to a city
+from $n$ different power plants. Each power plant fails with
+probability $p$, independent of the others.
+\begin{enumerate}
+\item Suppose that any one plant can produce enough electricity to
+supply the entire city. What is the probability that the city will
+experience a black-out? \label{p1}
+\item Suppose that two power plants are necessary to keep the city
+from a black-out. Find the probability that the city will
+experience a black-out. 
+\label{p2}
+\end{enumerate}
+
+\begin{solution}
+\bs
+For part~\ref{p1}, all $n$ plants must fail for the city to
+have a black-out. Since failures are independent, the probability
+of a black-out is $p^n$.
+
+For part~\ref{p2}, let $X$ be the number of failed plants. $X$
+has a Binomial distribution with parameters $n$ and $p$. The probability
+of a black-out is
+\begin{align*}
+  P(X \geq n-1) &= \sum_{i=n-1}^n {n \choose i} p^i (1-p)^{n-i} \\
+                &= {n \choose n-1} p^{n-1} (1-p)^{n-(n-1)} + {n \choose n} p^n (1-p)^{n-n} \\
+                &= np^{n-1}(1-p) + p^n \\
+                &= np^{n-1} - np^{n-1}p + p^n\\
+                &= np^{n-1} - np^n + p^n\\
+                &= np^{n-1} + (1-n)p^n
+\end{align*}
+\end{solution}
+
+% this problem is OK
+% exponential distribution
 \item \emph{Evaluating a warranty.}
   A manufacturer of automotive batteries offers a one-year
   warranty. If the battery fails for any reason during the warranty
@@ -148,145 +396,303 @@ Taking the warranty into account, the average profit per battery is
 So, the (average) effect of the warranty on profit is -\$5.90.
 \end{solution}
 
-% this problem needs to be re-written
-\item \emph{Selling tickets.}
-  The Springdale High School band is performing a benefit concert
-  in its new 400-seat auditorium. Local businesses buy the tickets in
-  blocks of 10 and donate them to youth organizations. Tickets go on
-  sale to business entities for four hours only the day before the
-  concert. The process of placing orders for tickets is Poisson with a
-  mean 10 calls per hour.  Any (blocks of) tickets remaining after the
-  box office is closed are sold at a discount as ``rush tickets'' one hour
-  before the concert starts. Determine the following:
-\begin{enumerate}
-\item The probability that it will be possible to buy rush tickets. \label{ex:rusha}
-\item  The average number of rush tickets available. \label{ex:rushb}
-\end{enumerate}
-
-For part~\ref{ex:rusha}, you should first write down the expression
-for the probability that it will be possible to buy ``rush''
-tickets. To compute the numerical answer, you will want to use
-software such as R.
+% memoryless property of the Exponential distribution this problem is
+% from Ross. It's a thought experiment. The actual numbers don't
+% matter as long as the rates are the same. Can we find a different
+% scenario that illustrates the same idea: the memoryless property
+\item \emph{Memoryless property of the Exponential distribution.}
+  There are two clerks at the local post office. You enter the post
+  office to find that both clerks are busy (i.e. each clerk is serving
+  a customer), but that no one is in line.  So, you are first in line
+  and you are to be served by the first available clerk. Customers
+  depart the post office as soon as they are finished being served by
+  a clerk. If the service time distribution for each clerk is
+  Exponential with rate $\lambda$, what is the probability that you
+  are the last of the three customers to depart the post office?
 
 \begin{solution}
 \bs
-First note that the number of calls in one hour is distributed
-Poisson with mean 10. Consequently, the number of calls in a 4--hour
-period is distributed Poisson with mean 40. Let $N$ be the
-number of calls in a 4--hour period. Then
-\[ N ~ \text{Poisson}(\lambda = 40) \]
-For part~\ref{ex:rusha}, the probability that tickets remain after they
-are offered to the local businesses is
+By the memoryless property of the Exponential distribution, the
+remaining time for each customer currently being served is identical.
+In particular, if we let $Y$ be the remaining time of a customer, then
+the distribution of remaining time is
+\[ P(Y \leq y) = 1 - e^{-\lambda y} \] Since the two customers have
+the same distribution for remaining time, the probability that
+customer 1 departs before customer 2 is 1/2 (likewise for
+customer 2 departing before customer 1). When you enter service, the
+memoryless property still applies.  Regardless of how long the
+other customer has been in service, you have the same distribution
+for remaining time. So, the probability that you are the last to depart
+is 1/2.
+\end{solution}
+
+% this problem has been re-written
+% Poisson distribution
+\item \emph{Donut giveaway.}  A professional baseball team has just
+  won a game that secured them a berth in the league’s playoffs. To
+  celebrate, a local donut shop will be giving away up to 200 free
+  donuts during a two-hour period on the morning following the
+  victory. All 200 donuts will be baked and decorated with a baseball
+  theme before the giveaway starts. If there are any donuts remaining
+  after the giveaway, they will be sold at a discounted price. Assume
+  that customers will arrive at the giveaway according to a Poisson
+  process at a mean rate of 100 customers per hour. Also, note that
+  there is a limit of one donut per customer.
+\begin{enumerate}
+\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
+\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
+\end{enumerate}
+
+For part~\ref{ex:donuta}, present your answer as an expression for the
+probability that there will be donuts remaining. Then, use software,
+such as R, to compute a numerical answer.
+
+\begin{solution}
+  \bs Given that customers arrive to the giveaway according to a
+  Poisson process with a mean of 100 customers per hour, the number of
+  customers that arrive during the two-hour period is Poisson
+  distributed with a mean of 200. Let $N$ be the number of customers
+  arriving in a two-hour period. Then
+\[ N ~ \text{Poisson}(\lambda = 200) \]
+For part~\ref{ex:donuta}, the probability that there will be donuts remaining after the giveaway is 
 \begin{align*}
-  P(N < 40) &= \sum_{n=0}^{39} \frac{\lambda^n e^{-\lambda}}{n!}\\
-            &= \sum_{n=0}^{39} \frac{40^n e^{-40}}{n!}\\
-            &\approx .48
+      P(N < 200) &= \sum_{n=0}^{199} \frac{\lambda^n e^{-\lambda}}{n!}\\
+      &= \sum_{n=0}^{199} \frac{200^n e^{-200}}{n!}\\
+      &\approx .49
 \end{align*}
 In R,
 \begin{Verbatim}
-> sum(dpois(0:39,40))
-[1] 0.4789711
+> sum(dpois(0:199,200))
+[1] 0.4905966
 \end{Verbatim}  
 
-For part~\ref{ex:rushb}, our calculations are all done in expectation
-(or on average). There are 40 calls in 4 hours,
-which means that 400 tickets are sold to local
-businesses. So, on average, no rush tickets are available.
+For part~\ref{ex:donutb}, our calculations are all done in expectation
+(that is to say, on average). There are 200 customers in 2 hours,
+which means that 200 donuts are given away. So, on average, no donuts
+are remaining.
 \end{solution}
 
-% this problem needs to be re-written, but it can be very similar
-\item \emph{College expenses.}
-  A freshman student receives a bank deposit of
-  \$100 a month from home to cover incidentals. Withdrawal checks of
-  \$20 each occur randomly during the month and are spaced according to
-  an exponential distribution with a mean value of 1 week.  Determine
-  the probability that the student will run out of incidental money
-  before the end of the fourth week.
+% re-written by hannah
+% Poisson distribution
+\item \emph{Startup expenses.}  Two friends are starting a small
+  business selling ice cream. They applied for a grant and have
+  received \$\num{1800} to help cover any startup expenses. The
+  friends will incur expenses of \$300 randomly throughout the first
+  year, and the time between payments for these expenses is
+  exponential with a mean of 2 months. Determine the probability that
+  the friends will run out of grant money before the end of the year.
 
 \begin{solution}
-\bs
-Let $X$ be a random variable that represents the time between
-checks. The mean time between checks, that is to say the
-expected value of $X$ ($E(X)$), is one week. We know that for
-the Exponential distribution
-\[ E(X) = \frac{1}{\lambda} \]
-where $\lambda$ is the rate (in units of checks
-per week). So,
-\[ X \sim \text{Exp}(\lambda = 1~\text{check per week}) \]
-If the time between checks is distributed Exponential with
-rate $\lambda$, then the number of checks written in $t$ weeks
-is Poisson with mean $\lambda t$. Let $N$ be the number of checks
-written in 4 weeks.
-\[ N \sim \text{Poisson}(\lambda = \lambda \times 4 = 4) \]
-Now, the probability that the student runs out of money is
+  \bs Let $X$ be a random variable that represents the time between
+  payments. The mean time between payments, that is to say the
+  expected value of $X$ ($E(X)$), is two months. We know that for the
+  Exponential distribution
+  \[ E(X) = \frac{1}{\lambda} \] where $\lambda$ is the rate (in units
+  of payments per month). So,
+  \[ X \sim \text{Exp}(\lambda = 1/2~\text{payments per month}) \] If
+  the time between payments is distributed Exponential with rate
+  $\lambda$, then the number of payments in $t$ months is Poisson with
+  mean $\lambda t$. Let $N$ be the number of payments in 12 months.
+  \[ N \sim \text{Poisson}(\lambda t = \lambda \times 12 = 6) \] Now,
+  the probability that the friends runs out of money is
 \begin{align*}
-  P(N \geq 5) &= 1 - P(N \leq 4) \\
-              &= 1 - \sum_{n=0}^{4} \frac{\lambda^n e^{-\lambda}}{n!}\\
-              &= .37
+      P(N \geq 6) &= 1 - P(N \leq 5) \\
+      &= 1 - \sum_{n=0}^{5} \frac{\lambda^n e^{-\lambda}}{n!}\\
+      &= 0.55
 \end{align*}
-You may have defined the event that the student runs out of money as
-$P(N = 5)$. In other words, that the student writes exactly five
-checks.  This is incorrect because we are modeling the student's
-check-writing activity as a Poisson process. In other words, the
-(unstated) assumption is that the number of checks written is
-independent of the available funds. (Probably closer to reality?)
+You may have defined the event that the friends runs out of
+money as $P(N = 6)$. In other words, that there are exactly
+six payments during the first year.  This is incorrect because
+we are modeling the spending activity as a Poisson process. In
+other words, the (unstated) assumption is that the number of
+payments is independent of the available funds.
 \end{solution}
 
-% this problem needs to be re-written, but it can be very similar.
-\item \emph{Stocking an item in inventory.}
-Demand for an item occurs according to a Poisson distribution with
-mean 3 per day. The maximum stock level is 25 items, which occurs on
-each Monday immediately after a new order is received. The order size
-depends on the number of units left at the end of the week on Saturday
-(business is closed on Sundays). Determine the following:
+% re-written by hannah
+% poisson distribution
+\item \emph{Stocking a vending machine.}  A university cafeteria has a
+  vending machine that is stocked with a variety of juices and
+  sodas. A vending machine attendant replenishes inventory weekly so
+  that there are 180 beverages in stock at the beginning of each
+  week. The cafeteria is open 24 hours, 7 days a week, and it is
+  expected that the beverages will be purchased according to a Poisson
+  distribution with a mean of 1 hour between purchases.
 \begin{enumerate}
-\item The average weekly size of the order. \label{ex:asize}
-\item The probability of shortage at the start of business on Friday. \label{ex:pshort}
-\item The probability that the weekly order size exceeds 10 units. \label{ex:pex}
+\item What is the probability that there are no beverages remaining in
+  the vending machine when the attendant arrives? \label{ex:pout}
+\item On average, how many beverages will be remaining in the vending
+  machine when the attendant arrives? \label{ex:qremain}
+\item What is the probability that the attendant will replenish 150 or
+  more beverages? \label{ex:preplenish}
 \end{enumerate}
 
 \begin{solution}
-\bs
-For part~\ref{ex:asize}, the distribution of demand over six days is
-Poisson with mean 18 items. So, the average weekly size
-of the order is 18 items.
-
-For part~\ref{ex:pshort}, shortage at the start of business on Friday means
-that all 25 items sold during Monday through Thursday. Let
-$D4$ be a random variable that represents demand over the
-first four days of the week.
-\[ D4 \sim \text{Poisson}(\lambda = 12) \]
-The probability of shortage at the start of the day on Friday is
+  \bs For part~\ref{ex:pout}, there will be no beverages remaining in
+  the vending machine if demand for beverages is at least 180.
+  Because the beverages are purchased according to a Poisson
+  distribution with a mean of one hour between purchases, the rate
+  $\lambda$ that beverages are purchased is 24 beverages per
+  day. Therefore, the number of purchases in seven days is Poisson
+  with mean $\lambda t$. Let $N$ be a random variable that represents
+  the number of purchases in one week (seven days).
+  \[ N \sim \text{Poisson}(\lambda = \lambda \times 7 = 168) \] 
 \begin{align*}
-  P(D4 \geq 25) &= 1 - P(D4 \leq 24)\\
-                &= 1 - \sum_{n=0}^{24} \frac{12^n e^{-12}}{n!}\\
-                &\approx 0.0007
+      P(N \geq 180) &= 1 - P(N \leq 179)\\
+      &= 1 - \sum_{i=0}^{179} \frac{168^i e^{-168}}{i!}\\
+      &\approx 0.19
 \end{align*}
 In R,
 \begin{Verbatim}
-> 1 - sum(dpois(0:24,12))
-[1] 0.0006856332
+> 1 - sum(dpois(0:179,168))
+[1] 0.1866995
 \end{Verbatim}
 
-For part~\ref{ex:pex}, the order size will exceed 10 units whenever more than
-10 items are sold during the six days of the week. Let $D6$ be
-the demand over one week, then
-\[ D6 \sim \text{Poisson}(\lambda = 18) \]
-and the probability that the order size exceeds 10 units is
+For part~\ref{ex:qremain}, the expected number of purchases from the
+vending machine each week is 168 beverages. Therefore, the expected
+number of beverages remaining at the end of the week is $180-168=12$.
+	
+For part~\ref{ex:preplenish}, 150 or more beverages will be
+replenished if 150 or more beverages are purchased before the end of
+the week. The probability that 150 or more beverages are purchased
+during a week is
 \begin{align*}
-  P(D6 > 10) &= 1 - P(D6 \leq 10) \\
-             &= 1 - \sum_{n=0}^{10} \frac{18^n e^{-18}}{n!}\\
-             &\approx .97
+      P(N \geq 150) &= 1 - P(N \leq 149)\\
+      &= 1 - \sum_{i=0}^{149} \frac{168^i e^{-168}}{i!}\\
+      &\approx 0.93
+\end{align*}
+In R,
+\begin{Verbatim}
+> 1 - sum(dpois(0:149,168))
+[1] 0.9253016
+\end{Verbatim}
+\end{solution}
+
+% re-written by hannah
+% Poisson distribution
+\item \emph{Car dealership.} A car dealership keeps 200 used cars that
+  are for sale in an uncovered parking lot. In the city where the
+  dealership is located, hailstorms occur randomly throughout the
+  month of June according to a Poisson distribution with a mean of 4
+  hailstorms. During a hailstorm, the number of cars that are damaged
+  follows a Poisson distribution with a mean of eight damaged cars per
+  10 cars in the parking lot.
+\begin{enumerate}
+\item Determine the probability that there will be exactly 5
+  hailstorms at the dealership in June. \label{a}
+\item During a hailstorm, determine the probability that 170 or more
+  cars will be damaged. \label{b}
+\end{enumerate}
+
+\begin{solution}
+  \bs For part~\ref{a}, let $X$ be a random variable that represents
+  the number of hailstorms in June. The number of hailstorms in June
+  follows a Poisson distribution with a mean of 4
+  hailstorms. Therefore, $X \sim \text{Poisson}(\lambda = 4)$.  The
+  probability that there are exactly 5 hailstorms is
+\[
+P(X=5) = \frac{e^{-\lambda}\lambda^5}{5!} = \frac{e^{-4}4^5}{120} \approx 0.16
+\]
+For part~\ref{b}, the rate that cars are damaged is Poisson with a mean
+of 8 damaged cars per 10 cars in the parking lot. Let $N$ be the
+number of damaged cars in the parking lot when 200 cars are present.
+\[ N \sim \text{Poisson}(\lambda = 160) \] 
+
+The probability that 170 or more cars will be damaged in a hailstorm is 
+\begin{align*}
+      P(N \geq 170) &= 1 - P(N \leq 169) \\
+      &= 1 - \sum_{n=0}^{169} \frac{\lambda^n e^{-\lambda}}{n!}\\
+      &\approx 0.22
 \end{align*}
 Using R,
 \begin{Verbatim}
-> 1 - sum(dpois(0:10,18))
-[1] 0.9696337
+> 1 - sum(dpois(0:169,160))
+[1] 0.2245714
 \end{Verbatim}
 \end{solution}
 
+% this problem is OK
+% a poisson process, memory-less property of exponential distribution
+\item \emph{A mining operation.} A dump truck at a mine takes ore to
+  the railroad after 10 one-ton scoops have been loaded into the
+  truck.  The one-ton scoops are loaded from a large diesel-powered
+  shovel independently and at a mean rate of seven scoops per hour.
+  The time between scoops from the shovel can be considered to follow
+  an Exponential distribution.
+
+\begin{enumerate}
+\item Find the probability that the time between consecutive trips to
+  the railroad will be at least one hour.
+\item It takes the dump truck 18 minutes to travel to the railroad,
+  unload, and return. Suppose the truck returns and finds that no
+  scoop is ready to be loaded. What is the probability that the next
+  scoop is ready within 5 minutes? \label{item:2}
+\end{enumerate}
+
+\begin{solution}
+  \bs The time between scoop arrivals is distributed Exponential, so
+  we know that the number of arrivals in a time interval is
+  distributed Poisson. In particular, the number of arrivals in a
+  one-hour period follows a Poisson distribution with mean
+  $\lambda=7$. In order for the time between consecutive trips to the
+  railroad to take at least one hour, we require that the number of
+  arrivals in one hour is nine or less. Let $X$ be the number of
+  (scoop) arrivals in a one hour period.
+\[
+P(X \leq 9) = \sum_{x=0}^9 \frac{e^{-\lambda}\lambda^x}{x!} = .83.
+\]
+For part \ref{item:2}, we can invoke the memoryless property of the
+Exponential distribution. The remaining time until the next arrival is
+disitributed Exponential with rate 7 scoops per hour, regardless of how
+much time has elapsed since the last arrival. Let $Y$ be the time
+until the next arrival, and don't forget to convert from minutes to
+hours.
+\[
+P(Y \leq 5) = 1 - e^{-7\times \frac{5}{60}} = .44
+\]
+\end{solution}
+
+% re-written by hannah
+% normal distribution
+\item \emph{Blood pressure screening.} High blood pressure is an
+  underlying health condition that makes people more susceptible to
+  severe illness. A company conducted blood pressure screenings to
+  determine the risk its employees have for severe illness. The
+  systolic blood pressures (SBP) of 220 employees were measured.  In
+  the general population, SBP measurements follow a Normal distribution
+  with mean $\mu=135$ with standard deviation $\sigma=20$.  The
+  company doctor has created the following guidelines for determining
+  which employees are at highest risk.
+
+\begin{tabular}{rl}
+	systolic blood pressure & risk \\ \hline
+	$\mu+1.5\sigma < SBP$ & very high \\
+	$\mu < SPB < \mu+1.5\sigma$ & high \\
+	$\mu-\sigma < SBP < \mu$ & average \\
+	$SBP < \mu-\sigma$ & low
+\end{tabular}
+
+How many employees of this company fall into each of the four categories?
+
+\vspace{.1in}
+\begin{solution}
+\bs Let $X \sim \mathcal{N}(\mu=135,~\sigma=20)$ be a random variable that represents
+sysolic blood pressure, and recall that $\Phi(z)$ indicates the CDF of the
+standard Normal distribution.
+\begin{align*}
+\text{very high}&
+\quad 220\times(1-P(X<\mu+1.5\sigma))=220\times(1-\Phi(1.5)) \approx 15 \\
+\text{high}&
+\quad 220\times (P(X<\mu+1.5\sigma)-P(X<\mu))=220\times(\Phi(1.5)-\Phi(0)) \approx 95 \\
+\text{average}&
+\quad 220\times(P(X<\mu)-P(X<\mu-\sigma))=220\times(\Phi(0)-\Phi(-1))\approx 75 \\
+\text{low}&
+\quad 220\times(P(X<\mu-\sigma))=220\times\Phi(-1) \approx 35
+\end{align*}
+\end{solution}
+
 % this problem needs to be re-written
-\item \emph{Lognormal distribution.} The prices of stocks are often modeled
+% Lognormal distribution
+\item \emph{Stock prices.} The prices of stocks are often modeled
   with a lognormal distribution. An investor is considering purchasing
   stock in one of two companies, A or B. The price of a share of stock
   today is \$1 for both companies. For company A, the value of the
@@ -338,6 +744,7 @@ P(X_B > \$1.20) &= P(\ln(X_B) > \ln(1.20)) \\
 \end{solution}
 
 \subsubsection*{Stochastic Processes}
+
 
 \subsubsection*{Queueing Models}
 

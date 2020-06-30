@@ -186,7 +186,7 @@ RSS <- sum( (y - y.hat)^2 )
 \subsubsection*{Regression}
   
 % this problem is OK
-\item \emph{Linear regression with a single predictor variable.}
+\item \emph{Old Faithful.}
 In the \texttt{datasets} package in R there is a data set named
 \text{faithful} that
 contains data on the Old Faithful geyser in Yellowstone National Park,
@@ -230,8 +230,22 @@ at the R prompt. Use this data to perform the following exercises.
   \end{enumerate}
 \end{enumerate}
 
+% re-written by Braeden 
+\item \emph{Cherry trees.} In the \texttt{datasets} package in R, the
+  \texttt{trees} data set contains measurements on the girth
+  (diameter) in inches, height in feet, and volume in cubic feet of 31
+  black cherry trees.
+\begin{enumerate}
+\item Fit a regression model with volume as the response
+variable and girth as the predictor variable.
+\item Plot the data and overlay the fitted regression line.
+\item Provide an interpretation for the coefficient on girth.
+\item In your own words, state your interpretation of the $p$-value
+for the coefficient on girth.
+\end{enumerate}
+  
 % written by braeden
-\item \emph{Using multiple linear regression to summarize a dataset.}
+\item \emph{Fuel efficiency.}
   For this problem we will be using a dataset called \texttt{mtcars}
   from the \texttt{datasets} package in R. This dataset contains data
   about different types of cars.  Fit a linear regression model using
@@ -345,9 +359,34 @@ x_3 = \begin{cases} 0 \quad \text{if season is winter} \\
   part~\ref{bb} \label{cc}
 \end{enumerate}
 
+% I need to check if this problem needs to be re-written.  The data is
+% from harrell's book, but we may be able to use it. the idea is to
+% fit a logistic regression model with one numeric predictor and one
+% categorical predictor and view the response on the probability scale
+% graphically.
+\item \emph{Logistic regression.} The file \texttt{harrell.csv}
+contains data on 40 people. The variables are \texttt{age} in years,
+\texttt{gender}, a categorical variable with two levels, \texttt{female}
+and \texttt{male}, and \texttt{response}, a 0/1 indicator variable for
+whether the person responded to a medical treatment (1 means that the
+person responded). Fit a logistic regression model with
+\texttt{response} as the dependent variable and \texttt{age} and
+\texttt{gender} as the independent variables.
+
+\begin{enumerate}
+\item How does the probability of response change for a 42-year-old male
+compared to a 52-year-old male?
+\item Which gender has a higher probability of response to the medical
+treatment?
+\item What is the effect on the odds of response for a one--year
+increase in age?
+\item Make a plot of the probability of response as a function
+of age, with one curve for females and one curve for males.
+\end{enumerate}
+
 \subsubsection*{Classification}
 
-\subsection*{Time Series}
+\subsubsection*{Time Series}
 
 \item \emph{Simulation of a simple trading strategy.}
   The file \texttt{BTC-USD.csv} contains one year's worth of price
