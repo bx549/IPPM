@@ -8,8 +8,8 @@ Deterministic Models
 
 Probabilistic Models
 - Modeling with Probability Distributions (R)
-- Simulation
 - Stochastic Processes (R) (Hannah)
+- Queueing Models
 - Stochastic Dynamic Programming
 - Probabilistic Inventory Models  (Emily)
 

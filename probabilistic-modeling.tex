@@ -1,4 +1,4 @@
-\chapter{Probabilistic Modeling}
+\chapter{Probabilistic Models}
 
 \section{Modeling with Probability Distributions}
 
@@ -339,20 +339,20 @@ probability $p$, independent of the others.
 \begin{enumerate}
 \item Suppose that any one plant can produce enough electricity to
 supply the entire city. What is the probability that the city will
-experience a black-out? \label{p1}
+experience a black-out? \label{ex:p1}
 \item Suppose that two power plants are necessary to keep the city
 from a black-out. Find the probability that the city will
 experience a black-out. 
-\label{p2}
+\label{ex:p2}
 \end{enumerate}
 
 \begin{solution}
 \bs
-For part~\ref{p1}, all $n$ plants must fail for the city to
+For part~\ref{ex:p1}, all $n$ plants must fail for the city to
 have a black-out. Since failures are independent, the probability
 of a black-out is $p^n$.
 
-For part~\ref{p2}, let $X$ be the number of failed plants. $X$
+For part~\ref{ex:p2}, let $X$ be the number of failed plants. $X$
 has a Binomial distribution with parameters $n$ and $p$. The probability
 of a black-out is
 \begin{align*}
@@ -581,13 +581,13 @@ In R,
   10 cars in the parking lot.
 \begin{enumerate}
 \item Determine the probability that there will be exactly 5
-  hailstorms at the dealership in June. \label{a}
+  hailstorms at the dealership in June. \label{ex:storms}
 \item During a hailstorm, determine the probability that 170 or more
-  cars will be damaged. \label{b}
+  cars will be damaged. \label{ex:cars}
 \end{enumerate}
 
 \begin{solution}
-  \bs For part~\ref{a}, let $X$ be a random variable that represents
+  \bs For part~\ref{ex:storms}, let $X$ be a random variable that represents
   the number of hailstorms in June. The number of hailstorms in June
   follows a Poisson distribution with a mean of 4
   hailstorms. Therefore, $X \sim \text{Poisson}(\lambda = 4)$.  The
@@ -595,7 +595,7 @@ In R,
 \[
 P(X=5) = \frac{e^{-\lambda}\lambda^5}{5!} = \frac{e^{-4}4^5}{120} \approx 0.16
 \]
-For part~\ref{b}, the rate that cars are damaged is Poisson with a mean
+For part~\ref{ex:cars}, the rate that cars are damaged is Poisson with a mean
 of 8 damaged cars per 10 cars in the parking lot. Let $N$ be the
 number of damaged cars in the parking lot when 200 cars are present.
 \[ N \sim \text{Poisson}(\lambda = 160) \] 
