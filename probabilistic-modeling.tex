@@ -665,55 +665,45 @@ Determine how many employees fall into each of the four categories.
 
 % this problem needs to be re-written
 % Lognormal distribution
-\item \emph{Stock prices.} The prices of stocks are often modeled
-  with a lognormal distribution. An investor is considering purchasing
-  stock in one of two companies, A or B. The price of a share of stock
-  today is \$1 for both companies. For company A, the value of the
-  stock one year from now is modeled as lognormal with parameters
-  $\mu=.05$ and $\sigma=.1$. For company B, the value of the stock one
-  year from now is modeled as lognormal with parameters $\mu=.02$ and
-  $\sigma=.2$.
+\item \emph{Log-normal distribution.} A sporting goods company is designing a highly durable tennis racquet for competitive players. A manufacturing engineer at the company is tasked with determining which machine should be used to produce the racquets. The engineer has identified two machines that are suitable. Machine A is capable of manufacturing tennis racquets that have an expected life (in years) modeled by the log-normal distribution with parameters $\mu= 0.8$ and $\sigma= 0.25$. Machine B is capable of manufacturing tennis racquets that have an expected life (in years) modeled by the log-normal distribution with parameters $\mu= 0.9$ and $\sigma= 0.05$.
 \begin{enumerate}
-\item Find the mean of the price of one share of company A one year
-  from now. \label{a1}
-\item Find the probability that the price of one share of company A
-  one year from now will be greater than \$1.20. \label{a2}
-\item Find the mean of the price of one share of company B one year
-  from now. \label{b1}
-\item Find the probability that the price of one share of company B
-  one year from now will be greater than \$1.20. \label{b2}
+	\item Determine the mean life of a tennis racquet produced by machine A. \label{a1}
+	\item Determine the mean life of a tennis racquet produced by machine B. \label{b1}
+	\item Determine the probability that a tennis racquet produced by machine A will last more than 2.6 years. \label{a2}
+	\item Determine the probability that a tennis racquet produced by machine B will last more than 2.6 years. \label{b2}
 \end{enumerate}
 
 \begin{solution}
-\bs Let $X_A$ and $X_B$ be the price of one share of company A and
-company B one year from now, respectively. We know from the problem
-description that $X_A \sim \text{LogN}(\mu=.05,\sigma=.1)$ and $X_B
-\sim \text{LogN}(\mu=.02,\sigma=.2)$.
-
-For part~\ref{a1}, the mean of $X_A$ is
-\[
-e^{\mu + \sigma^2/2} = \$1.06
-\]
-For part~\ref{a2}, 
-\begin{align*}
-P(X_A > \$1.20) &= P(\ln(X_A) > \ln(1.20)) \\
-&= P\left(Z > \frac{\ln(1.20)-.05}{.1}\right) \\
-&= P(Z > 1.323) \\
-&= 1-P(Z < 1.323) \\
-&= .093
-\end{align*}
-For part~\ref{b1}, the mean of $X_B$ is
-\[
-e^{\mu + \sigma^2/2} = \$1.04
-\]
-For part~\ref{b2}, 
-\begin{align*}
-P(X_B > \$1.20) &= P(\ln(X_B) > \ln(1.20)) \\
-&= P\left(Z > \frac{\ln(1.20)-.02}{.2}\right) \\
-&= P(Z > .812) \\
-&= 1-P(Z < .812) \\
-&= .208
-\end{align*}
+	\bs 
+	Let $X_A$ and $X_B$ represent the expected life of the racquets produced by machine A and machine B, respectively. It follows that  $X_A \sim \text{LogN}(\mu=0.8,\sigma=0.25)$ and $X_B
+	\sim \text{LogN}(\mu=0.9,\sigma=0.05)$.
+	
+	For part~\ref{a1}, the mean expected life of the racquets produced by machine A is
+	\[
+	e^{\mu + \sigma^2/2} \approx 2.3~\text{years}
+	\]
+	For part~\ref{b1}, the mean expected life of the racquets produced by machine B is
+	\[
+	e^{\mu + \sigma^2/2} \approx 2.5~\text{years}
+	\]
+	
+	For part~\ref{a2}, we wish to find $P(X_A > 2.6)$. It follows that
+	\begin{align*}
+		P(X_A > 2.6) &= P(\ln(X_A) > \ln(2.6)) \\
+		&= P\left(Z > \frac{\ln(2.6)-0.8}{0.25}\right) \\
+		&= P(Z > 0.622) \\
+		&= 1-P(Z < 0.622) \\
+		&= 0.267
+	\end{align*}
+	
+	For part~\ref{b2}, we wish to find $P(X_B > 2.6)$. It follows that
+	\begin{align*}
+		P(X_B > 2.6) &= P(\ln(X_B) > \ln(2.6)) \\
+		&= P\left(Z > \frac{\ln(2.6)-0.9}{0.05}\right) \\
+		&= P(Z > 1.110) \\
+		&= 1-P(Z < 1.110) \\
+		&= 0.134
+	\end{align*}
 \end{solution}
 
 \subsubsection*{Stochastic Processes}
