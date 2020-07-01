@@ -662,16 +662,16 @@ P(Y \leq 5) = 1 - e^{-7\times \frac{5}{60}} = .44
   determine the risk its employees have for severe illness. The
   systolic blood pressures (SBP) of 220 employees were measured.  In
   the general population, SBP measurements follow a Normal distribution
-  with mean $\mu=135$ with standard deviation $\sigma=20$.  The
+  with mean $\mu=135$ and with standard deviation $\sigma=20$.  The
   company doctor has created the following guidelines for determining
   which employees are at highest risk.
 
 \begin{tabular}{rl}
 	systolic blood pressure & risk \\ \hline
 	$\mu+1.5\sigma < SBP$ & very high \\
-	$\mu < SPB < \mu+1.5\sigma$ & high \\
-	$\mu-\sigma < SBP < \mu$ & average \\
-	$SBP < \mu-\sigma$ & low
+	$\mu < SPB \leq \mu+1.5\sigma$ & high \\
+	$\mu-\sigma < SBP \leq \mu$ & average \\
+	$SBP \leq \mu-\sigma$ & low
 \end{tabular}
 
 How many employees of this company fall into each of the four categories?
@@ -679,71 +679,57 @@ How many employees of this company fall into each of the four categories?
 \vspace{.1in}
 \begin{solution}
 \bs Let $X \sim \mathcal{N}(\mu=135,~\sigma=20)$ be a random variable that represents
-sysolic blood pressure, and recall that $\Phi(z)$ indicates the CDF of the
+systolic blood pressure, and recall that $\Phi(z)$ indicates the CDF of the
 standard Normal distribution.
 \begin{align*}
 \text{very high}&
-\quad 220\times(1-P(X<\mu+1.5\sigma))=220\times(1-\Phi(1.5)) \approx 15 \\
+\quad 220\times(1-P(X \leq \mu+1.5\sigma))=220\times(1-\Phi(1.5)) \approx 15 \\
 \text{high}&
-\quad 220\times (P(X<\mu+1.5\sigma)-P(X<\mu))=220\times(\Phi(1.5)-\Phi(0)) \approx 95 \\
+\quad 220\times (P(X \leq \mu+1.5\sigma)-P(X \leq \mu))=220\times(\Phi(1.5)-\Phi(0)) \approx 95 \\
 \text{average}&
-\quad 220\times(P(X<\mu)-P(X<\mu-\sigma))=220\times(\Phi(0)-\Phi(-1))\approx 75 \\
+\quad 220\times(P(X \leq \mu)-P(X \leq \mu-\sigma))=220\times(\Phi(0)-\Phi(-1))\approx 75 \\
 \text{low}&
-\quad 220\times(P(X<\mu-\sigma))=220\times\Phi(-1) \approx 35
+\quad 220\times(P(X \leq \mu-\sigma))=220\times\Phi(-1) \approx 35
 \end{align*}
 \end{solution}
 
-% this problem needs to be re-written
+% this problem is OK
 % Lognormal distribution
-\item \emph{Stock prices.} The prices of stocks are often modeled
-  with a lognormal distribution. An investor is considering purchasing
-  stock in one of two companies, A or B. The price of a share of stock
-  today is \$1 for both companies. For company A, the value of the
-  stock one year from now is modeled as lognormal with parameters
-  $\mu=.05$ and $\sigma=.1$. For company B, the value of the stock one
-  year from now is modeled as lognormal with parameters $\mu=.02$ and
-  $\sigma=.2$.
+\item \emph{Time to failure.} The lifetimes of parts or components
+  that are subjected to the environment (i.e. temperature, corrosion,
+  stress, chemicals) are often modeling using a Lognormal
+  distribution. Rather than being additive, the environmental factors
+  that influence the time to failure are multiplicative. The Central
+  Limit Theorem applies, but because the random effects are
+  multiplicative on the time scale, they are additive on the log
+  scale.  
+
+  A certain component of a bridge is inspected annually to see if it
+  needs to be replaced. The lifetime of the part follows a Lognormal
+  distribution with parameters $\mu=1.6$ and $\sigma=0.25$.
+
 \begin{enumerate}
-\item Find the mean of the price of one share of company A one year
-  from now. \label{a1}
-\item Find the probability that the price of one share of company A
-  one year from now will be greater than \$1.20. \label{a2}
-\item Find the mean of the price of one share of company B one year
-  from now. \label{b1}
-\item Find the probability that the price of one share of company B
-  one year from now will be greater than \$1.20. \label{b2}
+\item Determine the mean time to failure for this part.
+\item What is the probability that the part will last longer
+than seven years?
 \end{enumerate}
 
 \begin{solution}
-\bs Let $X_A$ and $X_B$ be the price of one share of company A and
-company B one year from now, respectively. We know from the problem
-description that $X_A \sim \text{LogN}(\mu=.05,\sigma=.1)$ and $X_B
-\sim \text{LogN}(\mu=.02,\sigma=.2)$.
+  \bs Let $X$ be a random variable that represents the time to failure
+of a part. Then  
+\[ X \sim \text{LogN}(\mu=1.6,\sigma=0.25). \]
+The mean time to failure is
+\[ e^{\mu + \sigma^2/2} \approx 5.1~\text{years.} \]
 
-For part~\ref{a1}, the mean of $X_A$ is
-\[
-e^{\mu + \sigma^2/2} = \$1.06
-\]
-For part~\ref{a2}, 
+We wish to find $P(X > 7)$. Taking logarithms and standardizing,
 \begin{align*}
-P(X_A > \$1.20) &= P(\ln(X_A) > \ln(1.20)) \\
-&= P\left(Z > \frac{\ln(1.20)-.05}{.1}\right) \\
-&= P(Z > 1.323) \\
-&= 1-P(Z < 1.323) \\
-&= .093
+      P(X > 7) &= P(\ln(X) > \ln(7)) \\
+      &= P\left(Z > \frac{\ln(7)-1.6}{0.25}\right) \\
+      &= P(Z > 1.38) \\
+      &= 1-P(Z \leq 1.38) \\
+      &= 0.084
 \end{align*}
-For part~\ref{b1}, the mean of $X_B$ is
-\[
-e^{\mu + \sigma^2/2} = \$1.04
-\]
-For part~\ref{b2}, 
-\begin{align*}
-P(X_B > \$1.20) &= P(\ln(X_B) > \ln(1.20)) \\
-&= P\left(Z > \frac{\ln(1.20)-.02}{.2}\right) \\
-&= P(Z > .812) \\
-&= 1-P(Z < .812) \\
-&= .208
-\end{align*}
+
 \end{solution}
 
 
