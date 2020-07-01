@@ -662,16 +662,16 @@ P(Y \leq 5) = 1 - e^{-7\times \frac{5}{60}} = .44
   determine the risk its employees have for severe illness. The
   systolic blood pressures (SBP) of 220 employees were measured.  In
   the general population, SBP measurements follow a Normal distribution
-  with mean $\mu=135$ with standard deviation $\sigma=20$.  The
+  with mean $\mu=135$ and with standard deviation $\sigma=20$.  The
   company doctor has created the following guidelines for determining
   which employees are at highest risk.
 
 \begin{tabular}{rl}
 	systolic blood pressure & risk \\ \hline
 	$\mu+1.5\sigma < SBP$ & very high \\
-	$\mu < SPB < \mu+1.5\sigma$ & high \\
-	$\mu-\sigma < SBP < \mu$ & average \\
-	$SBP < \mu-\sigma$ & low
+	$\mu < SPB \leq \mu+1.5\sigma$ & high \\
+	$\mu-\sigma < SBP \leq \mu$ & average \\
+	$SBP \leq \mu-\sigma$ & low
 \end{tabular}
 
 How many employees of this company fall into each of the four categories?
@@ -679,61 +679,57 @@ How many employees of this company fall into each of the four categories?
 \vspace{.1in}
 \begin{solution}
 \bs Let $X \sim \mathcal{N}(\mu=135,~\sigma=20)$ be a random variable that represents
-sysolic blood pressure, and recall that $\Phi(z)$ indicates the CDF of the
+systolic blood pressure, and recall that $\Phi(z)$ indicates the CDF of the
 standard Normal distribution.
 \begin{align*}
 \text{very high}&
-\quad 220\times(1-P(X<\mu+1.5\sigma))=220\times(1-\Phi(1.5)) \approx 15 \\
+\quad 220\times(1-P(X \leq \mu+1.5\sigma))=220\times(1-\Phi(1.5)) \approx 15 \\
 \text{high}&
-\quad 220\times (P(X<\mu+1.5\sigma)-P(X<\mu))=220\times(\Phi(1.5)-\Phi(0)) \approx 95 \\
+\quad 220\times (P(X \leq \mu+1.5\sigma)-P(X \leq \mu))=220\times(\Phi(1.5)-\Phi(0)) \approx 95 \\
 \text{average}&
-\quad 220\times(P(X<\mu)-P(X<\mu-\sigma))=220\times(\Phi(0)-\Phi(-1))\approx 75 \\
+\quad 220\times(P(X \leq \mu)-P(X \leq \mu-\sigma))=220\times(\Phi(0)-\Phi(-1))\approx 75 \\
 \text{low}&
-\quad 220\times(P(X<\mu-\sigma))=220\times\Phi(-1) \approx 35
+\quad 220\times(P(X \leq \mu-\sigma))=220\times\Phi(-1) \approx 35
 \end{align*}
 \end{solution}
 
-% this problem needs to be re-written
+% this problem is OK
 % Lognormal distribution
-\item \emph{Log-normal distribution.} A sporting goods company is designing a highly durable tennis racquet for competitive players. A manufacturing engineer at the company is tasked with determining which machine should be used to produce the racquets. The engineer has identified two machines that are suitable. Machine A is capable of manufacturing tennis racquets that have an expected life (in years) modeled by the log-normal distribution with parameters $\mu= 0.8$ and $\sigma= 0.25$. Machine B is capable of manufacturing tennis racquets that have an expected life (in years) modeled by the log-normal distribution with parameters $\mu= 0.9$ and $\sigma= 0.05$.
+\item \emph{Time to failure.} The lifetimes of parts or components
+  that are subjected to the environment (i.e. temperature, corrosion,
+  stress, chemicals) are often modeling using a Lognormal
+  distribution. Rather than being additive, the environmental factors
+  that influence the time to failure are multiplicative. The Central
+  Limit Theorem applies, but because the random effects are
+  multiplicative on the time scale, they are additive on the log
+  scale.  
+
+  A certain component of a bridge is inspected annually to see if it
+  needs to be replaced. The lifetime of the part follows a Lognormal
+  distribution with parameters $\mu=1.6$ and $\sigma=0.25$.
+
 \begin{enumerate}
-	\item Determine the mean life of a tennis racquet produced by machine A. \label{a1}
-	\item Determine the mean life of a tennis racquet produced by machine B. \label{b1}
-	\item Determine the probability that a tennis racquet produced by machine A will last more than 2.6 years. \label{a2}
-	\item Determine the probability that a tennis racquet produced by machine B will last more than 2.6 years. \label{b2}
+\item Determine the mean time to failure for this part.
+\item What is the probability that the part will last longer
+than seven years?
 \end{enumerate}
 
 \begin{solution}
-	\bs 
-	Let $X_A$ and $X_B$ represent the expected life of the racquets produced by machine A and machine B, respectively. It follows that  $X_A \sim \text{LogN}(\mu=0.8,\sigma=0.25)$ and $X_B
-	\sim \text{LogN}(\mu=0.9,\sigma=0.05)$.
-	
-	For part~\ref{a1}, the mean expected life of the racquets produced by machine A is
-	\[
-	e^{\mu + \sigma^2/2} \approx 2.3~\text{years}
-	\]
-	For part~\ref{b1}, the mean expected life of the racquets produced by machine B is
-	\[
-	e^{\mu + \sigma^2/2} \approx 2.5~\text{years}
-	\]
-	
-	For part~\ref{a2}, we wish to find $P(X_A > 2.6)$. It follows that
-	\begin{align*}
-		P(X_A > 2.6) &= P(\ln(X_A) > \ln(2.6)) \\
-		&= P\left(Z > \frac{\ln(2.6)-0.8}{0.25}\right) \\
-		&= P(Z > 0.622) \\
-		&= 1-P(Z < 0.622) \\
-		&= 0.267
-	\end{align*}
-	
-	For part~\ref{b2}, we wish to find $P(X_B > 2.6)$. It follows that
-	\begin{align*}
-		P(X_B > 2.6) &= P(\ln(X_B) > \ln(2.6)) \\
-		&= P\left(Z > \frac{\ln(2.6)-0.9}{0.05}\right) \\
-		&= P(Z > 1.110) \\
-		&= 1-P(Z < 1.110) \\
-		&= 0.134
-	\end{align*}
+  \bs Let $X$ be a random variable that represents the time to failure
+of a part. Then  
+\[ X \sim \text{LogN}(\mu=1.6,\sigma=0.25). \]
+The mean time to failure is
+\[ e^{\mu + \sigma^2/2} \approx 5.1~\text{years.} \]
+
+We wish to find $P(X > 7)$. Taking logarithms and standardizing,
+\begin{align*}
+      P(X > 7) &= P(\ln(X) > \ln(7)) \\
+      &= P\left(Z > \frac{\ln(7)-1.6}{0.25}\right) \\
+      &= P(Z > 1.38) \\
+      &= 1-P(Z \leq 1.38) \\
+      &= 0.084
+\end{align*}
+
 \end{solution}
 
 
