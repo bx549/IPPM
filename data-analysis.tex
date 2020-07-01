@@ -29,12 +29,13 @@ se <- sqrt((phat*(1-phat))/n)
 [1] 0.0212373
 \end{Verbatim}
 
-\emph{Confidence Interval using the $t$ Distribution.}
-An article in the \emph{Journal of Heat Transfer} describes a
-method of measuring the thermal conductivity of high-purity iron.
-Using a temperature of $100^{\circ}$F and a power input of
-550 W. The following 10 measurements of thermal conductivity
-(in Btu/hr -- ft -- ${}^{\circ}$F) were determined.
+% discussion of confidence interval.
+% change problem context, have >= 30 observations, use Normal distribution.
+  \emph{Confidence Interval.}  An article in the \emph{Journal of Heat
+    Transfer} describes a method of measuring the thermal conductivity
+  of high-purity iron.  Using a temperature of $100^{\circ}$F and a
+  power input of 550 W. The following 10 measurements of thermal
+  conductivity (in Btu/hr -- ft -- ${}^{\circ}$F) were determined.
 \begin{align*}
   41.60,~41.48,~&42.34,~41.95,~41.86\\
   42.18,~41.72,~&42.26,~41.81,~42.04
@@ -170,7 +171,8 @@ each value occurred.
   data? Why or why not?
 \end{enumerate}
 
-% this problem is OK
+% need to have 30 observations and use the normal distribution instead
+% of the t distribution. put the data set into a file.
 \item \emph{Validation of a simulation model.} A simulation model of a
   job shop was developed to investigate different scheduling rules. To
   validate the model, the scheduling rule currently used was
