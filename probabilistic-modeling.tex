@@ -908,75 +908,57 @@ grocery store.
 
 \subsubsection*{Probabilistic Inventory Models}
 
-% the context of this problem needs to be re-written
-% it is problem 27 ch 10 of IMS
-\item A perishable dairy product is ordered daily at a 
-  particular supermarket. The product costs
-  \$1.19 per unit and sells for \$1.65 per unit. If units are unsold at
-  the end of the day, the supplier takes them back at a rebate of
-  \$1 per unit. Assume that daily demand is approximately normally
-  distributed with $\mu = 150$ and $\sigma = 30$. 
+% written by Emily
+% Probabilistic Inventory Model
+% To replace problem 27 ch 10 IMS
+\item \emph{Lawn Chair Order Quantity}
+Summer is approaching and a store is determining how many folding lawn chairs they should purchase from a supplier. The inventory managers only want to stock lawn chairs in the summer because that is when there is a high demand for the product. Each chair costs \$15\ for the store to purchase and can be sold for \$27.50.\  Any chairs left at the end of the summer can be sold on clearance for \$10.50.\ Based on data from past years, the seasonal demand for lawn chairs follows a normal distribution with $\mu = 205$ and $\sigma = 25$.
 
 \begin{enumerate}
-\item What is your recommended daily order quantity for the
-  supermarket?
-\item What is the probability that the supermarket will sell all the
-  units it orders?
-\item In problems such as these, why would the supplier offer a rebate
-  as high as \$1? For example, why not offer a nominal rebate of, say,
-  25 cents per unit? What happens to the supermarket order quantity as
-  the rebate is reduced? \label{rebate}
+\item What is your recommended order quantity for the store?
+\item What is the probability that the store will sell all the folding lawn chairs it orders before summer is over?
+\item How would the economic order quantity change if the clearance price for the chairs was only \$8?\ What happens to the store's order quantity as the clearance price is reduced? 
 \end{enumerate}
 
 \begin{solution}
-\bs Let $D$ be the daily demand for the item. We know that
-$D \sim \mathcal{N}\left(\mu=150,~\sigma=30\right)$. The penalty
-for ordering too few items is $c_u=.46$ and the penalty for
-ordering too many items is $c_o=.19$. We want to find the
+\bs Let $D$ be the summer demand for folding lawn chairs. We know that
+$D \sim \mathcal{N}\left(\mu=205,~\sigma=25\right)$. The penalty
+for ordering too few items is $c_u= 12.50$ and the penalty for
+ordering too many items is $c_o= 4.50$. We want to find the
 order quantity $Q^{\ast}$ such that
-\[ P\left(D \leq Q^{\ast}\right) < \frac{c_u}{c_u+c_o} = \frac{.46}{.65} = 0.708 \]
+\[ P\left(D \leq Q^{\ast}\right) < \frac{c_u}{c_u+c_o} = \frac{12.50}{17.00} = 0.735 \]
 Standardizing,
-\[ P\left(z \leq \frac{Q^{\ast}-150}{30}\right) = 0.708 \]
+\[ P\left(z \leq \frac{Q^{\ast}-205}{25}\right) = 0.735 \]
 implies that
 \begin{align*}
-\frac{Q^{\ast}-150}{30} &= 0.55 \\
-Q^{\ast} &= 150 + 0.55(30)\\
-Q^{\ast} &= 166.5
+\frac{Q^{\ast}-205}{25} &= 0.63 \\
+Q^{\ast} &= 205 + 0.63(25)\\
+Q^{\ast} &= 220.75
 \end{align*}
-The supermarket should order 166 (or 167) units.  
-For part b) the probability that all units will sell is
+The grocery store should order 221 (or 220) folding lawn chairs. 
+
+For part b) the probability that all chairs will sell is
 \begin{align*}
-  P\left(D \geq 166 \right) &= 1 - P\left(D \leq 166 \right)\\
-                            &= 1 - P\left( z \leq \frac{166-150}{30} \right) \\
-                            &= 1 - P\left( z \leq .5333\right)\\
-                            &= 1 - .70 \\
-                            &= 0.30
+  P\left(D \geq 221 \right) &= 1 - P\left(D \leq 221 \right)\\
+                            &= 1 - P\left( z \leq \frac{221-205}{25} \right) \\
+                            &= 1 - P\left( z \leq .64 \right)\\
+                            &= 1 - .74 \\
+                            &= 0.26
 \end{align*}
 
-Regarding part~\ref{rebate}, if the rebate is \$.25 then the cost of being
-under--stocked $c_u=0.46$ is less than the cost of being over--stocked
-$c_o=0.94$. In this case the supermarket will order fewer items. Let's
-see what happens to the supplier's revenue when the rebate is \$.25.
-We want the order quantity $Q^{\ast}$ such that
+Regarding part c), if the clearance price decreases to \$8\, then the cost of being under--stocked will still be  $c_u=12.50$, but the cost of being over will increase to $c_o=7.00$. The order quantity $Q^{\ast}$ will change such that 
 \begin{align*}
-  P\left(D \leq Q^{\ast}\right) = \frac{.46}{1.4} &= .329 \\
-  P\left(z \leq \frac{Q^{\ast}-150}{30}\right) &= .329
+  P\left(D \leq Q^{\ast}\right) = \frac{12.50}{19.50} &= .641 \\
+  P\left(z \leq \frac{Q^{\ast}-205}{25}\right) &= .641
 \end{align*}
 which implies that
 \begin{align*}
-  \frac{Q^{\ast}- 150}{30} &= -0.44\\
-  Q^{\ast} &= 150 - 0.44(30) = 136.8
+  \frac{Q^{\ast}- 205}{25} &= .36\\
+  Q^{\ast} &= 205 + 0.36(25) = 214
 \end{align*}
-or about 137 units. The expected revenue to the supplier when
-$Q=166$ is
-\[ 166(\$1.19) - 16(\$1.00) = \$181.54, \]
-and the expected revenue when $Q=137$ is
-\[ 137(\$1.19) = \$163.03. \]
-As the rebate is reduced the supermarket will order fewer
-items. A related question is ``What is the rebate that will
-maximize the supplier's revenue?''.
+The new order quantity will be 214 chairs with a clearance price of \$8\. The order quantity will continue to decrease as the clearance price decreases because the cost of being over will continue to increase. 
+
+
 \end{solution}
-
-
 
 \end{enumerate}
