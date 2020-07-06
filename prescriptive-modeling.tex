@@ -1402,6 +1402,41 @@ With 10 days lead time and usage rate of 500 gallons per day, the reorder
 point is $10 \times 500 = \num{5000}$ gallons.
 \end{solution}
 
+% written by Emily
+% deterministic inventory model
+% to replace IMS problem 5 from ch 10
+
+\item \emph{Ordering lumber.} 
+Building Builders, a construction company, always has a full schedule of building projects. 
+One of the most important resources required for their projects is lumber. To complete their 
+projects, Building Builders has a constant demand for lumber of \num{5000} board feet per day. 
+There is a \$300\ delivery fee every time the company orders more lumber. It costs \$0.02\ 
+per week for the company to store each unused board foot (7 days in one week). Every order 
+has a lead time of 2 days to account for order processing and delivery time. 
+
+\begin{enumerate}
+\item What is the optimal order quantity (in board feet) for Building Builders?
+\item How frequently should Building Builders order to replenish the lumber supply?
+\item Building Builders currently has space to store \num{35000} board feet of lumber. Should they invest in more space to store lumber? Why or why not? 
+\item What is the reorder point?
+\end{enumerate}
+
+\begin{solution}
+\bs The cost per order is $C_0=\$300$, 
+the holding cost is $C_h=\$.02$ per board foot per week, the lead time is $m=2$ days, 
+the demand rate is $D=\num{5000}$ board feet per day, 
+and there are 7 days in a week. 
+The demand per week is \[\num{5000} ~\text{board feet per day} \times 7 ~\text{days per week} = \num{35000} ~\text{board feet per week}\]
+Using the formula for economic order quantity,
+\[ Q^{\ast} = \sqrt{\frac{2DC_o}{C_h}} = \sqrt{\frac{2(\num{35000})(300)}{0.02}} = \num{32404}~\text{board feet.} \]
+
+The cycle time associated with the economic order quantity is
+\[ T^{\ast} = \frac{Q^{\ast}}{D} = \frac{\num{32404}}{\num{5000}} = 6.5 ~\text{days.} \]
+
+No, Building Builders should not invest in more space to store lumber because the economic order quantity of \num{32404} board feet is less than the current storage space capacity of \num{35000} board feet.
+
+The lead time is 2 days and the usage rate per day is \num{5000} board feet, so the reorder point is $2 \times \num{5000} = \num{10000}$ board feet.
+\end{solution}
 
 
 \end{enumerate}
