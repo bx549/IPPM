@@ -914,21 +914,30 @@ grocery store.
 % written by Emily
 % Probabilistic Inventory Model
 % To replace problem 27 ch 10 IMS
-\item \emph{Lawn Chair Order Quantity}
-Summer is approaching and a store is determining how many folding lawn chairs they should purchase from a supplier. The inventory managers only want to stock lawn chairs in the summer because that is when there is a high demand for the product. Each chair costs \$15\ for the store to purchase and can be sold for \$27.50.\  Any chairs left at the end of the summer can be sold on clearance for \$10.50.\ Based on data from past years, the seasonal demand for lawn chairs follows a normal distribution with $\mu = 205$ and $\sigma = 25$.
+\item \emph{Stocking a seasonal item.} Summer is approaching and a
+  store is determining how many folding lawn chairs they should
+  purchase from a supplier.  Each chair costs \$15\ for the store to
+  purchase and can be sold for \$27.50.\ The store stocks lawn chairs
+  only during the summer; any chairs left at the end of the summer are
+  sold at a clearance price of \$10.50.\ Based on historical data, the
+  seasonal summer demand for lawn chairs follows a normal distribution with
+  $\mu = 205$ and $\sigma = 25$.
 
 \begin{enumerate}
 \item What is your recommended order quantity for the store?
-\item What is the probability that the store will sell all the folding lawn chairs it orders before summer is over?
-\item How would the economic order quantity change if the clearance price for the chairs was only \$8?\ What happens to the store's order quantity as the clearance price is reduced? 
+\item What is the probability that the store will sell all the folding
+  lawn chairs it orders before summer is over? \label{ex:lawn}
+\item How would the economic order quantity change if the clearance
+  price for the chairs was only \$8?\ What happens to the store's
+  order quantity as the clearance price is reduced? \label{ex:clearance}
 \end{enumerate}
 
 \begin{solution}
-\bs Let $D$ be the summer demand for folding lawn chairs. We know that
-$D \sim \mathcal{N}\left(\mu=205,~\sigma=25\right)$. The penalty
-for ordering too few items is $c_u= 12.50$ and the penalty for
-ordering too many items is $c_o= 4.50$. We want to find the
-order quantity $Q^{\ast}$ such that
+  \bs Let $D$ be the summer demand for folding lawn chairs. We know
+  that $D \sim \mathcal{N}\left(\mu=205,~\sigma=25\right)$. The
+  penalty for ordering too few items is $c_u= 12.50$ and the penalty
+  for ordering too many items is $c_o= 4.50$. We want to find the
+  order quantity $Q^{\ast}$ such that
 \[ P\left(D \leq Q^{\ast}\right) < \frac{c_u}{c_u+c_o} = \frac{12.50}{17.00} = 0.735 \]
 Standardizing,
 \[ P\left(z \leq \frac{Q^{\ast}-205}{25}\right) = 0.735 \]
@@ -938,9 +947,8 @@ implies that
 Q^{\ast} &= 205 + 0.63(25)\\
 Q^{\ast} &= 220.75
 \end{align*}
-The grocery store should order 221 (or 220) folding lawn chairs. 
-
-For part b) the probability that all chairs will sell is
+The store should order 221 (or 220) folding lawn chairs. 
+For part~\ref{ex:lawn}, the probability that all chairs will sell is
 \begin{align*}
   P\left(D \geq 221 \right) &= 1 - P\left(D \leq 221 \right)\\
                             &= 1 - P\left( z \leq \frac{221-205}{25} \right) \\
@@ -949,7 +957,10 @@ For part b) the probability that all chairs will sell is
                             &= 0.26
 \end{align*}
 
-Regarding part c), if the clearance price decreases to \$8\, then the cost of being under--stocked will still be  $c_u=12.50$, but the cost of being over will increase to $c_o=7.00$. The order quantity $Q^{\ast}$ will change such that 
+Regarding part~\ref{ex:clearance}, if the clearance price decreases to
+\$8\, then the cost of being under-stocked will still be $c_u=12.50$,
+but the cost of being over will increase to $c_o=7.00$. The order
+quantity $Q^{\ast}$ will change such that
 \begin{align*}
   P\left(D \leq Q^{\ast}\right) = \frac{12.50}{19.50} &= .641 \\
   P\left(z \leq \frac{Q^{\ast}-205}{25}\right) &= .641
@@ -959,9 +970,10 @@ which implies that
   \frac{Q^{\ast}- 205}{25} &= .36\\
   Q^{\ast} &= 205 + 0.36(25) = 214
 \end{align*}
-The new order quantity will be 214 chairs with a clearance price of \$8\. The order quantity will continue to decrease as the clearance price decreases because the cost of being over will continue to increase. 
-
-
+With a clearance price of \$8, the new order quantity will be 214
+chairs.  The economic order quantity will continue to decrease as the
+clearance price decreases because the cost of being over will continue
+to increase.
 \end{solution}
 
 \end{enumerate}
