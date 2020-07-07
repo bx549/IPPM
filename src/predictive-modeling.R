@@ -116,44 +116,6 @@ fm <- lm(sales ~ company.price + competitor.price + season, data=Sales)
 summary(fm)
 coef(fm)
 
-## Exercise: Simulation of a simple trading strategy.
-Bit <- read.csv("BTC-USD.csv", stringsAsFactors=FALSE)
-Bit$Date <- as.Date(Bit$Date)
-
-(p <- ggplot(Bit) + geom_line(aes(x=Date, y=Close)))
-
-(p2 <- ggplot(Bit) + geom_point(aes(x=Volume, y=Close)))
-
-## plot Close vs Volume on log scale
-require(scales)
-p2 + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x))) +
-    scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))
-
-## get set up
-alpha <- 0.5  # the smooting parameter
-n <- length(Bit$Close)
-net <- 0                 # gain/loss
-fcst <- numeric(n)       # will hold the forecast
-fcst[1] <- Bit$Close[1]  # to start the exponential smooting formula
-
-for (i in 2:n) {
-    # fcst[i] holds the prediction for day i+1
-    fcst[i] <- alpha * Bit$Close[i] + (1-alpha) * fcst[i-1]
-
-    if (fcst[i] >= Bit$Close[i]) { # fcst is for price increase
-        net  <- net - Bit$Close[i] # buy one BTC
-    } else {                       # fcst is for price decrease
-        net <- net + Bit$Close[i]  # sell one BTC
-    }
-}
-message("net dollar position = ",  net)
-
-# plot the forecasted price and the actual price
-Bit$fcst <- fcst
-p + geom_line(aes(x=Date, y=fcst), color="blue")
-
 ## Exercise: Logistic regression
 Med <- read.csv("../data/harrell.csv")
 
@@ -196,3 +158,70 @@ ggplot(VO2, aes(x=Age, y=VO2max)) +
     geom_smooth(method = "lm", se = FALSE, color="red")
 
 
+## Exercise: time series sales data
+Sales <- tibble(
+    month=1:12,
+    actual=c(105,135,120,105,90,120,145,140,100,80,100,110),
+    ## compute the 3-period moving average
+    saleslag1 = dplyr::lag(actual, 1),
+    saleslag2 = dplyr::lag(actual, 2),
+    ma = (actual + saleslag1 + saleslag2) / 3 
+)
+
+## compute the exponential smoothing values
+alpha <- 0.3  # the smooting parameter
+n <- nrow(Sales)
+smooth <- numeric(n)         # will hold the smoothed values
+smooth[1] <- Sales$actual[1] # to start the exponential smooting formula
+
+for (i in 1:(n-1)) {
+    smooth[i+1] <- alpha * Sales$actual[i] + (1-alpha) * smooth[i]
+}
+
+Sales$smooth <- smooth
+
+## put the data in "long" format so that plotting with ggplot2 is easy
+SalesLong <- Sales %>%
+    pivot_longer(c(actual, ma, smooth), names_to = "series", values_to = "sales")
+
+ggplot(SalesLong) +
+    geom_line(aes(x=month, y=sales, color=series))
+
+
+## Exercise: Simulation of a simple trading strategy.
+Bit <- read.csv("BTC-USD.csv", stringsAsFactors=FALSE)
+Bit$Date <- as.Date(Bit$Date)
+
+(p <- ggplot(Bit) + geom_line(aes(x=Date, y=Close)))
+
+(p2 <- ggplot(Bit) + geom_point(aes(x=Volume, y=Close)))
+
+## plot Close vs Volume on log scale
+require(scales)
+p2 + scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x))) +
+    scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x)))
+
+## get set up
+alpha <- 0.5  # the smooting parameter
+n <- length(Bit$Close)
+net <- 0                 # gain/loss
+fcst <- numeric(n)       # will hold the forecast
+fcst[1] <- Bit$Close[1]  # to start the exponential smooting formula
+
+for (i in 2:n) {
+    # fcst[i] holds the prediction for day i+1
+    fcst[i] <- alpha * Bit$Close[i] + (1-alpha) * fcst[i-1]
+
+    if (fcst[i] >= Bit$Close[i]) { # fcst is for price increase
+        net  <- net - Bit$Close[i] # buy one BTC
+    } else {                       # fcst is for price decrease
+        net <- net + Bit$Close[i]  # sell one BTC
+    }
+}
+message("net dollar position = ",  net)
+
+# plot the forecasted price and the actual price
+Bit$fcst <- fcst
+p + geom_line(aes(x=Date, y=fcst), color="blue")
