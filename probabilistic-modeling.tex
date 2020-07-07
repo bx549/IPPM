@@ -916,6 +916,45 @@ queue and the average time in queue appear to be acceptable for a
 grocery store.
 \end{solution}
 
+% the context of this problem needs to be re-written. perhaps describe a
+% situation of a store with two clerks, each with exponential service times
+% (so total service time is Gamma/Erlang). Social distancing measures mean
+% that only one customer at a time is allowed in the store.
+\item \emph{An $M$/$G$/$1$ queue.}  Patients arrive for a physical
+  examination at the rate of one per hour. Interarrival times are
+  exponentially distributed. The physical examination requires three
+  stages, each one independently and exponentially distributed with a
+  mean service time of 15 minutes. A patient must go through all three
+  stages before the next patient can begin the first stage. Determine
+  the average number of patients waiting to start the first stage,
+  $L_Q$. A couple of helpful items: 
+\begin{compactenum}[i)]
+\item The variance of the sum of independent
+  random variables is the sum of the variances,
+\item the sum of IID
+  exponential random variables is distributed Gamma, 
+\item the variance
+  of an exponential distribution is the mean squared, and
+\item for an $M$/$G$/1 queue, 
+\[ L_Q = \frac{\rho^2(1 + \sigma^2\mu^2)}{2(1-\rho)} \]
+where $\rho$ is the server utilization, $\mu$ is the service rate, and $\sigma^2$ is
+the variance of the service time distribution.
+\end{compactenum}
+
+\begin{solution}
+  \bs First we know that $\lambda = 1/60$ in units of patients per
+  minute. The expected service time for all three stages is 45
+  minutes. So $\mu = 1/45$ patients per minute. If we let $X$ be the
+  service time, then
+  \[ \text{Var}(X) = 15^2 + 15^2 + 15^2 = 675 \] because the time at
+  each stage is exponentially distributed time with mean 15 minutes.
+  Now,
+\begin{align*}
+  L_Q &= \frac{\frac{9}{16}\left(1 + 675\left(\frac{1}{2025}\right)\right)}{2\left(\frac{1}{4}\right)} \\
+      &= \frac{3}{2} \\
+      &= 1.5 ~\text{patients}
+\end{align*}
+\end{solution}
 
 \subsubsection*{Stochastic Dynamic Programming}
 
@@ -972,7 +1011,6 @@ For part~\ref{ex:lawn}, the probability that all chairs will sell is
                             &= 1 - .74 \\
                             &= 0.26
 \end{align*}
-
 
 Regarding part~\ref{ex:clearance}, if the clearance price decreases to
 \$8\, then the cost of being under-stocked will still be $c_u=12.50$,
