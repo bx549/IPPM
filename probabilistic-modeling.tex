@@ -823,35 +823,53 @@ To compute the average number in the queue, weight the time in queue
 by the number of customers. In other words, compute the area under the
 curve but above one, and then divide by the total time.
 \[ L_q = \frac{14}{17} \]
-
 \end{solution}
 
-% this problem needs to be re-written.
-\item \emph{Theme park waiting lines.} A small theme park, Expedited Expeditions, is known for having rides with short waiting times. A new ride has opened, and customers arrive to the ride according to a Poisson process with a mean of 20 arrivals per hour. Only one customer is allowed on the ride at a time, and customers can stay on the ride as long they wish. The length of time that each customer spends on the ride is exponentially distributed with a mean of 2.5 minutes. 
+% re-written by hannah.  can we make this into a capital expense
+% problem? something like the park will invest in a 2nd set of cars
+% for the roller coaster if the waiting metrics are too onerous for
+% the customers?
+\item \emph{Theme park waiting lines.} A small theme park, Expedited
+  Expeditions, is known for having rides with short waiting times. A
+  new ride has opened, and customers arrive to the ride according to a
+  Poisson process with a mean of 20 arrivals per hour. Only one
+  customer is allowed on the ride at a time, and customers can stay on
+  the ride as long they wish. The length of time that each customer
+  spends on the ride is exponentially distributed with a mean of 2.5
+  minutes.
 \begin{enumerate}
-	\item Determine the average waiting time in line for the ride. \label{item:14a}
-	\item Determine the average number of customers in line for the ride. \label{item:14b}
-	\item Determine the probability that a customer will spend 15 minutes or less waiting in line and enjoying the ride. \label{item:14c}
+\item Determine the average waiting time in line for the ride. \label{ex:theme-parka}
+\item Determine the average number of customers in line for the
+  ride. \label{ex:theme-parkb}
+\item Determine the probability that a customer will spend a total of
+15 minutes or less waiting in line and enjoying the ride
+(i.e. time in the system). \label{ex:theme-parkc}
 \end{enumerate}
+Assume that the system is in steady-state and that customers are
+served in a first-in-first-out manner.
+
 \begin{solution}
-	\bs
-	The system in this problem is an M/M/1 queuing system. Customers arrive at the rate
-	\[ \lambda = 20~\text{customers per hour} \]
-	We know that the service rate is 
-	\[ \mu = 24~\text{customers per hour} \]
-	
-	For part~\ref{item:14a}, we wish to find $W_q$. 
-	
-	\[ W_q = \frac{\lambda}{\mu(\mu-\lambda)} = \frac{20}{24 \times(24-20)} = 5/24~\text{hours} = 12.5~\text{minutes} \] 
-	
-	For part~\ref{item:14b}, we can use Little's law to find $L_q$. 
-	\[ L_q = \lambda \times W_q  = 20 \times 5/24 \approx 4~\text{customers}\]
-	
-	For part~\ref{item:14c}, we wish to find  the probability that a customer will spend 15 minutes or less in the system. Because 15 minutes = 1/4 hours, we will find P(W \leq 1/4).  
-	
-	\[ P(W \leq t) = 1 - e^{-t(\mu-\lambda)}= 1 - e^{-1/4(24-20)} \approx 0.63\]
-	
+  \bs The system in this problem is an M/M/1 queuing system. Customers
+  arrive at the rate
+\[ \lambda = 20~\text{customers per hour} \]
+We know that the service rate is 
+\[ \mu = 24~\text{customers per hour} \]
+
+For part~\ref{ex:theme-parka}, we wish to find $W_q$. 
+\[ W_q = \frac{\lambda}{\mu(\mu-\lambda)} = \frac{20}{24
+    \times(24-20)} = 5/24~\text{hours} = 12.5~\text{minutes} \]
+
+For part~\ref{ex:theme-parkb}, we can use Little's law to find $L_q$. 
+\[ L_q = \lambda \times W_q  = 20 \times 5/24 \approx 4~\text{customers}\]
+
+To find the probability that a customer will spend 15 minutes or less
+in the system, we use the fact that for an M/M/1 system with FIFO
+queue discipline and that has reached steady-state, the distribution
+of the time in system is Exponential with rate $\mu-\lambda$.
+Converting from minutes to hours,
+\[ P(W \leq t) = 1 - e^{-t(\mu-\lambda)}= 1 - e^{-1/4(24-20)} \approx 0.63\]
 \end{solution}
+
 % this problem needs to be re-written
 \item \emph{Comparing system configurations.}
   Pete's Market is a small local grocery store with one checkout counter.
