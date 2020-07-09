@@ -827,31 +827,39 @@ curve but above one, and then divide by the total time.
 \end{solution}
 
 % this problem needs to be re-written.
-\item \emph{Theme park waiting lines.} A small theme park, Expedited Expeditions, is known for having rides with short waiting times. A new ride has opened, and customers arrive to the ride according to a Poisson process with a mean of 20 arrivals per hour. Only one customer is allowed on the ride at a time, and customers can stay on the ride as long they wish. The length of time that each customer spends on the ride is exponentially distributed with a mean of 2.5 minutes. 
-\begin{enumerate}
-	\item Determine the average waiting time in line for the ride. \label{item:14a}
-	\item Determine the average number of customers in line for the ride. \label{item:14b}
-	\item Determine the probability that a customer will spend 15 minutes or less waiting in line and enjoying the ride. \label{item:14c}
-\end{enumerate}
+\item \emph{Justification for a capital expense.}
+Cars arrive at the Lincoln Tunnel toll gate according to a Poisson
+process with an average rate of 90 cars per hour. The time for passing
+the gate is exponential with mean 38 seconds.  Drivers complain of
+the long waiting time, and authorities are willing to reduce the
+average passing time to 30 seconds by installing automatic toll
+collecting devices, provided two conditions are satisfied: 1) the
+average number of waiting cars in the present system exceeds 5 and
+2) the percentage of the gate idle time with the new device
+installed does not exceed 10\%. Can the new device be justified?
+
 \begin{solution}
 	\bs
-	The system in this problem is an M/M/1 queuing system. Customers arrive at the rate
-	\[ \lambda = 20~\text{customers per hour} \]
-	We know that the service rate is 
-	\[ \mu = 24~\text{customers per hour} \]
-	
-	For part~\ref{item:14a}, we wish to find $W_q$. 
-	
-	\[ W_q = \frac{\lambda}{\mu(\mu-\lambda)} = \frac{20}{24 \times(24-20)} = 5/24~\text{hours} = 12.5~\text{minutes} \] 
-	
-	For part~\ref{item:14b}, we can use Little's law to find $L_q$. 
-	\[ L_q = \lambda \times W_q  = 20 \times 5/24 \approx 4~\text{customers}\]
-	
-	For part~\ref{item:14c}, we wish to find  the probability that a customer will spend 15 minutes or less in the system. Because 15 minutes = 1/4 hours, we will find P(W \leq 1/4).  
-	
-	\[ P(W \leq t) = 1 - e^{-t(\mu-\lambda)}= 1 - e^{-1/4(24-20)} \approx 0.63\]
-	
+	Cars arrive at the rate
+	\[ \lambda = 90~\text{cars per hour} \times 1/3600 =
+	1~\text{car}/40~\text{seconds} \]
+	We know that $\mu=1/38$
+	for the current system and $\mu_{\text{new}}=1/30$ for the new
+	system.
+	Condition 1 states that the average number of waiting
+	cars in the current system must exceed 5.
+	\[ L_s = \frac{\lambda}{\mu-\lambda} = \frac{1/40}{1/38-1/40} = 19 \]
+	You may have also computed
+	\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} =
+	\frac{(1/40)^2}{(1/38)(1/38 - 1/40)} = 18.05 \]
+	Either way, the first condition is satisfied. The second condition
+	states that the percentage of idle time in the new system cannot
+	exceed 10\%.
+	\[ p_0 = 1 - \frac{\lambda}{\mu_{\text{new}}} = 1 - \frac{1/40}{1/30} = .25 \]
+	The second condition is not satisfied. There is no justification
+	for the new toll gate device.
 \end{solution}
+
 % this problem needs to be re-written
 \item \emph{Comparing system configurations.}
   Pete's Market is a small local grocery store with one checkout counter.
