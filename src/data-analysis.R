@@ -74,3 +74,5 @@ for (i in 1:B) {
 sd(s)  # bootstrap estimate of std error
 quantile(s, probs=c(.025,.975))  # 95% boostrap CI
 
+
+
