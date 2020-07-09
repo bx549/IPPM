@@ -962,6 +962,7 @@ the variance of the service time distribution.
 
 % written by Emily
 % Probabilistic Inventory Model
+
 \item \emph{Stocking a seasonal item.} Summer is approaching and a
   store is determining how many folding lawn chairs they should
   purchase from a supplier.  Each chair costs \$15\ for the store to
@@ -986,6 +987,8 @@ the variance of the service time distribution.
   penalty for ordering too few items is $c_u= 12.50$ and the penalty
   for ordering too many items is $c_o= 4.50$. We want to find the
   order quantity $Q^{\ast}$ such that
+
+
 \[ P\left(D \leq Q^{\ast}\right) < \frac{c_u}{c_u+c_o} = \frac{12.50}{17.00} = 0.735 \]
 Standardizing,
 \[ P\left(z \leq \frac{Q^{\ast}-205}{25}\right) = 0.735 \]
@@ -995,6 +998,7 @@ implies that
 Q^{\ast} &= 205 + 0.63(25)\\
 Q^{\ast} &= 220.75
 \end{align*}
+
 The store should order 221 (or 220) folding lawn chairs. 
 If we are using R, we can obtain the answer without standardizing
 by simply passing the mean and standard deviation to \texttt{qnorm},
@@ -1004,6 +1008,8 @@ by simply passing the mean and standard deviation to \texttt{qnorm},
 \end{Verbatim}
 
 For part~\ref{ex:lawn}, the probability that all chairs will sell is
+
+
 \begin{align*}
   P\left(D \geq 221 \right) &= 1 - P\left(D \leq 221 \right)\\
                             &= 1 - P\left( z \leq \frac{221-205}{25} \right) \\
@@ -1012,10 +1018,12 @@ For part~\ref{ex:lawn}, the probability that all chairs will sell is
                             &= 0.26
 \end{align*}
 
+
 Regarding part~\ref{ex:clearance}, if the clearance price decreases to
 \$8\, then the cost of being under-stocked will still be $c_u=12.50$,
 but the cost of being over will increase to $c_o=7.00$. The order
 quantity $Q^{\ast}$ will change such that
+
 \begin{align*}
   P\left(D \leq Q^{\ast}\right) = \frac{12.50}{19.50} &= .641 \\
   P\left(z \leq \frac{Q^{\ast}-205}{25}\right) &= .641
@@ -1025,6 +1033,7 @@ which implies that
   \frac{Q^{\ast}- 205}{25} &= .36\\
   Q^{\ast} &= 205 + 0.36(25) = 214
 \end{align*}
+
 With a clearance price of \$8, the new order quantity will be 214
 chairs.  The economic order quantity will continue to decrease as the
 clearance price decreases because the cost of being over will continue
@@ -1060,6 +1069,7 @@ distribution function (CDF) is
 for $a \leq x \leq b$.
 You should use the CDF of the Uniform distribution to help answer
 this question.
+
 
 \begin{solution}
 \bs
