@@ -572,42 +572,45 @@ In R,
 
 % re-written by hannah
 % Poisson distribution
-\item \emph{Car dealership.} A car dealership keeps used cars that
-are for sale in an uncovered parking lot. In the city where the
-dealership is located, hailstorms occur randomly throughout the
-month of June according to a Poisson distribution with a mean of four
-hailstorms. After a hailstorm, the number of dents in a car follows a Poisson distribution with a mean of five dents.
+\item \emph{Car dealership.} A used car dealership has an 
+  uncovered lot. In the city where the
+  dealership is located, the number of hailstorms during the
+  month of June follows a Poisson distribution with mean four.
+  After a hailstorm, the number of dents in a car
+  follows a Poisson distribution with a mean of five dents.
 \begin{enumerate}
-	\item Determine the probability that there will be exactly five
-	hailstorms at the dealership in June. \label{ex:storms}
-	\item After a hailstorm, determine the probability that a car will have two or more dents. \label{ex:cars}
+\item Determine the probability that there will be exactly five
+  hailstorms at the dealership in June. \label{ex:storms}
+\item After a hailstorm, determine the probability that a car will
+  have two or more dents. \label{ex:cars}
 \end{enumerate}
 
 \begin{solution}
-	\bs For part~\ref{ex:storms}, let $X$ be a random variable that represents
-	the number of hailstorms in June. The number of hailstorms in June
-	follows a Poisson distribution with a mean of four
-	hailstorms. Therefore, $X \sim \text{Poisson}(\lambda = 4)$.  The
-	probability that there are exactly five hailstorms is
-	\[
-	P(X=5) = \frac{e^{-\lambda}\lambda^5}{5!} = \frac{e^{-4}4^5}{120} \approx 0.16
-	\]
-	For part~\ref{ex:cars}, the damage to a car after a hailstorm is Poisson with a mean
-	of five dents. Let $N$ be the
-	number of dents in a car after a hailstorm.
-	\[ N \sim \text{Poisson}(\lambda = 5) \] 
-	
-	The probability that there will be two or more dents in a car after a hailstorm is 
-	\begin{align*}
-		P(N \geq 2) &= 1 - P(N \leq 1) \\
-		&= 1 - \sum_{n=0}^{1} \frac{\lambda^n e^{-\lambda}}{n!}\\
-		&\approx 0.96
-	\end{align*}
-	Using R,
-	\begin{Verbatim}
-	> 1 - sum(dpois(0:1,5))
-	[1] 0.9595723
-	\end{Verbatim}
+  \bs For part~\ref{ex:storms}, let $X$ be a random variable that
+  represents the number of hailstorms in June. The number of
+  hailstorms in June follows a Poisson distribution with a mean of
+  four hailstorms. Therefore, $X \sim \text{Poisson}(\lambda = 4)$.
+  The probability that there are exactly five hailstorms is
+\[
+P(X=5) = \frac{e^{-\lambda}\lambda^5}{5!} = \frac{e^{-4}4^5}{120} \approx 0.16
+\]
+For part~\ref{ex:cars}, the damage to a car after a hailstorm is
+Poisson with a mean of five dents. Let $N$ be the number of dents in a
+car after a hailstorm.
+\[ N \sim \text{Poisson}(\lambda = 5) \] 
+
+The probability that there will be two or more dents in a car after a
+hailstorm is
+\begin{align*}
+      P(N \geq 2) &= 1 - P(N \leq 1) \\
+      &= 1 - \sum_{n=0}^{1} \frac{\lambda^n e^{-\lambda}}{n!}\\
+      &\approx 0.96
+\end{align*}
+Using R,
+\begin{Verbatim}
+> 1 - sum(dpois(0:1,5))
+[1] 0.9595723
+\end{Verbatim}
 \end{solution}
 
 % this problem is OK
@@ -820,41 +823,51 @@ To compute the average number in the queue, weight the time in queue
 by the number of customers. In other words, compute the area under the
 curve but above one, and then divide by the total time.
 \[ L_q = \frac{14}{17} \]
-
 \end{solution}
 
-% this problem needs to be re-written.
-\item \emph{Justification for a capital expense.}
-  Cars arrive at the Lincoln Tunnel toll gate according to a Poisson
-  process with an average rate of 90 cars per hour. The time for passing
-  the gate is exponential with mean 38 seconds.  Drivers complain of
-  the long waiting time, and authorities are willing to reduce the
-  average passing time to 30 seconds by installing automatic toll
-  collecting devices, provided two conditions are satisfied: 1) the
-  average number of waiting cars in the present system exceeds 5 and
-  2) the percentage of the gate idle time with the new device
-  installed does not exceed 10\%. Can the new device be justified?
+% re-written by hannah.  can we make this into a capital expense
+% problem? something like the park will invest in a 2nd set of cars
+% for the roller coaster if the waiting metrics are too onerous for
+% the customers?
+\item \emph{Theme park waiting lines.} A small theme park, Expedited
+  Expeditions, is known for having rides with short waiting times. A
+  new ride has opened, and customers arrive to the ride according to a
+  Poisson process with a mean of 20 arrivals per hour. Only one
+  customer is allowed on the ride at a time, and customers can stay on
+  the ride as long they wish. The length of time that each customer
+  spends on the ride is exponentially distributed with a mean of 2.5
+  minutes.
+\begin{enumerate}
+\item Determine the average waiting time in line for the ride. \label{ex:theme-parka}
+\item Determine the average number of customers in line for the
+  ride. \label{ex:theme-parkb}
+\item Determine the probability that a customer will spend a total of
+15 minutes or less waiting in line and enjoying the ride
+(i.e. time in the system). \label{ex:theme-parkc}
+\end{enumerate}
+Assume that the system is in steady-state and that customers are
+served in a first-in-first-out manner.
 
 \begin{solution}
-\bs
-Cars arrive at the rate
-\[ \lambda = 90~\text{cars per hour} \times 1/3600 =
-  1~\text{car}/40~\text{seconds} \]
-We know that $\mu=1/38$
-for the current system and $\mu_{\text{new}}=1/30$ for the new
-system.
-Condition 1 states that the average number of waiting
-cars in the current system must exceed 5.
-\[ L_s = \frac{\lambda}{\mu-\lambda} = \frac{1/40}{1/38-1/40} = 19 \]
-You may have also computed
-\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} =
-  \frac{(1/40)^2}{(1/38)(1/38 - 1/40)} = 18.05 \]
-Either way, the first condition is satisfied. The second condition
-states that the percentage of idle time in the new system cannot
-exceed 10\%.
-\[ p_0 = 1 - \frac{\lambda}{\mu_{\text{new}}} = 1 - \frac{1/40}{1/30} = .25 \]
-The second condition is not satisfied. There is no justification
-for the new toll gate device.
+  \bs The system in this problem is an M/M/1 queuing system. Customers
+  arrive at the rate
+\[ \lambda = 20~\text{customers per hour} \]
+We know that the service rate is 
+\[ \mu = 24~\text{customers per hour} \]
+
+For part~\ref{ex:theme-parka}, we wish to find $W_q$. 
+\[ W_q = \frac{\lambda}{\mu(\mu-\lambda)} = \frac{20}{24
+    \times(24-20)} = 5/24~\text{hours} = 12.5~\text{minutes} \]
+
+For part~\ref{ex:theme-parkb}, we can use Little's law to find $L_q$. 
+\[ L_q = \lambda \times W_q  = 20 \times 5/24 \approx 4~\text{customers}\]
+
+To find the probability that a customer will spend 15 minutes or less
+in the system, we use the fact that for an M/M/1 system with FIFO
+queue discipline and that has reached steady-state, the distribution
+of the time in system is Exponential with rate $\mu-\lambda$.
+Converting from minutes to hours,
+\[ P(W \leq t) = 1 - e^{-t(\mu-\lambda)}= 1 - e^{-1/4(24-20)} \approx 0.63\]
 \end{solution}
 
 % this problem needs to be re-written
@@ -903,6 +916,45 @@ queue and the average time in queue appear to be acceptable for a
 grocery store.
 \end{solution}
 
+% the context of this problem needs to be re-written. perhaps describe a
+% situation of a store with two clerks, each with exponential service times
+% (so total service time is Gamma/Erlang). Social distancing measures mean
+% that only one customer at a time is allowed in the store.
+\item \emph{An $M$/$G$/$1$ queue.}  Patients arrive for a physical
+  examination at the rate of one per hour. Interarrival times are
+  exponentially distributed. The physical examination requires three
+  stages, each one independently and exponentially distributed with a
+  mean service time of 15 minutes. A patient must go through all three
+  stages before the next patient can begin the first stage. Determine
+  the average number of patients waiting to start the first stage,
+  $L_Q$. A couple of helpful items: 
+\begin{compactenum}[i)]
+\item The variance of the sum of independent
+  random variables is the sum of the variances,
+\item the sum of IID
+  exponential random variables is distributed Gamma, 
+\item the variance
+  of an exponential distribution is the mean squared, and
+\item for an $M$/$G$/1 queue, 
+\[ L_Q = \frac{\rho^2(1 + \sigma^2\mu^2)}{2(1-\rho)} \]
+where $\rho$ is the server utilization, $\mu$ is the service rate, and $\sigma^2$ is
+the variance of the service time distribution.
+\end{compactenum}
+
+\begin{solution}
+  \bs First we know that $\lambda = 1/60$ in units of patients per
+  minute. The expected service time for all three stages is 45
+  minutes. So $\mu = 1/45$ patients per minute. If we let $X$ be the
+  service time, then
+  \[ \text{Var}(X) = 15^2 + 15^2 + 15^2 = 675 \] because the time at
+  each stage is exponentially distributed time with mean 15 minutes.
+  Now,
+\begin{align*}
+  L_Q &= \frac{\frac{9}{16}\left(1 + 675\left(\frac{1}{2025}\right)\right)}{2\left(\frac{1}{4}\right)} \\
+      &= \frac{3}{2} \\
+      &= 1.5 ~\text{patients}
+\end{align*}
+\end{solution}
 
 \subsubsection*{Stochastic Dynamic Programming}
 
@@ -910,22 +962,7 @@ grocery store.
 
 % written by Emily
 % Probabilistic Inventory Model
-% To replace problem 27 ch 10 IMS
-\item \emph{Lawn Chair Order Quantity}
-Summer is approaching and a store is determining how many folding lawn chairs they should purchase from a supplier. The inventory managers only want to stock lawn chairs in the summer because that is when there is a high demand for the product. Each chair costs \$15\ for the store to purchase and can be sold for \$27.50.\  Any chairs left at the end of the summer can be sold on clearance for \$10.50.\ Based on data from past years, the seasonal demand for lawn chairs follows a normal distribution with $\mu = 205$ and $\sigma = 25$.
 
-\begin{enumerate}
-\item What is your recommended order quantity for the store?
-\item What is the probability that the store will sell all the folding lawn chairs it orders before summer is over?
-\item How would the economic order quantity change if the clearance price for the chairs was only \$8?\ What happens to the store's order quantity as the clearance price is reduced? 
-\end{enumerate}
-
-\begin{solution}
-\bs Let $D$ be the summer demand for folding lawn chairs. We know that
-$D \sim \mathcal{N}\left(\mu=205,~\sigma=25\right)$. The penalty
-for ordering too few items is $c_u= 12.50$ and the penalty for
-ordering too many items is $c_o= 4.50$. We want to find the
-order quantity $Q^{\ast}$ such that
 \[ P\left(D \leq Q^{\ast}\right) < \frac{c_u}{c_u+c_o} = \frac{12.50}{17.00} = 0.735 \]
 Standardizing,
 \[ P\left(z \leq \frac{Q^{\ast}-205}{25}\right) = 0.735 \]
@@ -935,9 +972,7 @@ implies that
 Q^{\ast} &= 205 + 0.63(25)\\
 Q^{\ast} &= 220.75
 \end{align*}
-The grocery store should order 221 (or 220) folding lawn chairs. 
 
-For part b) the probability that all chairs will sell is
 \begin{align*}
   P\left(D \geq 221 \right) &= 1 - P\left(D \leq 221 \right)\\
                             &= 1 - P\left( z \leq \frac{221-205}{25} \right) \\
@@ -946,7 +981,7 @@ For part b) the probability that all chairs will sell is
                             &= 0.26
 \end{align*}
 
-Regarding part c), if the clearance price decreases to \$8\, then the cost of being under--stocked will still be  $c_u=12.50$, but the cost of being over will increase to $c_o=7.00$. The order quantity $Q^{\ast}$ will change such that 
+
 \begin{align*}
   P\left(D \leq Q^{\ast}\right) = \frac{12.50}{19.50} &= .641 \\
   P\left(z \leq \frac{Q^{\ast}-205}{25}\right) &= .641
@@ -956,7 +991,37 @@ which implies that
   \frac{Q^{\ast}- 205}{25} &= .36\\
   Q^{\ast} &= 205 + 0.36(25) = 214
 \end{align*}
-The new order quantity will be 214 chairs with a clearance price of \$8\. The order quantity will continue to decrease as the clearance price decreases because the cost of being over will continue to increase. 
+
+
+% the context of this problem needs to be re-written.
+% the main idea is that the distribution of demand is not Normally distributed.
+% We can use Uniform, Poisson, or an empirical discrete distribution.
+\item \emph{A clever title.} The bookstore offers a program of
+  reproducing class notes for participating professors. Professor
+  Hernandez teaches a class with an enrollment between 200 and 250
+  students, uniformly distributed. A copy costs \$10 to produce and it
+  sells for \$25. The students purchase their notes at the start of
+  the semester. Any unsold copies of the notes are shredded for
+  recycling because the professor makes substantial changes each
+  semester. Also, if the bookstore runs out of copies, no additional
+  copies can be printed. If the bookstore is only concerned about
+  maximizing profit, how many copies should it print?
+
+  Note that the probability distribution of demand for class notes is
+  Uniform between 200 and 250. Let $D$ be a random variable that
+  represents the demand for class notes. Then from the problem
+  description
+\[ D \sim \text{Uniform}(200,\,250) \]
+In general if a random variable $X$ is uniformly distributed between
+$a$ and $b$, we write $X \sim \text{Uniform}(a,\,b)$. The probability
+distribution function (PDF) is
+\[ f(x) = \frac{1}{b-a} \]
+for $a \leq x \leq b$ and zero elsewhere. The cumulative
+distribution function (CDF) is
+\[ P(X \leq x) = F(x) = \int_{y=a}^x f(y)\,dy = \int_{y=a}^x \frac{1}{b-a}\,dy = \frac{x-a}{b-a} \]
+for $a \leq x \leq b$.
+You should use the CDF of the Uniform distribution to help answer
+this question.
 
 
 \end{solution}
