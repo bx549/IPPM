@@ -1040,53 +1040,43 @@ clearance price decreases because the cost of being over will continue
 to increase.
 \end{solution}
 
-% the context of this problem needs to be re-written.
-% the main idea is that the distribution of demand is not Normally distributed.
-% We can use Uniform, Poisson, or an empirical discrete distribution.
-\item \emph{A clever title.} The bookstore offers a program of
-  reproducing class notes for participating professors. Professor
-  Hernandez teaches a class with an enrollment between 200 and 250
-  students, uniformly distributed. A copy costs \$10 to produce and it
-  sells for \$25. The students purchase their notes at the start of
-  the semester. Any unsold copies of the notes are shredded for
-  recycling because the professor makes substantial changes each
-  semester. Also, if the bookstore runs out of copies, no additional
-  copies can be printed. If the bookstore is only concerned about
-  maximizing profit, how many copies should it print?
-
-  Note that the probability distribution of demand for class notes is
-  Uniform between 200 and 250. Let $D$ be a random variable that
-  represents the demand for class notes. Then from the problem
-  description
-\[ D \sim \text{Uniform}(200,\,250) \]
-In general if a random variable $X$ is uniformly distributed between
-$a$ and $b$, we write $X \sim \text{Uniform}(a,\,b)$. The probability
-distribution function (PDF) is
-\[ f(x) = \frac{1}{b-a} \]
-for $a \leq x \leq b$ and zero elsewhere. The cumulative
-distribution function (CDF) is
-\[ P(X \leq x) = F(x) = \int_{y=a}^x f(y)\,dy = \int_{y=a}^x \frac{1}{b-a}\,dy = \frac{x-a}{b-a} \]
-for $a \leq x \leq b$.
-You should use the CDF of the Uniform distribution to help answer
-this question.
-
+% written by Emily
+% Uniform distribution
+\item \emph{Programs for sale.}
+A college hockey team has game programs for sale at every
+home game they play. The demand by fans for these programs
+follows a Uniform distribution with a minimum of \num{1200} 
+programs and a maximum of \num{2000} programs. 
+\[ D \sim \text{Uniform}(1200,\,2000) \]
+Each program costs \$1\ to produce and sells for \$3.\ 
+The programs contain information
+specific to the game, so any unsold programs are thrown 
+away after the game. How many game programs should the
+college print per game to maximize their revenue? You should 
+use the CDF of Uniform distribution to answer this question.
 
 \begin{solution}
-\bs
-$c_o = \$10$ for each unsold copy, and $c_u = \$15$ per copy
-for being short of actual demand. Let $D$ be a random variable
-that represents demand for the class notes. We know that
-\[ D \sim \text{Uniform}(200,\,250) \]
+\bs 
+The CDF of Uniform distribution is
+\[ P(X \leq x) = F(x) = \int_{y=a}^x f(y)\,dy = 
+\int_{y=a}^x \frac{1}{b-a}\,dy = \frac{x-a}{b-a} \]
+for $a \leq x \leq b$.
+
+
+$c_o = \$1$ , and $c_u = \$2$ per copy. 
+Let $D$ be a random variable
+\[ D \sim \text{Uniform}(1200,\,2000) \]
 Let $Q^{\ast}$ be the optimal number of copies to produce.
 Using the critical ratio, we want
-\[ P\left(D \leq Q^{\ast}\right) = \frac{c_u}{c_u+c_o} = 0.6 \]
+\[ P\left(D \leq Q^{\ast}\right) = \frac{c_u}{c_u+c_o} = 
+\frac{2}{3} \approx 0.667 \]
 Using the definition of the CDF for the Uniform distribution,
 \begin{align*}
-  \frac{Q^{\ast} - 200}{250 - 200} &= 0.6 \\
-  Q^{\ast} &= 0.6\times 50 + 200\\
-  Q^{\ast} &= 230
+  \frac{Q^{\ast} - 1200}{2000-1200} &= 0.667 \\
+    Q^{\ast} &= 0.667\times 800 + 1200\\
+    Q^{\ast} &= 1734
 \end{align*}
-The bookstore should produce 230 copies.
+The college should print 1734 copies.
 \end{solution}
 
 % This problem needs to be re-written. Can we make it more real-like
