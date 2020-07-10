@@ -1364,44 +1364,6 @@ $y_i \in \{0,1\}$, and $i = 1,2,3$.
 
 \subsubsection*{Deterministic Inventory Models}
 
-% this problem needs to be re-written. it is problem 5 of ch 10 in IMS.
-\item \emph{Ordering diesel fuel.} The Metropolitan Bus Company (MBC)
-  purchases diesel fuel from American Petroleum Supply. In addition to
-  the fuel cost, American Petroleum Supply charges MBC \$250 per order
-  to cover the expenses of delivering and transferring the fuel to
-  MBC' s storage tanks. The lead time for a new shipment from American
-  Petroleum is 10 days; the cost of holding a gallon of fuel in the
-  storage tanks is \$0.04 per month, or \$0.48 per year; and annual
-  fuel usage is \num{150000} gallons. MBC buses operate 300 days a
-  year.
-
-\begin{enumerate}
-\item What is the optimal order quantity for MBC?
-\item How frequently should MBC order to replenish the gasoline
-  supply?
-\item The MBC storage tanks have a capacity of 15,000 gallons. Should
-  MBC consider expanding the capacity of its storage tanks? \label{ex:tankcap}
-\item What is the reorder point?
-\end{enumerate}
-
-\begin{solution}
-\bs The cost per order is $C_0=\$250$, the holding cost is
-$C_h=\$.48$ per gallon per year, the lead time is $m=10$ days, the
-demand rate is $D=\num{150000}$ gallons per year, and there are 300
-working days per year. Using the formula for economic order quantity,
-\[ Q^{\ast} = \sqrt{\frac{2DC_o}{C_h}} = \sqrt{\frac{2(\num{150000})(250)}{.48}} = \num{12500}~\text{gallons.} \]
-
-The cycle time associated with the economic order quantity is
-\[ T^{\ast} = \frac{Q^{\ast}}{D} = \frac{\num{12500}}{\num{150000}\frac{1~\text{year}}{300~\text{days}}} = 25~\text{days.} \]
-
-Regarding part~\ref{ex:tankcap}, the answer is no, because the optimal
-order quantity $Q^{\ast}=\num{12500}$ is less than the storage
-capacity of \num{15000} gallons.
-
-With 10 days lead time and usage rate of 500 gallons per day, the reorder
-point is $10 \times 500 = \num{5000}$ gallons.
-\end{solution}
-
 % written by Emily
 % deterministic inventory model
 % to replace IMS problem 5 from ch 10
