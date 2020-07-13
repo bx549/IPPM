@@ -825,30 +825,32 @@ curve but above one, and then divide by the total time.
 \[ L_q = \frac{14}{17} \]
 \end{solution}
 
-% re-written by hannah.  can we make this into a capital expense
-% problem? something like the park will invest in a 2nd set of cars
-% for the roller coaster if the waiting metrics are too onerous for
-% the customers?
-\item \emph{Justifying a capital expense.} A small theme park, Expedited Expeditions, is known for having rides with short waiting times. A new ride has opened, and customers arrive to the ride according to a Poisson process with a mean of 20 arrivals per hour. Only one customer is allowed on the ride at a time, and customers can stay on the ride as long they wish. The length of time that each customer spends on the ride is exponentially distributed with a mean of 2.5 minutes. Management is willing to add an additional cart to the ride if both of the following conditions are satisfied:
-1) the average number of customers in line is greater than three and 2) the probability that a customer spends 10 minutes or less at the ride is less than 0.65. Can an additional cart be justified?
+% re-written by hannah.
+\item \emph{Justifying a capital expense.} An amusement park is known
+  for having rides with short waiting times. A new ride has opened,
+  and customers arrive to the ride according to a Poisson process with
+  a mean of 20 arrivals per hour. Only one customer is allowed on the
+  ride at a time, and customers can stay on the ride as long they
+  wish. The length of time that each customer spends on the ride is
+  exponentially distributed with a mean of 2.5 minutes. Management is
+  willing to add an additional cart to the ride if, under the current
+  system, 1) the average number of waiting customers is greater than
+  four, and 2) the percentage of time that the ride is idle exceeds
+  10\%.  Can an additional cart be justified?
 
 \begin{solution}
-	\bs
-	The system in this problem is an M/M/1 queuing system. Customers arrive at the rate
-	\[ \lambda = 20~\text{customers per hour} \]
-	We know that the service rate is 
-	\[ \mu = 24~\text{customers per hour} \]
-	
-	To check if the first condition is satisfied, we wish to find $L_q$. 
-	
-	\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{20^2}{24(24-20)} = 25/6~\text{customers} \] 
-	Thus, the first condition is satisfied.
-	
-	To check if the second condition is satisfied, we wish to find  the probability that a customer will spend 10 minutes or less in the system. Because 10 minutes = 1/6 hours, we will find $P(W \leq 1/6)$.  
-	
-	\[ P(W \leq t) = 1 - e^{-t(\mu-\lambda)}= 1 - e^{-1/6(24-20)} \approx 0.49\]
-	Thus, the second condition is satisfied.
-	
+  \bs The amusement ride can be modeled as an M/M/1 queuing
+  system. Customers arrive at the rate
+\[ \lambda = 20~\text{customers per hour,} \]
+and the service rate is 
+\[ \mu = 24~\text{customers per hour.} \]
+To see whether the first condition is satisfied, we compute
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{20^2}{24(24-20)} =
+  25/6 > 3~\text{customers} \] 
+and so the first condition is satisfied. To
+see if the second condition is satisfied, we compute
+\[ p_0 = 1 - \frac{\lambda}{\mu} = 0.167 \]
+and so the second condition is also satisfied.
 \end{solution}
 
 % this problem needs to be re-written
