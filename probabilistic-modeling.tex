@@ -853,37 +853,55 @@ see if the second condition is satisfied, we compute
 and so the second condition is also satisfied.
 \end{solution}
 
-% this problem needs to be re-written
-\item \emph{Comparing system configurations.}
-Patients arrive to an emergency room according to a Poisson process, with an arrival rate of 10 patients per hour. Before a patient can see a doctor, they must have their medical history reviewed and their vitals measured. Currently, the hospital has one nurse who performs both of these tasks for each patient. The time that each patient spends with the nurse is exponentially distributed with a mean of five minutes. An engineer at the hospital is considering two options for improving service.
+% re-written be hannah
+\item \emph{Comparing system configurations.}  Patients arrive to an
+  emergency room according to a Poisson process at the rate of 10
+  patients per hour. Before a patient can see a doctor, they must have
+  their medical history reviewed and their vitals measured. Currently,
+  the hospital has one nurse who performs both of these tasks for each
+  patient. The time that each patient spends with the nurse is
+  exponentially distributed with a mean of five minutes. An Industrial
+  Engineer at the hospital is considering two options for improving
+  service.
 \begin{compactenum}
-	\item Hire a medical scribe to review each patient's medical history while the nurse takes vitals. The service rate would increase to 20 patients per hour with this improved single-server operation.
-	\item Hire a second nurse who also reviews medical history and takes vitals for each patient. The two nurses would each have a service rate of 12 patients per hour with this two-server operation.
+\item Hire a medical scribe to review each patient's medical history
+  while the nurse takes vitals. The service rate would increase to 20
+  patients per hour with this improved single-server operation
+(service times are still exponentially distributed.) \label{ex:scribe}
+\item Hire a second nurse who also reviews medical history and takes
+  vitals for each patient. The two nurses would each have a service
+  rate of 12 patients per hour (each with exponential service times)
+  with this two-server operation.
 \end{compactenum}
-Consider the relative cost of each option and evaluate  the  improvements  that  would  result. Then, determine which option the engineer should recommend.
+Consider the relative cost of each option and evaluate the
+improvements that would result. Then, determine which option the
+engineer should recommend.
 
 \begin{solution}
-	\bs We will look at the average number of patients in the queue $L_Q$ and the
-	average time in queue $W_Q$ as metrics to judge improvement in
-	system performance. Before any improvements are made,
-	\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{10^2}{12(12-10)} = 25/6~\text{patients} \]
-	and
-	\[W_q = \frac{L_q}{\lambda} = \frac{25/6}{10} = 5/12~\text{hours} = 25~\text{minutes} \]
-	If they hire a scribe to assist the nurse
-	\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{10^2}{20(20-10)} = 0.5~\text{patients} \]
-	and
-	\[W_q = \frac{L_q}{\lambda} = \frac{0.5}{10} = 0.05~\text{hours} = 3~\text{minutes} \]
-	and if they add an additional nurse we
-	need to use the formulas for a two-server operation. First,
-	\[ P_0 = \frac{1}{\sum_{n=0}^{k-1}\frac{\left(\lambda/\mu\right)^n}{n!} + \frac{\left(\lambda/\mu\right)^k}{k!}\left(\frac{k\mu}{k\mu-\lambda}\right)} \]
-	where $k=2$ servers. Then
-	\[ L_q = \frac{\left(\lambda/\mu\right)^k\lambda\mu}{(k-1)!(k\mu-\lambda)^2}P_0 \]
-	and
-	\[W_q = \frac{L_q}{\lambda}  \]
-	Plugging values, I got $P_0=0.4118$, $L_q=0.1751$ patients, and $W_q=0.0175$ hours or $1.05$ minutes.
-	Considering the relative improvement and the cost
-	of adding a second nurse, I would recommend option a). That is, to hire a scribe to help the nurse. The average number in
-	queue and the average time in queue appear to be acceptable for an emergency room setting.
+  \bs We will look at the average number of patients in the queue
+  $L_Q$ and the average time in queue $W_Q$ as metrics to judge
+  improvement in system performance. Before any improvements are made,
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{10^2}{12(12-10)} = 25/6 = 4.167~\text{patients} \]
+and
+\[W_q = \frac{L_q}{\lambda} = \frac{25/6}{10} = 5/12~\text{hours} = 25~\text{minutes} \]
+If they hire a scribe to assist the nurse
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{10^2}{20(20-10)} = 0.5~\text{patients} \]
+and
+\[W_q = \frac{L_q}{\lambda} = \frac{0.5}{10} = 0.05~\text{hours} =
+  3~\text{minutes} \] 
+and if they add an additional nurse we need to
+use the formulas for a two-server operation. First,
+\[ P_0 = \frac{1}{\sum_{n=0}^{k-1}\frac{\left(\lambda/\mu\right)^n}{n!} + \frac{\left(\lambda/\mu\right)^k}{k!}\left(\frac{k\mu}{k\mu-\lambda}\right)} \]
+where $k=2$ servers. Then
+\[ L_q = \frac{\left(\lambda/\mu\right)^k\lambda\mu}{(k-1)!(k\mu-\lambda)^2}P_0 \]
+and
+\[W_q = \frac{L_q}{\lambda} \] 
+Plugging values, I got $P_0=0.4118$,
+$L_q=0.1751$ patients, and $W_q=0.0175$ hours or $1.05$ minutes.
+Considering the relative improvement and the cost of adding a second
+nurse, I would recommend option~\ref{ex:scribe}. That is, to hire a scribe to help
+the nurse. The average number in queue and the average time in queue
+appear to be acceptable for an emergency room setting.
 \end{solution}
 
 % the context of this problem needs to be re-written. perhaps describe a
