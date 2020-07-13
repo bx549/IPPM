@@ -333,36 +333,29 @@ or 5 to 11.
 % this problem needs to be re-written
 % binomial distribution
 \item \emph{System reliability.} 
-A power utility can supply electricity to a city
-from $n$ different power plants. Each power plant fails with
-probability $p$, independent of the others.
+A large passenger aircraft has $n$ engines. The performance of each engine is independent with failure probability $p$.
 \begin{enumerate}
-\item Suppose that any one plant can produce enough electricity to
-supply the entire city. What is the probability that the city will
-experience a black-out? \label{ex:p1}
-\item Suppose that two power plants are necessary to keep the city
-from a black-out. Find the probability that the city will
-experience a black-out. 
-\label{ex:p2}
+	\item Suppose only one appropriately working engine is required for a safe landing. What is the probability that the aircraft will experience an unsafe landing due to engine failure?  \label{ex:p1}
+	\item Suppose two appropriately working engines are required for a safe landing. What is the probability that the aircraft will experience an unsafe landing due to engine failure? 
+	\label{ex:p2}
 \end{enumerate}
 
 \begin{solution}
-\bs
-For part~\ref{ex:p1}, all $n$ plants must fail for the city to
-have a black-out. Since failures are independent, the probability
-of a black-out is $p^n$.
-
-For part~\ref{ex:p2}, let $X$ be the number of failed plants. $X$
-has a Binomial distribution with parameters $n$ and $p$. The probability
-of a black-out is
-\begin{align*}
-  P(X \geq n-1) &= \sum_{i=n-1}^n {n \choose i} p^i (1-p)^{n-i} \\
-                &= {n \choose n-1} p^{n-1} (1-p)^{n-(n-1)} + {n \choose n} p^n (1-p)^{n-n} \\
-                &= np^{n-1}(1-p) + p^n \\
-                &= np^{n-1} - np^{n-1}p + p^n\\
-                &= np^{n-1} - np^n + p^n\\
-                &= np^{n-1} + (1-n)p^n
-\end{align*}
+	\bs
+	For part~\ref{ex:p1}, all $n$ engines must fail for the aircraft to experience an unsafe landing due to engine failure. Because failures are independent, the probability
+	of an unsafe landing due to engine failure is $p^n$.
+	
+	For part~\ref{ex:p2}, let $X$ be the number of failed engines. $X$
+	has a Binomial distribution with parameters $n$ and $p$. The probability
+	of an unsafe landing due to engine failure is
+	\begin{align*}
+		P(X \geq n-1) &= \sum_{i=n-1}^n {n \choose i} p^i (1-p)^{n-i} \\
+		&= {n \choose n-1} p^{n-1} (1-p)^{n-(n-1)} + {n \choose n} p^n (1-p)^{n-n} \\
+		&= np^{n-1}(1-p) + p^n \\
+		&= np^{n-1} - np^{n-1}p + p^n\\
+		&= np^{n-1} - np^n + p^n\\
+		&= np^{n-1} + (1-n)p^n
+	\end{align*}
 \end{solution}
 
 % this problem is OK
@@ -403,30 +396,21 @@ So, the (average) effect of the warranty on profit is -\$5.90.
 % from Ross. It's a thought experiment. The actual numbers don't
 % matter as long as the rates are the same. Can we find a different
 % scenario that illustrates the same idea: the memoryless property
-\item \emph{Memoryless property of the Exponential distribution.}
-  There are two clerks at the local post office. You enter the post
-  office to find that both clerks are busy (i.e. each clerk is serving
-  a customer), but that no one is in line.  So, you are first in line
-  and you are to be served by the first available clerk. Customers
-  depart the post office as soon as they are finished being served by
-  a clerk. If the service time distribution for each clerk is
-  Exponential with rate $\lambda$, what is the probability that you
-  are the last of the three customers to depart the post office?
+\item \emph{Memoryless property of the Exponential distribution.} A hair salon has two hairdressers who provide haircuts on a walk-in basis. Sam arrives to the salon and finds that both hairdressers are busy with customers. However, no one else is in line, so Sam will receive a haircut immediately after one of the hairdressers finishes the haircut they are working on. The service time distribution for both hairdressers is exponential with a mean of 15 minutes. What is the probability that both haircuts currently in progress will be completed before Sam’s haircut is completed?
 
 \begin{solution}
-\bs
-By the memoryless property of the Exponential distribution, the
-remaining time for each customer currently being served is identical.
-In particular, if we let $Y$ be the remaining time of a customer, then
-the distribution of remaining time is
-\[ P(Y \leq y) = 1 - e^{-\lambda y} \] Since the two customers have
-the same distribution for remaining time, the probability that
-customer 1 departs before customer 2 is 1/2 (likewise for
-customer 2 departing before customer 1). When you enter service, the
-memoryless property still applies.  Regardless of how long the
-other customer has been in service, you have the same distribution
-for remaining time. So, the probability that you are the last to depart
-is 1/2.
+	\bs
+	By the memoryless property of the Exponential distribution, the
+	remaining time for each customer currently receiving a haircut is identical.
+	In particular, if we let $Y$ be the remaining service time of a customer, then
+	the distribution of remaining time is
+	\[ P(Y \leq y) = 1 - e^{-\lambda y} \] Since the two customers getting haircuts have
+	the same distribution for remaining time, the probability that
+	customer 1 finishes before customer 2 is 1/2 (likewise for
+	customer 2 finishing before customer 1). When Sam enters service, the
+	memoryless property still applies.  Regardless of how long the
+	other customers have been getting their hair cut, Sam has the same distribution
+	for remaining time. So, the probability that both haircuts in progress will be completed before Sam’s haircut is completed is 1/2.
 \end{solution}
 
 % this problem has been re-written
