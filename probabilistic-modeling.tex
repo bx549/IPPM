@@ -908,31 +908,43 @@ appear to be acceptable for an emergency room setting.
 % situation of a store with two clerks, each with exponential service times
 % (so total service time is Gamma/Erlang). Social distancing measures mean
 % that only one customer at a time is allowed in the store.
-\item \emph{An $M$/$G$/$1$ queue.}  A coffee shop has recently opened for takeout after being closed due to COVID-19. In order to follow public health guidelines, only one customer is allowed in the shop at a time. Therefore, if a customer is being served, any customer that arrives must wait in a line outside of the coffee shop. Customers arrive at a rate of 12 customers per hour, and interarrival times are exponentially distributed. The shop has two baristas: one barista takes orders and the other prepares the beverages. The service time for each barista to complete their task is independently and exponentially distributed with a mean of two minutes. Determine the average number of customers waiting in line to be served,
-$L_Q$. A couple of helpful items: 
+\item \emph{An $M$/$G$/$1$ queue.}  A coffee shop has recently opened
+  for takeout after being closed due to COVID-19. In order to follow
+  public health guidelines, only one customer is allowed in the shop
+  at a time. If a customer is being served, any customer
+  that arrives must wait in a line outside of the coffee
+  shop. Customers arrive at a rate of 12 customers per hour, and
+  inter-arrival times are exponentially distributed. The shop has two
+  baristas: one barista takes orders and the other prepares the
+  beverages. The service time for each barista to complete their task
+  is independently and exponentially distributed with a mean of two
+  minutes. Determine the average number of customers waiting in line
+  to be served, $L_Q$. A couple of helpful items:
 \begin{compactenum}[i)]
-	\item The variance of the sum of independent
-	random variables is the sum of the variances,
-	\item the sum of IID
-	exponential random variables is distributed Gamma, 
-	\item the variance
-	of an exponential distribution is the mean squared, and
-	\item for an $M$/$G$/1 queue, 
-	\[ L_Q = \frac{\rho^2(1 + \sigma^2\mu^2)}{2(1-\rho)} \]
-	where $\rho$ is the server utilization, $\mu$ is the service rate, and $\sigma^2$ is
-	the variance of the service time distribution.
+\item The variance of the sum of independent
+random variables is the sum of the variances,
+\item the sum of IID
+exponential random variables is distributed Gamma, 
+\item the variance
+of an exponential distribution is the mean squared, and
+\item for an $M$/$G$/1 queue, 
+\[ L_Q = \frac{\rho^2(1 + \sigma^2\mu^2)}{2(1-\rho)} \]
+where $\rho$ is the server utilization, $\mu$ is the service rate, and $\sigma^2$ is
+the variance of the service time distribution.
 \end{compactenum}
 
 \begin{solution}
-	\bs First we know that $\lambda = 1/5$ in units of customers per
-	minute. The expected total service time for both baristas is 4 minutes. So $\mu = 1/4$ customers per minute. If we let $X$ be the
-	service time, then
-	\[ \text{Var}(X) = 2^2 + 2^2 = 8\] because the time for each barista is exponentially distributed time with mean 2 minutes.
-	Now,
-	\begin{align*}
-		L_Q &= \frac{\frac{16}{25}\left(1 + 8\left(\frac{1}{16}\right)\right)}{2\left(\frac{1}{5}\right)} \\
-		&= 2.4 ~\text{customers}
-	\end{align*}
+\bs The first thing to note is that the service time is the sum of two IID exponential
+random variables, and so we know that it has a Gamma distribution.
+Letting $X$ represent the service time,
+\[ \text{Var}(X) = 2^2 + 2^2 = 8.\]
+The expected total service time for both baristas is 4 minutes, so
+$\mu = 1/4$ customers per minute. 
+Now, in units of customers per minute, the arrival rate is $\lambda = 1/5$.
+\begin{align*}
+      L_Q &= \frac{\frac{16}{25}\left(1 + 8\left(\frac{1}{16}\right)\right)}{2\left(\frac{1}{5}\right)} \\
+      &= 2.4 ~\text{customers}
+\end{align*}
 \end{solution}
 
 
