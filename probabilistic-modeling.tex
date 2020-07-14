@@ -960,5 +960,175 @@ the variance of the service time distribution.
 
 \subsubsection*{Probabilistic Inventory Models}
 
+% written by Emily
+% Probabilistic Inventory Model
+
+\item \emph{Stocking a seasonal item.} Summer is approaching and a
+  store is determining how many folding lawn chairs they should
+  purchase from a supplier.  Each chair costs \$15\ for the store to
+  purchase and can be sold for \$27.50.\ The store stocks lawn chairs
+  only during the summer; any chairs left at the end of the summer are
+  sold at a clearance price of \$10.50.\ Based on historical data, the
+  seasonal summer demand for lawn chairs follows a normal distribution with
+  $\mu = 205$ and $\sigma = 25$.
+
+\begin{enumerate}
+\item What is your recommended order quantity for the store?
+\item What is the probability that the store will sell all the folding
+  lawn chairs it orders before summer is over? \label{ex:lawn}
+\item How would the economic order quantity change if the clearance
+  price for the chairs was only \$8?\ What happens to the store's
+  order quantity as the clearance price is reduced? \label{ex:clearance}
+\end{enumerate}
+
+\begin{solution}
+  \bs Let $D$ be the summer demand for folding lawn chairs. We know
+  that $D \sim \mathcal{N}\left(\mu=205,~\sigma=25\right)$. The
+  penalty for ordering too few items is $c_u= 12.50$ and the penalty
+  for ordering too many items is $c_o= 4.50$. We want to find the
+  order quantity $Q^{\ast}$ such that
+
+
+\[ P\left(D \leq Q^{\ast}\right) < \frac{c_u}{c_u+c_o} = \frac{12.50}{17.00} = 0.735 \]
+Standardizing,
+\[ P\left(z \leq \frac{Q^{\ast}-205}{25}\right) = 0.735 \]
+implies that
+\begin{align*}
+\frac{Q^{\ast}-205}{25} &= 0.63 \\
+Q^{\ast} &= 205 + 0.63(25)\\
+Q^{\ast} &= 220.75
+\end{align*}
+
+The store should order 221 (or 220) folding lawn chairs. 
+If we are using R, we can obtain the answer without standardizing
+by simply passing the mean and standard deviation to \texttt{qnorm},
+\begin{Verbatim}
+> qnorm(.735, 205, 25)
+[1] 220.7002
+\end{Verbatim}
+
+For part~\ref{ex:lawn}, the probability that all chairs will sell is
+
+
+\begin{align*}
+  P\left(D \geq 221 \right) &= 1 - P\left(D \leq 221 \right)\\
+                            &= 1 - P\left( z \leq \frac{221-205}{25} \right) \\
+                            &= 1 - P\left( z \leq .64 \right)\\
+                            &= 1 - .74 \\
+                            &= 0.26
+\end{align*}
+
+
+Regarding part~\ref{ex:clearance}, if the clearance price decreases to
+\$8\, then the cost of being under-stocked will still be $c_u=12.50$,
+but the cost of being over will increase to $c_o=7.00$. The order
+quantity $Q^{\ast}$ will change such that
+
+\begin{align*}
+  P\left(D \leq Q^{\ast}\right) = \frac{12.50}{19.50} &= .641 \\
+  P\left(z \leq \frac{Q^{\ast}-205}{25}\right) &= .641
+\end{align*}
+which implies that
+\begin{align*}
+  \frac{Q^{\ast}- 205}{25} &= .36\\
+  Q^{\ast} &= 205 + 0.36(25) = 214
+\end{align*}
+
+With a clearance price of \$8, the new order quantity will be 214
+chairs.  The economic order quantity will continue to decrease as the
+clearance price decreases because the cost of being over will continue
+to increase.
+\end{solution}
+
+% written by Emily
+% Uniform distribution
+\item \emph{Programs for sale.}
+A college hockey team has game programs for sale at every
+home game they play. The demand by fans for these programs
+follows a Uniform distribution with a minimum of \num{1200} 
+programs and a maximum of \num{2000} programs. 
+\[ D \sim \text{Uniform}(1200,\,2000) \]
+Each program costs \$1\ to produce and sells for \$3.\ 
+The programs contain information
+specific to the game, so any unsold programs are thrown 
+away after the game. How many game programs should the
+college print per game to maximize their revenue? You should 
+use the CDF of Uniform distribution to answer this question.
+
+\begin{solution}
+\bs 
+The CDF of Uniform distribution is
+\[ P(X \leq x) = F(x) = \int_{y=a}^x f(y)\,dy = 
+\int_{y=a}^x \frac{1}{b-a}\,dy = \frac{x-a}{b-a} \]
+for $a \leq x \leq b$.
+
+
+$c_o = \$1$ , and $c_u = \$2$ per copy. 
+Let $D$ be a random variable
+\[ D \sim \text{Uniform}(1200,\,2000) \]
+Let $Q^{\ast}$ be the optimal number of copies to produce.
+Using the critical ratio, we want
+\[ P\left(D \leq Q^{\ast}\right) = \frac{c_u}{c_u+c_o} = 
+\frac{2}{3} \approx 0.667 \]
+Using the definition of the CDF for the Uniform distribution,
+\begin{align*}
+  \frac{Q^{\ast} - 1200}{2000-1200} &= 0.667 \\
+    Q^{\ast} &= 0.667\times 800 + 1200\\
+    Q^{\ast} &= 1734
+\end{align*}
+The college should print 1734 copies.
+\end{solution}
+
+% written by Emily
+\item \emph{The risk of being out-of-stock.}
+The daily demand for milk cartons in a school cafeteria
+follows a Normal distribution with mean 600 and standard
+deviation 20. It costs \$.01042 per day to hold one item in
+inventory. The fixed cost to make a replenishment order is
+\$50, and the lead time to receive an order is 2 days.
+
+\begin{enumerate}
+\item Currently, the inventory policy for milk cartons is 
+to order \num{3000} cartons whenever the inventory drops 
+to \num{1225} units. Determine the probability of a 
+stock-out under this policy.
+
+\item Recommend a better inventory policy for the school
+given that the probability of a stock-out cannot exceed .01.
+Your policy should include an economic order quantity and 
+a re-order point.
+\label{bb}
+\end{enumerate}
+
+\begin{solution}
+\bs The distribution of demand during lead time $X_m$ is
+\[ X_m \sim \text{Normal}(\mu_m=1200,\sigma_m=\sqrt{800}) \]
+The probability of a stock-out is
+\begin{align*}
+  P(X_m \geq 1225) &= P\left(z \geq \frac{1225-\mu_m}{\sigma_m}\right) \\
+                  &= 1 - P\left(z < \frac{1225-1200}{\sqrt{800}}\right) \\
+                  &= 1 - P\left(z < 0.8839\right) \\
+                  &= 1 - .8106 \\
+                  &\approx .1894
+\end{align*}
+
+For part b, we can lower the total cost and keep 
+the probability of a stock-out to be less than 
+.02. The optimal order quantity is
+\[
+  Q^{\ast} = \sqrt{\frac{2C_oD}{C_h}} = 
+  \sqrt{\frac{2\times 50\times 600}{.01042}} = 2400
+\]
+Without a buffer stock the optimal policy is to order 
+\num{2400} milk cartons every $T_0=Q^{\ast}/D=4$ days. 
+To compute the buffer stock, we want
+\[
+  P(X_m \geq B + 1200) \leq 0.01
+\]
+or equivalently, we want $B \geq \sigma_m \times 
+2.33 \approx 66$.
+The best policy is to order \num{2400} milk cartons 
+whenever the inventory drops to $1200+66=1266$ units.
+\end{solution}
 
 \end{enumerate}
