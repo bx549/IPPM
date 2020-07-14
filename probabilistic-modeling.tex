@@ -515,17 +515,17 @@ payments is independent of the available funds.
 % poisson distribution
 \item \emph{Stocking a vending machine.}  A university cafeteria has a
   vending machine that is stocked with a variety of juices and
-  sodas. A vending machine attendant replenishes inventory weekly so
-  that there are 180 beverages in stock at the beginning of each
-  week. The cafeteria is open 24 hours, 7 days a week, and it is
-  expected that the beverages will be purchased according to a Poisson
-  distribution with a mean of 1 hour between purchases.
+  sodas. A student employee replenishes inventory weekly so that there
+  are 180 beverages in stock at the beginning of each week. The
+  cafeteria is open 24 hours, 7 days a week, and beverages are
+  purchased according to a Poisson process with a mean of 1 hour
+  between purchases.
 \begin{enumerate}
-\item What is the probability that there are no beverages remaining in
-  the vending machine when the attendant arrives? \label{ex:pout}
-\item On average, how many beverages will be remaining in the vending
-  machine when the attendant arrives? \label{ex:qremain}
-\item What is the probability that the attendant will replenish 150 or
+\item What is the probability that, at the end of any given week, the
+  student employee will find the machine to be sold out? \label{ex:pout}
+\item On average, how many beverages remain in the vending
+  machine when the employee arrives? \label{ex:qremain}
+\item What is the probability that the employee will replenish 150 or
   more beverages? \label{ex:preplenish}
 \end{enumerate}
 
@@ -533,9 +533,9 @@ payments is independent of the available funds.
   \bs For part~\ref{ex:pout}, there will be no beverages remaining in
   the vending machine if demand for beverages is at least 180.
   Because the beverages are purchased according to a Poisson
-  distribution with a mean of one hour between purchases, the rate
+  process with a mean of one hour between purchases, the rate
   $\lambda$ that beverages are purchased is 24 beverages per
-  day. Therefore, the number of purchases in seven days is Poisson
+  day. This means that the number of purchases in seven days is Poisson
   with mean $\lambda t$. Let $N$ be a random variable that represents
   the number of purchases in one week (seven days).
   \[ N \sim \text{Poisson}(\lambda = \lambda \times 7 = 168) \] 
@@ -550,14 +550,12 @@ In R,
 [1] 0.1866995
 \end{Verbatim}
 
-For part~\ref{ex:qremain}, the expected number of purchases from the
-vending machine each week is 168 beverages. Therefore, the expected
-number of beverages remaining at the end of the week is $180-168=12$.
+For part~\ref{ex:qremain}, the expected number of beverages purchased
+from the vending machine each week is 168. The expected number of
+beverages remaining at the end of the week is $180-168=12$.
 	
-For part~\ref{ex:preplenish}, 150 or more beverages will be
-replenished if 150 or more beverages are purchased before the end of
-the week. The probability that 150 or more beverages are purchased
-during a week is
+For part~\ref{ex:preplenish}, The probability that 150 or more
+beverages are purchased during a week is
 \begin{align*}
       P(N \geq 150) &= 1 - P(N \leq 149)\\
       &= 1 - \sum_{i=0}^{149} \frac{168^i e^{-168}}{i!}\\
