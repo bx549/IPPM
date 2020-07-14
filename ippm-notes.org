@@ -44,3 +44,13 @@ Computing
 Education
 Crime
 Employment
+
+july/august
+hannah: 
+integer programming with models and solutions in GAMS
+
+braeden: 
+simulation of inventory models and queueing models in R
+
+emily: 
+decision problems using game theory and perhaps using ABM

@@ -103,6 +103,36 @@ critical point as
 \begin{enumerate}
 \subsubsection*{Descriptive Statistics}
 
+% need to use different data values
+% solution in ie1101/hwfa2018/hw3
+\item \emph{Taking averages.} Consider two datasets: 1, 5, 9 and 2,
+    4, 6, 8.
+\begin{enumerate}
+\item Denote the sample means of the two datasets by $\mean{x}$ and
+      $\mean{y}$. Is it true that the average
+      $\left(\mean{x}+\mean{y}\right)/2$ of $\mean{x}$ and $\mean{y}$ is
+      equal to the sample mean of the combined dataset with 7
+      elements?
+\item Suppose we have two other datasets: one of size $n$ with sample
+  mean $\mean{x}_n$ and another dataset of size $m$ with sample mean
+  $\mean{y}_m$. Is it always true that the average
+  $\left(\mean{x}_n + \mean{y}_m\right)/2$ of $\mean{x}_n$ and
+  $\mean{y}_m$ is equal to the sample mean of the combined dataset with
+  $n + m$ elements? If no, then provide a counterexample. If yes, then
+  explain this.
+\item If $m=n$, is $\left(\mean{x}_n + \mean{y}_m\right)/2$ equal to the
+  sample mean of the combined dataset with $n + m$ elements?
+\end{enumerate}
+
+% this problem is OK.
+% solution in ie1101/hwfa2018/hw3
+\item \emph{Computing the sample variance.} The following rule is
+  useful for the computation of the sample variance (and standard
+  deviation). Show that
+
+  \[ \frac{1}{n}\sum_{i=1}^n(x_i - \mean{x}_n)^2 = \left(\frac{1}{n}\sum_{i=1}^nx_i^2 \right)- \left(\mean{x}_n\right)^2 \]
+    where $\mean{x}_n = \left(\sum_{i=1}^n x_i\right)/n$
+
 % re-written by Braeden
 \item \emph{Summarizing a data set with statistics.}  In the
   \texttt{datasets} package in R, there is a data set called
@@ -152,7 +182,6 @@ critical point as
 \item \emph{Estimation of the size of a population.}
 
 
-
 % this problem is OK
 \item \emph{Confidence interval for a mean.} Restaurants are making
   more use of their data on service times for planning purposes.  The
@@ -167,49 +196,25 @@ critical point as
   data? Why or why not?
 \end{enumerate}
 
-% need to have 30 observations and use the normal distribution instead
-% of the t distribution. put the data set into a file.
+% re-written by Braeden
 \item \emph{Validation of a simulation model.} A simulation model of a
   job shop was developed to investigate different scheduling rules. To
   validate the model, the scheduling rule currently used was
   incorporated into the model and the resulting output was compared
   against observed system behavior. By searching the previous year’s
   records, it was estimated that the average number of jobs in the
-  shop was 22.5 on a given day. Seven independent replications of the
-  simulation model were run, each for 30 days of simulated time, with the
-  following results for average number of (simulated) jobs in the shop
-\[
-18.9 \quad
-22.0 \quad
-19.4 \quad
-22.1 \quad
-19.8 \quad 
-21.9 \quad
-20.2.\quad
-\]
-One metric that can be used to validate the simulation model is to
-construct a 95\% confidence interval for the true mean number of
-(simulated) jobs in the (simulated) shop. If the confidence interval
-contains the value 22.5, then, the model captures the average
-work-in-process for the job shop\footnote{You would want to know that the
-baseline simulation model is accurate before simulating any proposed
-changes to the scheduling rules.}. Construct the confidence interval
-and comment on the result.
+  shop was 22.5 on a given day. The file \texttt{simulation.txt} contains the 
+  results for the average number of (simulated) jobs in the shop for 30 independent 
+  replications of the simulation model, each for 30 days of simulated time.
 
-\begin{solution}
-  \bs Using the simulation output, we can construct a 95\% confidence
-  interval for the mean number of jobs in the shop. If the the CI
-  contains 22.5, then we will conclude that the simulation output
-  is consistent with the real system behavior (with a confidence level
-  of 95\%). Note that we have $n=7$ observations, so we should use the
-  $t$ distribution. The confidence interval is
-  \[ \bar{X} \pm t_{1-\alpha/a,n-1} \times \frac{S}{\sqrt{n}} \]
- Using the simulation output and the $t$ distribution we have
-  \[  20.614 \pm 2.447 \times \frac{1.356}{\sqrt{7}}  \]
-  The resulting CI is (19.36, 21.87), and we conclude that the
-  simulation output is not consistent with system behavior.
-\end{solution}
-
+  One metric that can be used to validate the simulation model is to
+  construct a 95\% confidence interval for the true mean number of
+  (simulated) jobs in the shop. If the confidence interval
+  contains the value 22.5, then, the model captures the average
+  work-in-process for the job shop\footnote{You would want to know that the
+  baseline simulation model is accurate before simulating any proposed
+  changes to the scheduling rules.}. Construct the confidence interval
+  and comment on the result.
 
 \item \emph{Confidence interval for a proportion.} 
 
