@@ -1,4 +1,4 @@
-\chapter{Predictive Modeling}
+\chapter{Predictive Models}
 
 \section{Regression}
 
@@ -388,18 +388,15 @@ of age, with one curve for females and one curve for males.
 
 \subsubsection*{Time Series}
 
-% this problem needs a different data set, perhaps a larger data set
-% that is read from a file. It does not necessarily need to be sales
-% data.  Also, can we find data that exhibits some pattern,
-% e.g. trend, or seasonal data, or data that spikes at times that are
-% easily explained.
-\item \emph{Smoothing the curve.}
-The file \texttt{us-daily-covid-cases.csv} contains data on the daily number of confirmed
-COVID-19 cases in the United States from March 1st to July 7th 2020. 
+% re-written by braeden
+\item \emph{Flattening the curve.}  The file
+  \texttt{us-daily-covid-cases.csv} contains data on the daily number
+  of confirmed COVID-19 cases in the United States from March 1st to
+  July 7th 2020.
 
 \begin{enumerate}
 \item Construct a single plot that shows the actual number of cases,
-a 7-day moving average, and exponential smoothing values for 
+a 7-day moving average, and exponentially smoothed average for 
 the case where the smoothing parameter is $\alpha=0.3$. 
 \item Briefly explain the main differences between the moving average
 values and the exponential smoothing values.

@@ -103,6 +103,36 @@ critical point as
 \begin{enumerate}
 \subsubsection*{Descriptive Statistics}
 
+% need to use different data values
+% solution in ie1101/hwfa2018/hw3
+\item \emph{Taking averages.} Consider two datasets: 1, 5, 9 and 2,
+    4, 6, 8.
+\begin{enumerate}
+\item Denote the sample means of the two datasets by $\mean{x}$ and
+      $\mean{y}$. Is it true that the average
+      $\left(\mean{x}+\mean{y}\right)/2$ of $\mean{x}$ and $\mean{y}$ is
+      equal to the sample mean of the combined dataset with 7
+      elements?
+\item Suppose we have two other datasets: one of size $n$ with sample
+  mean $\mean{x}_n$ and another dataset of size $m$ with sample mean
+  $\mean{y}_m$. Is it always true that the average
+  $\left(\mean{x}_n + \mean{y}_m\right)/2$ of $\mean{x}_n$ and
+  $\mean{y}_m$ is equal to the sample mean of the combined dataset with
+  $n + m$ elements? If no, then provide a counterexample. If yes, then
+  explain this.
+\item If $m=n$, is $\left(\mean{x}_n + \mean{y}_m\right)/2$ equal to the
+  sample mean of the combined dataset with $n + m$ elements?
+\end{enumerate}
+
+% this problem is OK.
+% solution in ie1101/hwfa2018/hw3
+\item \emph{Computing the sample variance.} The following rule is
+  useful for the computation of the sample variance (and standard
+  deviation). Show that
+
+  \[ \frac{1}{n}\sum_{i=1}^n(x_i - \mean{x}_n)^2 = \left(\frac{1}{n}\sum_{i=1}^nx_i^2 \right)- \left(\mean{x}_n\right)^2 \]
+    where $\mean{x}_n = \left(\sum_{i=1}^n x_i\right)/n$
+
 % re-written by Braeden
 \item \emph{Summarizing a data set with statistics.}  In the
   \texttt{datasets} package in R, there is a data set called
