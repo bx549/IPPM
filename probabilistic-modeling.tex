@@ -330,32 +330,34 @@ The odds are
 or 5 to 11.
 \end{solution}
 
-% this problem needs to be re-written
 % binomial distribution
-\item \emph{System reliability.} 
-A large passenger aircraft has $n$ engines. The performance of each engine is independent with failure probability $p$.
+\item \emph{System reliability.}  A data warehouse has $n$ servers.
+Each server will fail, independently, with probability $p$.
 \begin{enumerate}
-	\item Suppose only one appropriately working engine is required for a safe landing. What is the probability that the aircraft will experience an unsafe landing due to engine failure?  \label{ex:p1}
-	\item Suppose two appropriately working engines are required for a safe landing. What is the probability that the aircraft will experience an unsafe landing due to engine failure? 
-	\label{ex:p2}
+\item Suppose that a single functioning server can support the
+  integrity of the data. What is the probability that data will be
+  lost? \label{ex:p1}
+\item Suppose that two functioning servers are required for data
+  integrity.  What is the probability that data will be lost?
+\label{ex:p2}
 \end{enumerate}
 
 \begin{solution}
-	\bs
-	For part~\ref{ex:p1}, all $n$ engines must fail for the aircraft to experience an unsafe landing due to engine failure. Because failures are independent, the probability
-	of an unsafe landing due to engine failure is $p^n$.
-	
-	For part~\ref{ex:p2}, let $X$ be the number of failed engines. $X$
-	has a Binomial distribution with parameters $n$ and $p$. The probability
-	of an unsafe landing due to engine failure is
-	\begin{align*}
-		P(X \geq n-1) &= \sum_{i=n-1}^n {n \choose i} p^i (1-p)^{n-i} \\
-		&= {n \choose n-1} p^{n-1} (1-p)^{n-(n-1)} + {n \choose n} p^n (1-p)^{n-n} \\
-		&= np^{n-1}(1-p) + p^n \\
-		&= np^{n-1} - np^{n-1}p + p^n\\
-		&= np^{n-1} - np^n + p^n\\
-		&= np^{n-1} + (1-n)p^n
-	\end{align*}
+  \bs For part~\ref{ex:p1}, all $n$ servers must fail for data to be
+  lost.  Because failures are independent, the probability of data
+  loss due to server failure is $p^n$.
+
+For part~\ref{ex:p2}, let $X$ be the number of failed servers. $X$
+has a Binomial distribution with parameters $n$ and $p$. The probability
+of data loss due to server failure is
+\begin{align*}
+      P(X \geq n-1) &= \sum_{i=n-1}^n {n \choose i} p^i (1-p)^{n-i} \\
+      &= {n \choose n-1} p^{n-1} (1-p)^{n-(n-1)} + {n \choose n} p^n (1-p)^{n-n} \\
+      &= np^{n-1}(1-p) + p^n \\
+      &= np^{n-1} - np^{n-1}p + p^n\\
+      &= np^{n-1} - np^n + p^n\\
+      &= np^{n-1} + (1-n)p^n
+\end{align*}
 \end{solution}
 
 % this problem is OK
@@ -396,24 +398,28 @@ So, the (average) effect of the warranty on profit is -\$5.90.
 % from Ross. It's a thought experiment. The actual numbers don't
 % matter as long as the rates are the same. Can we find a different
 % scenario that illustrates the same idea: the memoryless property
-\item \emph{Memoryless property of the Exponential distribution.} A hair salon has two hairdressers who provide haircuts on a walk-in basis. Sam arrives to the salon and finds that both hairdressers are busy with customers. However, no one else is in line, so Sam will receive a haircut immediately after one of the hairdressers finishes the haircut they are working on. The service time distribution for both hairdressers is exponential with a mean of 15 minutes. What is the probability that both haircuts currently in progress will be completed before Sam’s haircut is completed?
+\item \emph{Memoryless property of the Exponential distribution.} A
+  hair salon has two hairdressers who provide haircuts on a walk-in
+  basis. Sam arrives to the salon and finds that both hairdressers are
+  busy with customers. However, no other customers are waiting, so Sam
+  will begin his haircut (immediately) when the first space opens up.
+  Suppose that the distribution of service times for both hairdressers is
+  exponential with rate $\lambda$. What is the probability that
+  Sam is the last of the three customers to complete a haircut?
 
 \begin{solution}
-	\bs
-	By the memoryless property of the Exponential distribution, the
-	remaining time for each customer currently receiving a haircut is identical.
-	In particular, if we let $Y$ be the remaining service time of a customer, then
-	the distribution of remaining time is
-	\[ P(Y \leq y) = 1 - e^{-\lambda y} \] Since the two customers getting haircuts have
-	the same distribution for remaining time, the probability that
-	customer 1 finishes before customer 2 is 1/2 (likewise for
-	customer 2 finishing before customer 1). When Sam enters service, the
-	memoryless property still applies.  Regardless of how long the
-	other customers have been getting their hair cut, Sam has the same distribution
-	for remaining time. So, the probability that both haircuts in progress will be completed before Sam’s haircut is completed is 1/2.
+  \bs By the memoryless property of the Exponential distribution, the
+  distribution of remaining time for each customer currently receiving
+  a haircut is exponential with rate $\lambda$.  Since the two
+  customers getting haircuts have the same distribution for remaining
+  time, the probability that customer 1 finishes before customer 2 is
+  1/2 (likewise for customer 2 finishing before customer 1). When Sam
+  enters service, the memoryless property still applies.  Regardless
+  of how long the other customers have been in service, Sam has the
+  same distribution for remaining time. The probability Sam is the
+  last to finish is 1/2.
 \end{solution}
 
-% this problem has been re-written
 % Poisson distribution
 \item \emph{Donut giveaway.}  A professional baseball team has just
   won a game that secured them a berth in the league’s playoffs. To
@@ -426,8 +432,10 @@ So, the (average) effect of the warranty on profit is -\$5.90.
   process at a mean rate of 100 customers per hour. Also, note that
   there is a limit of one donut per customer.
 \begin{enumerate}
-\item What is the probability that there will be donuts remaining after the giveaway? \label{ex:donuta}
-\item What is the predicted number of donuts that will be remaining after the giveaway? \label{ex:donutb}
+\item What is the probability that there will be donuts remaining
+  after the giveaway? \label{ex:donuta}
+\item What is the predicted number of donuts that will be remaining
+  after the giveaway? \label{ex:donutb}
 \end{enumerate}
 
 For part~\ref{ex:donuta}, present your answer as an expression for the
@@ -440,12 +448,14 @@ such as R, to compute a numerical answer.
   customers that arrive during the two-hour period is Poisson
   distributed with a mean of 200. Let $N$ be the number of customers
   arriving in a two-hour period. Then
-\[ N ~ \text{Poisson}(\lambda = 200) \]
-For part~\ref{ex:donuta}, the probability that there will be donuts remaining after the giveaway is 
+  \[ N \sim \text{Poisson}(\lambda = 200) \] 
+For part~\ref{ex:donuta},
+  the probability that there will be donuts remaining after the
+  giveaway is
 \begin{align*}
-      P(N < 200) &= \sum_{n=0}^{199} \frac{\lambda^n e^{-\lambda}}{n!}\\
-      &= \sum_{n=0}^{199} \frac{200^n e^{-200}}{n!}\\
-      &\approx .49
+P(N < 200) &= \sum_{n=0}^{199} \frac{\lambda^n e^{-\lambda}}{n!}\\
+&= \sum_{n=0}^{199} \frac{200^n e^{-200}}{n!}\\
+&\approx .49
 \end{align*}
 In R,
 \begin{Verbatim}
@@ -456,7 +466,7 @@ In R,
 For part~\ref{ex:donutb}, our calculations are all done in expectation
 (that is to say, on average). There are 200 customers in 2 hours,
 which means that 200 donuts are given away. So, on average, no donuts
-are remaining.
+remain.
 \end{solution}
 
 % re-written by hannah
@@ -499,17 +509,17 @@ payments is independent of the available funds.
 % poisson distribution
 \item \emph{Stocking a vending machine.}  A university cafeteria has a
   vending machine that is stocked with a variety of juices and
-  sodas. A vending machine attendant replenishes inventory weekly so
-  that there are 180 beverages in stock at the beginning of each
-  week. The cafeteria is open 24 hours, 7 days a week, and it is
-  expected that the beverages will be purchased according to a Poisson
-  distribution with a mean of 1 hour between purchases.
+  sodas. A student employee replenishes inventory weekly so that there
+  are 180 beverages in stock at the beginning of each week. The
+  cafeteria is open 24 hours, 7 days a week, and beverages are
+  purchased according to a Poisson process with a mean of 1 hour
+  between purchases.
 \begin{enumerate}
-\item What is the probability that there are no beverages remaining in
-  the vending machine when the attendant arrives? \label{ex:pout}
-\item On average, how many beverages will be remaining in the vending
-  machine when the attendant arrives? \label{ex:qremain}
-\item What is the probability that the attendant will replenish 150 or
+\item What is the probability that, at the end of any given week, the
+  student employee will find the machine to be sold out? \label{ex:pout}
+\item On average, how many beverages remain in the vending
+  machine when the employee arrives? \label{ex:qremain}
+\item What is the probability that the employee will replenish 150 or
   more beverages? \label{ex:preplenish}
 \end{enumerate}
 
@@ -517,9 +527,9 @@ payments is independent of the available funds.
   \bs For part~\ref{ex:pout}, there will be no beverages remaining in
   the vending machine if demand for beverages is at least 180.
   Because the beverages are purchased according to a Poisson
-  distribution with a mean of one hour between purchases, the rate
+  process with a mean of one hour between purchases, the rate
   $\lambda$ that beverages are purchased is 24 beverages per
-  day. Therefore, the number of purchases in seven days is Poisson
+  day. This means that the number of purchases in seven days is Poisson
   with mean $\lambda t$. Let $N$ be a random variable that represents
   the number of purchases in one week (seven days).
   \[ N \sim \text{Poisson}(\lambda = \lambda \times 7 = 168) \] 
@@ -534,14 +544,12 @@ In R,
 [1] 0.1866995
 \end{Verbatim}
 
-For part~\ref{ex:qremain}, the expected number of purchases from the
-vending machine each week is 168 beverages. Therefore, the expected
-number of beverages remaining at the end of the week is $180-168=12$.
+For part~\ref{ex:qremain}, the expected number of beverages purchased
+from the vending machine each week is 168. The expected number of
+beverages remaining at the end of the week is $180-168=12$.
 	
-For part~\ref{ex:preplenish}, 150 or more beverages will be
-replenished if 150 or more beverages are purchased before the end of
-the week. The probability that 150 or more beverages are purchased
-during a week is
+For part~\ref{ex:preplenish}, The probability that 150 or more
+beverages are purchased during a week is
 \begin{align*}
       P(N \geq 150) &= 1 - P(N \leq 149)\\
       &= 1 - \sum_{i=0}^{149} \frac{168^i e^{-168}}{i!}\\
@@ -809,94 +817,126 @@ curve but above one, and then divide by the total time.
 \[ L_q = \frac{14}{17} \]
 \end{solution}
 
-% re-written by hannah.  can we make this into a capital expense
-% problem? something like the park will invest in a 2nd set of cars
-% for the roller coaster if the waiting metrics are too onerous for
-% the customers?
-\item \emph{Justifying a capital expense.} A small theme park, Expedited Expeditions, is known for having rides with short waiting times. A new ride has opened, and customers arrive to the ride according to a Poisson process with a mean of 20 arrivals per hour. Only one customer is allowed on the ride at a time, and customers can stay on the ride as long they wish. The length of time that each customer spends on the ride is exponentially distributed with a mean of 2.5 minutes. Management is willing to add an additional cart to the ride if both of the following conditions are satisfied:
-1) the average number of customers in line is greater than three and 2) the probability that a customer spends 10 minutes or less at the ride is less than 0.65. Can an additional cart be justified?
+% re-written by hannah.
+\item \emph{Justifying a capital expense.} An amusement park is known
+  for having rides with short waiting times. A new ride has opened,
+  and customers arrive to the ride according to a Poisson process with
+  a mean of 20 arrivals per hour. Only one customer is allowed on the
+  ride at a time, and customers can stay on the ride as long they
+  wish. The length of time that each customer spends on the ride is
+  exponentially distributed with a mean of 2.5 minutes. Management is
+  willing to add an additional cart to the ride if, under the current
+  system, 1) the average number of waiting customers is greater than
+  four, and 2) the percentage of time that the ride is idle exceeds
+  10\%.  Can an additional cart be justified?
 
 \begin{solution}
-	\bs
-	The system in this problem is an M/M/1 queuing system. Customers arrive at the rate
-	\[ \lambda = 20~\text{customers per hour} \]
-	We know that the service rate is 
-	\[ \mu = 24~\text{customers per hour} \]
-	
-	To check if the first condition is satisfied, we wish to find $L_q$. 
-	
-	\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{20^2}{24(24-20)} = 25/6~\text{customers} \] 
-	Thus, the first condition is satisfied.
-	
-	To check if the second condition is satisfied, we wish to find  the probability that a customer will spend 10 minutes or less in the system. Because 10 minutes = 1/6 hours, we will find $P(W \leq 1/6)$.  
-	
-	\[ P(W \leq t) = 1 - e^{-t(\mu-\lambda)}= 1 - e^{-1/6(24-20)} \approx 0.49\]
-	Thus, the second condition is satisfied.
-	
+  \bs The amusement ride can be modeled as an M/M/1 queuing
+  system. Customers arrive at the rate
+\[ \lambda = 20~\text{customers per hour,} \]
+and the service rate is 
+\[ \mu = 24~\text{customers per hour.} \]
+To see whether the first condition is satisfied, we compute
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{20^2}{24(24-20)} =
+  25/6 > 3~\text{customers} \] 
+and so the first condition is satisfied. To
+see if the second condition is satisfied, we compute
+\[ p_0 = 1 - \frac{\lambda}{\mu} = 0.167 \]
+and so the second condition is also satisfied.
 \end{solution}
 
-% this problem needs to be re-written
-\item \emph{Comparing system configurations.}
-Patients arrive to an emergency room according to a Poisson process, with an arrival rate of 10 patients per hour. Before a patient can see a doctor, they must have their medical history reviewed and their vitals measured. Currently, the hospital has one nurse who performs both of these tasks for each patient. The time that each patient spends with the nurse is exponentially distributed with a mean of five minutes. An engineer at the hospital is considering two options for improving service.
+% re-written be hannah
+\item \emph{Comparing system configurations.}  Patients arrive to an
+  emergency room according to a Poisson process at the rate of 10
+  patients per hour. Before a patient can see a doctor, they must have
+  their medical history reviewed and their vitals measured. Currently,
+  the hospital has one nurse who performs both of these tasks for each
+  patient. The time that each patient spends with the nurse is
+  exponentially distributed with a mean of five minutes. An Industrial
+  Engineer at the hospital is considering two options for improving
+  service.
 \begin{compactenum}
-	\item Hire a medical scribe to review each patient's medical history while the nurse takes vitals. The service rate would increase to 20 patients per hour with this improved single-server operation.
-	\item Hire a second nurse who also reviews medical history and takes vitals for each patient. The two nurses would each have a service rate of 12 patients per hour with this two-server operation.
+\item Hire a medical scribe to review each patient's medical history
+  while the nurse takes vitals. The service rate would increase to 20
+  patients per hour with this improved single-server operation
+(service times are still exponentially distributed.) \label{ex:scribe}
+\item Hire a second nurse who also reviews medical history and takes
+  vitals for each patient. The two nurses would each have a service
+  rate of 12 patients per hour (each with exponential service times)
+  with this two-server operation.
 \end{compactenum}
-Consider the relative cost of each option and evaluate  the  improvements  that  would  result. Then, determine which option the engineer should recommend.
+Consider the relative cost of each option and evaluate the
+improvements that would result. Then, determine which option the
+engineer should recommend.
 
 \begin{solution}
-	\bs We will look at the average number of patients in the queue $L_Q$ and the
-	average time in queue $W_Q$ as metrics to judge improvement in
-	system performance. Before any improvements are made,
-	\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{10^2}{12(12-10)} = 25/6~\text{patients} \]
-	and
-	\[W_q = \frac{L_q}{\lambda} = \frac{25/6}{10} = 5/12~\text{hours} = 25~\text{minutes} \]
-	If they hire a scribe to assist the nurse
-	\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{10^2}{20(20-10)} = 0.5~\text{patients} \]
-	and
-	\[W_q = \frac{L_q}{\lambda} = \frac{0.5}{10} = 0.05~\text{hours} = 3~\text{minutes} \]
-	and if they add an additional nurse we
-	need to use the formulas for a two-server operation. First,
-	\[ P_0 = \frac{1}{\sum_{n=0}^{k-1}\frac{\left(\lambda/\mu\right)^n}{n!} + \frac{\left(\lambda/\mu\right)^k}{k!}\left(\frac{k\mu}{k\mu-\lambda}\right)} \]
-	where $k=2$ servers. Then
-	\[ L_q = \frac{\left(\lambda/\mu\right)^k\lambda\mu}{(k-1)!(k\mu-\lambda)^2}P_0 \]
-	and
-	\[W_q = \frac{L_q}{\lambda}  \]
-	Plugging values, I got $P_0=0.4118$, $L_q=0.1751$ patients, and $W_q=0.0175$ hours or $1.05$ minutes.
-	Considering the relative improvement and the cost
-	of adding a second nurse, I would recommend option a). That is, to hire a scribe to help the nurse. The average number in
-	queue and the average time in queue appear to be acceptable for an emergency room setting.
+  \bs We will look at the average number of patients in the queue
+  $L_Q$ and the average time in queue $W_Q$ as metrics to judge
+  improvement in system performance. Before any improvements are made,
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{10^2}{12(12-10)} = 25/6 = 4.167~\text{patients} \]
+and
+\[W_q = \frac{L_q}{\lambda} = \frac{25/6}{10} = 5/12~\text{hours} = 25~\text{minutes} \]
+If they hire a scribe to assist the nurse
+\[ L_q = \frac{\lambda^2}{\mu(\mu-\lambda)} = \frac{10^2}{20(20-10)} = 0.5~\text{patients} \]
+and
+\[W_q = \frac{L_q}{\lambda} = \frac{0.5}{10} = 0.05~\text{hours} =
+  3~\text{minutes} \] 
+and if they add an additional nurse we need to
+use the formulas for a two-server operation. First,
+\[ P_0 = \frac{1}{\sum_{n=0}^{k-1}\frac{\left(\lambda/\mu\right)^n}{n!} + \frac{\left(\lambda/\mu\right)^k}{k!}\left(\frac{k\mu}{k\mu-\lambda}\right)} \]
+where $k=2$ servers. Then
+\[ L_q = \frac{\left(\lambda/\mu\right)^k\lambda\mu}{(k-1)!(k\mu-\lambda)^2}P_0 \]
+and
+\[W_q = \frac{L_q}{\lambda} \] 
+Plugging values, I got $P_0=0.4118$,
+$L_q=0.1751$ patients, and $W_q=0.0175$ hours or $1.05$ minutes.
+Considering the relative improvement and the cost of adding a second
+nurse, I would recommend option~\ref{ex:scribe}. That is, to hire a scribe to help
+the nurse. The average number in queue and the average time in queue
+appear to be acceptable for an emergency room setting.
 \end{solution}
 
 % the context of this problem needs to be re-written. perhaps describe a
 % situation of a store with two clerks, each with exponential service times
 % (so total service time is Gamma/Erlang). Social distancing measures mean
 % that only one customer at a time is allowed in the store.
-\item \emph{An $M$/$G$/$1$ queue.}  A coffee shop has recently opened for takeout after being closed due to COVID-19. In order to follow public health guidelines, only one customer is allowed in the shop at a time. Therefore, if a customer is being served, any customer that arrives must wait in a line outside of the coffee shop. Customers arrive at a rate of 12 customers per hour, and interarrival times are exponentially distributed. The shop has two baristas: one barista takes orders and the other prepares the beverages. The service time for each barista to complete their task is independently and exponentially distributed with a mean of two minutes. Determine the average number of customers waiting in line to be served,
-$L_Q$. A couple of helpful items: 
+\item \emph{An $M$/$G$/$1$ queue.}  A coffee shop has recently opened
+  for takeout after being closed due to COVID-19. In order to follow
+  public health guidelines, only one customer is allowed in the shop
+  at a time. If a customer is being served, any customer
+  that arrives must wait in a line outside of the coffee
+  shop. Customers arrive at a rate of 12 customers per hour, and
+  inter-arrival times are exponentially distributed. The shop has two
+  baristas: one barista takes orders and the other prepares the
+  beverages. The service time for each barista to complete their task
+  is independently and exponentially distributed with a mean of two
+  minutes. Determine the average number of customers waiting in line
+  to be served, $L_Q$. A couple of helpful items:
 \begin{compactenum}[i)]
-	\item The variance of the sum of independent
-	random variables is the sum of the variances,
-	\item the sum of IID
-	exponential random variables is distributed Gamma, 
-	\item the variance
-	of an exponential distribution is the mean squared, and
-	\item for an $M$/$G$/1 queue, 
-	\[ L_Q = \frac{\rho^2(1 + \sigma^2\mu^2)}{2(1-\rho)} \]
-	where $\rho$ is the server utilization, $\mu$ is the service rate, and $\sigma^2$ is
-	the variance of the service time distribution.
+\item The variance of the sum of independent
+random variables is the sum of the variances,
+\item the sum of IID
+exponential random variables is distributed Gamma, 
+\item the variance
+of an exponential distribution is the mean squared, and
+\item for an $M$/$G$/1 queue, 
+\[ L_Q = \frac{\rho^2(1 + \sigma^2\mu^2)}{2(1-\rho)} \]
+where $\rho$ is the server utilization, $\mu$ is the service rate, and $\sigma^2$ is
+the variance of the service time distribution.
 \end{compactenum}
 
 \begin{solution}
-	\bs First we know that $\lambda = 1/5$ in units of customers per
-	minute. The expected total service time for both baristas is 4 minutes. So $\mu = 1/4$ customers per minute. If we let $X$ be the
-	service time, then
-	\[ \text{Var}(X) = 2^2 + 2^2 = 8\] because the time for each barista is exponentially distributed time with mean 2 minutes.
-	Now,
-	\begin{align*}
-		L_Q &= \frac{\frac{16}{25}\left(1 + 8\left(\frac{1}{16}\right)\right)}{2\left(\frac{1}{5}\right)} \\
-		&= 2.4 ~\text{customers}
-	\end{align*}
+\bs The first thing to note is that the service time is the sum of two IID exponential
+random variables, and so we know that it has a Gamma distribution.
+Letting $X$ represent the service time,
+\[ \text{Var}(X) = 2^2 + 2^2 = 8.\]
+The expected total service time for both baristas is 4 minutes, so
+$\mu = 1/4$ customers per minute. 
+Now, in units of customers per minute, the arrival rate is $\lambda = 1/5$.
+\begin{align*}
+      L_Q &= \frac{\frac{16}{25}\left(1 + 8\left(\frac{1}{16}\right)\right)}{2\left(\frac{1}{5}\right)} \\
+      &= 2.4 ~\text{customers}
+\end{align*}
 \end{solution}
 
 
@@ -997,7 +1037,7 @@ to increase.
   the game. How many game programs should the college print per game
   to maximize their revenue? You should use the CDF of the Uniform
   distribution to answer this question.
-
+  
 \begin{solution}
 \bs 
 The CDF of Uniform distribution is
