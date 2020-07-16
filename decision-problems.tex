@@ -592,55 +592,74 @@ of available stylists.
 The best decision is to have 4 stylists available.
 \end{solution}
 
-% this problem needs a new context. we cannot use this example of a
-% decision on where to go for the evening. the main idea is to
-% reinforce the expected utility theorem ... that the utility of a
-% "lottery" is its expected utility.
-\item \emph{Friends and enemies.}  Utilities are the basis for making
-  rational decisions.  Alice is making a decision on what to do for
-  the evening. The three options and their inherent utilities are:
+% Written by Emily
+% Expected Utility Theorem
+\item \emph{Expected utility of a day off.}
+    Utilities are the basis for making rational decisions. 
+    Sydney has a day off of work next week and is trying to 
+    decide how she will spend it. Her top three options and their 
+    inherent utilities are:
 
 \setlength{\tabcolsep}{8pt}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lr}
   option & utility \\ \hline
-  go to the club & 100\\
-  go to the movie & 50\\
-  watch a video at home & 50
+  go to the beach & 100\\
+  go hiking & 75\\
+  stay home and watch movies & 50
 \end{tabular}
 
-With no other information, Alice would choose to go to the
-club. However, there is some uncertainty (or risk) in Alice's
-decision. The presence of Bob and/or Carol modify Alice's utilities.
-Alice thinks Bob is a nuisance.
-If she runs into Bob at the movie, her utility is decreased by 40.
-If she runs into Bob at the club, her utility is decreased by 90.
-On the other hand, Alice likes Carol. The presence of Carol at
-either the movie or the club will increase Alice's utility by
-a factor of 1.5 (after any disutility has been appplied).
+With only this information, Sydney would choose to go to the
+beach for the day. However, there is some uncertainty (or risk) in Sydney's
+decision. The weather and the people she runs into at the beach or while 
+hiking impact her utility.
+Sydney does not enjoy being outside when it is raining.
+If it rains while she is at the beach, her utility is decreased by 80.
+If it rains while she is hiking, her utility is decreased by 30.
+On the other hand, Sydney enjoys running into friends. If she runs into a 
+friend at either the beach or on the hiking trail, it will increase Sydney's 
+utility by a factor of 1.5 (after any disutility has been appplied).
 
-A few more pieces of information are that Bob spends 40\% of
-his time at the movie and 60\% of his time at the club. Carol
-spends 75\% of her time at the movie and 25\% of her time
-at the club.
+It will also help in the decision making to know that at the beach it is 
+rainy 40\% of the time and she has a 30\% chance of running into a friend. 
+On the hiking trail it is rainy 20\% of the time and she has a 50\% chance 
+of running into a friend.
 
-Compute Alice's expected utilities for each option. What is the
-``rational'' decision for Alice?
+Compute Sydney's expected utilities for each option. What is the
+``rational'' decision for Sydney?
 
 With this exercise, there are three points to be made:
 \begin{enumerate}
-\item Rational choice means that agents (like Alice) make decisions that maximize
-  their utility (or payoff, or happiness). It doesn't mean that agents only
-  care about themselves. Agents have preferences over states of the
-  world. An agent might have a preference for making another agent
-  happy, and that would be reflected in her utility for that state
-  of the world.
+\item Rational choice means that agents (like Sydney) make decisions 
+    that maximize their utility (or payoff, or happiness). It doesn't 
+    mean that agents only care about themselves. Agents have 
+    preferences over states of the world. An agent might have a preference 
+    for making another agent happy, and that would be reflected in her 
+    utility for that state of the world.
 \item Each agent has a utility function that maps states of the world
-  to real numbers that represent the agent's level of happiness.
+    to real numbers that represent the agent's level of happiness.
 \item When there is uncertainty over which state will occur, then
-  an agent's utility is her expected utility.
+    an agent's utility is her expected utility.
 \end{enumerate}
 
+\begin{solution}
+\bs We must calculate the expected utility for each possible decision.
+The expected utility of going to the beach is:
+\begin{align*}
+E(\text{utility}) &= 100 - 80 \times 0.40 + 
+(100 - 80 \times 0.40) \times 0.50 \times 0.30 \\
+&= 78.20
+\end{align*}
+The expected utility of going hiking is:
+\begin{align*}
+E(\text{utility}) &= 75 - 30 \times 0.20 + (75 - 30 \times 0.20) \times 0.50 \times 0.50 \\
+&= 86.25
+\end{align*}
+The expected utility of staying home watching movies is 50 because it 
+is not influenced by the weather, and Sydney will not run into a 
+friend if she stays at home.
+
+The most rational decision for Sydney is to go hiking.
 
 % this problem needs a new context. the problem itself should not
 % change ...  that is, can you represent a preference ordering that is
