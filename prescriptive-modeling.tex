@@ -1249,70 +1249,70 @@ in the following table, along with the amounts to be produced and
 the amounts needed at the warehouses.
 
 \begin{center}
-	\begin{tabular}{|l|r|r|r|r|}\hline
-		& \multicolumn{3}{c|}{Unit shipping cost} & \\ \cline{2-4}
-		& & \multicolumn{2}{c|}{Warehouse} & \\ \cline{3-4} 
-		\diagbox[width=10em]{From}{To}&  DC & WH1 & WH2 & supply \\ \hline
-		Factory 1&  3 &  7 & -- & 80\\
-		Factory 2&  4 &  --&  9 & 70\\
-		DC       &    &  2 &  4 &   \\ \hline
-		demand   &    & 60 & 90 &   \\ \hline
-	\end{tabular}
+\begin{tabular}{|l|r|r|r|r|}\hline
+      & \multicolumn{3}{c|}{Unit shipping cost} & \\ \cline{2-4}
+      & & \multicolumn{2}{c|}{Warehouse} & \\ \cline{3-4} 
+      \diagbox[width=10em]{From}{To}&  DC & WH1 & WH2 & supply \\ \hline
+      Factory 1&  3 &  7 & -- & 80\\
+      Factory 2&  4 &  --&  9 & 70\\
+      DC       &    &  2 &  4 &   \\ \hline
+      demand   &    & 60 & 90 &   \\ \hline
+\end{tabular}
 \end{center}
 
 \begin{enumerate}
-	\item Draw the network representation of this problem as a transshipment problem.
-	\item Formulate the linear programming problem that minimizes total shipping cost.
-	\item Solve this problem using an algebraic modeling language such as GAMS.
+\item Draw the network representation of this problem as a transshipment problem.
+\item Formulate the linear programming problem that minimizes total shipping cost.
+\item Solve this problem using an algebraic modeling language such as GAMS.
 \end{enumerate}
 
 \begin{solution}
-	\bs
-	
-	To make the notation easier, assign numbers to the nodes in the
-	network as follows: node 1 is factory 1, node 2 is factory 2, node 3
-	is the DC, node 4 is warehouse 1, and node 5 is warehouse 2.  Let
-	$x_{ij}$ be the number of products shipped from node $i$ to node $j$.
-	
-	\begin{center}
-		\begin{tikzpicture}[>=latex]
-		\node[circle,draw](f1) at (0,2) {1};
-		\node[circle,draw](f2) at (0,0) {2};
-		\node[circle,draw](dc) at (3,1) {3};
-		\node[circle,draw](wh2) at (6,0) {5};
-		\node[circle,draw](wh1) at (6,2) {4};
-		
-		\node[anchor=east] at (f1) {[80]~~~~};
-		\node[anchor=east] at (f2) {[70]~~~~};
-		\node[anchor=west] at (wh1) {~~~[-60]};
-		\node[anchor=west] at (wh2) {~~~[-90]};
-		
-		\draw[->] (f1) to [out=20,in=160]  node[above,pos=.5]{7} (wh1);
-		\draw[->] (f2) to [out=340,in=200] node[below,pos=.5]{9} (wh2);
-		\draw[->] (f1) -- (dc) node[above,pos=.2]{3} node[above,pos=.7]{$\leq 50$};
-		\draw[->] (f2) -- (dc) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
-		\draw[->] (dc) -- (wh1) node[above,pos=.2]{2} node[above,pos=.7]{$\leq 50$};
-		\draw[->] (dc) -- (wh2) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
-		\end{tikzpicture}
-	\end{center}
-	
-	\[
-	\begin{array}{lrrrrrrrrrrl}
-	\textrm{maximize} & 3x_{13} &+& 4x_{23} &+& 7x_{14} &+& 9x_{25} &+& 2x_{34} &+& 4x_{35} \\
-	\textrm{subject to} &&&&&&& x_{13} &+& x_{14} &=& 80\\
-	&&&&&&& x_{23} &+& x_{25} &=& 70\\
-	&&&&&&& x_{34} &+& x_{14} &=& 60\\
-	&&&&&&& x_{25} &+& x_{35} &=& 90\\
-	&&&&&&&&& x_{13} & \leq & 50\\
-	&&&&&&&&& x_{23} & \leq & 50\\
-	&&&&&&&&& x_{34} & \leq & 50\\
-	&&&&&&&&& x_{35} & \leq & 50\\
-	&&& x_{13} &+& x_{23} &-& x_{34} &-& x_{35} &=& 0\\
-	\multicolumn{10}{r}{x_{ij}} & \geq & 0
-	\end{array}
-	\]
-	The flow balance constraint at the DC is unnecessary because
-	total supply equals total demand. 
+\bs
+
+To make the notation easier, assign numbers to the nodes in the
+network as follows: node 1 is factory 1, node 2 is factory 2, node 3
+is the DC, node 4 is warehouse 1, and node 5 is warehouse 2.  Let
+$x_{ij}$ be the number of products shipped from node $i$ to node $j$.
+
+\begin{center}
+      \begin{tikzpicture}[>=latex]
+      \node[circle,draw](f1) at (0,2) {1};
+      \node[circle,draw](f2) at (0,0) {2};
+      \node[circle,draw](dc) at (3,1) {3};
+      \node[circle,draw](wh2) at (6,0) {5};
+      \node[circle,draw](wh1) at (6,2) {4};
+
+      \node[anchor=east] at (f1) {[80]~~~~};
+      \node[anchor=east] at (f2) {[70]~~~~};
+      \node[anchor=west] at (wh1) {~~~[-60]};
+      \node[anchor=west] at (wh2) {~~~[-90]};
+
+      \draw[->] (f1) to [out=20,in=160]  node[above,pos=.5]{7} (wh1);
+      \draw[->] (f2) to [out=340,in=200] node[below,pos=.5]{9} (wh2);
+      \draw[->] (f1) -- (dc) node[above,pos=.2]{3} node[above,pos=.7]{$\leq 50$};
+      \draw[->] (f2) -- (dc) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
+      \draw[->] (dc) -- (wh1) node[above,pos=.2]{2} node[above,pos=.7]{$\leq 50$};
+      \draw[->] (dc) -- (wh2) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
+      \end{tikzpicture}
+\end{center}
+
+\[
+\begin{array}{lrrrrrrrrrrl}
+\textrm{minimize} & 3x_{13} &+& 4x_{23} &+& 7x_{14} &+& 9x_{25} &+& 2x_{34} &+& 4x_{35} \\
+\textrm{subject to} &&&&&&& x_{13} &+& x_{14} &=& 80\\
+&&&&&&& x_{23} &+& x_{25} &=& 70\\
+&&&&&&& x_{34} &+& x_{14} &=& 60\\
+&&&&&&& x_{25} &+& x_{35} &=& 90\\
+&&&&&&&&& x_{13} & \leq & 50\\
+&&&&&&&&& x_{23} & \leq & 50\\
+&&&&&&&&& x_{34} & \leq & 50\\
+&&&&&&&&& x_{35} & \leq & 50\\
+&&& x_{13} &+& x_{23} &-& x_{34} &-& x_{35} &=& 0\\
+\multicolumn{10}{r}{x_{ij}} & \geq & 0
+\end{array}
+\]
+We note that the flow balance constraint at the DC is unnecessary
+because total supply equals total demand.
 \end{solution}
 
 \subsubsection*{Integer Programming}
