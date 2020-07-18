@@ -1556,6 +1556,7 @@ Now the binary integer programming formulation is
   \begin{array}{lrrrrrrrrl}
     \textrm{maximize}   &&& y_1 & + & 4y_4 & + & 6y_6 & + & 2x_2 \\
     \textrm{subject to} & y_0 & + & y_1 & + & y_4 & + & y_6 & = & 1 \\
+                        & y_1 & + & 4y_4 & + & 6y_6 & + & x_2 & \leq & 8\\
                         & -y_1 & - & 4y_4 & - & 6y_6 & + & x_2 & \leq & 2\\
                         & y_1 & + & 4y_4 & + & 6y_6 & - & x_2 & \leq & 4\\
     \multicolumn{8}{r}{x_2}& \geq & 0 ~\text{and integer}\\
