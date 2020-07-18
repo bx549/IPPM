@@ -1,0 +1,249 @@
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 07/17/20 11:18:39 Page 1
+Supply chain problem
+C o m p i l a t i o n
+
+
+   2   
+   3  set node / fac1, fac2, dc, wh1, wh2 /;
+   4   
+   5  alias (node,i,j);
+   6   
+   7  set edge(i,j)
+   8    / fac1.dc, fac1.wh1,
+   9      fac2.dc, fac2.wh2,
+  10      dc.wh1, dc.wh2 /;
+  11   
+  12  set capedge(node,node) 'capacitated edge'
+  13    / fac1.dc, fac2.dc, dc.wh1, dc.wh2 /;
+  14   
+  15  table c(node,node) 'cost to ship one unit'
+  16       dc wh1 wh2
+  17  fac1  3   7
+  18  fac2  4       9
+  19  dc        2   4
+  20  ;
+  21   
+  22  sets
+  23    factory(node) / fac1, fac2 /
+  24    warehouse(node) / wh1, wh2 /
+  25    distr(node) / dc /;
+  26   
+  27  parameter a(factory) 'supply at factory'
+  28    / fac1 = 80
+  29      fac2 = 70 /;
+  30  parameter b(warehouse) 'demand at warehouse'
+  31    / wh1 = 60
+  32      wh2 = 90 /;
+  33  scalar u "shipping capacity" / 50 /;
+  34   
+  35  positive variable x(node,node);
+  36  free variable z;
+  37   
+  38  equations
+  39    cost       'objective function'
+  40    supply(factory)     'cannot exceed supply at factory'
+  41    demand(warehouse)   'must meet demand at factory'
+  42    transhipment(distr) 'flow balance at dc'
+  43    capacity(node,node) 'capacity on edges to/from dc'
+  44    ;
+  45   
+  46  cost.. z =e= sum(edge, c(edge)*x(edge));
+  47   
+  48  supply(factory).. sum(node $ edge(factory,node), x(factory,node)) =l= a(factory);
+  49  demand(warehouse).. sum(node $ edge(node,warehouse), x(node,warehouse)) =g= b(warehouse);
+  50  transhipment(distr).. sum(j $ edge(distr,j), x(distr,j)) - sum(i $ edge(i,distr), x(i,distr)) =e= 0;
+  51  capacity(capedge(i,j)).. x(capedge) =l= 50;
+  52   
+  53  model supplychain / all /;
+  54   
+  55  solve supplychain using lp minimizing z;
+
+
+COMPILATION TIME     =        0.001 SECONDS      3 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 07/17/20 11:18:39 Page 2
+Supply chain problem
+Equation Listing    SOLVE supplychain Using LP From line 55
+
+
+---- cost  =E=  objective function
+
+cost..  - 3*x(fac1,dc) - 7*x(fac1,wh1) - 4*x(fac2,dc) - 9*x(fac2,wh2) - 2*x(dc,wh1) - 4*x(dc,wh2) + z =E= 0 ; (LHS = 0)
+     
+
+---- supply  =L=  cannot exceed supply at factory
+
+supply(fac1)..  x(fac1,dc) + x(fac1,wh1) =L= 80 ; (LHS = 0)
+     
+supply(fac2)..  x(fac2,dc) + x(fac2,wh2) =L= 70 ; (LHS = 0)
+     
+
+---- demand  =G=  must meet demand at factory
+
+demand(wh1)..  x(fac1,wh1) + x(dc,wh1) =G= 60 ; (LHS = 0, INFES = 60 ****)
+     
+demand(wh2)..  x(fac2,wh2) + x(dc,wh2) =G= 90 ; (LHS = 0, INFES = 90 ****)
+     
+
+---- transhipment  =E=  flow balance at dc
+
+transhipment(dc)..  - x(fac1,dc) - x(fac2,dc) + x(dc,wh1) + x(dc,wh2) =E= 0 ; (LHS = 0)
+     
+
+---- capacity  =L=  capacity on edges to/from dc
+
+capacity(fac1,dc)..  x(fac1,dc) =L= 50 ; (LHS = 0)
+     
+capacity(fac2,dc)..  x(fac2,dc) =L= 50 ; (LHS = 0)
+     
+capacity(dc,wh1)..  x(dc,wh1) =L= 50 ; (LHS = 0)
+     
+REMAINING ENTRY SKIPPED
+
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 07/17/20 11:18:39 Page 3
+Supply chain problem
+Column Listing      SOLVE supplychain Using LP From line 55
+
+
+---- x  
+
+x(fac1,dc)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -3       cost
+        1       supply(fac1)
+       -1       transhipment(dc)
+        1       capacity(fac1,dc)
+
+x(fac1,wh1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -7       cost
+        1       supply(fac1)
+        1       demand(wh1)
+
+x(fac2,dc)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -4       cost
+        1       supply(fac2)
+       -1       transhipment(dc)
+        1       capacity(fac2,dc)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- z  
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       cost
+
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 07/17/20 11:18:39 Page 4
+Supply chain problem
+Model Statistics    SOLVE supplychain Using LP From line 55
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           5     SINGLE EQUATIONS           10
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            7
+NON ZERO ELEMENTS            23
+
+
+GENERATION TIME      =        0.002 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+EXECUTION TIME       =        0.002 SECONDS      4 MB  31.1.0 r55b6ce3 LEX-LEG
+GAMS 31.1.0  r55b6ce3 Released May  1, 2020 LEX-LEG x86 64bit/Linux - 07/17/20 11:18:39 Page 5
+Supply chain problem
+Solution Report     SOLVE supplychain Using LP From line 55
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   supplychain         OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  55
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE             1100.0000
+
+ RESOURCE USAGE, LIMIT          0.029      1000.000
+ ITERATION COUNT, LIMIT         0    2000000000
+
+IBM ILOG CPLEX   31.1.0 r55b6ce3 Released May 01, 2020 LEG x86 64bit/Linux    
+*** This solver runs with a demo license. No commercial use.
+Cplex 12.10.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.00sec (det. 0.01 ticks)
+Optimal solution found.
+Objective :        1100.000000
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU cost                .              .              .             1.0000      
+
+  cost  objective function
+
+---- EQU supply  cannot exceed supply at factory
+
+            LOWER          LEVEL          UPPER         MARGINAL
+
+fac1        -INF           80.0000        80.0000          .          
+fac2        -INF           70.0000        70.0000        -1.0000      
+
+---- EQU demand  must meet demand at factory
+
+           LOWER          LEVEL          UPPER         MARGINAL
+
+wh1        60.0000        60.0000        +INF            7.0000      
+wh2        90.0000        90.0000        +INF           10.0000      
+
+---- EQU transhipment  flow balance at dc
+
+          LOWER          LEVEL          UPPER         MARGINAL
+
+dc          .              .              .            -5.0000      
+
+---- EQU capacity  capacity on edges to/from dc
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+fac1.dc         -INF           50.0000        50.0000        -2.0000      
+fac2.dc         -INF           30.0000        50.0000          .          
+dc  .wh1        -INF           30.0000        50.0000          .          
+dc  .wh2        -INF           50.0000        50.0000        -1.0000      
+
+---- VAR x  
+
+                LOWER          LEVEL          UPPER         MARGINAL
+
+fac1.dc           .            50.0000        +INF             .          
+fac1.wh1          .            30.0000        +INF             .          
+fac2.dc           .            30.0000        +INF             .          
+fac2.wh2          .            40.0000        +INF             .          
+dc  .wh1          .            30.0000        +INF             .          
+dc  .wh2          .            50.0000        +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR z                 -INF         1100.0000        +INF             .          
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.001 SECONDS      2 MB  31.1.0 r55b6ce3 LEX-LEG
+
+
+USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
+      University of Minnesota Twin Cities, United States of AmeDL009821
+
+
+**** FILE SUMMARY
+
+Input      /home/darin/MEGA/IPPM/gams/supply-chain.gms
+Output     /home/darin/MEGA/IPPM/gams/supply-chain.lst
