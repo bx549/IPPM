@@ -1523,16 +1523,7 @@ and HDTV. The problem is to
 % remain, but can we find a situation/problem to which this model
 % would apply? we can change the coefficients if needed.
 % no GAMS code is needed for this problem.
-\item \emph{Modeling with binary variables.} Consider the scenario: A business sells video games and movies. For each video game sold, the business earns a profit of \$1. For each movie sold, the business earns a profit of \$2. To make inventory management easier, the business has imposed the following restrictions on what customers can purchase.
-
-\begin{compactenum}[i)]
-	\item There is a limit of eight items per customer.
-	\item A customer can only buy one, four, or six video games. However, any quantity of movies can be purchased. 
-	\item A customer cannot purchase five or more video games than movies, and they cannot purchase three or more movies than video games.
-\end{compactenum}
-
-The manager would like to determine the combination of purchases by a customer that would maximize profit. The problem can be formulated as follows:
-
+\item \emph{Modeling with binary variables.} Consider the problem:
 \[
 \begin{array}{lrrrrrrl}
 \textrm{maximize} &   & z & = & x_1 & + & 2x_2 & \\
@@ -1545,38 +1536,38 @@ The manager would like to determine the combination of purchases by a customer t
 \]
 
 \begin{enumerate}
-	\item Reformulate the problem as an equivalent integer linear
-	program.\label{ex:ip}
-	\item How would your answer to part \ref{ex:ip} change if the
-	objective function were changed to:
-	\[ \text{maximize~} z = x_1^2 + 2x_2\text{?} \] \label{ex:quad}
+\item Reformulate the problem as an equivalent integer linear
+  program.\label{ex:ip}
+\item How would your answer to part \ref{ex:ip} change if the
+  objective function were changed to:
+\[ \text{maximize~} z = x_1^2 + 2x_2\text{?} \] \label{ex:quad}
 \end{enumerate}
 
 \begin{solution} 
-	\bs Introduce the following binary variables. Let
-	\[ y_i = \begin{cases}
-	1 \quad \text{if}~ x_1 = i \quad i \in \{0,1,4,6\}\\
-	0 \quad \text{otherwise}
-	\end{cases}
-	\]
-	
-	Now the binary integer programming formulation is
-	\[
-	\begin{array}{lrrrrrrrrl}
-	\textrm{maximize}   &&& y_1 & + & 4y_4 & + & 6y_6 & + & 2x_2 \\
-	\textrm{subject to} & y_0 & + & y_1 & + & y_4 & + & y_6 & = & 1 \\
-	& y_1 & + & 4y_4 & + & 6y_6 & + & x_2 & \leq & 8\\
-	& -y_1 & - & 4y_4 & - & 6y_6 & + & x_2 & \leq & 2\\
-	& y_1 & + & 4y_4 & + & 6y_6 & - & x_2 & \leq & 4\\
-	\multicolumn{8}{r}{x_2}& \geq & 0 ~\text{and integer}\\
-	\multicolumn{8}{r}{y_0,y_1,y_4,y_6}& \in & \{0,1\}
-	\end{array}
-	\]
-	For part \ref{ex:quad}, change the coefficients on the $y_i$
-	variables in the objective function only to be the squares,
-	i.e. $16y_4$ and $36y_6$. Note that by using this technique the
-	objective function is transformed from a quadratic to a linear function
-	of the variables.
+\bs Introduce the following binary variables. Let
+\[ y_i = \begin{cases}
+    1 \quad \text{if}~ x_1 = i \quad i \in \{0,1,4,6\}\\
+    0 \quad \text{otherwise}
+    \end{cases}
+  \]
+
+Now the binary integer programming formulation is
+\[
+  \begin{array}{lrrrrrrrrl}
+    \textrm{maximize}   &&& y_1 & + & 4y_4 & + & 6y_6 & + & 2x_2 \\
+    \textrm{subject to} & y_0 & + & y_1 & + & y_4 & + & y_6 & = & 1 \\
+                        & y_1 & + & 4y_4 & + & 6y_6 & + & x_2 & \leq & 8\\
+                        & -y_1 & - & 4y_4 & - & 6y_6 & + & x_2 & \leq & 2\\
+                        & y_1 & + & 4y_4 & + & 6y_6 & - & x_2 & \leq & 4\\
+    \multicolumn{8}{r}{x_2}& \geq & 0 ~\text{and integer}\\
+    \multicolumn{8}{r}{y_0,y_1,y_4,y_6}& \in & \{0,1\}
+  \end{array}
+\]
+For part \ref{ex:quad}, change the coefficients on the $y_i$
+variables in the objective function only to be the squares,
+i.e. $16y_4$ and $36y_6$. Note that by using this technique the
+objective function is transformed from a quadratic to a linear function
+of the variables.
 \end{solution}
 
 \subsubsection*{Deterministic Dynamic Programming}

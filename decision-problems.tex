@@ -531,111 +531,123 @@ and the optimal strategy is the same for both players. Each
 should play a mixture of $(2/5,~3/5)$.
 \end{solution}
 
-
-% this problem needs to be re-written with a new context.  can we
-% think of something more realistic that would have only a few
-% discrete values for possible sales?
-\item \emph{An inventory problem in a decision problem framework.} 
-Daily demand for loaves of bread at a
-  grocery store are specified by the following probability
-  distribution.
+% written by Emily
+\item \emph{Workforce staffing.}  A salon is trying to decide how many
+  stylists they should have available for walk-in customers. The
+  hourly walk-in demand is specified by the following probability
+  distribution, where $p_n$ is the probability of having $n$ customers
+  in one hour.
 
 \vspace{.2in}
 \begin{tabular}{r|rrrrr}
-$n$ & 100 & 150 & 200 & 250 & 300 \\ \hline
-$p_n$ & .20 & .25 & .30 & .15 & .10 \\
+$n$ & 1 & 2 & 3 & 4 & 5 \\ \hline
+$p_n$ & .10 & .20 & .35 & .25 & .10 \\
 \end{tabular}
 
-\vspace{.2in}
-The store buys a loaf for 55 cents and sells it for \$1.20. Any
-unsold loves at the end of the day are marked down and sold for 25
-cents each. Assume that the stock level is restricted to one of the
-demand levels specified for $p_n$. How many loaves should be
-stocked daily in order to maximize expected profit?
+\vspace{.2in} Each stylist costs the salon \$20\ per hour.  If a
+stylist has a customer that hour, the salon will charge the customer
+\$45\ for service.  Each customer requires about an hour of time from
+a stylist.  If a stylist does not have a customer that hour, he/she
+will complete a different task in the salon which adds \$9\ of
+value. If all stylists are busy with a customer and an additional
+customer arrives, that customer will be turned away and will go to a
+different salon. How many stylists should be available each hour in
+order to maximize profit for the salon?
 
 \begin{solution}
-\bs
-Let $Q$ represent the stock quantity and let $z$ represent the
-demand. There are two situations. First, if $Q \geq z$
+  \bs Let $Q$ represent the available number of stylists (quantity)
+  and let $z$ represent the demand. There are two situations.  First,
+  if $Q \geq z$
 \begin{align*}
-E(\text{profit}) &= 1.20z - .55Q + .25(Q-z) \\
-&= .95z - .3Q
+E(\text{profit}) &= 45z - 20Q + 9(Q-z) \\
+&= 36z - 11Q
 \end{align*}
 Otherwise if $Q < z$, then
 \begin{align*}
-E(\text{profit}) &= 1.20Q - .55Q\\
-&= .65Q
+E(\text{profit}) &= 45Q - 20Q\\
+&= 25Q
 \end{align*}
-Using these formulas we can compute the payoffs for each
-possible outcome. Using the demand distribution and the
-payoffs we can compute the expected payoff for each stock
-quantity.
+We use the distribution of demand to compute the expected profit
+for each possible level of staffing.
 
 \begin{center}
 \begin{tabular}{rr|rrrrrr}
 & & \multicolumn{5}{c}{$z$} & \\
-& & .2 & .25 & .3 & .15 & .1 & \\
-& & 100 & 150 & 200 & 250 & 300 &  $E(\text{payoff})$ \\ \hline
-\multirow{5}{*}{$Q$} & 100 & 65 & 65 & 65 & 65 & 65 & 65 \\
-& 150 & 50 & 97.5 & 97.5 & 97.5 & 97.5 & 88 \\
-& 200 & 35 & 82.5 & 130 & 130 & 130 & {\raise.17ex\hbox{$\scriptstyle\sim$}}99 \\
-& 250 & 20 & 67.5 & 115 & 162.5 & 162.5 & 96 \\
-& 300 & 5 & 52.5 & 100 & 147.5 & 195 & {\raise.17ex\hbox{$\scriptstyle\sim$}}86
+& & .1 & .2 & .35 & .25 & .1 & \\
+& & 1 & 2 & 3 & 4 & 5 &  $E(\text{payoff})$ \\ \hline
+\multirow{5}{*}{$Q$} & 1 & 25 & 25 & 25 & 25 & 25 & 25 \\
+& 2 & 14 & 50 & 50 & 50 & 50 & 46.4 \\
+& 3 & 3 & 39 & 75 & 75 & 75 & 60.6 \\
+& 4 & -8 & 28 & 64 & 100 & 100 & 62.2 \\
+& 5 & -19 & 17 & 53 & 89 & 125 & 54.8
 \end{tabular}
 \end{center}
 
-The best decision is to stock 200 loaves of bread.
+The best decision is to have 4 stylists available.
 \end{solution}
 
-% this problem needs a new context. we cannot use this example of a
-% decision on where to go for the evening. the main idea is to
-% reinforce the expected utility theorem ... that the utility of a
-% "lottery" is its expected utility.
-\item \emph{Friends and enemies.}  Utilities are the basis for making
-  rational decisions.  Alice is making a decision on what to do for
-  the evening. The three options and their inherent utilities are:
+% Written by Emily
+% Expected Utility Theorem
+\item \emph{Expected utility of a day off.}  Utilities are the basis
+  for making rational decisions.  Sydney has the day off from work and
+  she is trying to decide what to do. Her top three options and their
+  utilities are:
 
-\setlength{\tabcolsep}{8pt}
-\renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lr}
   option & utility \\ \hline
-  go to the club & 100\\
-  go to the movie & 50\\
-  watch a video at home & 50
+  go to the beach & 100\\
+  go hiking & 75\\
+  stay home and watch movies & 50
 \end{tabular}
 
-With no other information, Alice would choose to go to the
-club. However, there is some uncertainty (or risk) in Alice's
-decision. The presence of Bob and/or Carol modify Alice's utilities.
-Alice thinks Bob is a nuisance.
-If she runs into Bob at the movie, her utility is decreased by 40.
-If she runs into Bob at the club, her utility is decreased by 90.
-On the other hand, Alice likes Carol. The presence of Carol at
-either the movie or the club will increase Alice's utility by
-a factor of 1.5 (after any disutility has been appplied).
+With only this information, Sydney would choose to go to the beach for
+the day. However, there is some uncertainty (or risk) in Sydney's
+decision. The weather and the people she runs into at the beach or
+while hiking impact her utility.  Sydney does not enjoy being outside
+when it is raining.  If it rains while she is at the beach, her
+utility is decreased by 80.  If it rains while she is hiking, her
+utility is decreased by 30.  On the other hand, Sydney enjoys running
+into friends. If she runs into a friend at either the beach or on the
+hiking trail, it will increase Sydney's utility by a factor of 1.5
+(after any disutility has been appplied).
 
-A few more pieces of information are that Bob spends 40\% of
-his time at the movie and 60\% of his time at the club. Carol
-spends 75\% of her time at the movie and 25\% of her time
-at the club.
-
-Compute Alice's expected utilities for each option. What is the
-``rational'' decision for Alice?
+At the beach, it is rainy 40\% of the time and Sydney has a 30\%
+chance of running into a friend.  On the hiking trail, it is rainy
+20\% of the time and she has a 50\% chance of running into a friend.
+Compute Sydney's expected utilities for each option. What is the
+``rational'' decision for Sydney?
 
 With this exercise, there are three points to be made:
 \begin{enumerate}
-\item Rational choice means that agents (like Alice) make decisions that maximize
-  their utility (or payoff, or happiness). It doesn't mean that agents only
-  care about themselves. Agents have preferences over states of the
-  world. An agent might have a preference for making another agent
-  happy, and that would be reflected in her utility for that state
-  of the world.
+\item Rational choice means that agents (like Sydney) make decisions 
+    that maximize their utility (or payoff, or happiness). It doesn't 
+    mean that agents only care about themselves. Agents have 
+    preferences over states of the world. An agent might have a preference 
+    for making another agent happy, and that would be reflected in her 
+    utility for that state of the world.
 \item Each agent has a utility function that maps states of the world
-  to real numbers that represent the agent's level of happiness.
+    to real numbers that represent the agent's level of happiness.
 \item When there is uncertainty over which state will occur, then
-  an agent's utility is her expected utility.
+    an agent's utility is her expected utility.
 \end{enumerate}
 
+\begin{solution}
+\bs We must calculate the expected utility for each possible decision.
+The expected utility of going to the beach is:
+\begin{align*}
+E(\text{utility}) &= 100 - 80 \times 0.40 + 
+(100 - 80 \times 0.40) \times 0.50 \times 0.30 \\
+&= 78.20
+\end{align*}
+The expected utility of going hiking is:
+\begin{align*}
+E(\text{utility}) &= 75 - 30 \times 0.20 + (75 - 30 \times 0.20) \times 0.50 \times 0.50 \\
+&= 86.25
+\end{align*}
+The expected utility of staying home watching movies is 50 because it
+is influenced by neither the weather nor running into friends. The
+``rational'' decision for Sydney is to go hiking.
+\end{solution}
 
 % this problem needs a new context. the problem itself should not
 % change ...  that is, can you represent a preference ordering that is
