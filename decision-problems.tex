@@ -532,36 +532,32 @@ should play a mixture of $(2/5,~3/5)$.
 \end{solution}
 
 % written by Emily
-\item \emph{An inventory problem in a decision problem framework.}
-    A salon is trying to decide how many 
-    stylists they should have available for walk-in 
-    customers each hour. The hourly walk-in demand is 
-    specified by the following probability distribution.
-    
-    \vspace{.2in}
-    \begin{tabular}{r|rrrrr}
-    $n$ & 1 & 2 & 3 & 4 & 5 \\ \hline
-    $p_n$ & .10 & .20 & .35 & .25 & .10 \\
-    \end{tabular}
+\item \emph{Workforce staffing.}  A salon is trying to decide how many
+  stylists they should have available for walk-in customers. The
+  hourly walk-in demand is specified by the following probability
+  distribution, where $p_n$ is the probability of having $n$ customers
+  in one hour.
 
-    \vspace{.2in}
-    It costs the salon \$20\ per hour to have each stylist
-    available. If the stylist has a customer that hour, 
-    the salon will charge the customer \$45\ for service.
-    Each customer requires about an hour of time from the stylist.
-    If the stylist does not have a customer that hour, 
-    they will complete a different task in the salon which 
-    adds \$9\ of value. If all stylists are busy with a customer
-    and an additional customer arrives, that customer will be turned 
-    away and will go to a different salon. How many stylists 
-    should be available each hour in order to maximize profit 
-    for the salon?
+\vspace{.2in}
+\begin{tabular}{r|rrrrr}
+$n$ & 1 & 2 & 3 & 4 & 5 \\ \hline
+$p_n$ & .10 & .20 & .35 & .25 & .10 \\
+\end{tabular}
 
-    \begin{solution}
-    \bs
-    Let $Q$ represent the available number of stylists (quantity) 
-    and let $z$ represent the demand. There are two situations. 
-    First, if $Q \geq z$
+\vspace{.2in} Each stylist costs the salon \$20\ per hour.  If a
+stylist has a customer that hour, the salon will charge the customer
+\$45\ for service.  Each customer requires about an hour of time from
+a stylist.  If a stylist does not have a customer that hour, he/she
+will complete a different task in the salon which adds \$9\ of
+value. If all stylists are busy with a customer and an additional
+customer arrives, that customer will be turned away and will go to a
+different salon. How many stylists should be available each hour in
+order to maximize profit for the salon?
+
+\begin{solution}
+  \bs Let $Q$ represent the available number of stylists (quantity)
+  and let $z$ represent the demand. There are two situations.  First,
+  if $Q \geq z$
 \begin{align*}
 E(\text{profit}) &= 45z - 20Q + 9(Q-z) \\
 &= 36z - 11Q
@@ -571,10 +567,8 @@ Otherwise if $Q < z$, then
 E(\text{profit}) &= 45Q - 20Q\\
 &= 25Q
 \end{align*}
-Using these formulas we can compute the payoffs for each
-possible outcome. Using the demand distribution and the
-payoffs we can compute the expected payoff for each quantity
-of available stylists.
+We use the distribution of demand to compute the expected profit
+for each possible level of staffing.
 
 \begin{center}
 \begin{tabular}{rr|rrrrrr}
