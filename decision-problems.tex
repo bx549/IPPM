@@ -532,36 +532,32 @@ should play a mixture of $(2/5,~3/5)$.
 \end{solution}
 
 % written by Emily
-\item \emph{An inventory problem in a decision problem framework.}
-    A salon is trying to decide how many 
-    stylists they should have available for walk-in 
-    customers each hour. The hourly walk-in demand is 
-    specified by the following probability distribution.
-    
-    \vspace{.2in}
-    \begin{tabular}{r|rrrrr}
-    $n$ & 1 & 2 & 3 & 4 & 5 \\ \hline
-    $p_n$ & .10 & .20 & .35 & .25 & .10 \\
-    \end{tabular}
+\item \emph{Workforce staffing.}  A salon is trying to decide how many
+  stylists they should have available for walk-in customers. The
+  hourly walk-in demand is specified by the following probability
+  distribution, where $p_n$ is the probability of having $n$ customers
+  in one hour.
 
-    \vspace{.2in}
-    It costs the salon \$20\ per hour to have each stylist
-    available. If the stylist has a customer that hour, 
-    the salon will charge the customer \$45\ for service.
-    Each customer requires about an hour of time from the stylist.
-    If the stylist does not have a customer that hour, 
-    they will complete a different task in the salon which 
-    adds \$9\ of value. If all stylists are busy with a customer
-    and an additional customer arrives, that customer will be turned 
-    away and will go to a different salon. How many stylists 
-    should be available each hour in order to maximize profit 
-    for the salon?
+\vspace{.2in}
+\begin{tabular}{r|rrrrr}
+$n$ & 1 & 2 & 3 & 4 & 5 \\ \hline
+$p_n$ & .10 & .20 & .35 & .25 & .10 \\
+\end{tabular}
 
-    \begin{solution}
-    \bs
-    Let $Q$ represent the available number of stylists (quantity) 
-    and let $z$ represent the demand. There are two situations. 
-    First, if $Q \geq z$
+\vspace{.2in} Each stylist costs the salon \$20\ per hour.  If a
+stylist has a customer that hour, the salon will charge the customer
+\$45\ for service.  Each customer requires about an hour of time from
+a stylist.  If a stylist does not have a customer that hour, he/she
+will complete a different task in the salon which adds \$9\ of
+value. If all stylists are busy with a customer and an additional
+customer arrives, that customer will be turned away and will go to a
+different salon. How many stylists should be available each hour in
+order to maximize profit for the salon?
+
+\begin{solution}
+  \bs Let $Q$ represent the available number of stylists (quantity)
+  and let $z$ represent the demand. There are two situations.  First,
+  if $Q \geq z$
 \begin{align*}
 E(\text{profit}) &= 45z - 20Q + 9(Q-z) \\
 &= 36z - 11Q
@@ -571,11 +567,9 @@ Otherwise if $Q < z$, then
 E(\text{profit}) &= 45Q - 20Q\\
 &= 25Q
 \end{align*}
-Using these formulas we can compute the payoffs for each
-possible outcome. Using the demand distribution and the
-payoffs we can compute the expected payoff for each quantity
-of available stylists.
 
+We use the distribution of demand to compute the expected profit
+for each possible level of staffing.
 \begin{center}
 \begin{tabular}{rr|rrrrrr}
 & & \multicolumn{5}{c}{$z$} & \\
@@ -594,14 +588,11 @@ The best decision is to have 4 stylists available.
 
 % Written by Emily
 % Expected Utility Theorem
-\item \emph{Expected utility of a day off.}
-    Utilities are the basis for making rational decisions. 
-    Sydney has a day off of work next week and is trying to 
-    decide how she will spend it. Her top three options and their 
-    inherent utilities are:
+\item \emph{Expected utility of a day off.}  Utilities are the basis
+  for making rational decisions.  Sydney has the day off from work and
+  she is trying to decide what to do. Her top three options and their
+  utilities are:
 
-\setlength{\tabcolsep}{8pt}
-\renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lr}
   option & utility \\ \hline
   go to the beach & 100\\
@@ -609,22 +600,20 @@ The best decision is to have 4 stylists available.
   stay home and watch movies & 50
 \end{tabular}
 
-With only this information, Sydney would choose to go to the
-beach for the day. However, there is some uncertainty (or risk) in Sydney's
-decision. The weather and the people she runs into at the beach or while 
-hiking impact her utility.
-Sydney does not enjoy being outside when it is raining.
-If it rains while she is at the beach, her utility is decreased by 80.
-If it rains while she is hiking, her utility is decreased by 30.
-On the other hand, Sydney enjoys running into friends. If she runs into a 
-friend at either the beach or on the hiking trail, it will increase Sydney's 
-utility by a factor of 1.5 (after any disutility has been appplied).
+With only this information, Sydney would choose to go to the beach for
+the day. However, there is some uncertainty (or risk) in Sydney's
+decision. The weather and the people she runs into at the beach or
+while hiking impact her utility.  Sydney does not enjoy being outside
+when it is raining.  If it rains while she is at the beach, her
+utility is decreased by 80.  If it rains while she is hiking, her
+utility is decreased by 30.  On the other hand, Sydney enjoys running
+into friends. If she runs into a friend at either the beach or on the
+hiking trail, it will increase Sydney's utility by a factor of 1.5
+(after any disutility has been appplied).
 
-It will also help in the decision making to know that at the beach it is 
-rainy 40\% of the time and she has a 30\% chance of running into a friend. 
-On the hiking trail it is rainy 20\% of the time and she has a 50\% chance 
-of running into a friend.
-
+At the beach, it is rainy 40\% of the time and Sydney has a 30\%
+chance of running into a friend.  On the hiking trail, it is rainy
+20\% of the time and she has a 50\% chance of running into a friend.
 Compute Sydney's expected utilities for each option. What is the
 ``rational'' decision for Sydney?
 
@@ -655,11 +644,10 @@ The expected utility of going hiking is:
 E(\text{utility}) &= 75 - 30 \times 0.20 + (75 - 30 \times 0.20) \times 0.50 \times 0.50 \\
 &= 86.25
 \end{align*}
-The expected utility of staying home watching movies is 50 because it 
-is not influenced by the weather, and Sydney will not run into a 
-friend if she stays at home.
-
-The most rational decision for Sydney is to go hiking.
+The expected utility of staying home watching movies is 50 because it
+is influenced by neither the weather nor running into friends. The
+``rational'' decision for Sydney is to go hiking.
+\end{solution}
 
 % written by Emily
 \item \emph{Preference orderings and utility functions.}
