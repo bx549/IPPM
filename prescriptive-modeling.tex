@@ -1374,38 +1374,58 @@ problem formulation is
 
 % this problem needs to be re-written with a different context and
 % different data.
-\item \emph{A set partitioning problem.}  In a real estate development
-  project, a residential area is divided into five tracts.  Two fire
-  stations are to be constructed. There can be no more than one
-  station in any tract. Furthermore, a station will respond to all
-  fires in the tract in which it is located and to fires in the other
-  tracts assigned to it.  The decisions to be made are
-\begin{compactenum}
-\item In which tracts are fire stations located
-\item Assignment of the other tracts
-\end{compactenum}
-The objective is to minimize the overall average response time to fires.
-Response times in the table below are in minutes.
+\item \emph{A set partitioning problem.} A DSL (Digital subscriber Line) internet service provider is determining where to construct three central offices in a city. A customer’s DSL connection works better when they are near a central office, so customers that live close to a new central office will experience faster internet speeds. The city is divided into six geographical regions, and an industrial engineer must decide which regions should have central offices. The engineer must also determine which regions each central office will serve. The following table indicates the average internet speed in a region, depending on the region of the central office providing service.
 
-\setlength{\tabcolsep}{7pt}
-\renewcommand{\arraystretch}{1.2}
-\newcolumntype{Y}{>{\centering\arraybackslash}X}
-\begin{tabularx}{3.5in}{Y|rrrrrr}
-  station located in tract  & \multicolumn{6}{l}{response time to fire in tract} \\
-   & 1 & 2 & 3 & 4 & 5 &\\ \hline
-  1 & 5 & 12 & 30 & 20 & 15 &\\
-  2 & 20 & 4 & 15 & 10 & 25 &\\
-  3 & 15 & 20 & 6 & 15 & 12 &\\
-  4 & 25 & 15 & 25 & 4 & 10 &\\
-  5 & 10 & 25 & 15 & 12 & 5 &\\ \hline
-  average number of fires per day & 2 & 1 & 3 & 1 & 3 &
-\end{tabularx}
-\vspace{.2in}
+\begin{center}
+	\begin{tabular}{c|ccccccc}
+		& \multicolumn{7}{c}{average internet speed in region} \\
+		central office & 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+		1 & 45 & 35 & 30 & 25 & 10 & 12\\
+		2 & 35 & 45 & 20 & 20 & 25 & 18\\
+		3 & 30 & 20 & 45 & 30 & 15 & 25\\
+		4 & 25 & 20 & 30 & 45 & 12 & 27\\
+		5 & 10 & 25 & 15 & 12 & 45 & 30\\ 
+		6 & 12 & 18 & 25 & 27 & 30 & 45\\ 
+	\end{tabular}
+\end{center}
 
-Formulate a linear integer programming model that will locate the fire stations
-and assign them to the other tracts without fire stations while minimizing
-the overall average response time.
-% need to put solution in LaTeX
+Formulate an integer programming model to determine the locations and assignments for the central offices so the average internet speed in the entire city is maximized.
+
+\begin{solution}
+	\bs
+	Let $a_{ij}$ be the data describing the average internet speed in region $j$ when served by a central office in region $i$. Also, let the decision variables be
+	
+	\begin{equation*}
+		\text{$x_{ij}$} = 
+		\begin{cases}
+			1 & \text{if central office in region $i$ provides service to region $j$}\\
+			0 & \text{otherwise.}
+		\end{cases}
+	\end{equation*}
+	and
+	\begin{equation*}
+		\text{$y_i$} = 
+		\begin{cases}
+			1 & \text{if central office is constructed in region $i$}\\
+			0 & \text{otherwise.}
+		\end{cases}
+	\end{equation*}
+	
+	The full
+	problem formulation is
+	\[
+	\begin{array}{lrrrrrrrl}
+	\textrm{maximize} & \sum_{i=1}^{6}\sum_{j=1}^{6} \frac{1}{6}x_{ij}a_{ij} & & & & & \\
+	\textrm{subject to} & & & & & & & & & & & & & \sum_{i=1}^{6} \text{$y_i$} = 3  \\
+	& & & & & & & & & & & &\sum_{i=1}^{6} \text{$x_{ij}$} = 1 & \forall \text{$j$}\\ 
+	& &  & \text{$x_{ij}$} \leq \text{$y_i$} & \forall \text{$i$}, \forall \text{$j$} \\
+	\multicolumn{5}{r}{x_{ij} \in \{0,1\}}\\
+	\multicolumn{5}{r}{y_i \in \{0,1\}}\\
+	\multicolumn{5}{r}{i = 1,\ldots,6}\\
+	\multicolumn{5}{r}{j = 1,\ldots,6}
+	\end{array}
+	\]
+\end{solution}
 
 % hannah
 % integer programming with a fixed charge
