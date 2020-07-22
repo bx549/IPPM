@@ -1374,57 +1374,74 @@ problem formulation is
 
 % this problem needs to be re-written with a different context and
 % different data.
-\item \emph{A set partitioning problem.} A DSL (Digital subscriber Line) internet service provider is determining where to construct three central offices in a city. A customer’s DSL connection works better when they are near a central office, so customers that live close to a new central office will experience faster internet speeds. The city is divided into six geographical regions, and an industrial engineer must decide which regions should have central offices. The engineer must also determine which regions each central office will serve. The following table indicates the average internet speed in a region, depending on the region of the central office providing service.
+\item \emph{A set partitioning problem.} A DSL (Digital Subscriber
+  Line) Internet service provider is determining where to construct
+  three central offices in a city. A customer’s DSL connection works
+  better when they are near a central office, so customers that live
+  close to a new central office will experience faster Internet
+  speeds. The city is divided into six geographical regions, and an
+  industrial engineer must decide which regions should have central
+  offices. The engineer must also determine which regions each central
+  office will serve. The following table indicates the average
+  internet speed in a region, depending on the region of the central
+  office that provides service.
 
 \begin{center}
-	\begin{tabular}{c|ccccccc}
-		& \multicolumn{7}{c}{average internet speed in region} \\
-		central office & 1 & 2 & 3 & 4 & 5 & 6\\ \hline
-		1 & 45 & 35 & 30 & 25 & 10 & 12\\
-		2 & 35 & 45 & 20 & 20 & 25 & 18\\
-		3 & 30 & 20 & 45 & 30 & 15 & 25\\
-		4 & 25 & 20 & 30 & 45 & 12 & 27\\
-		5 & 10 & 25 & 15 & 12 & 45 & 30\\ 
-		6 & 12 & 18 & 25 & 27 & 30 & 45\\ 
-	\end{tabular}
+\begin{tabularx}{3.75in}{>{\setlength\hsize{.9in}\centering}Y|ZZZZZZ}
+\multirow{2}{.9in}{location of central office} & \multicolumn{6}{c}{avg internet speed in region} \\
+& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+1 & 45 & 35 & 30 & 25 & 10 & 12\\
+2 & 35 & 45 & 20 & 20 & 25 & 18\\
+3 & 30 & 20 & 45 & 30 & 15 & 25\\
+4 & 25 & 20 & 30 & 45 & 12 & 27\\
+5 & 10 & 25 & 15 & 12 & 45 & 30\\ 
+6 & 12 & 18 & 25 & 27 & 30 & 45\\ 
+\end{tabularx}
 \end{center}
 
-Formulate an integer programming model to determine the locations and assignments for the central offices so the average internet speed in the entire city is maximized.
+Formulate an integer programming model to determine the regions in
+which central offices are located and the regions to which each
+central is assigned so that the average internet speed in the city is
+maximized.
 
 \begin{solution}
-	\bs
-	Let $a_{ij}$ be the data describing the average internet speed in region $j$ when served by a central office in region $i$. Also, let the decision variables be
-	
-	\begin{equation*}
-		\text{$x_{ij}$} = 
-		\begin{cases}
-			1 & \text{if central office in region $i$ provides service to region $j$}\\
-			0 & \text{otherwise.}
-		\end{cases}
-	\end{equation*}
-	and
-	\begin{equation*}
-		\text{$y_i$} = 
-		\begin{cases}
-			1 & \text{if central office is constructed in region $i$}\\
-			0 & \text{otherwise.}
-		\end{cases}
-	\end{equation*}
-	
-	The full
-	problem formulation is
-	\[
-	\begin{array}{lrrrrrrrl}
-	\textrm{maximize} & \sum_{i=1}^{6}\sum_{j=1}^{6} \frac{1}{6}x_{ij}a_{ij} & & & & & \\
-	\textrm{subject to} & & & & & & & & & & & & & \sum_{i=1}^{6} \text{$y_i$} = 3  \\
-	& & & & & & & & & & & &\sum_{i=1}^{6} \text{$x_{ij}$} = 1 & \forall \text{$j$}\\ 
-	& &  & \text{$x_{ij}$} \leq \text{$y_i$} & \forall \text{$i$}, \forall \text{$j$} \\
-	\multicolumn{5}{r}{x_{ij} \in \{0,1\}}\\
-	\multicolumn{5}{r}{y_i \in \{0,1\}}\\
-	\multicolumn{5}{r}{i = 1,\ldots,6}\\
-	\multicolumn{5}{r}{j = 1,\ldots,6}
-	\end{array}
-	\]
+  \bs Let $a_{ij}$ be the data describing the average internet speed
+  in region $j$ when served by a central office in region $i$. Also,
+  let the decision variables be
+
+\begin{equation*}
+\text{$x_{ij}$} = 
+\begin{cases}
+    1 & \text{if central office in region $i$ provides service to region $j$}\\
+    0 & \text{otherwise.}
+\end{cases}
+\end{equation*}
+and
+\begin{equation*}
+\text{$y_i$} = 
+\begin{cases}
+    1 & \text{if central office is constructed in region $i$}\\
+    0 & \text{otherwise.}
+\end{cases}
+\end{equation*}
+
+The problem is to
+\[
+\begin{array}{lll}
+\textrm{maximize} & \multicolumn{2}{c}{\displaystyle\sum_{i=1}^6 \sum_{j=1}^6 a_{ij}x_{ij}} \\
+\textrm{subject to} & \displaystyle\sum_{i=1}^6 y_i &= 3  \\
+& \displaystyle\sum_{i=1}^{6} x_{ij} &= 1~\text{for all $j$}\\ 
+& x_{ij} &\leq y_i~\text{for all $i$ and $j$} \\
+& \multicolumn{2}{r}{ x_{ij} \in \{0,1\}} \\
+& \multicolumn{2}{r}{ y_i \in \{0,1\}} \\
+& \multicolumn{2}{r}{ i = 1,\ldots,6} \\
+& \multicolumn{2}{r}{ j = 1,\ldots,6}
+\end{array}
+\]
+The objective function will maximize the average Internet speed of the
+six regions. We could include the constant 1/6, which would change the
+value of the objective function, but not the values of the decision
+variables.
 \end{solution}
 
 % hannah

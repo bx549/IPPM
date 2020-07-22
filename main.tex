@@ -53,7 +53,8 @@
 % with better spacing for readability and with vertical lines
 % that do not extend over all rows.
 \newcommand{\gtcol}[1]{\multicolumn{1}{c|}{#1}}
-\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}  % centered
+\newcolumntype{Z}{>{\raggedleft\arraybackslash}X} % right-justify
 
 \includecomment{solution}
 %\excludecomment{solution} % comment this out to create the solutions
