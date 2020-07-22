@@ -1318,9 +1318,9 @@ Otherwise if $Q < z$, then
 E(\text{profit}) &= 45Q - 20Q\\
 &= 25Q
 \end{align*}
+
 We use the distribution of demand to compute the expected profit
 for each possible level of staffing.
-
 \begin{center}
 \begin{tabular}{rr|rrrrrr}
 & & \multicolumn{5}{c}{$z$} & \\
@@ -1400,22 +1400,20 @@ is influenced by neither the weather nor running into friends. The
 ``rational'' decision for Sydney is to go hiking.
 \end{solution}
 
-% this problem needs a new context. the problem itself should not
-% change ...  that is, can you represent a preference ordering that is
-% naturally specified with two values by a single real value? can we
-% think of a modern situation like this? 
-\item \emph{Preference orderings and utility functions.}  Suppose that
-  you live in a society with the following rules. When you reach age
-  20 you will be presented with some alternative choices. The choices
-  are of the form $(x;y)$ where $x$ represents the amount of time you
-  have left to live, say anywhere from zero to 50 years, and $y$
-  represents the amount of time you have left to work, again anywhere
-  from zero to 50 years. Both $x$ and $y$ are continuous amounts of
-  time, and certainly $x \ge y$. In general you prefer to live longer
-  and work less, but you always prefer to live longer no matter how
-  long you will work. For example,
+% written by Emily
+\item \emph{Preference orderings and utility functions.}
+    Suppose you have a goal to be a great long-distance runner.
+    There are two choices involved with this goal in the form
+    of $(x;y)$ where $x$ represents the number of miles you 
+    are able to run in a day after you have trained for a month, 
+    anywhere from zero to 30 miles, and $y$ represents the total 
+    number of miles ran to train over the course of the month, 
+    anywhere from zero to 500. Both $x$ and $y$ are continuous 
+    distances, and $x \ge y$. In general you prefer to be able 
+    to run farther with less training, but you always prefer to be able to
+    run father no matter how much you have to train. For example,
   \[
-  (x=45~\text{years}; y=35~\text{years}) \succ (x=44~\text{years and}~300~\text{days};y=10~\text{years})
+  (x=25~\text{miles}; y=500~\text{miles}) \succ (x=24~\text{miles}; y=200~\text{miles})
   \]
   The symbol `$\succ$' means ``is preferred to''.  Don't confuse that
   symbol with the mathematical inequality symbol `$>$' (although I
@@ -1434,7 +1432,7 @@ is influenced by neither the weather nor running into friends. The
 
 \begin{solution}
   \bs I think it is not possible to represent $u$ as a linear
-  function of $x$ and $y$. Define $w=50-y$, so that we can represent
+  function of $x$ and $y$. Define $w=500-y$, so that we can represent
   an alternative as $(x,w)$ with the interpretation that more is always
   better, but $x$ still has priority. Now, a linear function will have
   the form
