@@ -232,9 +232,10 @@ associate a value (i.e. a number) to something that is inherently
 non-numeric.  The expected utility theorem is a representation
 theorem.
 
+\label{rules-of-consistency}
 Now for the rules of consistency. Let $L(p,x,y)$ represent a gamble
 (also called a lottery) in which you receive outcome $x$ with
-probabililty $p$ or you receive outcome $y$ with probability
+probability $p$ or you receive outcome $y$ with probability
 $(1-p)$. Also, let $x \succ y$ indicate that outcome $x$ is preferred
 to outcome $y$, and let $x \sim y$ indicate indifference between the
 outcomes $x$ and $y$. A decision-maker's preferences must satisfy the
@@ -1401,17 +1402,18 @@ is influenced by neither the weather nor running into friends. The
 \end{solution}
 
 % written by Emily
-\item \emph{Preference orderings and utility functions.}
-    Suppose you have a goal to be a great long-distance runner.
-    There are two choices involved with this goal in the form
-    of $(x;y)$ where $x$ represents the number of miles you 
-    are able to run in a day after you have trained for a month, 
-    anywhere from zero to 30 miles, and $y$ represents the total 
-    number of miles ran to train over the course of the month, 
-    anywhere from zero to 500. Both $x$ and $y$ are continuous 
-    distances, and $x \ge y$. In general you prefer to be able 
-    to run farther with less training, but you always prefer to be able to
-    run father no matter how much you have to train. For example,
+\item \emph{Preference orderings and utility functions.}  This
+  exercise is inspired from discussion in~\cite{resnik:1987}.  Suppose
+  you have a goal to be a great long-distance runner.  There are two
+  choices involved with this goal in the form of $(x;y)$ where $x$
+  represents the number of miles you are able to run in a day after
+  you have trained for a month, anywhere from zero to 30 miles, and
+  $y$ represents the total number of miles ran to train over the
+  course of the month, anywhere from zero to 500. Both $x$ and $y$ are
+  continuous distances, and $x \le y$. In general you prefer to be
+  able to run farther with less training, but you always prefer to be
+  able to run father no matter how much you have to train. For
+  example,
   \[
   (x=25~\text{miles}; y=500~\text{miles}) \succ (x=24~\text{miles}; y=200~\text{miles})
   \]
@@ -1419,12 +1421,13 @@ is influenced by neither the weather nor running into friends. The
   symbol with the mathematical inequality symbol `$>$' (although I
   suspect that the resemblence is intended). Note that, as defined, your
   preference ordering satisfies the completeness and transitivity
-  properties (see your textbook). Is it possible to represent your
+  properties (see the discussion on page~\pageref{rules-of-consistency}). 
+  Is it possible to represent your
   preferences with a single (real-valued) number? That is to say, is
   there a function $u(x,y) : (x,y) \mapsto \mathbb{R}$ with the
   following property
   \[
-  (x_1,y_1) \succ (x_2,y_2) \implies u(x_1,y_1) > u(x_2,y_2)
+  (x_1,y_1) \succ (x_2,y_2)~\implies~u(x_1,y_1) > u(x_2,y_2)
   \]
   To make things a little easier, you can restrict $u$ to be a linear
   function of $x$ and $y$. Support your answer with an explanation
@@ -1460,8 +1463,9 @@ is influenced by neither the weather nor running into friends. The
     B\delta_w &> A\delta_x \\
     \frac{\delta_w}{\delta_x} &> \frac{A}{B}
   \end{align*}
-  We can choose $\delta_x$ and $\delta_w$ to satisfy the last
-  inequality, which means that $u(x_1,w_1) < u(x_2,w_2)$.
+  Note that $\delta_w = w_2-w_1 = y_1-y_2 \leq 500$, but because $x$
+  is continuous, we can choose $\delta_x$ and $\delta_w$ to satisfy
+  the last inequality, which means that $u(x_1,w_1) < u(x_2,w_2)$.
 \end{solution}
 
 \end{enumerate}
