@@ -254,13 +254,19 @@ If you can state your preferences according to the above rules,
 then an \emph{interval} utility function $u()$ can be constructed
 in such a way that
 \begin{enumerate}[i)]
-\item $u(x) \succ u(y) \iff x \succ y$ \label{c1}
-\item $u(x) = u(y) \iff x \sim y$ \label{c2}
-\item $u\left(L(p,x,y)\right) = pu(x) + (1-p)u(y)$ (expected utility property) \label{c3}
+\item $u(x) \succ u(y) \iff x \succ y$ \label{eu1}
+\item $u(x) = u(y) \iff x \sim y$ \label{eu2}
+\item $u\left(L(p,x,y)\right) = pu(x) + (1-p)u(y)$ 
+(expected utility property) \label{eu3}
 \item if $u'()$ is a positive linear transformation of $u()$ then
-  $u'()$ also satisfies \ref{c1}, \ref{c2}, and \ref{c3}. \label{c4}
+  $u'()$ also satisfies \ref{eu1}, \ref{eu2}, and \ref{eu3}. \label{eu4}
 \end{enumerate}
-Items \ref{c1} through \ref{c4} constitute the Expected Utility Theorem.
+Items \ref{eu1} through \ref{eu4} constitute the Expected Utility
+Theorem.  When working through exercises, perhaps the most useful item is
+item \ref{eu3}, the expected utility property. It states that the utility
+of a lottery is equal to its expected utility. Do \emph{not} confuse
+expected utility with the utility of the expected value, which is not
+of interest.
 
 \emph{Retirement and risk}.  This example is inspired from the
 discussion on utility in Chernoff and Moses~\cite{chernoff:1959}.
@@ -497,7 +503,7 @@ u(m) = \frac{10}{1+e^{-(\frac{m}{\num{500000}}-5)}}
 Note that her current utility is
 $u(\$\num{400000})=2.69$.  Suppose that on a trip to Las Vegas, Alice
 is offered a gambling opportunity for gaining \$\num{200000} or losing
-\${100000}. The odds are 1-to-1 for gaining and losing. If ALice wins,
+\$\num{100000}. The odds are 1-to-1 for gaining and losing. If Alice wins,
 she will have \$\num{600000}, but if she loses, she will have
 \$\num{300000}. Alice knows about the the expected utility property:
 that the utility of a lottery is equal to its expected
