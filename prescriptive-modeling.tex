@@ -1372,8 +1372,7 @@ problem formulation is
 \]
 \end{solution}
 
-% this problem needs to be re-written with a different context and
-% different data.
+% re-written by hannah
 \item \emph{A set partitioning problem.} A DSL (Digital Subscriber
   Line) Internet service provider is determining where to construct
   three central offices in a city. A customer’s DSL connection works
@@ -1550,7 +1549,7 @@ and HDTV. The problem is to
 \textrm{maximize}   & 9.5x_1& +& 3x_2&+& 3x_3 &+& 5x_4 & & \\
   \textrm{subject to} & 12x_1& +& 2x_2&+& 2x_3 &+& 3x_4 & \leq & 16 \\
                     &&&&&& &x_3 & \leq & x_2 \\
-  &&&&& x_1 & + & x_4 &\leq& 1 \\
+                    &&&&& x_1 & + & x_4 &\leq& 1 \\
 \multicolumn{8}{r}{x_j}&  \in & \{0,1\}
 \end{array}
 \]
@@ -1560,7 +1559,30 @@ and HDTV. The problem is to
 % remain, but can we find a situation/problem to which this model
 % would apply? we can change the coefficients if needed.
 % no GAMS code is needed for this problem.
-\item \emph{Modeling with binary variables.} Consider the problem:
+\item \emph{Modeling with binary variables.} This problem (slightly
+  altered) appears in~\cite{bradley:1977}, an excellent book that is
+  freely available on-line. A business sells video games and
+  movies. For each video game sold, the business earns a profit of
+  \$1. For each movie sold, the business earns a profit of \$2. The
+  store manager, who is a bit quirky, has imposed the following
+  restrictions on customers' purchases.
+
+\begin{compactenum}[i)]
+\item There is a limit of eight items (total) per customer.
+\item The number of movies purchased minus the number of video games
+purchased cannot exceed 2.
+\item The number of video games purchased minus the number of movies
+purchased cannot exceed four.
+\item A customer can purchase zero, one, four, or six video games. No
+  other quantities of video games are allowed. There is no such
+  restriction on the quantity of movies.
+\end{compactenum}
+
+The manager would like to determine the combination of purchases by a
+customer that will maximize profit. Letting $x_1$ and $x_2$ represent
+the quantities of video games and movies, respectively, the problem
+can be formulated as follows.
+
 \[
 \begin{array}{lrrrrrrl}
 \textrm{maximize} &   & z & = & x_1 & + & 2x_2 & \\
@@ -1576,29 +1598,29 @@ and HDTV. The problem is to
 \item Reformulate the problem as an equivalent integer linear
   program.\label{ex:ip}
 \item How would your answer to part \ref{ex:ip} change if the
-  objective function were changed to:
+  objective function was instead
 \[ \text{maximize~} z = x_1^2 + 2x_2\text{?} \] \label{ex:quad}
 \end{enumerate}
 
 \begin{solution} 
 \bs Introduce the following binary variables. Let
 \[ y_i = \begin{cases}
-    1 \quad \text{if}~ x_1 = i \quad i \in \{0,1,4,6\}\\
-    0 \quad \text{otherwise}
-    \end{cases}
-  \]
+1 \quad \text{if}~ x_1 = i \quad i \in \{0,1,4,6\}\\
+0 \quad \text{otherwise}
+\end{cases}
+\]
 
 Now the binary integer programming formulation is
 \[
-  \begin{array}{lrrrrrrrrl}
-    \textrm{maximize}   &&& y_1 & + & 4y_4 & + & 6y_6 & + & 2x_2 \\
-    \textrm{subject to} & y_0 & + & y_1 & + & y_4 & + & y_6 & = & 1 \\
-                        & y_1 & + & 4y_4 & + & 6y_6 & + & x_2 & \leq & 8\\
-                        & -y_1 & - & 4y_4 & - & 6y_6 & + & x_2 & \leq & 2\\
-                        & y_1 & + & 4y_4 & + & 6y_6 & - & x_2 & \leq & 4\\
-    \multicolumn{8}{r}{x_2}& \geq & 0 ~\text{and integer}\\
-    \multicolumn{8}{r}{y_0,y_1,y_4,y_6}& \in & \{0,1\}
-  \end{array}
+\begin{array}{lrrrrrrrrl}
+\textrm{maximize}   &&& y_1 & + & 4y_4 & + & 6y_6 & + & 2x_2 \\
+\textrm{subject to} & y_0 & + & y_1 & + & y_4 & + & y_6 & = & 1 \\
+& y_1 & + & 4y_4 & + & 6y_6 & + & x_2 & \leq & 8\\
+& -y_1 & - & 4y_4 & - & 6y_6 & + & x_2 & \leq & 2\\
+& y_1 & + & 4y_4 & + & 6y_6 & - & x_2 & \leq & 4\\
+\multicolumn{8}{r}{x_2}& \geq & 0 ~\text{and integer}\\
+\multicolumn{8}{r}{y_0,y_1,y_4,y_6}& \in & \{0,1\}
+\end{array}
 \]
 For part \ref{ex:quad}, change the coefficients on the $y_i$
 variables in the objective function only to be the squares,
