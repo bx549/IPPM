@@ -616,16 +616,15 @@ Using R,
 \item \emph{A mining operation.} A dump truck at a mine takes ore to
   the railroad after 10 one-ton scoops have been loaded into the
   truck.  The one-ton scoops are loaded from a large diesel-powered
-  shovel independently and at a mean rate of seven scoops per hour.
-  The time between scoops from the shovel can be considered to follow
-  an Exponential distribution.
+  shovel at a mean rate of seven scoops per hour.  The time between
+  scoops from the shovel follows an Exponential distribution.
 
 \begin{enumerate}
-\item Find the probability that the time between consecutive trips to
-  the railroad will be at least one hour.
+\item Find the probability that the time required to load the truck
+takes at least one hour.
 \item It takes the dump truck 18 minutes to travel to the railroad,
   unload, and return. Suppose the truck returns and finds that no
-  scoop is ready to be loaded. What is the probability that the next
+  scoop is waiting to be loaded. What is the probability that the next
   scoop is ready within 5 minutes? \label{item:2}
 \end{enumerate}
 
@@ -634,19 +633,18 @@ Using R,
   we know that the number of arrivals in a time interval is
   distributed Poisson. In particular, the number of arrivals in a
   one-hour period follows a Poisson distribution with mean
-  $\lambda=7$. In order for the time between consecutive trips to the
-  railroad to take at least one hour, we require that the number of
-  arrivals in one hour is nine or less. Let $X$ be the number of
-  (scoop) arrivals in a one hour period.
+  $\lambda=7$. In order for the time required to load the truck be at
+  least one hour, the number of scoops in one hour be nine or
+  less. Let $N$ be the number of scoops in a one hour period.
 \[
-P(X \leq 9) = \sum_{x=0}^9 \frac{e^{-\lambda}\lambda^x}{x!} = .83.
+P(N \leq 9) = \sum_{x=0}^9 \frac{e^{-\lambda}\lambda^x}{x!} = .83.
 \]
 For part \ref{item:2}, we can invoke the memoryless property of the
 Exponential distribution. The remaining time until the next arrival is
-disitributed Exponential with rate 7 scoops per hour, regardless of how
-much time has elapsed since the last arrival. Let $Y$ be the time
-until the next arrival, and don't forget to convert from minutes to
-hours.
+disitributed Exponential with rate 7 scoops per hour, regardless of
+how much time has elapsed since the last arrival. Let $Y$ be the
+remaining time until the next arrival, and don't forget to convert
+from minutes to hours.
 \[
 P(Y \leq 5) = 1 - e^{-7\times \frac{5}{60}} = .44
 \]
