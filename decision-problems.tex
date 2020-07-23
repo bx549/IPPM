@@ -1033,6 +1033,59 @@ Expanding the facility is the best decision unless the probability of
 poor weather is greater than .64.
 \end{solution}
 
+\item \emph{The value of perfect information.}  You are taking a 
+  date to a movie. You like horror movies but you are unsure whether
+  your date likes them. You have two choices for the movie, ``The
+  Burrowers'' which, despite its title, you've heard is a good movie,
+  and ``A Star is Born'', which is rather safe as far as date movies
+  go. Your decision problem with associated payoffs is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{4in}{YYY}
+& \multicolumn{2}{c}{Your date} \\
+& likes horror movies & hates horror movies\\ \cline{2-3}
+\gtcol{The Burrowers} & \gtcol{10} & \gtcol{1} \\ \cline{2-3}
+\gtcol{A Star is Born} & \gtcol{4} & \gtcol{7} \\ \cline{2-3}
+\end{tabularx}
+\endgroup
+
+\vspace{.2in}
+\begin{enumerate}
+\item Let $p$ represent the probability that your date likes horror movies. What is
+  the optimal decision as a function of $p$?
+\item At this point you have no information for your date's movie
+  preference (even the trail of social media cannot help you) and so
+  you assign $p=1/2$ as your subjective prior probability. Suppose
+  that the date's best friend will tell you for sure whether your date
+  likes horror movies, but this person is not so nice and wants to be
+  paid. If the payoffs represent dollar amounts then how much are you
+  willing to pay this person for perfect information? \label{ex:pi}
+\end{enumerate}
+
+\begin{solution}
+  \bs Choose ``The Burrowers'' if
+  \begin{align*}
+    10p + (1-p) &> 4p + 7(1-p)\\
+    9p + 1 &> -3p + 7\\
+    12p &> 6\\
+    p &> 1/2
+  \end{align*}
+
+  Regarding part \ref{ex:pi}, if you knew that your date liked horror
+  movies you would choose ``The Burrowers'' for a pyoff of \$10 and if
+  you knew the opposite then you would choose ``A Star is Born'' for a
+  payoff of \$7. The expected payoff with perfect information, that
+  is, before you actually receive the information, is
+  \[ \frac{1}{2}(10) + \frac{1}{2}(7) = 8\frac{1}{2} \]
+  Without the information your expected payoff is $\$5 \frac{1}{2}$ (for either
+  choice). You would be willing to pay at most
+  \[ \$8.50 - \$5.50 = \$3 \]
+  for the perfect information.
+
+\end{solution}
+
 % written by Emily
 \item \emph{Elimination of dominated strategies.}
 Two street vendors, A and B, are located near a major tourist attraction. 
@@ -1399,6 +1452,76 @@ E(\text{utility}) &= 75 - 30 \times 0.20 + (75 - 30 \times 0.20) \times 0.50 \ti
 The expected utility of staying home watching movies is 50 because it
 is influenced by neither the weather nor running into friends. The
 ``rational'' decision for Sydney is to go hiking.
+\end{solution}
+
+\item \emph{Attitudes toward risk.}  Consider the following scenarios
+  for Alice and Bob. Then, draw reasonable utility functions for each
+  person. Alice's utility function should be in the range zero to
+  \$100K.  Bob's should be from zero to \$40.
+
+  Alice has worked hard to save \$25K for a down payment on a
+  house. She is ready to buy the house, but just before closing, she
+  is offered the following hot tip. If she invest invests \$25K in a
+  cryptocurrency, there is an 80\% chance that she will make \$50K
+  within one month, but a 20\% chance that she will lose everything.
+  The expected monetary value of the opportunity is
+  \[
+  0.8 \times \$75\text{K} - 0.2 \times \$25\text{K} = \$55\text{K},
+  \]
+  but Alice makes the \$25K down payment even though the EMV of the
+  investment is higher. The certainty of getting the house is worth
+  more to her than the uncertain gain from the investment.
+
+  Bob has \$20 in his possession. He \emph{really} wants to see the
+  show at First Avenue, but tickets cost \$40. Over on 7th Street,
+  someone comes along and offers Bob the following gamble.
+\begin{quote}
+  Put in \$20. Roll a die. If the die comes up ``6'', then the player
+  wins \$20. If the die comes up any other number the player loses the
+  \$20.
+\end{quote}
+If Bob is lucky enough to win the gamble, he would have \$40 for the
+ticket. The expected monetary value of the gamble is
+  \[
+  \frac{1}{6} \times \$40 - \frac{5}{6} \times \$20 = -\$10,
+  \]
+  but Bob takes the bet because the chance to see the show is worth
+  more to him than having \$20 and \emph{not} seeing the show.
+
+\begin{solution}
+  \bs The important point is the general shape of the utility
+  functions, not the magnitudes of the utilities. Alice is risk-averse
+  and Bob is risk seeking.
+
+\begin{minipage}{.49\textwidth}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\begin{axis}[
+xlabel={$m$},
+ylabel={$U(m)$},
+xticklabel={\$$\pgfmathprintnumber{\tick}$},
+title=Alice's risk averse behavior,
+]
+\addplot[domain=0:100000] {1 - exp(-x/30000)};
+\end{axis}
+\end{tikzpicture}}
+\end{minipage}
+\hfill
+\begin{minipage}{.49\textwidth}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\begin{axis}[
+xlabel={$m$},
+ylabel={$U(m)$},
+xticklabel={\$$\pgfmathprintnumber{\tick}$},
+title=Bob's risk seeking behavior,
+yticklabel pos=right,
+]
+\addplot[domain=0:40] {exp(x/10)};
+\end{axis}
+\end{tikzpicture}}
+\end{minipage}
+
 \end{solution}
 
 % written by Emily
