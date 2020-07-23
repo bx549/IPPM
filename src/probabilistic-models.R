@@ -20,3 +20,11 @@ sales <- ifelse(sales > 180, 180, demand)
 
 ## estimate of probability that 150 or more beverages will be sold
 sum(demand >= 150) / n
+
+## car dealership
+
+n <- 1000
+numdents <- rpois(n, 5) # 1000 draws from the poisson(5) distribution
+sum(numdents <= 1)/n
+
+0.30 * sum(numdents > 5)/n * 100
