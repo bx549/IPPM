@@ -564,44 +564,50 @@ In R,
 
 % re-written by hannah
 % Poisson distribution
-\item \emph{Car dealership.} A used car dealership has an 
-  uncovered lot. In the city where the
-  dealership is located, the number of hailstorms during the
-  month of June follows a Poisson distribution with mean four.
-  After a hailstorm, the number of dents in a car
-  follows a Poisson distribution with a mean of five dents.
+\item \emph{Car dealership.} A used car dealership parks their
+  inventory on an uncovered lot. In the city where the dealership is
+  located, the probability of a hailstorm during the month of June is
+  0.30. If a hailstorm occurs, the number of dents in a randomly
+  chosen car follows a Poisson distribution with a mean of five dents.
 \begin{enumerate}
-\item Determine the probability that there will be exactly five
-  hailstorms at the dealership in June. \label{ex:storms}
-\item After a hailstorm, determine the probability that a car will
-  have two or more dents. \label{ex:cars}
+\item If a car receives no more than one dent during a hailstorm,
+the dealership ignores it and hopes that the customer will not notice.
+Given that a hailstorm occurred, compute the probability that a car
+receives no more than one dent.~\label{ex:dent}
+\item The occurrence of a storm and the amount of damage after a storm
+  are independent. (Of course damage is conditional on the occurrence
+  of a storm.)  If a car has more than five dents after a storm, then
+  the dealership must file an insurance claim for the car. It is May 31
+  and there are 100 cars on the lot. Determine the expected number of
+  cars for which the dealership will file insurance during June
+  (assume that the inventory remains constant at 100
+  cars).\label{ex:cars}
 \end{enumerate}
 
 \begin{solution}
-  \bs For part~\ref{ex:storms}, let $X$ be a random variable that
-  represents the number of hailstorms in June. The number of
-  hailstorms in June follows a Poisson distribution with a mean of
-  four hailstorms. Therefore, $X \sim \text{Poisson}(\lambda = 4)$.
-  The probability that there are exactly five hailstorms is
-\[
-P(X=5) = \frac{e^{-\lambda}\lambda^5}{5!} = \frac{e^{-4}4^5}{120} \approx 0.16
-\]
-For part~\ref{ex:cars}, the damage to a car after a hailstorm is
-Poisson with a mean of five dents. Let $N$ be the number of dents in a
-car after a hailstorm.
-\[ N \sim \text{Poisson}(\lambda = 5) \] 
-
-The probability that there will be two or more dents in a car after a
-hailstorm is
+  \bs For part~\ref{ex:dent}, let $N$ be a random variable that
+  represents the number of dents in a car after a hailstorm.  We know
+  that
+ \[ N \sim \text{Poisson}(\lambda = 5). \]
+  The probability that a car receives no more than one dent is
 \begin{align*}
-      P(N \geq 2) &= 1 - P(N \leq 1) \\
-      &= 1 - \sum_{n=0}^{1} \frac{\lambda^n e^{-\lambda}}{n!}\\
-      &\approx 0.96
+P(N \leq 1) &= P(N=0)+P(N=1) \\
+&= \frac{e^{-\lambda}\lambda^0}{0!} + \frac{e^{-\lambda}\lambda^1}{1!} \\
+&\approx 0.04
 \end{align*}
-Using R,
+
+Conditional on the occurrence of a hailstorm, the probability that any
+particular car receives more than 5 dents is
+\begin{align*} P(N \geq 6) &= 1-P(N\leq 5) \\
+&= \sum_{i=0}^5 \frac{e^{-\lambda}\lambda^i}{i!}\\
+&\approx 0.384,
+\end{align*}
+and the (unconditional) expected number of such cars is
+\[ 0.30 \times P(N \geq 6) \times 100 \approx 11.5 \]
+Using R, 
 \begin{Verbatim}
-> 1 - sum(dpois(0:1,5))
-[1] 0.9595723
+> 0.30 * (1 - sum(dpois(0:5,5))) * 100
+[1] 11.52118
 \end{Verbatim}
 \end{solution}
 
