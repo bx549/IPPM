@@ -92,23 +92,8 @@ toward risk and utility theory is fundamental to understanding
 decision problems.
 \vspace{.2in} 
 
-% latex will treat minipage as a paragraph and indent the whole thing.
-% so, here is my work-around: first use \noindent, then inside minipage,
-% set the indentation for paragraphs.
-\noindent
-\begin{minipage}{.6\textwidth}
-  \setlength{\parindent}{1pc} Sometimes taking a simple expected value
-  makes sense.  Consider a gamble in which one of three outcomes will
-  occur. The outcomes are worth \$1, \$5, and \$20 and the
-  probabilities of the outcomes are .2, .5, and .3, respectively. For
-  example, a wheel is spun and the probability of winning an amount
-  corresponds to the area on the wheel.  The expected monetary value
-  (EMV) of the gamble is
-\[ \$1 \times .2 + \$5 \times .5 + \$20 \times .3 = \$8.70 \]
-\end{minipage}
-%\hfill
-\begin{minipage}{.4\textwidth}
-\begin{center}
+\begin{wrapfigure}{r}{.33\textwidth}
+\centering
 \begin{tikzpicture}
 \draw (-1.5,0) -- (1.5,0);
 \draw (0,0) -- (.5,1.4);
@@ -117,9 +102,15 @@ decision problems.
 \draw (-.7,.7) node {\$20};
 \draw (.8,.65) node {\$1};
 \end{tikzpicture}
-\end{center}
-\end{minipage}
-\vspace{.2in}
+\end{wrapfigure}
+
+Sometimes taking a simple expected value makes sense.  Consider a
+gamble in which one of three outcomes will occur. The outcomes are
+worth \$1, \$5, and \$20 and the probabilities of the outcomes are .2,
+.5, and .3, respectively. For example, a wheel is spun and the
+probability of winning an amount corresponds to the area on the wheel.
+The expected monetary value (EMV) of the gamble is
+\[ \$1 \times .2 + \$5 \times .5 + \$20 \times .3 = \$8.70 \]
 
 However, there exist situations where EMV is not an appropriate
 indicator of ``fair value''. Consider another gamble in which a fair
@@ -135,25 +126,28 @@ toss $n$ is $(1/2)^n$ and the EMV of the gamble is
 Few people (perhaps no one) would pay any amount to participate in the
 gamble.  This is the St. Petersburg paradox stated by Bernoulli. To
 resolve the paradox, he said that the monetary value is not as
-important as the ``intrinsic worth'' of the money. For many (most)
-people, an increase in the amount of money has increasing worth, but
-at a decreasing rate. For example, given an amount of money $m$, the
-logarithm captures the basic relationship between $m$ and its
-``intrinsic worth''.
-\begin{center}
-%\resizebox{.5\textwidth}{!}{%
+important as the ``intrinsic worth'' of the money. For many people, an
+increase in the amount of money has increasing worth, but at a
+decreasing rate. Given an amount of money $m$, the logarithmic
+function captures the basic relationship between $m$ and its
+``intrinsic worth'' (see Figure~\vref{fig:diminishing}).
+
+\begin{figure}
+\centering
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={$m$},
     ylabel={$u(m) = \ln m$},
     xticklabel={\$$\pgfmathprintnumber{\tick}$},
-    title={The diminishing rate of the ``value'' of money}
+    %title={}
   ]
   \addplot[domain=0:1000000,samples=400] {ln(x)};
 \end{axis}
 \end{tikzpicture}
-%}
-\end{center}
+\caption{The diminishing rate of the value of money.}
+\label{fig:diminishing}
+\end{figure}
+
 However, there are many functions with this basic shape and they
 differ from person to person. How can the value (or utility) of money
 be specified for an individual? Also, expected value is commonly
@@ -273,22 +267,24 @@ of interest.
 discussion on utility in Chernoff and Moses~\cite{chernoff:1959}.
 Alice currently has \$\num{400000} in her individual retirement
 account (IRA). Of course, it is always better to have more money for
-retirement, but Alice is not super-greedy; she wants to have
-enough money to pay bills and take a few backpacking trips each year.
-Her utility for an amount of money $m$ in the range \$0 to \$1 million
-is given by the following function.
+retirement, but Alice is not super-greedy; she wants to have enough
+money to pay bills and take a few backpacking trips each year.  Her
+utility for an amount of money $m$ in the range \$0 to \$1 million is
+given by the following function and is shown in
+Figure~\vref{fig:retirement}.
 
 \[
 u(m) = \frac{10}{1+e^{-(\frac{m}{\num{500000}}-5)}}
 \]
-\begin{center}
-%\resizebox{.5\textwidth}{!}{%
+
+\begin{figure}
+\centering
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={$m$},
     ylabel={$u(m)$},
     xticklabel={\$$\pgfmathprintnumber{\tick}$},
-    title={Utility function for the retirement funds}
+    %title={Utility function for the retirement funds}
   ]
   %\addplot[domain=0:1000000,samples=1000] {10 / (1 + exp(-(x/500000 - 5)))};
   % tikz was plottting the function incorrectly, so for now i am resorting
@@ -499,8 +495,10 @@ u(m) = \frac{10}{1+e^{-(\frac{m}{\num{500000}}-5)}}
   };
 \end{axis}
 \end{tikzpicture}
-%}
-\end{center}
+\caption{Utility function for the retirement funds.}
+\label{fig:retirement}
+\end{figure}
+
 Note that her current utility is
 $u(\$\num{400000})=2.69$.  Suppose that on a trip to Las Vegas, Alice
 is offered a gambling opportunity for gaining \$\num{200000} or losing
@@ -538,14 +536,14 @@ the gamble is fair, she declines.
 
 \tikzstyle{place}=[circle,draw,minimum size=.75mm,
   inner sep=0pt,fill=black]
-\begin{center}
-%\resizebox{.5\textwidth}{!}{%
+\begin{figure}
+\centering
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={$m$},
     ylabel={$u(m)$},
     xticklabel={\$$\pgfmathprintnumber{\tick}$},
-    title={Geometric interpretation of the gamble}
+    %title={A graphic interpretation of the gamble}
   ]
   \addplot[color=black,mark=none]
   coordinates {
@@ -758,21 +756,23 @@ the gamble is fair, she declines.
   \draw [-] (a) -- (b);
 \end{axis}
 \end{tikzpicture}
-%}
-\end{center}
+\caption{A graphic interpretation of the gamble.}
+\label{fig:gamble}
+\end{figure}
 
-We can represent the situation geometrically by drawing a line segment
+We can represent the situation graphically by drawing a line segment
 from the utility when losing
 $u(\$\num{500000})$ to the utility when winning
 $u(\$\num{800000})$, and noting the point at one-third of the distance
 from $u(\$\num{500000})$ to
-$u(\$\num{800000})$.  The corresponding monetary value is the expected
-value of the gamble, i.e. \$\num{600000}, and the corresponding
-utility is the expected utility of the gamble, 6.51. With
-\$\num{600000} in retirement funds, Alice's behavior changes.
-We say that her utility function is risk-averse (or concave) in
-the range from \$\num{500000} to \$\num{1000000} and that it is risk-seeking
-(or convex) in the range from \$0 to \$\num{500000}. 
+$u(\$\num{800000})$ (see figure~\vref{fig:gamble}).  The corresponding
+monetary value is the expected value of the gamble,
+i.e. \$\num{600000}, and the corresponding utility is the expected
+utility of the gamble, 6.51. With \$\num{600000} in retirement funds,
+Alice's behavior changes.  We say that her utility function is
+risk-averse (or concave) in the range from \$\num{500000} to
+\$\num{1000000} and that it is risk-seeking (or convex) in the range
+from \$0 to \$\num{500000}.
 
 Notice that if Alice had only \$\num{100000} in retirement savings,
 then her utility would be 0.180 and her utility for the gamble would
@@ -1491,7 +1491,7 @@ ticket. The expected monetary value of the gamble is
 \begin{solution}
   \bs The important point is the general shape of the utility
   functions, not the magnitudes of the utilities. Alice is risk-averse
-  and Bob is risk seeking.
+  and Bob is risk-seeking.
 
 \begin{minipage}{.49\textwidth}
 \resizebox{\textwidth}{!}{%
@@ -1500,7 +1500,7 @@ ticket. The expected monetary value of the gamble is
 xlabel={$m$},
 ylabel={$U(m)$},
 xticklabel={\$$\pgfmathprintnumber{\tick}$},
-title=Alice's risk averse behavior,
+title=Alice's risk-averse behavior,
 ]
 \addplot[domain=0:100000] {1 - exp(-x/30000)};
 \end{axis}
@@ -1514,7 +1514,7 @@ title=Alice's risk averse behavior,
 xlabel={$m$},
 ylabel={$U(m)$},
 xticklabel={\$$\pgfmathprintnumber{\tick}$},
-title=Bob's risk seeking behavior,
+title=Bob's risk-seeking behavior,
 yticklabel pos=right,
 ]
 \addplot[domain=0:40] {exp(x/10)};
