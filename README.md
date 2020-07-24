@@ -1,6 +1,8 @@
 # IPPM
 
-The book provides practical introduction to the use of mathematical
+This is the repository for the open textbook "Introduction to Prescriptive and Predictive Modeling".
+
+The book provides a practical introduction to the use of mathematical
 modeling and statistical computing techniques to solve decision
 problems that arise in various industrial settings. Examples are drawn
 from manufacturing, finance, sports, healthcare, retail,
