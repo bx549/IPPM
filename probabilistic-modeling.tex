@@ -268,6 +268,162 @@ Questions.
 
 \section{Probabilistic Inventory Models}
 
+% first we need to introduce the newsvendor problem.
+% perhaps solve this problem as a newsvendor problem.
+% also need to make sure that the example of turkeys is OK to use.
+
+\emph{Monte Carlo simulation and Thanksgiving turkeys.}
+Tom the grocer pays \$10 wholesale for his turkeys.  Before
+Thanksgiving he sells them for \$18.  After Thanksgiving he sells any
+remaining turkeys for \$5 each.  In the past years Tom has noticed
+pre-Thanksgiving demand has varied uniformly between 50 and 100 birds.
+How many turkeys should he buy to maximize his expected profit?
+
+Let's let $x$ represent the number of turkeys that Tom should order.
+The random pre-Thanksgiving customer demand is $D$, and Tom's
+expect profit is $P$, where
+
+\begin{equation*}
+  P = \begin{cases}
+    (18 - 10)x & \text{if}~D \geq x \\
+    18D - 10x + 5(x - D) & \text{if}~D < x
+  \end{cases} 
+\end{equation*}
+           
+Let's find an optimal value for $x$ (our decision variable)
+via simulation. Here are the steps.
+
+\begin{compactenum}
+\item Set $x = 50,~51,~52,~\ldots,~100$.
+  \begin{compactenum}
+\item For each value of $x$ generate $B \approx 200$ independent replications
+  of $D$, where $D \sim U(50,~100)$. Call the realized values of demand $D_i$ where
+  $i = 1 \ldots B$.
+\item Calculate the profit $P_i$ for each $D_i$.
+  \end{compactenum}
+\item Estimate expected profit for each value of $x$ as
+  \[ \frac{1}{B} = \sum_{i=1}^B P_i \]
+\item Choose the value of $x$ that achieves the maximum profit.
+\end{compactenum}
+
+An implementation in R is shown in Figure~\ref{fig:sim-turkeys} and the
+output is shown in Figure~\ref{fig:plot-turkeys}.
+
+\begin{SaveVerbatim}{simulation}
+Order <- 50:100
+EP <- numeric(length(Order))  # will hold expected profit
+B <- 200                      # number of replications
+
+for (x in Order) {
+    P <- numeric(B)   # will hold realized profits
+    for (i in 1:B) {
+        D <- sample(50:100, 1)
+        if (D >= x) { # sell all turkeys
+            P[i] <- 8*x
+        } else {      # don't sell them all
+            P[i] <- 18*D - 10*x + 5*(x-D)
+        }
+    }
+    EP[which(x==Order)] <- mean(P)
+}
+
+plot(Order, EP)   # using base R graphics
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{simulation}
+\caption{Simulation to determine the number of turkeys to order
+  so that expected profit is maximized.}
+\label{fig:sim-turkeys}
+\end{minipage}
+}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{turkeyprofit.pdf}  % change to tikz plot with data
+\caption{Plot of expected profit vs. turkeys ordered.}
+\label{fig:plot-turkeys}
+\end{center}
+\end{figure}
+
+\emph{Questions.}
+\begin{enumerate}
+\item Referring to Figure~\ref{fig:plot-turkeys}, why does it appear
+  that the expected profit is becoming more varied as the order
+  quantity increases? What can we do about it?
+\item Can you solve this problem analytically?
+\item Why use simulation?
+\end{enumerate}
+
+\emph{Auctioning a turkey.}
+On the Wednesday before Thanksgiving, Tom decides to auction a turkey
+with the proceeds donated to charity. Tom will offer the turkey using
+a second-price sealed-bid auction. In a second-price auction
+(also valled a Vickrey auction), the highest bidder wins, but the pays the
+price of the second-highest bid.  At the time of the auction it turns
+out that there are only two bidders.  Tom doesn't want to give the
+turkey away so he sets a reserve price $r$.  The reserve price 
+modifies the rules of the auction as follows.  If both bids are below
+$r$ then neither bidder wins, and Tom collects no proceeds.
+If both bids are at or above $r$ then the regular 2nd-price
+auction rules prevail. If only one bid is at or above $r$ then that
+bidder wins the turkey and pays $r$. Both bidders agree to the rules.
+
+Now, it is well-known that a 2nd-price is a truth-telling mechanism.
+That is to say, bidders will bid their true valuations for the item.
+Suppose each bidder has a value for the Turkey is independently and
+uniformly distributed between \$0 and \$20.
+What is the optimal reserve price $r$?
+
+With some effort, this problem can be solved analytically.
+Alternatively, and with not as much effort, we can determine the
+optimal reserve price via simulation (see Figure~\ref{fig:auction}.)
+Now consider adding just a bit more complexity to the problem, e.g. a
+third-price auction, or multiple classes of bidders having different
+valuation distributions (Gamma, Lognormal, etc.) The problem can
+become intractable to solve analytically, but it is relatively easy to
+obtain an approximate optimal solution via simulation.
+
+\begin{SaveVerbatim}{auction}
+auction <- function(r) {
+    b1 <- runif(1, 0, 20) # bidder 1's valuation
+    b2 <- runif(1, 0, 20) # bidder 2's valuation, independent of bidder 1
+    if (b1 < r && b2 < r) {
+        rev <- 0
+    } else if (b1 >= r && b2 >= r) {
+        rev <- min(b1,b2) # regular 2nd price auction
+    } else {
+        rev <- r
+    }
+    rev
+}
+
+reserve <- seq(0, 20, by=.1)
+expected.rev <- numeric(length(reserve))
+
+for (i in 1:length(reserve)) {
+    expected.rev[i] <- mean(replicate(10000, auction(reserve[i])))
+}
+
+plot(reserve, expected.rev, type="l")
+\end{SaveVerbatim}
+
+\begin{figure}[h]
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{auction}
+\caption{Implementation of a 2nd-price auction with a reserve price $r$ and
+  independent valuations for two bidders. We would like to know the reserve
+  price $r$ that maximizes revenue for the seller.}
+\label{fig:auction}
+\end{minipage}
+}
+\end{figure}
+
+
 \section{Exercises}
 
 \begin{enumerate}
@@ -822,17 +978,17 @@ curve but above one, and then divide by the total time.
 \end{solution}
 
 % re-written by hannah.
-\item \emph{Justifying a capital expense.} An amusement park is known
-  for having rides with short waiting times. A new ride has opened,
-  and customers arrive to the ride according to a Poisson process with
-  a mean of 20 arrivals per hour. Only one customer is allowed on the
-  ride at a time, and customers can stay on the ride as long they
-  wish. The length of time that each customer spends on the ride is
-  exponentially distributed with a mean of 2.5 minutes. Management is
-  willing to add an additional cart to the ride if, under the current
-  system, 1) the average number of waiting customers is greater than
-  four, and 2) the percentage of time that the ride is idle exceeds
-  10\%.  Can an additional cart be justified?
+\item \emph{Justification for a capital expense.} An amusement park is
+  known for having rides with short waiting times. A new ride has
+  opened, and customers arrive to the ride according to a Poisson
+  process with a mean of 20 arrivals per hour. Only one customer is
+  allowed on the ride at a time, and customers can stay on the ride as
+  long they wish. The length of time that each customer spends on the
+  ride is exponentially distributed with a mean of 2.5
+  minutes. Management is willing to add an additional cart to the ride
+  if, under the current system, 1) the average number of waiting
+  customers is greater than four, and 2) the percentage of time that
+  the ride is idle exceeds 10\%.  Can an additional cart be justified?
 
 \begin{solution}
   \bs The amusement ride can be modeled as an M/M/1 queuing

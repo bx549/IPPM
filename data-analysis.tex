@@ -96,6 +96,39 @@ critical point as
 \emph{Question:} When I got the critical point in R, why did I use
 \texttt{qnorm(1-alpha/2)} and not \texttt{qnorm(alpha/2)}?
 
+
+% introduce the boot strap as a non-parametric technique to obtain
+% the std error of a statistic.
+\emph{A model for the price of a stock.}
+Consider the UNH stock price data that are posted on the class web
+site. Suppose that on November 19, 2018, your portfolio consists of 1
+share of stock and one call option with a strike price of \$265 and a
+duration of six months (125 trading days).  You are
+to obtain a 95\% prediction interval for the value of the portfolio in
+six months. To estimate the price of the stock six months into the
+future, use the multiplicative model 
+\[
+S_n = S_0 e^{X_1 + X_2 + \ldots + X_n}, \quad n \ge 0
+\]
+where $S_i$ is the price of the stock on day $i$ and $X_i$ is a random
+disturbance on day $i$. The $X_i$ are distributed normal with mean
+$\mu$ and variance $\sigma^2$. The policy for exercising the call
+option is to wait until the last possible day and then exercise the
+option if the stock price is greater than the strike price. Here are
+the steps you need to perform:
+\begin{enumerate}
+\item Using the historical data, estimate the mean $\mu$ and standard deviation $\sigma$ of
+the random disturbance. \label{qq}
+\item Use Monte Carlo simulation to estimate the price of the stock in six months (125 days).
+That is, six months from the last trading day in the data, which is Friday Nov 16, 2018.
+\item Compute the cash flow from the call option.
+\item Obtain a 95\% prediction interval for the value of the portfolio 
+(one share of stock plus one call option.)
+\item Use the bootstrap technique to assess the accuracy of your estimate for the
+standard deviation $\sigma$ that was computed in step~\ref{qq}. That is, use the bootstrap
+to compute the standard error of $\sigma$.
+\end{enumerate}
+
 \section{Descriptive Graphics}
 
 \section{Exercises}
