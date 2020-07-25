@@ -55,48 +55,6 @@ simulation of inventory models and queueing models in R
 emily: 
 decision problems using game theory and perhaps using ABM
 
-jul 24
-emily:
-chapter 3 
-
-"structuring a decision problem" exercise 1
-
-"The lost dog" exercise 7 needs a new context.
-
-"An optimal strategy for a chess match." execise 10 needs a new
-context. The idea here is that the decisions are made over two time
-steps. The decision tree is hand-written. I will write the LaTeX code
-for the decision tree once we have written the problem context.
-(see tree-chess-match.pdf)
-
-
-hannah:
-chapter 1
-
-"Maximum flow through a network" exercise 5
-
-"Supplies for a multi-day event" exercise 8
-(see car-races.pdf)
-
-"Laundering napkins" exercise 9
-(see napkin-laundering.pdf)
-
-"A maxi-min problem" exercise 14.
-(see gambler.mod on github in gams/ directory)
-
-braeden:
-ch 2
-
-"Stocking a seasonal item" exercise 17
-Can we obtain a solution via simulation (using R)?
-
-"The risk of beging out of stock" exercise 19
-Can we implement in R?
-
-Please see the example R code for determining how many Thanksgiving
-Turkeys Tom the grocer should order. I put this example in chapter 2
-in section 2.5 (it will come later in the section, but it's there
-now.)
 
 
 
