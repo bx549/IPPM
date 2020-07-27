@@ -1,0 +1,364 @@
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 07/20/20 15:26:54 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   2   
+   3  set i "regions" /1*6/;
+   4   
+   5  alias (i,j);
+   6   
+   7  table a(i,j) "internet speed in region j when served by central office in 
+      region i"
+   8    1  2  3  4  5  6
+   9  1 45 35 30 25 10 12
+  10  2 35 45 20 20 25 18
+  11  3 30 20 45 30 15 25
+  12  4 25 20 30 45 12 27
+  13  5 10 25 15 12 45 30
+  14  6 12 18 25 27 30 45;
+  15   
+  16  binary variable x(i,j)
+  17  binary variable y(i);
+  18   
+  19  free variable z;
+  20   
+  21  equations
+  22   offices 'number of central offices to construct'
+  23   assignment(j) 'Assignment of regions to a central office'
+  24   constraint(i,j) 'logical constraint'
+  25   speed 'objective function'
+  26   ;
+  27   
+  28  offices.. sum(i,y(i)) =e= 3;
+  29  assignment(j).. sum(i,x(i,j)) =e= 1;
+  30  constraint(i,j).. x(i,j) =l= y(i);
+  31  speed.. z =e= sum((i,j),x(i,j)*a(i,j))/6;
+  32   
+  33  model internet /all/;
+  34  solve internet using mip maximizing z;
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 07/20/20 15:26:54 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE internet Using MIP From line 34
+
+
+---- offices  =E=  number of central offices to construct
+
+offices..  y(1) + y(2) + y(3) + y(4) + y(5) + y(6) =E= 3 ;
+     
+      (LHS = 0, INFES = 3 ****)
+     
+
+---- assignment  =E=  Assignment of regions to a central office
+
+assignment(1)..  x(1,1) + x(2,1) + x(3,1) + x(4,1) + x(5,1) + x(6,1) =E= 1 ;
+     
+      (LHS = 0, INFES = 1 ****)
+     
+assignment(2)..  x(1,2) + x(2,2) + x(3,2) + x(4,2) + x(5,2) + x(6,2) =E= 1 ;
+     
+      (LHS = 0, INFES = 1 ****)
+     
+assignment(3)..  x(1,3) + x(2,3) + x(3,3) + x(4,3) + x(5,3) + x(6,3) =E= 1 ;
+     
+      (LHS = 0, INFES = 1 ****)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- constraint  =L=  logical constraint
+
+constraint(1,1)..  x(1,1) - y(1) =L= 0 ; (LHS = 0)
+     
+constraint(1,2)..  x(1,2) - y(1) =L= 0 ; (LHS = 0)
+     
+constraint(1,3)..  x(1,3) - y(1) =L= 0 ; (LHS = 0)
+     
+REMAINING 33 ENTRIES SKIPPED
+
+
+---- speed  =E=  objective function
+
+speed..  - 7.5*x(1,1) - 5.83333333333333*x(1,2) - 5*x(1,3)
+     
+      - 4.16666666666667*x(1,4) - 1.66666666666667*x(1,5) - 2*x(1,6)
+     
+      - 5.83333333333333*x(2,1) - 7.5*x(2,2) - 3.33333333333333*x(2,3)
+     
+      - 3.33333333333333*x(2,4) - 4.16666666666667*x(2,5) - 3*x(2,6) - 5*x(3,1)
+     
+      - 3.33333333333333*x(3,2) - 7.5*x(3,3) - 5*x(3,4) - 2.5*x(3,5)
+     
+      - 4.16666666666667*x(3,6) - 4.16666666666667*x(4,1)
+     
+      - 3.33333333333333*x(4,2) - 5*x(4,3) - 7.5*x(4,4) - 2*x(4,5) - 4.5*x(4,6)
+     
+      - 1.66666666666667*x(5,1) - 4.16666666666667*x(5,2) - 2.5*x(5,3)
+     
+      - 2*x(5,4) - 7.5*x(5,5) - 5*x(5,6) - 2*x(6,1) - 3*x(6,2)
+     
+      - 4.16666666666667*x(6,3) - 4.5*x(6,4) - 5*x(6,5) - 7.5*x(6,6) + z =E= 0 ;
+     
+      (LHS = 0)
+     
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 07/20/20 15:26:54 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE internet Using MIP From line 34
+
+
+---- x  
+
+x(1,1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       assignment(1)
+        1       constraint(1,1)
+       -7.5     speed
+
+x(1,2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       assignment(2)
+        1       constraint(1,2)
+       -5.8333  speed
+
+x(1,3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       assignment(3)
+        1       constraint(1,3)
+       -5       speed
+
+REMAINING 33 ENTRIES SKIPPED
+
+---- y  
+
+y(1)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       offices
+       -1       constraint(1,1)
+       -1       constraint(1,2)
+       -1       constraint(1,3)
+       -1       constraint(1,4)
+       -1       constraint(1,5)
+       -1       constraint(1,6)
+
+y(2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       offices
+       -1       constraint(2,1)
+       -1       constraint(2,2)
+       -1       constraint(2,3)
+       -1       constraint(2,4)
+       -1       constraint(2,5)
+       -1       constraint(2,6)
+
+y(3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       offices
+       -1       constraint(3,1)
+       -1       constraint(3,2)
+       -1       constraint(3,3)
+       -1       constraint(3,4)
+       -1       constraint(3,5)
+       -1       constraint(3,6)
+
+REMAINING 3 ENTRIES SKIPPED
+
+---- z  
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       speed
+
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 07/20/20 15:26:54 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE internet Using MIP From line 34
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           4     SINGLE EQUATIONS           44
+BLOCKS OF VARIABLES           3     SINGLE VARIABLES           43
+NON ZERO ELEMENTS           151     DISCRETE VARIABLES         42
+
+
+GENERATION TIME      =        0.125 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+
+
+EXECUTION TIME       =        0.125 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 07/20/20 15:26:54 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE internet Using MIP From line 34
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   internet            OBJECTIVE  z
+     TYPE    MIP                 DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  34
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE               38.3333
+
+ RESOURCE USAGE, LIMIT          0.140      1000.000
+ ITERATION COUNT, LIMIT         8    2000000000
+
+IBM ILOG CPLEX   28.2.0 r750fa45 Released Aug 19, 2019 WEI x86 64bit/MS Window
+Cplex 12.9.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+MIP status(101): integer optimal solution
+Cplex Time: 0.11sec (det. 0.36 ticks)
+Fixing integer variables, and solving final LP...
+Fixed MIP status(1): optimal
+Cplex Time: 0.02sec (det. 0.03 ticks)
+Proven optimal solution.
+
+MIP Solution:           38.333333    (8 iterations, 0 nodes)
+Final Solve:            38.333333    (0 iterations)
+
+Best possible:          38.333333
+Absolute gap:            0.000000
+Relative gap:            0.000000
+
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- EQU offices        3.000     3.000     3.000      .         
+
+  offices  number of central offices to construct
+
+---- EQU assignment  Assignment of regions to a central office
+
+     LOWER     LEVEL     UPPER    MARGINAL
+
+1     1.000     1.000     1.000      .         
+2     1.000     1.000     1.000      .         
+3     1.000     1.000     1.000      .         
+4     1.000     1.000     1.000      .         
+5     1.000     1.000     1.000      .         
+6     1.000     1.000     1.000      .         
+
+---- EQU constraint  logical constraint
+
+       LOWER     LEVEL     UPPER    MARGINAL
+
+1.1     -INF       .         .         .         
+1.2     -INF       .         .         .         
+1.3     -INF       .         .         .         
+1.4     -INF       .         .         .         
+1.5     -INF       .         .         .         
+1.6     -INF       .         .         .         
+2.1     -INF       .         .         .         
+2.2     -INF       .         .         .         
+2.3     -INF     -1.000      .         .         
+2.4     -INF     -1.000      .         .         
+2.5     -INF     -1.000      .         .         
+2.6     -INF     -1.000      .         .         
+3.1     -INF     -1.000      .         .         
+3.2     -INF     -1.000      .         .         
+3.3     -INF       .         .         .         
+3.4     -INF       .         .         .         
+3.5     -INF     -1.000      .         .         
+3.6     -INF     -1.000      .         .         
+4.1     -INF       .         .         .         
+4.2     -INF       .         .         .         
+4.3     -INF       .         .         .         
+4.4     -INF       .         .         .         
+4.5     -INF       .         .         .         
+4.6     -INF       .         .         .         
+5.1     -INF     -1.000      .         .         
+5.2     -INF     -1.000      .         .         
+5.3     -INF     -1.000      .         .         
+5.4     -INF     -1.000      .         .         
+5.5     -INF       .         .         .         
+5.6     -INF       .         .         .         
+6.1     -INF       .         .         .         
+6.2     -INF       .         .         .         
+6.3     -INF       .         .         .         
+6.4     -INF       .         .         .         
+6.5     -INF       .         .         .         
+6.6     -INF       .         .         .         
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- EQU speed           .         .         .        1.000      
+
+  speed  objective function
+
+---- VAR x  
+
+       LOWER     LEVEL     UPPER    MARGINAL
+
+1.1      .         .        1.000     7.500      
+1.2      .         .        1.000     5.833      
+1.3      .         .        1.000     5.000      
+1.4      .         .        1.000     4.167      
+1.5      .         .        1.000     1.667      
+1.6      .         .        1.000     2.000      
+2.1      .        1.000     1.000     5.833      
+2.2      .        1.000     1.000     7.500      
+2.3      .         .        1.000     3.333      
+2.4      .         .        1.000     3.333      
+2.5      .         .        1.000     4.167      
+2.6      .         .        1.000     3.000      
+3.1      .         .        1.000     5.000      
+3.2      .         .        1.000     3.333      
+3.3      .        1.000     1.000     7.500      
+3.4      .        1.000     1.000     5.000      
+3.5      .         .        1.000     2.500      
+3.6      .         .        1.000     4.167      
+4.1      .         .        1.000     4.167      
+4.2      .         .        1.000     3.333      
+4.3      .         .        1.000     5.000      
+4.4      .         .        1.000     7.500      
+4.5      .         .        1.000     2.000      
+4.6      .         .        1.000     4.500      
+5.1      .         .        1.000     1.667      
+5.2      .         .        1.000     4.167      
+5.3      .         .        1.000     2.500      
+5.4      .         .        1.000     2.000      
+5.5      .        1.000     1.000     7.500      
+5.6      .        1.000     1.000     5.000      
+6.1      .         .        1.000     2.000      
+6.2      .         .        1.000     3.000      
+6.3      .         .        1.000     4.167      
+6.4      .         .        1.000     4.500      
+6.5      .         .        1.000     5.000      
+6.6      .         .        1.000     7.500      
+
+---- VAR y  
+
+     LOWER     LEVEL     UPPER    MARGINAL
+
+1      .         .        1.000      EPS       
+2      .        1.000     1.000      EPS       
+3      .        1.000     1.000      EPS       
+4      .         .        1.000      EPS       
+5      .        1.000     1.000      EPS       
+6      .         .        1.000      EPS       
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- VAR z              -INF     38.333     +INF       .         
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.000 SECONDS      2 MB  28.2.0 r750fa45 WEX-WEI
+
+
+USER: GAMS Development Corporation, USA              G871201/0000CA-ANY
+      Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Hannah Kleist\Documents\gamsdir\projdir\set-partitioning.gms
+Output     C:\Users\Hannah Kleist\Documents\gamsdir\projdir\set-partitioning.lst

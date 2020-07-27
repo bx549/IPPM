@@ -1154,6 +1154,69 @@ brown rice, 22\% vegetables, and 10\% corn meal for a cost of \$2.27
 per pound.
 \end{solution}
 
+% can we add some context to this problem? perhaps an industrial
+% setting such as max flow through a drainage system (water can only
+% flow in one direction.) ?
+% we should also provide GAMS code.
+\item \emph{Maximum flow through a network.}  For the network shown
+  below, formulate a linear programming problem to find the maximum
+  flow from source node $s$ to sink node $t$.  The number on each edge
+  indicates its capacity. The arrows indicate the direction of flow.
+
+\vspace{.2in}
+\begin{center}
+\begin{tikzpicture}[>=latex]
+
+  \node[circle,draw] (source) at (0,2) {$s$};
+  \node[circle,draw] (1) at (2,4) {1};
+  \node[circle,draw] (2) at (2,0) {2};
+  \node[circle,draw] (3) at (5,4) {3};
+  \node[circle,draw] (4) at (5,0) {4};
+  \node[circle,draw] (sink) at (7,2) {$t$};
+
+  \draw[->] (source) -- (1) node[above=3pt,pos=.5]{4};
+  \draw[->] (source) -- (2) node[above=3pt,pos=.5]{6};
+  \draw[->] (2) -- (1) node[right,pos=.5]{4};
+  \draw[->] (1) -- (3) node[above,pos=.5]{6};
+  \draw[->] (1) -- (4) node[right=2pt,pos=.4]{2};
+  \draw[->] (2) -- (4) node[above,pos=.5]{4};
+  \draw[->] (3) -- (sink) node[right=2pt,pos=.5]{6};
+  \draw[->] (4) -- (sink) node[above=2pt,pos=.5]{2};
+  \draw[->] (4) -- (3) node[right,pos=.5]{1};
+  
+\end{tikzpicture}
+\end{center}
+
+\begin{solution}
+  \bs
+  Add an artificial edge from sink node $t$ to source node $s$ that
+  has unlimited capacity. Let $x_{ij}$ be the amount of flow from node
+  $i$ to node $j$ for each directed edge $i,j$ that exists in the network.
+  The problem formulation is
+  
+\[
+  \begin{array}{lrrrrrrrrl}
+    \textrm{maximize}   & x_{ts} & & & & & & & \\
+    \textrm{subject to} & & & x_{s1} & + & x_{s2} & - & x_{ts} & = & 0 \\
+    & x_{13}&+ & x_{14} & - & x_{s1} & - & x_{21} & = & 0 \\
+    & & & x_{24} & + & x_{21} & - & x_{s2} & = & 0 \\
+    & & & x_{3t} & - & x_{13} & - & x_{43} & = & 0 \\
+    & x_{43} & + & x_{4t} & - & x_{14} & - & x_{24} & = & 0 \\
+                        & & & x_{ts} & - & x_{3t} & - & x_{4t} & = & 0 \\
+    &&&&&&& x_{s1} & \leq & 4 \\
+    &&&&&&& x_{s2} & \leq & 6 \\
+    &&&&&&& x_{13} & \leq & 6 \\
+    &&&&&&& x_{21} & \leq & 4 \\
+    &&&&&&& x_{14} & \leq & 2 \\
+    &&&&&&& x_{24} & \leq & 4 \\
+    &&&&&&& x_{43} & \leq & 1 \\
+    &&&&&&& x_{4t} & \leq & 2 \\
+    &&&&&&& x_{3t} & \leq & 6 \\
+    \multicolumn{7}{r}{x_{ij}}&\geq & 0 & \text{for all edges $i,j$}
+  \end{array}
+\]
+
+\end{solution}
 
 % re-written by Hannah
 \item \emph{Golf lessons.}  Amy and Brian are professional
@@ -1238,25 +1301,25 @@ will be the same.
 
 % we need GAMS code for this problem, otherwise it's OK
 \item \emph{A supply chain problem.} A company will produce the same
-  new product at two different factories, and then the product will be
-  shipped to two warehouses. Factory 1 can send an unlimited amount by
-  rail to warehouse 1 only, whereas factory 2 can send an unlimited
-  amount by rail to warehouse 2 only. However, independent truckers
-  can can be used to ship up to 50 units from each factory to a
-  distribution center (DC), from which up to 50 units can be shipped
-  to each warehouse.  The shipping cost for each alternative is shown
-  in the following table, along with the amounts to be produced and
-  the amounts needed at the warehouses.
+new product at two different factories, and then the product will be
+shipped to two warehouses. Factory 1 can send an unlimited amount by
+rail to warehouse 1 only, whereas factory 2 can send an unlimited
+amount by rail to warehouse 2 only. However, independent truckers
+can can be used to ship up to 50 units from each factory to a
+distribution center (DC), from which up to 50 units can be shipped
+to each warehouse.  The shipping cost for each alternative is shown
+in the following table, along with the amounts to be produced and
+the amounts needed at the warehouses.
 
 \begin{center}
 \begin{tabular}{|l|r|r|r|r|}\hline
- & \multicolumn{3}{c|}{Unit shipping cost} & \\ \cline{2-4}
-    & & \multicolumn{2}{c|}{Warehouse} & \\ \cline{3-4} 
-\diagbox[width=10em]{From}{To}&  DC & WH1 & WH2 & supply \\ \hline
-  Factory 1&  3 &  7 & -- & 80\\
-  Factory 2&  4 &  --&  9 & 70\\
-  DC       &    &  2 &  4 &   \\ \hline
-  demand   &    & 60 & 90 &   \\ \hline
+      & \multicolumn{3}{c|}{Unit shipping cost} & \\ \cline{2-4}
+      & & \multicolumn{2}{c|}{Warehouse} & \\ \cline{3-4} 
+      \diagbox[width=10em]{From}{To}&  DC & WH1 & WH2 & supply \\ \hline
+      Factory 1&  3 &  7 & -- & 80\\
+      Factory 2&  4 &  --&  9 & 70\\
+      DC       &    &  2 &  4 &   \\ \hline
+      demand   &    & 60 & 90 &   \\ \hline
 \end{tabular}
 \end{center}
 
@@ -1275,49 +1338,153 @@ is the DC, node 4 is warehouse 1, and node 5 is warehouse 2.  Let
 $x_{ij}$ be the number of products shipped from node $i$ to node $j$.
 
 \begin{center}
-\begin{tikzpicture}[>=latex]
-  \node[circle,draw](f1) at (0,2) {1};
-  \node[circle,draw](f2) at (0,0) {2};
-  \node[circle,draw](dc) at (3,1) {3};
-  \node[circle,draw](wh2) at (6,0) {5};
-  \node[circle,draw](wh1) at (6,2) {6};
+      \begin{tikzpicture}[>=latex]
+      \node[circle,draw](f1) at (0,2) {1};
+      \node[circle,draw](f2) at (0,0) {2};
+      \node[circle,draw](dc) at (3,1) {3};
+      \node[circle,draw](wh2) at (6,0) {5};
+      \node[circle,draw](wh1) at (6,2) {4};
 
-  \node[anchor=east] at (f1) {[80]~~~~};
-  \node[anchor=east] at (f2) {[70]~~~~};
-  \node[anchor=west] at (wh1) {~~~[-60]};
-  \node[anchor=west] at (wh2) {~~~[-90]};
+      \node[anchor=east] at (f1) {[80]~~~~};
+      \node[anchor=east] at (f2) {[70]~~~~};
+      \node[anchor=west] at (wh1) {~~~[-60]};
+      \node[anchor=west] at (wh2) {~~~[-90]};
 
-  \draw[->] (f1) to [out=20,in=160]  node[above,pos=.5]{7} (wh1);
-  \draw[->] (f2) to [out=340,in=200] node[below,pos=.5]{9} (wh2);
-  \draw[->] (f1) -- (dc) node[above,pos=.2]{3} node[above,pos=.7]{$\leq 50$};
-  \draw[->] (f2) -- (dc) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
-  \draw[->] (dc) -- (wh1) node[above,pos=.2]{2} node[above,pos=.7]{$\leq 50$};
-  \draw[->] (dc) -- (wh2) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
-\end{tikzpicture}
+      \draw[->] (f1) to [out=20,in=160]  node[above,pos=.5]{7} (wh1);
+      \draw[->] (f2) to [out=340,in=200] node[below,pos=.5]{9} (wh2);
+      \draw[->] (f1) -- (dc) node[above,pos=.2]{3} node[above,pos=.7]{$\leq 50$};
+      \draw[->] (f2) -- (dc) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
+      \draw[->] (dc) -- (wh1) node[above,pos=.2]{2} node[above,pos=.7]{$\leq 50$};
+      \draw[->] (dc) -- (wh2) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
+      \end{tikzpicture}
 \end{center}
-  
+
 \[
 \begin{array}{lrrrrrrrrrrl}
-\textrm{maximize} & 3x_{13} &+& 4x_{23} &+& 7x_{14} &+& 9x_{25} &+& 2x_{34} &+& 4x_{35} \\
-  \textrm{subject to} &&&&&&& x_{12} &+& x_{14} &=& 80\\
-                  &&&&&&& x_{23} &+& x_{25} &=& 70\\
-                  &&&&&&& x_{34} &+& x_{14} &=& 60\\
-                  &&&&&&& x_{25} &+& x_{35} &=& 90\\
-  &&&&&&&&& x_{13} & \leq & 50\\
-  &&&&&&&&& x_{23} & \leq & 50\\
-  &&&&&&&&& x_{34} & \leq & 50\\
-  &&&&&&&&& x_{35} & \leq & 50\\
-  &&& x_{13} &+& x_{23} &-& x_{34} &-& x_{35} &=& 0\\
+\textrm{minimize} & 3x_{13} &+& 4x_{23} &+& 7x_{14} &+& 9x_{25} &+& 2x_{34} &+& 4x_{35} \\
+\textrm{subject to} &&&&&&& x_{13} &+& x_{14} &=& 80\\
+&&&&&&& x_{23} &+& x_{25} &=& 70\\
+&&&&&&& x_{34} &+& x_{14} &=& 60\\
+&&&&&&& x_{25} &+& x_{35} &=& 90\\
+&&&&&&&&& x_{13} & \leq & 50\\
+&&&&&&&&& x_{23} & \leq & 50\\
+&&&&&&&&& x_{34} & \leq & 50\\
+&&&&&&&&& x_{35} & \leq & 50\\
+&&& x_{13} &+& x_{23} &-& x_{34} &-& x_{35} &=& 0\\
 \multicolumn{10}{r}{x_{ij}} & \geq & 0
 \end{array}
 \]
-The flow balance constraint at the DC is unnecessary because
-total supply equals total demand. 
+We note that the flow balance constraint at the DC is unnecessary
+because total supply equals total demand.
 \end{solution}
 
+% this problem needs a new context. is there something in sports
+% scheduling?  or in a mfg process a chemical solution (goo that is
+% hard when cold flows when heated) holds parts to be machined in
+% place. over a 4 week period the goo can be filtered or replaced
+% (with new.) ???
+\item \emph{Supplies for a multi-day event.}  An automobile
+  association is organizing a series of car races that will last for
+  four days. The organizers know that $r_j \geq 0$ special tires in
+  good condition will be required on each of the four successive days,
+  $j = 1, 2, 3, 4$. They can meet these needs either by buying new
+  tires at $P$ dollars per new tire or by reshaping used tires
+  (reshaping is a technique by which the grooves on the tire are
+  deepened, using a special profile-shaped tool). Two kinds of service
+  are available for reshaping: normal service, which requires one full
+  day at $N$ dollars per tire, and an overnight quick service, that
+  costs $Q$ dollars per tire. The association currently has zero
+  tires.
+
+\begin{enumerate}
+\item  Formulate a network flow problem that will allow the association to
+  meet the requirements at minimal cost. You should draw a diagram of
+  the network to help you formulate the problem. Take into account the
+  fact that, at the end of day $j$, some used tires may not be sent to
+  reshaping.
+
+\item Now suppose that a tire may be reshaped only once. How does the
+  model change?
+\end{enumerate}
+
+% this problem needs a new context. but is a version of the well-known
+% "caterer's" problem. what is a modern day version? a hotel that uses
+% a service to launder sheets?
+% i can create the LaTeX code for the network after we decide on the
+% context.
+\item \emph{Laundering napkins.} The Egserk Catering Company manages a
+  moderate-sized luncheon cafeteria featuring prompt service,
+  delectable cuisine, and luxurious surroundings. The desired
+  atmosphere requires fresh linen napkins, which must be available at
+  the start of each day. Normal laundry takes one full day at 1.5
+  cents per napkin; rapid laundry can be performed overnight but costs
+  2.5 cents a napkin. Under usual usage rates, the current napkin
+  supply of 350 is adequate to permit complete dependence upon the
+  normal laundry; however, the additional usage resulting from a
+  three-day seminar to begin tomorrow poses a problem. It is known
+  that the napkin requirements for the next three days will be 300,
+  325, and 275, in that order. It is now midafternoon and there are
+  175 fresh napkins, and 175 soiled napkins ready to be sent to the
+  laundry. It is against the health code to have dirty napkins linger
+  overnight. The cafeteria will be closed the day after the seminar
+  and, as a result, all soiled napkins on the third day can be sent to
+  normal laundry and be ready for the next business day.  The caterer
+  wants to plan for the napkin laundering so as to minimize total
+  cost, subject to meeting all his fresh napkin requirements and
+  complying with the health code.
+
+  Interpret this problem as one of network flow.  Draw the network and
+  formulate the LP (i.e. the decision variables, the objective
+  function, and the constraints.)
+
 \subsubsection*{Integer Programming}
-% hannah
-% the idea is that it is a set covering problem.
+% this problem is OK.
+\item \emph{Discrete purchases.} Sam is considering purchasing some
+  combination of a new car, a washer, a dryer, and a high-definition
+  television (HDTV). For practical reasons, Sam knows that he can only
+  buy the dryer if he also buys the washer. It could still make sense
+  to buy the washer without the dryer because Sam could dry his
+  clothes on a clothesline. Due to political reasons with Sam's
+  spouse, he can only purchase the HDTV if he does not purchase the
+  car. Taking everything into consideration, Sam has estimated the
+  values for each item. The item utilities (converted to dollars) and
+  purchase prices in dollars are shown in the table below.  Sam's
+  total budget is \$16,000. Formulate a binay integer programming
+  problem to maximize Sam's estimated value while respecting the
+  practicality, spouse, and budget constraints mentioned above.
+
+\begin{center}
+\begin{tabular}{lcc}
+Item    &  Estimated value  & Price   \\  \hline
+car     &   \$9,500   &  \$12,000 \\
+washer  &   \$3,000   &  \$2,000  \\
+dryer   &   \$3,000   &  \$2,000  \\
+HDTV    &   \$5,000   &  \$3,000  \\
+\end{tabular}
+\end{center}
+
+\begin{solution}
+\bs
+
+\[ \text{Let}~x_j = \begin{cases}
+1 \quad \text{if item $j$ is purchased}\\
+0 \quad \text{otherwise} \end{cases}
+\]
+
+where the index $j = 1,2,3,4$ corresponds to the car, washer, dryer,
+and HDTV. The problem is to 
+\[
+\begin{array}{lrrrrrrrrl}
+\textrm{maximize}   & 9.5x_1& +& 3x_2&+& 3x_3 &+& 5x_4 & & \\
+  \textrm{subject to} & 12x_1& +& 2x_2&+& 2x_3 &+& 3x_4 & \leq & 16 \\
+                    &&&&&& &x_3 & \leq & x_2 \\
+                    &&&&& x_1 & + & x_4 &\leq& 1 \\
+\multicolumn{8}{r}{x_j}&  \in & \{0,1\}
+\end{array}
+\]
+\end{solution}
+
+% re-written by hannah
 \item \emph{A set covering problem.}  A general merchandise retailer
   is planning to expand into a new metropolitan area comprised of
   seven cities. The following table shows the distance (in miles)
@@ -1372,43 +1539,78 @@ problem formulation is
 \]
 \end{solution}
 
-% this problem needs to be re-written with a different context and
-% different data.
-\item \emph{A set partitioning problem.}  In a real estate development
-  project, a residential area is divided into five tracts.  Two fire
-  stations are to be constructed. There can be no more than one
-  station in any tract. Furthermore, a station will respond to all
-  fires in the tract in which it is located and to fires in the other
-  tracts assigned to it.  The decisions to be made are
-\begin{compactenum}
-\item In which tracts are fire stations located
-\item Assignment of the other tracts
-\end{compactenum}
-The objective is to minimize the overall average response time to fires.
-Response times in the table below are in minutes.
+% re-written by hannah
+\item \emph{A set partitioning problem.} A DSL (Digital Subscriber
+  Line) Internet service provider is determining where to construct
+  three central offices in a city. A customer’s DSL connection works
+  better when they are near a central office, so customers that live
+  close to a new central office will experience faster Internet
+  speeds. The city is divided into six geographical regions, and an
+  industrial engineer must decide which regions should have central
+  offices. The engineer must also determine which regions each central
+  office will serve. The following table indicates the average
+  internet speed in a region, depending on the region of the central
+  office that provides service.
 
-\setlength{\tabcolsep}{7pt}
-\renewcommand{\arraystretch}{1.2}
-\newcolumntype{Y}{>{\centering\arraybackslash}X}
-\begin{tabularx}{3.5in}{Y|rrrrrr}
-  station located in tract  & \multicolumn{6}{l}{response time to fire in tract} \\
-   & 1 & 2 & 3 & 4 & 5 &\\ \hline
-  1 & 5 & 12 & 30 & 20 & 15 &\\
-  2 & 20 & 4 & 15 & 10 & 25 &\\
-  3 & 15 & 20 & 6 & 15 & 12 &\\
-  4 & 25 & 15 & 25 & 4 & 10 &\\
-  5 & 10 & 25 & 15 & 12 & 5 &\\ \hline
-  average number of fires per day & 2 & 1 & 3 & 1 & 3 &
+\begin{center}
+\begin{tabularx}{3.75in}{>{\setlength\hsize{.9in}\centering}Y|ZZZZZZ}
+\multirow{2}{.9in}{location of central office} & \multicolumn{6}{c}{avg internet speed in region} \\
+& 1 & 2 & 3 & 4 & 5 & 6\\ \hline
+1 & 45 & 35 & 30 & 25 & 10 & 12\\
+2 & 35 & 45 & 20 & 20 & 25 & 18\\
+3 & 30 & 20 & 45 & 30 & 15 & 25\\
+4 & 25 & 20 & 30 & 45 & 12 & 27\\
+5 & 10 & 25 & 15 & 12 & 45 & 30\\ 
+6 & 12 & 18 & 25 & 27 & 30 & 45\\ 
 \end{tabularx}
-\vspace{.2in}
+\end{center}
 
-Formulate a linear integer programming model that will locate the fire stations
-and assign them to the other tracts without fire stations while minimizing
-the overall average response time.
-% need to put solution in LaTeX
+Formulate an integer programming model to determine the regions in
+which central offices are located and the regions to which each
+central is assigned so that the average internet speed in the city is
+maximized.
 
-% hannah
-% integer programming with a fixed charge
+\begin{solution}
+  \bs Let $a_{ij}$ be the data describing the average internet speed
+  in region $j$ when served by a central office in region $i$. Also,
+  let the decision variables be
+
+\begin{equation*}
+\text{$x_{ij}$} = 
+\begin{cases}
+    1 & \text{if central office in region $i$ provides service to region $j$}\\
+    0 & \text{otherwise.}
+\end{cases}
+\end{equation*}
+and
+\begin{equation*}
+\text{$y_i$} = 
+\begin{cases}
+    1 & \text{if central office is constructed in region $i$}\\
+    0 & \text{otherwise.}
+\end{cases}
+\end{equation*}
+
+The problem is to
+\[
+\begin{array}{lll}
+\textrm{maximize} & \multicolumn{2}{c}{\displaystyle\sum_{i=1}^6 \sum_{j=1}^6 a_{ij}x_{ij}} \\
+\textrm{subject to} & \displaystyle\sum_{i=1}^6 y_i &= 3  \\
+& \displaystyle\sum_{i=1}^{6} x_{ij} &= 1~\text{for all $j$}\\ 
+& x_{ij} &\leq y_i~\text{for all $i$ and $j$} \\
+& \multicolumn{2}{r}{ x_{ij} \in \{0,1\}} \\
+& \multicolumn{2}{r}{ y_i \in \{0,1\}} \\
+& \multicolumn{2}{r}{ i = 1,\ldots,6} \\
+& \multicolumn{2}{r}{ j = 1,\ldots,6}
+\end{array}
+\]
+The objective function will maximize the average Internet speed of the
+six regions. We could include the constant 1/6, which would change the
+value of the objective function, but not the values of the decision
+variables.
+\end{solution}
+
+% re-written by hannah
 \item \emph{A problem with a fixed charge.}  A bicycle manufacturing
   company can produce three types of bikes: mountain bikes, road
   bikes, and fat bikes. The company rents specific machinery for
@@ -1473,57 +1675,75 @@ where $M$ is a large number, $x_i \geq 0$, $x_i$ are integer-valued,
 $y_i \in \{0,1\}$, and $i = 1,2,3$.
 \end{solution}
 
-% this problem is OK.
-\item \emph{Discrete purchases.} Sam is considering purchasing some
-  combination of a new car, a washer, a dryer, and a high-definition
-  television (HDTV). For practical reasons, Sam knows that he can only
-  buy the dryer if he also buys the washer. It could still make sense
-  to buy the washer without the dryer because Sam could dry his
-  clothes on a clothesline. Due to political reasons with Sam's
-  spouse, he can only purchase the HDTV if he does not purchase the
-  car. Taking everything into consideration, Sam has estimated the
-  values for each item. The item utilities (converted to dollars) and
-  purchase prices in dollars are shown in the table below.  Sam's
-  total budget is \$16,000. Formulate a binay integer programming
-  problem to maximize Sam's estimated value while respecting the
-  practicality, spouse, and budget constraints mentioned above.
+% this problem needs a new context. right now it could be an LP, but
+% would like for it to be an IP, so the number of "units" to invest
+% should probably be no more than about 100? could even be 50.
+% we need a solution in GAMS. I have place my AMPL solution on github
+% in the file "gambler.mod"
+\item \emph{A maxi-min problem.}  A gambler divides her money (\$500)
+  among four options.  There are three possible outcomes. The outcome
+  is determined by a random event A, B, or C, and the return for each
+  possible outcome per dollar invested is shown in the table
+  below. For example, if the gambler invests \$1 in option 1 and
+  outcome B occurs, then the gambler receives \$5. The gambler's
+  strategy is to maximize the minimum return. Provide an integer
+  programming formulation and obtain a solution.  \emph{Hint:} The
+  decision variables are the amounts to invest in each
+  option. Introduce another variable (say $w$) that represents the
+  minimum return. Then if $w$ is the minimum return, the actual return
+  for each possible outcome must be greater than or equal to $w$.)
 
-\begin{center}
-\begin{tabular}{lcc}
-Item    &  Estimated value  & Price   \\  \hline
-car     &   \$9,500   &  \$12,000 \\
-washer  &   \$3,000   &  \$2,000  \\
-dryer   &   \$3,000   &  \$2,000  \\
-HDTV    &   \$5,000   &  \$3,000  \\
+\begin{tabular}{r|rrr}
+& \multicolumn{3}{c}{outcome}\\
+option & A & B & C \\ \hline
+1 & -3 & 5 & 3 \\
+2 & 4 & -3 & -9 \\
+3 & -7 & 9 & 10 \\
+4 & 15 & 4 & -8
 \end{tabular}
-\end{center}
 
 \begin{solution}
-\bs
+  \bs Let the decision variables $x_i$ represent the amounts to invest
+in each option, where $i = 1,2,3,4$. Also, let $w$ represent
+the minimum return among the three options. Then the gambler wants to
 
-\[ \text{Let}~x_j = \begin{cases}
-1 \quad \text{if item $j$ is purchased}\\
-0 \quad \text{otherwise} \end{cases}
-\]
-
-where the index $j = 1,2,3,4$ corresponds to the car, washer, dryer,
-and HDTV. The problem is to 
 \[
-\begin{array}{lrrrrrrrrl}
-\textrm{maximize}   & 9.5x_1& +& 3x_2&+& 3x_3 &+& 5x_4 & & \\
-  \textrm{subject to} & 12x_1& +& 2x_2&+& 2x_3 &+& 3x_4 & \leq & 16 \\
-                    &&&&&& &x_3 & \leq & x_2 \\
-  &&&&& x_1 & + & x_4 &\leq& 1 \\
-\multicolumn{8}{r}{x_j}&  \in & \{0,1\}
+\begin{array}{lrrrrrrrrrrr}
+\textrm{maximize} & w & \multicolumn{10}{c}{} \\
+\textrm{subject to} & -3x_1 & + & 4x_2 & - & 7x_3 & + & 15x4 &-&500&\geq & w \\
+& 5x_1 & - & 3x_2 & + & 9x_3 & + & 4x4 &-&500&\geq & w \\
+& 3x_1 & - & 9x_2 & + & 10x_3 & - & 8x4 &-&500&\geq & w \\
+&  & & x_1 & + & x_2 & + & x_3 &+&x_4& = & 500 \\
 \end{array}
 \]
+where $x_i \geq 0$, and $w$ is unrestricted.
 \end{solution}
 
-% this problem needs to be re-written. the form of the problem should
-% remain, but can we find a situation/problem to which this model
-% would apply? we can change the coefficients if needed.
-% no GAMS code is needed for this problem.
-\item \emph{Modeling with binary variables.} Consider the problem:
+% re-written by hannah
+\item \emph{Modeling with binary variables.} This problem (slightly
+  altered) appears in~\cite{bradley:1977}, an excellent book that is
+  freely available on-line. A business sells video games and
+  movies. For each video game sold, the business earns a profit of
+  \$1. For each movie sold, the business earns a profit of \$2. The
+  store manager, who is a bit quirky, has imposed the following
+  restrictions on customers' purchases.
+
+\begin{compactenum}[i)]
+\item There is a limit of eight items (total) per customer.
+\item The number of movies purchased minus the number of video games
+purchased cannot exceed 2.
+\item The number of video games purchased minus the number of movies
+purchased cannot exceed four.
+\item A customer can purchase zero, one, four, or six video games. No
+  other quantities of video games are allowed. There is no such
+  restriction on the quantity of movies.
+\end{compactenum}
+
+The manager would like to determine the combination of purchases by a
+customer that will maximize profit. Letting $x_1$ and $x_2$ represent
+the quantities of video games and movies, respectively, the problem
+can be formulated as follows.
+
 \[
 \begin{array}{lrrrrrrl}
 \textrm{maximize} &   & z & = & x_1 & + & 2x_2 & \\
@@ -1539,28 +1759,29 @@ and HDTV. The problem is to
 \item Reformulate the problem as an equivalent integer linear
   program.\label{ex:ip}
 \item How would your answer to part \ref{ex:ip} change if the
-  objective function were changed to:
+  objective function was instead
 \[ \text{maximize~} z = x_1^2 + 2x_2\text{?} \] \label{ex:quad}
 \end{enumerate}
 
 \begin{solution} 
 \bs Introduce the following binary variables. Let
 \[ y_i = \begin{cases}
-    1 \quad \text{if}~ x_1 = i \quad i \in \{0,1,4,6\}\\
-    0 \quad \text{otherwise}
-    \end{cases}
-  \]
+1 \quad \text{if}~ x_1 = i \quad i \in \{0,1,4,6\}\\
+0 \quad \text{otherwise}
+\end{cases}
+\]
 
 Now the binary integer programming formulation is
 \[
-  \begin{array}{lrrrrrrrrl}
-    \textrm{maximize}   &&& y_1 & + & 4y_4 & + & 6y_6 & + & 2x_2 \\
-    \textrm{subject to} & y_0 & + & y_1 & + & y_4 & + & y_6 & = & 1 \\
-                        & -y_1 & - & 4y_4 & - & 6y_6 & + & x_2 & \leq & 2\\
-                        & y_1 & + & 4y_4 & + & 6y_6 & - & x_2 & \leq & 4\\
-    \multicolumn{8}{r}{x_2}& \geq & 0 ~\text{and integer}\\
-    \multicolumn{8}{r}{y_0,y_1,y_4,y_6}& \in & \{0,1\}
-  \end{array}
+\begin{array}{lrrrrrrrrl}
+\textrm{maximize}   &&& y_1 & + & 4y_4 & + & 6y_6 & + & 2x_2 \\
+\textrm{subject to} & y_0 & + & y_1 & + & y_4 & + & y_6 & = & 1 \\
+& y_1 & + & 4y_4 & + & 6y_6 & + & x_2 & \leq & 8\\
+& -y_1 & - & 4y_4 & - & 6y_6 & + & x_2 & \leq & 2\\
+& y_1 & + & 4y_4 & + & 6y_6 & - & x_2 & \leq & 4\\
+\multicolumn{8}{r}{x_2}& \geq & 0 ~\text{and integer}\\
+\multicolumn{8}{r}{y_0,y_1,y_4,y_6}& \in & \{0,1\}
+\end{array}
 \]
 For part \ref{ex:quad}, change the coefficients on the $y_i$
 variables in the objective function only to be the squares,
@@ -1569,7 +1790,146 @@ objective function is transformed from a quadratic to a linear function
 of the variables.
 \end{solution}
 
+\begin{comment}
+% Let's hold off on this problem for now. This problem should be explained
+% in the chapter.
+\item \emph{Scheduling a sports league.} An amateur hockey league is
+  being formed among four cities in northern Minnesota. The cities
+  with teams are Bemidji, Park Rapids, Crookston, and Detroit
+  Lakes. The league is to be split into two divisions, A and B. Each
+  division will have two teams. Each team is to play four away games
+  against the opponent in their own league and two away games against
+  opponents in the other league. We can represent this with the
+  following ``away-game matrix''.
+
+\begin{center}
+\begin{tabular}{rrr}
+    & A & B\\
+  A & 4 & 2\\
+  B & 2 & 4
+\end{tabular}
+\end{center}
+
+The distances between cities are:
+
+\begin{center}
+\begin{tabular}{lrrrr}
+  & \multicolumn{4}{c}{Distance in miles} \\
+            & Bemidji & Park Rapids & Crookston & Detroit Lakes \\
+Bemidji     &  0  &     47   &      87   &     85\\
+Park Rapids  & 47  &     0    &      114  &     39\\
+Crookston   & 87  &     114  &      0    &     92\\
+Detroit Lakes& 85  &     39   &      92   &     0
+\end{tabular}
+\end{center}
+
+Find an assignment of teams to divisions that minimizes total league
+travel.
+
+\begin{solution}
+\bs The league structure that minimizes total travel is to assign
+Bemidji and Crookston to one division, and assign Detroit Lakes and
+Park Rapids to the other division. My AMPL output is shown below.
+
+\begin{Verbatim}[samepage=true]
+ampl: include '/home/darin/Dropbox/isye/ie1101/ampl/options.run';
+ampl: model '/home/darin/Dropbox/isye/ie1101/hw/realignment.mod';
+ampl: data '/home/darin/Dropbox/isye/ie1101/hw/realignment-mn.dat';
+ampl: solve;
+CPLEX 12.7.1.0: sensitivity
+CPLEX 12.7.1.0: optimal integer solution; objective 2360
+36 MIP simplex iterations
+0 branch-and-bound nodes
+
+suffix up OUT;
+suffix down OUT;
+suffix current OUT;
+ampl: display x;
+x :=
+bemidji      divA   1
+bemidji      divB   0
+crookston    divA   1
+crookston    divB   0
+detroitlakes divA   0
+detroitlakes divB   1
+parkrapids   divA   0
+parkrapids   divB   1
+;  
+\end{Verbatim}
+\end{solution}
+\end{comment}
+
 \subsubsection*{Deterministic Dynamic Programming}
+
+\item \emph{An optimal assignment of resources.} 
+The number of crimes in each of a city's three
+  precincts depends on the number of police cars assigned to each
+  precinct. The number of crimes is shown in the table below. Three
+  patrol cars are available. Use dynamic programming to determine how
+  many patrol cars should be assigned to each precinct so that the
+  total number of crimes is minimized.
+
+  \begin{center}
+  \begin{tabularx}{3.5in}{r|XXXX}
+    & \multicolumn{4}{c}{No. of patrol cars assigned to precinct} \\
+    &0 & 1 & 2 & 3 \\ \hline
+    precinct 1 & 14 & 10 & 7 & 4 \\
+    precinct 2 & 25 & 19 & 16 & 14 \\
+    precinct 3 & 20 & 14 & 11 & 8
+  \end{tabularx}
+\end{center}
+
+\begin{solution}
+  \bs A natural representation for dynamic programming is that the
+  stage is the precinct and the state is the number of patrol cars
+  remaining. Let $x_i$ represent the number of cars to assign to
+  precinct $i$, $i = 1,2,3$. With one precinct to go it makes sense to
+  assign all remaining cars. In this stage I am assigning cars to
+  precinct 3.
+
+  \begin{tabular}{rrrr}
+    state & $x_3$ & cost & $x_3^{\ast}$ \\ \hline
+    0 & 0 & 20 & 0 \\
+    1 & 1 & 14 & 1 \\
+    2 & 2 & 11 & 2 \\
+    3 & 3 & 8 & 3
+  \end{tabular}
+
+  With two precincts to go, we are assigning cars to precinct 2.
+
+  \begin{tabular}{llccll}
+    state & $x_2$ & cost & cost-to-go & total & $x_2^{\ast}$ \\ \hline
+    0 & 0 & 25 & 20 & 45 & 0 \\ \hline
+
+    \multirow{2}{*}{1} & 0 & 25 & 14 & $39^{\ast}$ & \multirow{2}{*}{0} \\
+          & 1 & 19 & 20 & 39 &  \\ \hline
+
+    \multirow{3}{*}{2} & 0 & 25 & 11 & 36 & \multirow{3}{*}{1} \\
+          & 1 & 19 & 14 & 33$^{\ast}$ &  \\
+          & 2 & 16 & 20 & 36 & \\ \hline
+
+    \multirow{4}{*}{3} & 0 & 25 & 8 & 33 & \multirow{4}{*}{1}\\
+    & 1 & 19 & 11 & $30^{\ast}$ &  \\
+    & 2 & 16 & 14 & 30 & \\
+    & 3 & 14 & 20 & 34 & 
+  \end{tabular}
+
+  With three precincts to go we are assigning cars to precinct 1. At this
+  stage no cars have been assigned.
+
+  \begin{tabular}{llrcll}
+    state & $x_1$ & cost & cost-to-go & total & $x_1^{\ast}$ \\ \hline
+    \multirow{4}{*}{3} & 0 & 14 & 30 & 44 & \multirow{4}{*}{1} \\
+          & 1 & 10 & 33 & $43^{\ast}$ & \\
+          & 2 & 7 & 39 & 46 & \\
+          & 3 & 4 & 45 & 49 &
+  \end{tabular}
+
+  The optimal solution is to assign 1 car to each of the three
+  precincts for a total of 43 crimes. You may have selected a
+  different sequence of precincts for the stages, but the solution
+  should be the same.
+\end{solution}
 
 \subsubsection*{Deterministic Inventory Models}
 
