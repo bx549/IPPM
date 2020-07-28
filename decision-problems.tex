@@ -1170,50 +1170,55 @@ poor weather is greater than .64.
 
 \end{solution}
 
-% this problem needs a new context. we cannot use the example of a lost dog.
-% it is a game against nature. the main idea is to have practice with:
-% 1. formulation of a decision problem and making a decision based on expected value,
-% 2. using Baye's formula to update a prior probability, and 
-% 3. computing the value of perfect information.
-\item \emph{The lost dog and the value of perfect information.} Oscar
-  is walking his dog Pablo down a road. On one side of the road is
-  forest A and on the other side of the road is forest B. Pablo
-  wanders off into one the forests, but Oscar was preoccupied with his
-  cell phone and doesn't know which one. If Pablo is in forest A,
-  Oscar's probability of finding him by the end of the day is 0.5. If
-  Pablo is in forest B, Oscar's probability of finding him by the end
-  of the day is .8. Oscar's prior probability for the dog being in
-  forest A is 0.7 (Oscar knows Pablo likes forest A a little better).
+% written by Emily
+\item \emph{Quality control and the value of perfect information.} 
+  A worker in a factory producing potato chips notices that a small 
+  bolt is missing off of a piece of equipment in the packaging 
+  area and determines that it fell into a bag before it was
+  sealed. Two pallets worth of chips have been produced since 
+  the last routine check was performed determining that the 
+  bolt was in place. The worker does not want to throw away all
+  bags of chips that the bolt could possibly be in, so he decides
+  to search for the bolt. He has to decide if he should start 
+  searching bags on pallet one or pallet two. If the bolt fell into
+  a bag on pallet one and he searches bags on pallet one, there is a 0.5 
+  chance of finding it by the end of the day. If the bolt fell into 
+  a bag on pallet two and he searches pallet two, there is a 0.8 chance
+  that he finds the bolt. The worker's prior probability that the bolt
+  is in a bag on pallet one is 0.7 (he thinks it was loose from some work done earlier in the day and fell off right away).
 
 \begin{enumerate}
-\item Oscar can only look in one forest per day. In which forest, A or
-  B, should he look for Pablo?  Oscar wants to maximize his
-  probability of finding Pablo. That is to say, Oscar's utility for
-  finding Pablo is equal to the probability of finding him.
-\item Suppose that at the end of the day, Oscar has not found Pablo
-  and must return home.  Assume that Pablo remains in whatever forest
-  he initially entered. In which forest should Oscar look on day 2?
-  \emph{Hint}: First update the prior probabilities that the dog is in
-  Forest A/B.
-\item Suppose that on the second day, just before Oscar begins to
-  search for Pablo, a person approaches and tells Oscar that he saw
-  the dog enter the forest, but wants some form of payment. How much
-  should Oscar be willing to pay for this perfect information?  Note
-  that the ``units'' for the payment are in terms of probabilities.
+\item The worker only has time to search one pallet per day. 
+  In which pallet, one or two, should he look for the bolt?  
+  The worker wants to maximize his
+  probability of finding the bolt. 
+\item Suppose that at the end of the day when the worker goes home,
+  he has not found the bolt yet. Which pallet should he 
+  search on day 2?
+  \emph{Hint}: First update the prior probabilities that the bolt is
+  in pallet one/two.
+\item Suppose that on the second day, just before the worker begins
+  to
+  search for the bolt, a security guard approaches and tells him
+  that he has access to security camera footage that would reveal when 
+  the bolt fell into a bag (revealing which pallet the bolt is in).
+  How much should the worker be willing to pay for this perfect 
+  information?  Note that the ``units'' for the payment are in 
+  terms of probabilities.
 \end{enumerate}
 
 \begin{solution}
 \bs
-Let $A$ be the event that Pablo is in forest A and let $B$ be the event
-that Pablo is in forest B. Also, let $F_A$ represent the event that Oscar
-finds Pablo in forest A (and similarly define $F_B$). We are given the
+Let $A$ be the event that the bolt is in pallet one and let $B$ be the event
+that the bolt is in pallet two. Also, let $F_A$ represent the event that the worker
+finds the bolt in pallet one (and similarly define $F_B$). We are given the
 following.
 \begin{align*}
   P(F_A \mid A) = 0.5 &\qquad P(\overline{F}_A \mid A) = 0.5 \\
   P(F_B \mid B) = 0.8 &\qquad P(\overline{F}_B \mid B) = 0.2 \\
 \end{align*}
 
-Oscar's decision problem is
+The worker's decision problem is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
@@ -1222,23 +1227,23 @@ Oscar's decision problem is
 & & \multicolumn{2}{c}{Nature} \\
 & & $0.7$ & $0.3$ \\
 & & $A$ & $B$  \\ \cline{3-4}
-\multirow{2}{.9in}{Oscar} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
+\multirow{2}{.9in}{Worker} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
 & \gtcol{Look in B} & \gtcol{0} & \gtcol{.8} \\ \cline{3-4}
 \end{tabularx}
 \endgroup
 \vspace{.2in}
 
-Oscar's best option is to look in forest A. He will find the dog on the first
+The best option is to look in pallet one. He will find the bolt on the first
 day with probability $0.7 \times 0.5 = 0.35$.
 
-On the second day, Oscar's belief that Pablo is in forest A is updated to
+On the second day, the worker's belief that the bolt is in pallet one is updated to
 \begin{align*}
   P(A \mid \overline{F}_A) &= \frac{P(\overline{F}_A \mid A)P(A)}{P(\overline{F}_A \mid A)P(A) + P(\overline{F}_A \mid B)P(B)}\\
                            &= \frac{0.5 \times 0.7}{0.5 \times 0.7 + 1 \times 0.3} \\
                            &= 0.538
 \end{align*}
 which implies that $P(B \mid \overline{F}_A) = 1 - 0.538 = 0.462$. On day two,
-Oscar's decision problem is
+the worker's decision problem is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
@@ -1247,23 +1252,24 @@ Oscar's decision problem is
 & & \multicolumn{2}{c}{Nature} \\
 & & $0.538$ & $0.462$ \\
 & & $A$ & $B$  \\ \cline{3-4}
-\multirow{2}{.9in}{Oscar} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
+\multirow{2}{.9in}{Worker} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
 & \gtcol{Look in B} & \gtcol{0} & \gtcol{.8} \\ \cline{3-4}
 \end{tabularx}
 \endgroup
 \vspace{.2in}
 
-and his best option is to look in forest B. Oscar will find Pablo with probability
+and his best option is to look in pallet two. The worker will find the bolt with probability
 \[ 0.462 \times 0.8 = 0.37\]
 
-With perfect information, but \emph{before} receiving the information, Oscar's
-expected value for the probability of finding Pablo is
+With perfect information, but \emph{before} receiving the information, the worker's
+expected value for the probability of finding the bolt is
 \[ 0.5 \times 0.538 + 0.8 \times 0.462 = 0.639 \]
-and in terms of probability ``units'', Oscar should be willing to pay
+and in terms of probability ``units'', he should be willing to pay
 \[ 0.639 - 0.37 = 0.269 \]
 for the information.
 
 \end{solution}
+
 
 % this problem is OK.
 \item \emph{Planting crops and the value of imperfect information.} A
