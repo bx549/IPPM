@@ -1171,10 +1171,7 @@ poor weather is greater than .64.
 \end{solution}
 
 % this problem needs a new context. we cannot use the example of a lost dog.
-% it is a game against nature. the main idea is to have practice with:
-% 1. formulation of a decision problem and making a decision based on expected value,
-% 2. using Baye's formula to update a prior probability, and 
-% 3. computing the value of perfect information.
+% written by Emily
 \item \emph{Contractors and the value of perfect information.} 
   A worker in a factory producing potato chips notices that a small 
   bolt is missing off of a piece of equipment in the packaging 
@@ -1198,22 +1195,24 @@ poor weather is greater than .64.
   The workers want to maximize their
   probability of finding the bolt. The less searching they have to do,
   the more bags of chips are still able to be sold.
-\item Suppose that at the end of the day, Oscar has not found Pablo
-  and must return home.  Assume that Pablo remains in whatever forest
-  he initially entered. In which forest should Oscar look on day 2?
-  \emph{Hint}: First update the prior probabilities that the dog is in
-  Forest A/B.
-\item Suppose that on the second day, just before Oscar begins to
-  search for Pablo, a person approaches and tells Oscar that he saw
-  the dog enter the forest, but wants some form of payment. How much
-  should Oscar be willing to pay for this perfect information?  Note
-  that the ``units'' for the payment are in terms of probabilities.
+\item Suppose that at the end of the day when the workers go home,
+  they have not found the bolt yet. Which pallet should the workers 
+  search on day 2?
+  \emph{Hint}: First update the prior probabilities that the bolt is in
+  pallet one/two.
+\item Suppose that on the second day, just before the workers begin to
+  search for the bolt, a security guard approaches and tells the workers
+  that he has access to security camera footage that would reveal when 
+  the bolt fell into a bag (revealing which pallet the bolt is in).
+  How much should the workers be willing to pay for this perfect 
+  information?  Note that the ``units'' for the payment are in 
+  terms of probabilities.
 \end{enumerate}
 
 \begin{solution}
 \bs
-Let $A$ be the event that Pablo is in forest A and let $B$ be the event
-that Pablo is in forest B. Also, let $F_A$ represent the event that Oscar
+Let $A$ be the event that the bolt is in pallet one and let $B$ be the event
+that the bolt is in pallet two. Also, let $F_A$ represent the event that Oscar
 finds Pablo in forest A (and similarly define $F_B$). We are given the
 following.
 \begin{align*}
@@ -1221,7 +1220,7 @@ following.
   P(F_B \mid B) = 0.8 &\qquad P(\overline{F}_B \mid B) = 0.2 \\
 \end{align*}
 
-Oscar's decision problem is
+The worker's decision problem is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
