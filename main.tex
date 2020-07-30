@@ -23,6 +23,7 @@
 \usepackage[nottoc,numbib]{tocbibind}
 \usepackage{color,colortbl}
 \usepackage{draftwatermark}
+\usepackage{float,wrapfig,varioref}
 
 \newcommand*\mean[1]{\overline{#1}}
 
@@ -53,7 +54,8 @@
 % with better spacing for readability and with vertical lines
 % that do not extend over all rows.
 \newcommand{\gtcol}[1]{\multicolumn{1}{c|}{#1}}
-\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}  % centered
+\newcolumntype{Z}{>{\raggedleft\arraybackslash}X} % right-justify
 
 \includecomment{solution}
 %\excludecomment{solution} % comment this out to create the solutions
@@ -67,7 +69,11 @@
   and Predictive Modeling}
 \thispagestyle{empty}
 %{\hspace{0.25in} \includegraphics{./ru_sun.jpg} }
-%\section*{\large \center Darin England}
+\begin{center}
+{\large Darin England\\
+Department of Industrial and Systems Engineering\\
+University of Minnesota, Minneapolis}
+\end{center}
 
 \newpage
 \noindent
@@ -93,6 +99,40 @@ for damages that may result from the use of information contained
 within.
 
 \tableofcontents
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+
+\subsubsection*{Goals} 
+
+The book provides a practical introduction to the use of mathematical
+modeling and statistical computing techniques to solve decision
+problems that arise in various industrial settings. Examples are drawn
+from manufacturing, finance, sports, healthcare, retail,
+transportation, and other areas. In realistic settings, proficiency
+with mathematical and statistical computing software is required to
+solve these problems. We use the algebraic modeling language GAMS for
+solving mathematical programming problems and we use the R programming
+language for obtaining answers to statistical computing problems;
+however, the methodologies that are developed stand on their own and
+the book can be used with other programming langauges. GAMS code and
+listings are provided via github in the gams/ directory. R code,
+output, and discussion are provided in the form of Jupyter notebooks
+in the src/ directory. The github repository for the book is
+\url{https://github.com/bx549/IPPM}.  We hope that students as well as
+practicing engineers and analysts will find the book to be useful.
+
+\subsubsection*{Acknowledgments}
+
+I want to acknowledge the following undergraduate students in the
+Department of Industrial and Systems Engineering who created content
+and checked solutions to end-of-chapter exercises.  Hannah Kleist
+created scenarios for deterministic optimization problems in Chapter 1
+and implemented solutions in GAMS. She also created content for
+exercises on stochastic processes in chapter 2. Emily Sayles created
+content for end-of-chapter exercises on deterministic inventory models
+in chapter 1, probabilistic inventory models in chapter 2, and
+decision problems in chapter 3. Braeden Greseth created content and
+implemented solutions in R for exercises in chapters 2, 4, and 5.
 
 \include{prescriptive-modeling}
 \include{probabilistic-modeling}

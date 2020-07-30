@@ -54,3 +54,7 @@ simulation of inventory models and queueing models in R
 
 emily: 
 decision problems using game theory and perhaps using ABM
+
+
+
+

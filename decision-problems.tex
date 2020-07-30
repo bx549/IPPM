@@ -2,6 +2,10 @@
 
 \section{Games Against Nature}
 
+
+% also we need a section on using backward induction to solve
+% decisions over time. relate it to DP.
+
 \section{Games Against an Opponent}
 
 % this will be the last portion of this section, where we bring together
@@ -92,23 +96,8 @@ toward risk and utility theory is fundamental to understanding
 decision problems.
 \vspace{.2in} 
 
-% latex will treat minipage as a paragraph and indent the whole thing.
-% so, here is my work-around: first use \noindent, then inside minipage,
-% set the indentation for paragraphs.
-\noindent
-\begin{minipage}{.6\textwidth}
-  \setlength{\parindent}{1pc} Sometimes taking a simple expected value
-  makes sense.  Consider a gamble in which one of three outcomes will
-  occur. The outcomes are worth \$1, \$5, and \$20 and the
-  probabilities of the outcomes are .2, .5, and .3, respectively. For
-  example, a wheel is spun and the probability of winning an amount
-  corresponds to the area on the wheel.  The expected monetary value
-  (EMV) of the gamble is
-\[ \$1 \times .2 + \$5 \times .5 + \$20 \times .3 = \$8.70 \]
-\end{minipage}
-%\hfill
-\begin{minipage}{.4\textwidth}
-\begin{center}
+\begin{wrapfigure}{r}{.33\textwidth}
+\centering
 \begin{tikzpicture}
 \draw (-1.5,0) -- (1.5,0);
 \draw (0,0) -- (.5,1.4);
@@ -117,9 +106,15 @@ decision problems.
 \draw (-.7,.7) node {\$20};
 \draw (.8,.65) node {\$1};
 \end{tikzpicture}
-\end{center}
-\end{minipage}
-\vspace{.2in}
+\end{wrapfigure}
+
+Sometimes taking a simple expected value makes sense.  Consider a
+gamble in which one of three outcomes will occur. The outcomes are
+worth \$1, \$5, and \$20 and the probabilities of the outcomes are .2,
+.5, and .3, respectively. For example, a wheel is spun and the
+probability of winning an amount corresponds to the area on the wheel.
+The expected monetary value (EMV) of the gamble is
+\[ \$1 \times .2 + \$5 \times .5 + \$20 \times .3 = \$8.70 \]
 
 However, there exist situations where EMV is not an appropriate
 indicator of ``fair value''. Consider another gamble in which a fair
@@ -135,25 +130,28 @@ toss $n$ is $(1/2)^n$ and the EMV of the gamble is
 Few people (perhaps no one) would pay any amount to participate in the
 gamble.  This is the St. Petersburg paradox stated by Bernoulli. To
 resolve the paradox, he said that the monetary value is not as
-important as the ``intrinsic worth'' of the money. For many (most)
-people, an increase in the amount of money has increasing worth, but
-at a decreasing rate. For example, given an amount of money $m$, the
-logarithm captures the basic relationship between $m$ and its
-``intrinsic worth''.
-\begin{center}
-%\resizebox{.5\textwidth}{!}{%
+important as the ``intrinsic worth'' of the money. For many people, an
+increase in the amount of money has increasing worth, but at a
+decreasing rate. Given an amount of money $m$, the logarithmic
+function captures the basic relationship between $m$ and its
+``intrinsic worth'' (see Figure~\vref{fig:diminishing}).
+
+\begin{figure}
+\centering
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={$m$},
     ylabel={$u(m) = \ln m$},
     xticklabel={\$$\pgfmathprintnumber{\tick}$},
-    title={The diminishing rate of the ``value'' of money}
+    %title={}
   ]
   \addplot[domain=0:1000000,samples=400] {ln(x)};
 \end{axis}
 \end{tikzpicture}
-%}
-\end{center}
+\caption{The diminishing rate of the value of money.}
+\label{fig:diminishing}
+\end{figure}
+
 However, there are many functions with this basic shape and they
 differ from person to person. How can the value (or utility) of money
 be specified for an individual? Also, expected value is commonly
@@ -232,9 +230,10 @@ associate a value (i.e. a number) to something that is inherently
 non-numeric.  The expected utility theorem is a representation
 theorem.
 
+\label{rules-of-consistency}
 Now for the rules of consistency. Let $L(p,x,y)$ represent a gamble
 (also called a lottery) in which you receive outcome $x$ with
-probabililty $p$ or you receive outcome $y$ with probability
+probability $p$ or you receive outcome $y$ with probability
 $(1-p)$. Also, let $x \succ y$ indicate that outcome $x$ is preferred
 to outcome $y$, and let $x \sim y$ indicate indifference between the
 outcomes $x$ and $y$. A decision-maker's preferences must satisfy the
@@ -272,22 +271,24 @@ of interest.
 discussion on utility in Chernoff and Moses~\cite{chernoff:1959}.
 Alice currently has \$\num{400000} in her individual retirement
 account (IRA). Of course, it is always better to have more money for
-retirement, but Alice is not super-greedy; she wants to have
-enough money to pay bills and take a few backpacking trips each year.
-Her utility for an amount of money $m$ in the range \$0 to \$1 million
-is given by the following function.
+retirement, but Alice is not super-greedy; she wants to have enough
+money to pay bills and take a few backpacking trips each year.  Her
+utility for an amount of money $m$ in the range \$0 to \$1 million is
+given by the following function and is shown in
+Figure~\vref{fig:retirement}.
 
 \[
 u(m) = \frac{10}{1+e^{-(\frac{m}{\num{500000}}-5)}}
 \]
-\begin{center}
-%\resizebox{.5\textwidth}{!}{%
+
+\begin{figure}
+\centering
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={$m$},
     ylabel={$u(m)$},
     xticklabel={\$$\pgfmathprintnumber{\tick}$},
-    title={Utility function for the retirement funds}
+    %title={Utility function for the retirement funds}
   ]
   %\addplot[domain=0:1000000,samples=1000] {10 / (1 + exp(-(x/500000 - 5)))};
   % tikz was plottting the function incorrectly, so for now i am resorting
@@ -498,8 +499,10 @@ u(m) = \frac{10}{1+e^{-(\frac{m}{\num{500000}}-5)}}
   };
 \end{axis}
 \end{tikzpicture}
-%}
-\end{center}
+\caption{Utility function for the retirement funds.}
+\label{fig:retirement}
+\end{figure}
+
 Note that her current utility is
 $u(\$\num{400000})=2.69$.  Suppose that on a trip to Las Vegas, Alice
 is offered a gambling opportunity for gaining \$\num{200000} or losing
@@ -537,14 +540,14 @@ the gamble is fair, she declines.
 
 \tikzstyle{place}=[circle,draw,minimum size=.75mm,
   inner sep=0pt,fill=black]
-\begin{center}
-%\resizebox{.5\textwidth}{!}{%
+\begin{figure}
+\centering
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={$m$},
     ylabel={$u(m)$},
     xticklabel={\$$\pgfmathprintnumber{\tick}$},
-    title={Geometric interpretation of the gamble}
+    %title={A graphic interpretation of the gamble}
   ]
   \addplot[color=black,mark=none]
   coordinates {
@@ -757,21 +760,23 @@ the gamble is fair, she declines.
   \draw [-] (a) -- (b);
 \end{axis}
 \end{tikzpicture}
-%}
-\end{center}
+\caption{A graphic interpretation of the gamble.}
+\label{fig:gamble}
+\end{figure}
 
-We can represent the situation geometrically by drawing a line segment
+We can represent the situation graphically by drawing a line segment
 from the utility when losing
 $u(\$\num{500000})$ to the utility when winning
 $u(\$\num{800000})$, and noting the point at one-third of the distance
 from $u(\$\num{500000})$ to
-$u(\$\num{800000})$.  The corresponding monetary value is the expected
-value of the gamble, i.e. \$\num{600000}, and the corresponding
-utility is the expected utility of the gamble, 6.51. With
-\$\num{600000} in retirement funds, Alice's behavior changes.
-We say that her utility function is risk-averse (or concave) in
-the range from \$\num{500000} to \$\num{1000000} and that it is risk-seeking
-(or convex) in the range from \$0 to \$\num{500000}. 
+$u(\$\num{800000})$ (see figure~\vref{fig:gamble}).  The corresponding
+monetary value is the expected value of the gamble,
+i.e. \$\num{600000}, and the corresponding utility is the expected
+utility of the gamble, 6.51. With \$\num{600000} in retirement funds,
+Alice's behavior changes.  We say that her utility function is
+risk-averse (or concave) in the range from \$\num{500000} to
+\$\num{1000000} and that it is risk-seeking (or convex) in the range
+from \$0 to \$\num{500000}.
 
 Notice that if Alice had only \$\num{100000} in retirement savings,
 then her utility would be 0.180 and her utility for the gamble would
@@ -815,7 +820,84 @@ reasonable.
 
 \section{Exercises}
 \begin{enumerate}
-	
+
+% this problem needs a new context. can we find an industrial setting
+% for this problem? 	
+\item \emph{Structuring a decision problem.} A banana costs \$0.50
+and a piece of candy costs \$0.25 at the local cafeteria.
+You have \$1.25 in your pocket and you value money. The money-equivalent
+value (payoff) you get from eating your first banana is \$1.20 and
+that of each additional banana is half the previous one (the second
+banana gives you a value of \$0.60, the third \$0.30 and so on).
+Similarly, the payoff you get from eating your first piece of candy is
+\$0.40 and that of each additional piece of candy is half the previous one
+(\$0.20, \$0.10, \ldots). Your value from eating bananas is not affected
+by how much candy you eat, and vice versa.
+
+\begin{enumerate}
+\item Draw the decision tree that is associated with this problem. 
+\item You make decisions based on maximizing your payoff. Should you
+  spend all of your money at the cafeteria?
+\end{enumerate}
+
+Remember to compute the payoff for each leaf (or end--node) of the
+decision tree. For example, if you purchase one banana and one piece
+of candy, you will spend \$.75 and the payoff is
+  \[ \$1.25 - .75 + 1.20 + .40 = \$2.10 \]
+  Note that I am including the initial amount of \$1.25 in the
+  calculation of the payoff because the problem description states
+  ``\ldots and you value money.''
+
+\begin{solution}
+\bs
+In the tree below, ``b'' indicates a choice for number of
+bananas, and ``c'' indicates a choice for pieces of candy.
+
+\begin{tikzpicture}
+  \tikzstyle{level 1}=[sibling distance=40mm]
+  \tikzstyle{level 2}=[sibling distance=8mm]
+  \node {b} [grow=right]
+  child{node {c} 
+    child {node {1.25}
+    edge from parent node {0}}
+    child {node {1.40}
+    edge from parent node {1}}
+    child {node {1.35}
+    edge from parent node {2}}
+    child {node {1.20}
+    edge from parent node {3}}
+    child {node {1.00}
+    edge from parent node {4}}
+    child {node {.775}
+    edge from parent node {5}}
+    edge from parent node[below] {0} }
+  child {node {c}
+    child {node {1.95}
+    edge from parent node {0}}
+    child {node {2.10}
+    edge from parent node {1}}
+    child {node {2.05}
+    edge from parent node {2}}
+    child {node {1.90}
+    edge from parent node {3}}
+    edge from parent node[above] {1} }
+  child {node {c}
+    child[sibling distance=10mm] {node[anchor=west] {1.25 - 1.00 + 1.20 + .60 = 2.05}
+    edge from parent node {0}}
+    child[sibling distance=10mm] {node[anchor=west] {1.25 - 1.00 - .25 + 1.20 + .60 + .40 = 2.20}
+    edge from parent node {1}}
+    edge from parent node[above] {2} }
+  ;
+\end{tikzpicture}
+
+You should spend all of your money at the cafeteria.
+As a rational decision-maker you will choose the action that maximizes
+the money-equivalent value (payoff). For this problem a rational decision-maker
+would choose to purchase two bananas and one piece of candy for a payoff of
+\[ 1.25 - 1.00 - .25 + 1.20 + .60 + .40 = 2.20 \]
+
+\end{solution}
+
 % This exercise is OK
 \item \emph{Rules for decision--making under ignorance.}
   You have the opportunity to go on a
@@ -859,6 +941,9 @@ decline date & -1000 & 0
 \\[.1in] Minimax regret tells you to go on the date because the
 possibility of not finding love has the most regret.
 \end{solution}
+
+
+\subsubsection*{Games Against Nature}
 
 % written by Emily
 \item \emph{Gardening against nature.} A family is considering growing
@@ -1031,6 +1116,411 @@ p &\leq \frac{7}{11} \approx .64
 Expanding the facility is the best decision unless the probability of
 poor weather is greater than .64.
 \end{solution}
+
+\item \emph{The value of perfect information.}  You are taking a 
+  date to a movie. You like horror movies but you are unsure whether
+  your date likes them. You have two choices for the movie, ``The
+  Burrowers'' which, despite its title, you've heard is a good movie,
+  and ``A Star is Born'', which is rather safe as far as date movies
+  go. Your decision problem with associated payoffs is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{4in}{YYY}
+& \multicolumn{2}{c}{Your date} \\
+& likes horror movies & hates horror movies\\ \cline{2-3}
+\gtcol{The Burrowers} & \gtcol{10} & \gtcol{1} \\ \cline{2-3}
+\gtcol{A Star is Born} & \gtcol{4} & \gtcol{7} \\ \cline{2-3}
+\end{tabularx}
+\endgroup
+
+\vspace{.2in}
+\begin{enumerate}
+\item Let $p$ represent the probability that your date likes horror movies. What is
+  the optimal decision as a function of $p$?
+\item At this point you have no information for your date's movie
+  preference (even the trail of social media cannot help you) and so
+  you assign $p=1/2$ as your subjective prior probability. Suppose
+  that the date's best friend will tell you for sure whether your date
+  likes horror movies, but this person is not so nice and wants to be
+  paid. If the payoffs represent dollar amounts then how much are you
+  willing to pay this person for perfect information? \label{ex:pi}
+\end{enumerate}
+
+\begin{solution}
+  \bs Choose ``The Burrowers'' if
+  \begin{align*}
+    10p + (1-p) &> 4p + 7(1-p)\\
+    9p + 1 &> -3p + 7\\
+    12p &> 6\\
+    p &> 1/2
+  \end{align*}
+
+  Regarding part \ref{ex:pi}, if you knew that your date liked horror
+  movies you would choose ``The Burrowers'' for a pyoff of \$10 and if
+  you knew the opposite then you would choose ``A Star is Born'' for a
+  payoff of \$7. The expected payoff with perfect information, that
+  is, before you actually receive the information, is
+  \[ \frac{1}{2}(10) + \frac{1}{2}(7) = 8\frac{1}{2} \]
+  Without the information your expected payoff is $\$5 \frac{1}{2}$ (for either
+  choice). You would be willing to pay at most
+  \[ \$8.50 - \$5.50 = \$3 \]
+  for the perfect information.
+
+\end{solution}
+
+% this problem needs a new context. we cannot use the example of a lost dog.
+% it is a game against nature. the main idea is to have practice with:
+% 1. formulation of a decision problem and making a decision based on expected value,
+% 2. using Baye's formula to update a prior probability, and 
+% 3. computing the value of perfect information.
+\item \emph{The lost dog and the value of perfect information.} Oscar
+  is walking his dog Pablo down a road. On one side of the road is
+  forest A and on the other side of the road is forest B. Pablo
+  wanders off into one the forests, but Oscar was preoccupied with his
+  cell phone and doesn't know which one. If Pablo is in forest A,
+  Oscar's probability of finding him by the end of the day is 0.5. If
+  Pablo is in forest B, Oscar's probability of finding him by the end
+  of the day is .8. Oscar's prior probability for the dog being in
+  forest A is 0.7 (Oscar knows Pablo likes forest A a little better).
+
+\begin{enumerate}
+\item Oscar can only look in one forest per day. In which forest, A or
+  B, should he look for Pablo?  Oscar wants to maximize his
+  probability of finding Pablo. That is to say, Oscar's utility for
+  finding Pablo is equal to the probability of finding him.
+\item Suppose that at the end of the day, Oscar has not found Pablo
+  and must return home.  Assume that Pablo remains in whatever forest
+  he initially entered. In which forest should Oscar look on day 2?
+  \emph{Hint}: First update the prior probabilities that the dog is in
+  Forest A/B.
+\item Suppose that on the second day, just before Oscar begins to
+  search for Pablo, a person approaches and tells Oscar that he saw
+  the dog enter the forest, but wants some form of payment. How much
+  should Oscar be willing to pay for this perfect information?  Note
+  that the ``units'' for the payment are in terms of probabilities.
+\end{enumerate}
+
+\begin{solution}
+\bs
+Let $A$ be the event that Pablo is in forest A and let $B$ be the event
+that Pablo is in forest B. Also, let $F_A$ represent the event that Oscar
+finds Pablo in forest A (and similarly define $F_B$). We are given the
+following.
+\begin{align*}
+  P(F_A \mid A) = 0.5 &\qquad P(\overline{F}_A \mid A) = 0.5 \\
+  P(F_B \mid B) = 0.8 &\qquad P(\overline{F}_B \mid B) = 0.2 \\
+\end{align*}
+
+Oscar's decision problem is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{3.25in}{YYYY}
+& & \multicolumn{2}{c}{Nature} \\
+& & $0.7$ & $0.3$ \\
+& & $A$ & $B$  \\ \cline{3-4}
+\multirow{2}{.9in}{Oscar} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
+& \gtcol{Look in B} & \gtcol{0} & \gtcol{.8} \\ \cline{3-4}
+\end{tabularx}
+\endgroup
+\vspace{.2in}
+
+Oscar's best option is to look in forest A. He will find the dog on the first
+day with probability $0.7 \times 0.5 = 0.35$.
+
+On the second day, Oscar's belief that Pablo is in forest A is updated to
+\begin{align*}
+  P(A \mid \overline{F}_A) &= \frac{P(\overline{F}_A \mid A)P(A)}{P(\overline{F}_A \mid A)P(A) + P(\overline{F}_A \mid B)P(B)}\\
+                           &= \frac{0.5 \times 0.7}{0.5 \times 0.7 + 1 \times 0.3} \\
+                           &= 0.538
+\end{align*}
+which implies that $P(B \mid \overline{F}_A) = 1 - 0.538 = 0.462$. On day two,
+Oscar's decision problem is
+
+\begingroup
+\setlength{\tabcolsep}{9pt}
+\renewcommand*{\arraystretch}{2}
+\begin{tabularx}{3.25in}{YYYY}
+& & \multicolumn{2}{c}{Nature} \\
+& & $0.538$ & $0.462$ \\
+& & $A$ & $B$  \\ \cline{3-4}
+\multirow{2}{.9in}{Oscar} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
+& \gtcol{Look in B} & \gtcol{0} & \gtcol{.8} \\ \cline{3-4}
+\end{tabularx}
+\endgroup
+\vspace{.2in}
+
+and his best option is to look in forest B. Oscar will find Pablo with probability
+\[ 0.462 \times 0.8 = 0.37\]
+
+With perfect information, but \emph{before} receiving the information, Oscar's
+expected value for the probability of finding Pablo is
+\[ 0.5 \times 0.538 + 0.8 \times 0.462 = 0.639 \]
+and in terms of probability ``units'', Oscar should be willing to pay
+\[ 0.639 - 0.37 = 0.269 \]
+for the information.
+
+\end{solution}
+
+% this problem is OK.
+\item \emph{Planting crops and the value of imperfect information.} A
+  farmer can plant one of four crops. The yield in bushels per acre
+  depends on the particular crop planted and the weather during the
+  growing season. Regarding crop yields, the weather can be
+  categorized as dry, moderate, or wet. The estimated crop yields,
+  commodity prices, and weather forecast are provided in the table
+  below.
+
+\begin{center}
+\begin{tabular}{lcccc}
+& dry & moderate & wet & \$/bushel \\ \hline
+crop 1 & 30 & 50 & 60 & \$3.00 \\
+crop 2 & 25 & 30 & 40 & \$4.50 \\
+crop 3 & 40 & 35 & 35 & \$3.00 \\
+crop 4 & 60 & 60 & 60 & \$1.50 \\ \hline
+forecast & .2 & .5 & .3 & 
+\end{tabular}
+\end{center}
+
+\begin{enumerate}
+\item If the farmer maximizes expected monetary value, which crop
+should she plant and what is her expected revenue per acre?
+
+\item Suppose that the farmer could pay an oracle to tell her
+with certainty which category of weather would occur during
+the growing season. How much should the farmer be willing to 
+pay for this perfect information? Your answer should be in terms
+of \$/acre. \label{b}
+
+\item Now suppose a start-up company that specializes in predictive
+  modeling announces a new machine learning algorithm for weather
+  forecasting. The predictions from the model are good, but not
+  perfect.  In particular, the company advertises the following
+  accuracy for the weather forecasting model. \label{c}
+
+\begin{center}
+\begin{tabular}{clccc}
+& & \multicolumn{3}{c}{actual} \\
+& & dry & moderate & wet \\ \cline{2-5}
+\parbox[t]{2mm}{\multirow{3}{*}{\rotatebox[origin=c]{90}{model}}} & dry & .9 & .1 & .05 \\
+& moderate & .05 & .8 & .05 \\
+& wet & .05 & .1 & .9 
+\end{tabular}
+\end{center}
+
+For example, if the weather actually turns out to be dry, the model
+would have predicted dry weather with probability .9, moderate weather
+with probability .05, and wet weather with probability .05. How much
+should the farmer be willing to pay (again in \$/acre) for this
+less-than-perfect prediction of the weather? Settle in with a cup of
+coffee: this part requires some work. Here is a strategy.
+\begin{enumerate}[i)]
+\item Develop a notation, e.g., $x$ indicates the weather during the growing season,
+and $x'$ indicates the prediction, where $x$ is dry, moderate, or wet.
+
+\item Use Baye's formula to compute the posterior probabilities for
+  each weather category given the predictions, e.g. you want to know
+  $P(d \mid d')$, $P(m \mid d')$, etc.
+
+\item Determine the expected payoff for each case that the prediction is
+dry, moderate, and wet.
+
+\item The expected value of the prediction (i.e. the expected value of the
+less-than-perfect information) is the difference between the expected payoff
+with the information and without it.
+\end{enumerate}
+
+\end{enumerate}
+
+\begin{solution}
+\bs Considering the estimated commodity prices, the payoff table and expected
+values in \$/acre for each crop are
+
+\begin{center}
+\begin{tabular}{lrrrr}
+& dry & moderate & wet & $E(\text{payoff})$ \\ \hline
+crop 1 & 90 & 150 & 180 & \$147 \\
+crop 2 & 112.5 & 135 & 180 & \$144 \\
+crop 3 & 120 & 105 & 105 & \$108 \\
+crop 4 & 90 & 90 & 90 & \$90 
+\end{tabular}
+\end{center}
+
+To maximize expected monetary value the farmer should plant crop 1 and
+expect \$147/acre of revenue. For part~\ref{b}, if she knew for
+certain that the weather would be dry, moderate, or wet, then she
+would plant crop 3 with revenue \$120 per acre, crop 1 with revenue
+\$150 per acre, and crop 1 (or 2) with revenue \$180 per acre,
+respectively. Prior to learning the perfect information, the farmer's
+expected payoff with the new information is
+\[
+.2 \times \$120 + .5 \times \$150 + .3 \times \$180 = \$153
+\]
+and so the value of the perfect information is worth no more than
+\[
+\$153 - \$147 = \$6~\text{per acre}
+\]
+
+Now for part~\ref{c}, the likelihoods are provided as follows
+(using the notation given in the problem description).
+\[
+\begin{matrix}
+P(d' \mid d)=.9 & P(m' \mid d)=.05 & P(w' \mid d)=.05 \\
+P(d' \mid m)=.1 & P(m' \mid m)=.8 & P(w' \mid m)=.1 \\
+P(d' \mid w)=.05 & P(m' \mid w)=.05 & P(w' \mid w)=.9 \\
+\end{matrix}
+\]
+
+Using Baye's formula to compute the posterior probabilities, we get
+\begin{align*}
+P(d \mid d') &= \frac{P(d \cap d')}{P(d')} \\
+&= \frac{P(d' \mid d)P(d)}{P(d' \mid d)P(d) + P(d' \mid m)P(m) + P(d' \mid w)P(w)} \\
+&= \frac{(.9)(.2)}{(.9)(.2) + (.1)(.5) + (.05)(.3)} \\
+&= .735
+\end{align*}
+and in a similar manner 
+\[
+\begin{matrix}
+& P(m \mid d')=.204 & P(w \mid d')=.061 \\
+P(d \mid m')=.024 & P(m \mid m')=.941 & P(w \mid m')=.035 \\
+P(d \mid w')=.03 & P(m \mid w')=.152 & P(w \mid w')=.818 \\
+\end{matrix}
+\]
+The expected monetary values given the predictions are
+
+\begin{center}
+\begin{tabular}{lrrr}
+& $E(\text{dry})$ & $E(\text{moderate})$ & $E(\text{wet})$ \\ \hline
+crop 1 & \$108 & 150 & 173 \\
+crop 2 & 121 & 136 & 171 \\
+crop 3 & 116 & 105 & 105 \\
+crop 4 & 90 & 90 & 90
+\end{tabular}
+\end{center}
+
+If the prediction is dry, the farmer would plant crop 2 for an
+expected revenue of \$121 per acre. Similarly for predictions
+of moderate and wet, she would plant crop 1 with expected revenue
+\$150 per acre and crop 1 with expected revenue \$173 per acre,
+respectively. Prior to obtaining the weather prediction,
+the expected value of having the prediction is 
+\begin{align*}
+E(\text{payoff}) &= \$121 \times P(d') + \$150 \times P(m') + \$173 \times P(w') \\
+&= \$121 \times .245 + \$150 \times .425 + \$173 \times .33 \\
+&= \$150.50
+\end{align*}
+Note that the unconditional probabilities of the predictions are obtained
+using the formula for total probability and they were computed during the
+application of Baye's formula. The value of the less-than-perfect
+informtaion is 
+\[
+\$150.50 - \$147 = \$3.50~\text{per acre}
+\]
+\end{solution}
+
+% decisions over time
+% this problem is OK.
+\item \emph{The break-up.} You are considering
+  breaking up with your boy(girl)friend; however, you know that
+  he(she) may break up with you. Your utility is higher if you end
+  the realtionship, but it's Friday and you have joint plans for the
+  weekend. Here is the situation: on Friday (and possibly Saturday)
+  you need to decide to either stay in the relationship, or end it.
+  \begin{compactitem}[i)]
+    \item \emph{On Friday:}
+  If you decide to end the relationship your payoff is one
+  (and your done.) If you stay in the relationship then a random
+  chance event happens where your boy(girl)friend ends the relationship
+  with probability 0.25 and stays with probability 0.75.
+\item \emph{On Saturday:} If you end the relationship your
+  payoff is 3 (and your done.) If you stay then a chance event happens
+  where your boy(girl)friend ends the relationship with probability
+  0.5 and stays with probability 0.5.
+\end{compactitem}
+If you stay in the relationship until Sunday, then you will definitely
+end it and your payoff is 4. If, on Friday or Saturday, your boy(girl)friend
+ends the relationship then your payoff is one.
+
+Use backward induction to determine a policy for ending/staying that
+will maximize your expected payoff.
+
+\begin{solution}
+  \bs The decision tree is shown below. Working backwards, the expected
+  value of ``stay'' on Saturday is 2.5, so the best decision is ``exit'',
+  for a payoff of 3. On Friday, the expected value of ``stay'' is 2.5,
+  which is better than ``exit'' with a payoff of 1. So, the policy that
+  maximizes expected payoff is to stay in the relationship on Friday and
+  exit the relationship on Saturday.
+
+\vspace{.2in}
+\begin{center}
+%\resizebox{.5\textwidth}{!}{%
+  \begin{tikzpicture}
+    \draw (0,0) -- (8,0)
+    node[pos=.1,anchor=south] {stay}
+    node[pos=.35,anchor=south] {.75}
+    node[pos=0.6,anchor=south] {stay}
+    node[pos=.85,anchor=south] {.5}
+    node[right] {4};
+    \draw (0,0) -- (0,-2) node[pos=0.5,anchor=west] {exit} node[below] {1};
+    \draw (2,0) -- (2,-2) node[pos=.5,anchor=west] {.25} node[below] {1};
+    \draw (4,0) -- (4,-2) node[pos=0.5,anchor=west] {exit} node[below] {3};
+    \draw (6,0) -- (6,-2) node[pos=0.5,anchor=west] {.5} node[below] {1};
+    \node[draw] at (0,0) {};
+    \node[circle,draw] at (2,0) {};
+    \node[draw] at (4,0) {};
+    \node[circle,draw] at (6,0) {};
+    \node[anchor=south] at (0,0.2) {Fri};
+    \node[anchor=south] at (4,0.2) {Sat};
+\end{tikzpicture}%}
+\end{center}
+\end{solution}
+
+% this problem needs a different context.
+% the idea is to use backward induction to find an optimal policy.
+\item \emph{An optimal strategy for a chess match.}  Alice is
+  preparing for a two--game chess match.  In each game Alice can
+  choose one of two strategies: timid play or bold play. The strategy
+  selected in the second game can differ from the strategy selected
+  in the first game. If Alice plays bold then she will win with
+  probability $p_w$ and lose with probability $1-p_w$. If Alice
+  chooses timid play then the match will result in a draw with probability
+  $p_d$ and she will lose the match with probability $1-p_d$. Note
+  that bold play results in a either a win or a loss, and that timid
+  play results in either a draw or a loss. At the conclusion of each
+  game, each player is awarded 1 point for a win, 1/2 point for a
+  draw, or zero points for a loss. If the score is tied at the of two
+  games, then the match goes into sudden death and the first person to
+  win a game wins the match.  Let $p_w=0.45$ and let $p_d=0.9$. Which
+  strategy should Alice select for the first game of the match, timid
+  or bold? What about the second game? In other words, what is the
+  strategy that will maximize Alice's expected payoff for the match?
+
+  Note that the payoff for Alice is the difference in scores. For
+  example, suppose that Alice plays timid in the first game resulting
+  in a draw and she plays bold in the second game resulting in a win.
+  Then the score for the match is Alice $1\frac{1}{2}$ points and her
+  opponent $\frac{1}{2}$ point. In that case the payoff for Alice is
+  $1\frac{1}{2} - \frac{1}{2} = 1$. Also consider that in the event of
+  a tied score at the end of two games Alice should play bold in
+  sudden death.  If she plays timid during sudden death then the best
+  that she could hope for is to drag out the match indefinitely. The
+  payoff for Alice for a tied score after two games is the expected
+  value of a lottery wherein she gets 1 point with probability $p_w$
+  and -1 point with probability $1-p_w$.
+
+\begin{solution}
+  \bs The optimal strategy for Alice, i.e. the strategy that maximizes
+  her expected payoff is to play timid in the first game. If she loses
+  the first game then play timid in the second game, otherwise if she
+  draws in the first game, then play bold in the second game.  Please
+  see the attached decision tree. 
+\end{solution}
+
+\subsubsection*{Games Against an Opponent}
 
 % written by Emily
 \item \emph{Elimination of dominated strategies.}
@@ -1318,9 +1808,9 @@ Otherwise if $Q < z$, then
 E(\text{profit}) &= 45Q - 20Q\\
 &= 25Q
 \end{align*}
+
 We use the distribution of demand to compute the expected profit
 for each possible level of staffing.
-
 \begin{center}
 \begin{tabular}{rr|rrrrrr}
 & & \multicolumn{5}{c}{$z$} & \\
@@ -1336,6 +1826,8 @@ for each possible level of staffing.
 
 The best decision is to have 4 stylists available.
 \end{solution}
+
+\subsubsection*{Utility Theory}
 
 % Written by Emily
 % Expected Utility Theorem
@@ -1400,33 +1892,157 @@ is influenced by neither the weather nor running into friends. The
 ``rational'' decision for Sydney is to go hiking.
 \end{solution}
 
-% this problem needs a new context. the problem itself should not
-% change ...  that is, can you represent a preference ordering that is
-% naturally specified with two values by a single real value? can we
-% think of a modern situation like this? 
-\item \emph{Preference orderings and utility functions.}  Suppose that
-  you live in a society with the following rules. When you reach age
-  20 you will be presented with some alternative choices. The choices
-  are of the form $(x;y)$ where $x$ represents the amount of time you
-  have left to live, say anywhere from zero to 50 years, and $y$
-  represents the amount of time you have left to work, again anywhere
-  from zero to 50 years. Both $x$ and $y$ are continuous amounts of
-  time, and certainly $x \ge y$. In general you prefer to live longer
-  and work less, but you always prefer to live longer no matter how
-  long you will work. For example,
+\item \emph{Attitudes toward risk.}  Consider the following scenarios
+  for Alice and Bob. Then, draw reasonable utility functions for each
+  person. Alice's utility function should be in the range zero to
+  \$100K.  Bob's should be from zero to \$40.
+
+  Alice has worked hard to save \$25K for a down payment on a
+  house. She is ready to buy the house, but just before closing, she
+  is offered the following hot tip. If she invest invests \$25K in a
+  cryptocurrency, there is an 80\% chance that she will make \$50K
+  within one month, but a 20\% chance that she will lose everything.
+  The expected monetary value of the opportunity is
   \[
-  (x=45~\text{years}; y=35~\text{years}) \succ (x=44~\text{years and}~300~\text{days};y=10~\text{years})
+  0.8 \times \$75\text{K} - 0.2 \times \$25\text{K} = \$55\text{K},
+  \]
+  but Alice makes the \$25K down payment even though the EMV of the
+  investment is higher. The certainty of getting the house is worth
+  more to her than the uncertain gain from the investment.
+
+  Bob has \$20 in his possession. He \emph{really} wants to see the
+  show at First Avenue, but tickets cost \$40. Over on 7th Street,
+  someone comes along and offers Bob the following gamble.
+\begin{quote}
+  Put in \$20. Roll a die. If the die comes up ``6'', then the player
+  wins \$20. If the die comes up any other number the player loses the
+  \$20.
+\end{quote}
+If Bob is lucky enough to win the gamble, he would have \$40 for the
+ticket. The expected monetary value of the gamble is
+  \[
+  \frac{1}{6} \times \$40 - \frac{5}{6} \times \$20 = -\$10,
+  \]
+  but Bob takes the bet because the chance to see the show is worth
+  more to him than having \$20 and \emph{not} seeing the show.
+
+\begin{solution}
+  \bs The important point is the general shape of the utility
+  functions, not the magnitudes of the utilities. Alice is risk-averse
+  and Bob is risk-seeking.
+
+\begin{minipage}{.49\textwidth}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\begin{axis}[
+xlabel={$m$},
+ylabel={$U(m)$},
+xticklabel={\$$\pgfmathprintnumber{\tick}$},
+title=Alice's risk-averse behavior,
+]
+\addplot[domain=0:100000] {1 - exp(-x/30000)};
+\end{axis}
+\end{tikzpicture}}
+\end{minipage}
+\hfill
+\begin{minipage}{.49\textwidth}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}
+\begin{axis}[
+xlabel={$m$},
+ylabel={$U(m)$},
+xticklabel={\$$\pgfmathprintnumber{\tick}$},
+title=Bob's risk-seeking behavior,
+yticklabel pos=right,
+]
+\addplot[domain=0:40] {exp(x/10)};
+\end{axis}
+\end{tikzpicture}}
+\end{minipage}
+
+\end{solution}
+
+\item \emph{Registering for classes.} You are deciding to register for
+  one of two classes, IE 5571 or IE 5591. If you register for IE 5571
+  you know that you will get a B for sure, but IE 5591 is a lottery
+  because the department has not yet decided who will teach the
+  class. If Professor England teaches the class then you will get an
+  A, but if Professor Doroudi teaches the class then you will get a
+  C. You will not know the identity of the instructor until class
+  begins and you cannot withdraw from the course once registered. The
+  points associated with the letter grades are
+
+\begingroup
+\renewcommand{\arraystretch}{1}
+\begin{tabular}{cccc}
+A&B&C&D \\
+4.0 & 3.0 & 2.0 & 1.0
+\end{tabular}
+\endgroup
+
+Now, you value having fun as much or more than improving your GPA. In
+fact, your utility for the points $x$ associated with a letter grade
+is $u(x) = \sqrt{x}$. That is to say, your utility for getting a B is
+$\sqrt{3}$. The ISyE department head tells you that the probability
+that Professor Doroudi will teach IE 5591 is 2/5.
+
+\begin{enumerate}
+\item For which class will you register?
+\item In general, what is your risk profile toward letter grades?
+  (A \emph{brief} answer will suffice.)
+\item Your preferences satisfy the conditions of the Expected Utility
+  Theorem.  Furthermore, your utility function $u(x)$ was determined
+  via questions pertaining to preferences between pairs of
+  alternatives (including lotteries). Is it appropriate to say that
+  receiving an A is twice as desirable as receiving a D?
+\end{enumerate}
+
+\begin{solution}
+\bs
+The utility of registering for IE 5571 is
+\[ u(B) = \sqrt{3} \]
+By the expected utility property, the utility of a lottery is its
+expected utility. So the utility of registering for IE 5591 is
+\begin{align*}
+  u\left(L\left(\frac{3}{5},~A,~C\right)\right) &= \frac{3}{5}u(A) + \frac{2}{5}u(C) \\
+                  &= \frac{3}{5}\sqrt{4} + \frac{2}{5}\sqrt{2} \\
+                  &= \frac{6 + 2\sqrt{2}}{5}
+\end{align*}
+which is greater than $\sqrt{3}$, so you will register for IE 5591.
+In general you are risk-averse with respect to letter grades. It
+is \emph{not} appropriate to say that receiving an A is twice
+as desirable as receiving a D. Utility functions are defined for
+interval scales, not for ratio scales.
+
+\end{solution}
+
+% written by Emily
+\item \emph{Preference orderings and utility functions.}  This
+  exercise is inspired from discussion in~\cite{resnik:1987}.  Suppose
+  you have a goal to be a great long-distance runner.  There are two
+  choices involved with this goal in the form of $(x;y)$ where $x$
+  represents the number of miles you are able to run in a day after
+  you have trained for a month, anywhere from zero to 30 miles, and
+  $y$ represents the total number of miles ran to train over the
+  course of the month, anywhere from zero to 500. Both $x$ and $y$ are
+  continuous distances, and $x \le y$. In general you prefer to be
+  able to run farther with less training, but you always prefer to be
+  able to run father no matter how much you have to train. For
+  example,
+  \[
+  (x=25~\text{miles}; y=500~\text{miles}) \succ (x=24~\text{miles}; y=200~\text{miles})
   \]
   The symbol `$\succ$' means ``is preferred to''.  Don't confuse that
   symbol with the mathematical inequality symbol `$>$' (although I
   suspect that the resemblence is intended). Note that, as defined, your
   preference ordering satisfies the completeness and transitivity
-  properties (see your textbook). Is it possible to represent your
+  properties (see the discussion on page~\pageref{rules-of-consistency}). 
+  Is it possible to represent your
   preferences with a single (real-valued) number? That is to say, is
   there a function $u(x,y) : (x,y) \mapsto \mathbb{R}$ with the
   following property
   \[
-  (x_1,y_1) \succ (x_2,y_2) \implies u(x_1,y_1) > u(x_2,y_2)
+  (x_1,y_1) \succ (x_2,y_2)~\implies~u(x_1,y_1) > u(x_2,y_2)
   \]
   To make things a little easier, you can restrict $u$ to be a linear
   function of $x$ and $y$. Support your answer with an explanation
@@ -1434,7 +2050,7 @@ is influenced by neither the weather nor running into friends. The
 
 \begin{solution}
   \bs I think it is not possible to represent $u$ as a linear
-  function of $x$ and $y$. Define $w=50-y$, so that we can represent
+  function of $x$ and $y$. Define $w=500-y$, so that we can represent
   an alternative as $(x,w)$ with the interpretation that more is always
   better, but $x$ still has priority. Now, a linear function will have
   the form
@@ -1462,8 +2078,9 @@ is influenced by neither the weather nor running into friends. The
     B\delta_w &> A\delta_x \\
     \frac{\delta_w}{\delta_x} &> \frac{A}{B}
   \end{align*}
-  We can choose $\delta_x$ and $\delta_w$ to satisfy the last
-  inequality, which means that $u(x_1,w_1) < u(x_2,w_2)$.
+  Note that $\delta_w = w_2-w_1 = y_1-y_2 \leq 500$, but because $x$
+  is continuous, we can choose $\delta_x$ and $\delta_w$ to satisfy
+  the last inequality, which means that $u(x_1,w_1) < u(x_2,w_2)$.
 \end{solution}
 
 \end{enumerate}
