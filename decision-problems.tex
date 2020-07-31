@@ -821,80 +821,91 @@ reasonable.
 \section{Exercises}
 \begin{enumerate}
 
-% this problem needs a new context. can we find an industrial setting
-% for this problem? 	
-\item \emph{Structuring a decision problem.} A banana costs \$0.50
-and a piece of candy costs \$0.25 at the local cafeteria.
-You have \$1.25 in your pocket and you value money. The money-equivalent
-value (payoff) you get from eating your first banana is \$1.20 and
-that of each additional banana is half the previous one (the second
-banana gives you a value of \$0.60, the third \$0.30 and so on).
-Similarly, the payoff you get from eating your first piece of candy is
-\$0.40 and that of each additional piece of candy is half the previous one
-(\$0.20, \$0.10, \ldots). Your value from eating bananas is not affected
-by how much candy you eat, and vice versa.
+% written by Emily	
+\item \emph{Structuring a decision problem.} 
+An online retail company is looking to purchase some robots to
+perform tasks in their warehouse. There are two types of 
+helpful robots available. Robot A can collect
+items in the warehouse. Robot B seals boxes shut. Robot A costs \$\num{6000}
+and Robot B costs \$\num{3000}.
+The business has \$\num{15000} available to spend and they value money. 
+The money-equivalent
+value (payoff) they get from acquiring their first Robot A is 
+\$\num{14000} and
+that of each additional Robot A is half the previous one (the second
+Robot A gives them a value of \$\num{7000}, the third \$\num{3500} and so on).
+Similarly, the payoff they get from acquiring their first Robot B is
+\$\num{5000} and that of each additional Robot B is half the previous one
+(\$\num{2500}, \$\num{1250}, \ldots). The robots do separate jobs, so 
+the value from each Robot A acquired is not
+affected by how many of Robot B are acquired, and vice versa.
 
 \begin{enumerate}
 \item Draw the decision tree that is associated with this problem. 
-\item You make decisions based on maximizing your payoff. Should you
-  spend all of your money at the cafeteria?
+\item The business makes decisions based on maximizing their 
+payoff. Should they spend all of their available money on 
+these robots?
 \end{enumerate}
 
-Remember to compute the payoff for each leaf (or end--node) of the
-decision tree. For example, if you purchase one banana and one piece
-of candy, you will spend \$.75 and the payoff is
-  \[ \$1.25 - .75 + 1.20 + .40 = \$2.10 \]
-  Note that I am including the initial amount of \$1.25 in the
-  calculation of the payoff because the problem description states
+Compute the payoff for each leaf (or end--node) of the
+decision tree. For example, if you purchase one Robot A and one
+Robot B, you will spend \$\num{9000} and the payoff is
+  \[ \num{15000}-\num{6000}-\num{3000} + \num{14000}+\num{5000} = \$\num{25000} \]
+  Note that I included the initial amount of available
+  cash in the calculation because the problem states 
   ``\ldots and you value money.''
 
 \begin{solution}
 \bs
-In the tree below, ``b'' indicates a choice for number of
-bananas, and ``c'' indicates a choice for pieces of candy.
+In the tree below, ``A'' indicates a choice for number of 
+Robot A to purchase, and ``B'' indicates a choice for number 
+of Robot B to purchase.
 
 \begin{tikzpicture}
   \tikzstyle{level 1}=[sibling distance=40mm]
   \tikzstyle{level 2}=[sibling distance=8mm]
-  \node {b} [grow=right]
-  child{node {c} 
-    child {node {1.25}
+  \node {A} [grow=right]
+  child{node {B} 
+    child {node {\num{15000}}
     edge from parent node {0}}
-    child {node {1.40}
+    child {node {\num{17000}}
     edge from parent node {1}}
-    child {node {1.35}
+    child {node {\num{16500}}
     edge from parent node {2}}
-    child {node {1.20}
+    child {node {\num{14750}}
     edge from parent node {3}}
-    child {node {1.00}
+    child {node {\num{12375}}
     edge from parent node {4}}
-    child {node {.775}
+    child {node {\num{9687.5}}
     edge from parent node {5}}
     edge from parent node[below] {0} }
-  child {node {c}
-    child {node {1.95}
+  child {node {B}
+    child {node {\num{23000}}
     edge from parent node {0}}
-    child {node {2.10}
+    child {node {\num{25000}}
     edge from parent node {1}}
-    child {node {2.05}
+    child {node {\num{24500}}
     edge from parent node {2}}
-    child {node {1.90}
+    child {node {\num{22750}}
     edge from parent node {3}}
     edge from parent node[above] {1} }
-  child {node {c}
-    child[sibling distance=10mm] {node[anchor=west] {1.25 - 1.00 + 1.20 + .60 = 2.05}
+  child {node {B}
+    child[sibling distance=10mm] {node[anchor=west] {\num{15000} -
+    \num{12000} + \num{14000} + \num{70000} = \num{24000}}
     edge from parent node {0}}
-    child[sibling distance=10mm] {node[anchor=west] {1.25 - 1.00 - .25 + 1.20 + .60 + .40 = 2.20}
+    child[sibling distance=10mm] {node[anchor=west] {\num{15000} - 
+    \num{12000} - \num{3000} + \num{14000} + \num{7000} + \num{5000} 
+    = \num{26000}}
     edge from parent node {1}}
     edge from parent node[above] {2} }
   ;
 \end{tikzpicture}
 
-You should spend all of your money at the cafeteria.
-As a rational decision-maker you will choose the action that maximizes
-the money-equivalent value (payoff). For this problem a rational decision-maker
-would choose to purchase two bananas and one piece of candy for a payoff of
-\[ 1.25 - 1.00 - .25 + 1.20 + .60 + .40 = 2.20 \]
+The company wants to make the most rational decision, so they
+choose the action that maximizes the payoff. 
+The company should spend the entire \$\num{15000} on robots for 
+their warehouse. They should purchase two of Robot A and one of 
+Robot B for a money-equivalent value of \$\num{26000}.
 
 \end{solution}
 
