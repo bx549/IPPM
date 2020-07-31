@@ -826,21 +826,18 @@ reasonable.
 An online retail company is looking to purchase some robots to
 perform tasks in their warehouse. There are two types of 
 helpful robots available. Robot A can collect
-items in the warehouse. Robot B seals boxes shut. Robot A costs 
-\$\num{6000}
+items in the warehouse. Robot B seals boxes shut. Robot A costs \$\num{6000}
 and Robot B costs \$\num{3000}.
-The business has \$\num{15000} available to spend and they value 
-money. 
+The business has \$\num{15000} available to spend and they value money. 
 The money-equivalent
 value (payoff) they get from acquiring their first Robot A is 
 \$\num{14000} and
-that of each additional Robot A is half the previous one 
-(the second
+that of each additional Robot A is half the previous one (the second
 Robot A gives them a value of \$\num{7000}, the third \$\num{3500} and so on).
 Similarly, the payoff they get from acquiring their first Robot B is
 \$\num{5000} and that of each additional Robot B is half the previous one
-(\$\num{2500}, \$\num{1250}, \ldots). The robots do separate jobs, so the 
-value from each Robot A acquired is not
+(\$\num{2500}, \$\num{1250}, \ldots). The robots do separate jobs, so 
+the value from each Robot A acquired is not
 affected by how many of Robot B are acquired, and vice versa.
 
 \begin{enumerate}
@@ -853,8 +850,7 @@ these robots?
 Compute the payoff for each leaf (or end--node) of the
 decision tree. For example, if you purchase one Robot A and one
 Robot B, you will spend \$\num{9000} and the payoff is
-  \[ \num{15000}-\num{6000}-\num{3000} + \num{14000}+\num{5000} = 
-  \$\num{25000} \]
+  \[ \num{15000}-\num{6000}-\num{3000} + \num{14000}+\num{5000} = \$\num{25000} \]
   Note that I included the initial amount of available
   cash in the calculation because the problem states 
   ``\ldots and you value money.''
@@ -870,35 +866,36 @@ of Robot B to purchase.
   \tikzstyle{level 2}=[sibling distance=8mm]
   \node {A} [grow=right]
   child{node {B} 
-    child {node {15000}
+    child {node {\num{15000}}
     edge from parent node {0}}
-    child {node {17000}
+    child {node {\num{17000}}
     edge from parent node {1}}
-    child {node {16500}
+    child {node {\num{16500}}
     edge from parent node {2}}
-    child {node {14750}
+    child {node {\num{14750}}
     edge from parent node {3}}
-    child {node {12375}
+    child {node {\num{12375}}
     edge from parent node {4}}
-    child {node {9687.5}
+    child {node {\num{9687.5}}
     edge from parent node {5}}
     edge from parent node[below] {0} }
   child {node {B}
-    child {node {23000}
+    child {node {\num{23000}}
     edge from parent node {0}}
-    child {node {25000}
+    child {node {\num{25000}}
     edge from parent node {1}}
-    child {node {24500}
+    child {node {\num{24500}}
     edge from parent node {2}}
-    child {node {22750}
+    child {node {\num{22750}}
     edge from parent node {3}}
     edge from parent node[above] {1} }
   child {node {B}
-    child[sibling distance=10mm] {node[anchor=west] {15000 - 
-    12000 + 14000 + 70000 = 24000}
+    child[sibling distance=10mm] {node[anchor=west] {\num{15000} -
+    \num{12000} + \num{14000} + \num{70000} = \num{24000}}
     edge from parent node {0}}
-    child[sibling distance=10mm] {node[anchor=west] {15000 - 
-    12000 - 3000 + 14000 + 7000 + 5000 = 26000}
+    child[sibling distance=10mm] {node[anchor=west] {\num{15000} - 
+    \num{12000} - \num{3000} + \num{14000} + \num{7000} + \num{5000} 
+    = \num{26000}}
     edge from parent node {1}}
     edge from parent node[above] {2} }
   ;
@@ -907,9 +904,8 @@ of Robot B to purchase.
 The company wants to make the most rational decision, so they
 choose the action that maximizes the payoff. 
 The company should spend the entire \$\num{15000} on robots for 
-their warehouse. 
-They should purchase two of Robot A and one of Robot B for a 
-money-equivalent value of \$\num{26000}.
+their warehouse. They should purchase two of Robot A and one of 
+Robot B for a money-equivalent value of \$\num{26000}.
 
 \end{solution}
 
