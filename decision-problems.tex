@@ -821,23 +821,21 @@ reasonable.
 \begin{enumerate}
 
 % written by Emily	
-\item \emph{Structuring a decision problem.} 
-An online retail company is looking to purchase some robots to
-perform tasks in their warehouse. There are two types of 
-helpful robots available. Robot A can collect
-items in the warehouse. Robot B seals boxes shut. Robot A costs \$\num{6000}
-and Robot B costs \$\num{3000}.
-The business has \$\num{15000} available to spend and they value money. 
-The money-equivalent
-value (payoff) they get from acquiring their first Robot A is 
-\$\num{14000} and
-that of each additional Robot A is half the previous one (the second
-Robot A gives them a value of \$\num{7000}, the third \$\num{3500} and so on).
-Similarly, the payoff they get from acquiring their first Robot B is
-\$\num{5000} and that of each additional Robot B is half the previous one
-(\$\num{2500}, \$\num{1250}, \ldots). The robots do separate jobs, so 
-the value from each Robot A acquired is not
-affected by how many of Robot B are acquired, and vice versa.
+\item \emph{Structuring a decision problem.}  An online retail company
+  is looking to purchase some robots to perform tasks in their
+  warehouse. There are two types of helpful robots available. Robot A
+  can collect items in the warehouse. Robot B seals boxes shut. Robot
+  A costs \$\num{6000} and Robot B costs \$\num{3000}.  The business
+  has \$\num{15000} available to spend and they value money.  The
+  money-equivalent value (payoff) they get from acquiring their first
+  Robot A is \$\num{14000} and that of each additional Robot A is half
+  the previous one (the second Robot A gives them a value of
+  \$\num{7000}, the third \$\num{3500} and so on).  Similarly, the
+  payoff they get from acquiring their first Robot B is \$\num{5000}
+  and that of each additional Robot B is half the previous one
+  (\$\num{2500}, \$\num{1250}, \ldots). The robots do separate jobs,
+  so the value from each Robot A acquired is not affected by how many
+  of Robot B are acquired, and vice versa.
 
 \begin{enumerate}
 \item Draw the decision tree that is associated with this problem. 
@@ -852,7 +850,7 @@ Robot B, you will spend \$\num{9000} and the payoff is
   \[ \num{15000}-\num{6000}-\num{3000} + \num{14000}+\num{5000} = \$\num{25000} \]
   Note that I included the initial amount of available
   cash in the calculation because the problem states 
-  ``\ldots and you value money.''
+  ``\ldots and they value money.''
 
 \begin{solution}
 \bs
@@ -861,7 +859,7 @@ Robot A to purchase, and ``B'' indicates a choice for number
 of Robot B to purchase.
 
 \begin{tikzpicture}
-  \tikzstyle{level 1}=[sibling distance=40mm]
+  \tikzstyle{level 1}=[sibling distance=43mm]
   \tikzstyle{level 2}=[sibling distance=8mm]
   \node {A} [grow=right]
   child{node {B} 
@@ -877,7 +875,7 @@ of Robot B to purchase.
     edge from parent node {4}}
     child {node {\num{9687.5}}
     edge from parent node {5}}
-    edge from parent node[below] {0} }
+    edge from parent node[below=10pt] {0} }
   child {node {B}
     child {node {\num{23000}}
     edge from parent node {0}}
@@ -887,7 +885,7 @@ of Robot B to purchase.
     edge from parent node {2}}
     child {node {\num{22750}}
     edge from parent node {3}}
-    edge from parent node[above] {1} }
+    edge from parent node[above=1pt] {1} }
   child {node {B}
     child[sibling distance=10mm] {node[anchor=west] {\num{15000} -
     \num{12000} + \num{14000} + \num{70000} = \num{24000}}
@@ -896,7 +894,7 @@ of Robot B to purchase.
     \num{12000} - \num{3000} + \num{14000} + \num{7000} + \num{5000} 
     = \num{26000}}
     edge from parent node {1}}
-    edge from parent node[above] {2} }
+    edge from parent node[above=10pt] {2} }
   ;
 \end{tikzpicture}
 
