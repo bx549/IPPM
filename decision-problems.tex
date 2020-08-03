@@ -2,7 +2,6 @@
 
 \section{Games Against Nature}
 
-
 % also we need a section on using backward induction to solve
 % decisions over time. relate it to DP.
 
@@ -821,80 +820,91 @@ reasonable.
 \section{Exercises}
 \begin{enumerate}
 
-% this problem needs a new context. can we find an industrial setting
-% for this problem? 	
-\item \emph{Structuring a decision problem.} A banana costs \$0.50
-and a piece of candy costs \$0.25 at the local cafeteria.
-You have \$1.25 in your pocket and you value money. The money-equivalent
-value (payoff) you get from eating your first banana is \$1.20 and
-that of each additional banana is half the previous one (the second
-banana gives you a value of \$0.60, the third \$0.30 and so on).
-Similarly, the payoff you get from eating your first piece of candy is
-\$0.40 and that of each additional piece of candy is half the previous one
-(\$0.20, \$0.10, \ldots). Your value from eating bananas is not affected
-by how much candy you eat, and vice versa.
+% written by Emily	
+\item \emph{Structuring a decision problem.} 
+An online retail company is looking to purchase some robots to
+perform tasks in their warehouse. There are two types of 
+helpful robots available. Robot A can collect
+items in the warehouse. Robot B seals boxes shut. Robot A costs \$\num{6000}
+and Robot B costs \$\num{3000}.
+The business has \$\num{15000} available to spend and they value money. 
+The money-equivalent
+value (payoff) they get from acquiring their first Robot A is 
+\$\num{14000} and
+that of each additional Robot A is half the previous one (the second
+Robot A gives them a value of \$\num{7000}, the third \$\num{3500} and so on).
+Similarly, the payoff they get from acquiring their first Robot B is
+\$\num{5000} and that of each additional Robot B is half the previous one
+(\$\num{2500}, \$\num{1250}, \ldots). The robots do separate jobs, so 
+the value from each Robot A acquired is not
+affected by how many of Robot B are acquired, and vice versa.
 
 \begin{enumerate}
 \item Draw the decision tree that is associated with this problem. 
-\item You make decisions based on maximizing your payoff. Should you
-  spend all of your money at the cafeteria?
+\item The business makes decisions based on maximizing their 
+payoff. Should they spend all of their available money on 
+these robots?
 \end{enumerate}
 
-Remember to compute the payoff for each leaf (or end--node) of the
-decision tree. For example, if you purchase one banana and one piece
-of candy, you will spend \$.75 and the payoff is
-  \[ \$1.25 - .75 + 1.20 + .40 = \$2.10 \]
-  Note that I am including the initial amount of \$1.25 in the
-  calculation of the payoff because the problem description states
+Compute the payoff for each leaf (or end--node) of the
+decision tree. For example, if you purchase one Robot A and one
+Robot B, you will spend \$\num{9000} and the payoff is
+  \[ \num{15000}-\num{6000}-\num{3000} + \num{14000}+\num{5000} = \$\num{25000} \]
+  Note that I included the initial amount of available
+  cash in the calculation because the problem states 
   ``\ldots and you value money.''
 
 \begin{solution}
 \bs
-In the tree below, ``b'' indicates a choice for number of
-bananas, and ``c'' indicates a choice for pieces of candy.
+In the tree below, ``A'' indicates a choice for number of 
+Robot A to purchase, and ``B'' indicates a choice for number 
+of Robot B to purchase.
 
 \begin{tikzpicture}
   \tikzstyle{level 1}=[sibling distance=40mm]
   \tikzstyle{level 2}=[sibling distance=8mm]
-  \node {b} [grow=right]
-  child{node {c} 
-    child {node {1.25}
+  \node {A} [grow=right]
+  child{node {B} 
+    child {node {\num{15000}}
     edge from parent node {0}}
-    child {node {1.40}
+    child {node {\num{17000}}
     edge from parent node {1}}
-    child {node {1.35}
+    child {node {\num{16500}}
     edge from parent node {2}}
-    child {node {1.20}
+    child {node {\num{14750}}
     edge from parent node {3}}
-    child {node {1.00}
+    child {node {\num{12375}}
     edge from parent node {4}}
-    child {node {.775}
+    child {node {\num{9687.5}}
     edge from parent node {5}}
     edge from parent node[below] {0} }
-  child {node {c}
-    child {node {1.95}
+  child {node {B}
+    child {node {\num{23000}}
     edge from parent node {0}}
-    child {node {2.10}
+    child {node {\num{25000}}
     edge from parent node {1}}
-    child {node {2.05}
+    child {node {\num{24500}}
     edge from parent node {2}}
-    child {node {1.90}
+    child {node {\num{22750}}
     edge from parent node {3}}
     edge from parent node[above] {1} }
-  child {node {c}
-    child[sibling distance=10mm] {node[anchor=west] {1.25 - 1.00 + 1.20 + .60 = 2.05}
+  child {node {B}
+    child[sibling distance=10mm] {node[anchor=west] {\num{15000} -
+    \num{12000} + \num{14000} + \num{70000} = \num{24000}}
     edge from parent node {0}}
-    child[sibling distance=10mm] {node[anchor=west] {1.25 - 1.00 - .25 + 1.20 + .60 + .40 = 2.20}
+    child[sibling distance=10mm] {node[anchor=west] {\num{15000} - 
+    \num{12000} - \num{3000} + \num{14000} + \num{7000} + \num{5000} 
+    = \num{26000}}
     edge from parent node {1}}
     edge from parent node[above] {2} }
   ;
 \end{tikzpicture}
 
-You should spend all of your money at the cafeteria.
-As a rational decision-maker you will choose the action that maximizes
-the money-equivalent value (payoff). For this problem a rational decision-maker
-would choose to purchase two bananas and one piece of candy for a payoff of
-\[ 1.25 - 1.00 - .25 + 1.20 + .60 + .40 = 2.20 \]
+The company wants to make the most rational decision, so they
+choose the action that maximizes the payoff. 
+The company should spend the entire \$\num{15000} on robots for 
+their warehouse. They should purchase two of Robot A and one of 
+Robot B for a money-equivalent value of \$\num{26000}.
 
 \end{solution}
 
@@ -1170,50 +1180,52 @@ poor weather is greater than .64.
 
 \end{solution}
 
-% this problem needs a new context. we cannot use the example of a lost dog.
-% it is a game against nature. the main idea is to have practice with:
-% 1. formulation of a decision problem and making a decision based on expected value,
-% 2. using Baye's formula to update a prior probability, and 
-% 3. computing the value of perfect information.
-\item \emph{The lost dog and the value of perfect information.} Oscar
-  is walking his dog Pablo down a road. On one side of the road is
-  forest A and on the other side of the road is forest B. Pablo
-  wanders off into one the forests, but Oscar was preoccupied with his
-  cell phone and doesn't know which one. If Pablo is in forest A,
-  Oscar's probability of finding him by the end of the day is 0.5. If
-  Pablo is in forest B, Oscar's probability of finding him by the end
-  of the day is .8. Oscar's prior probability for the dog being in
-  forest A is 0.7 (Oscar knows Pablo likes forest A a little better).
+% written by Emily
+\item \emph{Quality control and the value of perfect information.}  A
+  worker in a factory producing potato chips notices that a small bolt
+  is missing off of a piece of equipment in the packaging area and
+  determines that it fell into a bag before it was sealed. Two pallets
+  worth of chips have been produced since the last routine check was
+  performed determining that the bolt was in place. The worker does
+  not want to throw away all bags of chips that the bolt could
+  possibly be in, so he decides to search for the bolt. He has to
+  decide if he should start searching bags on pallet one or pallet
+  two. If the bolt fell into a bag on pallet one and he searches bags
+  on pallet one, the probability of finding the bolt by the end of the
+  day is 0.5. If the bolt fell into a bag on pallet two and he
+  searches pallet two, the probability of finding the bolt by the end
+  of the day is 0.8. The worker's prior probability that the bolt is
+  in a bag on pallet one is 0.7 (he thinks it was loose from some work
+  done earlier in the day and fell off right away).
 
 \begin{enumerate}
-\item Oscar can only look in one forest per day. In which forest, A or
-  B, should he look for Pablo?  Oscar wants to maximize his
-  probability of finding Pablo. That is to say, Oscar's utility for
-  finding Pablo is equal to the probability of finding him.
-\item Suppose that at the end of the day, Oscar has not found Pablo
-  and must return home.  Assume that Pablo remains in whatever forest
-  he initially entered. In which forest should Oscar look on day 2?
-  \emph{Hint}: First update the prior probabilities that the dog is in
-  Forest A/B.
-\item Suppose that on the second day, just before Oscar begins to
-  search for Pablo, a person approaches and tells Oscar that he saw
-  the dog enter the forest, but wants some form of payment. How much
-  should Oscar be willing to pay for this perfect information?  Note
-  that the ``units'' for the payment are in terms of probabilities.
+\item The worker only has time to search one pallet per day.  In which
+  pallet, one or two, should he look for the bolt?  The worker wants
+  to maximize his probability of finding the bolt.
+\item Suppose that at the end of the day when the worker goes home, he
+  has not found the bolt yet. Which pallet should he search on day 2?
+  \emph{Hint}: First update the prior probabilities that the bolt is
+  in pallet one/two.
+\item Suppose that on the second day, just before the worker begins to
+  search for the bolt, a security guard approaches and tells him that
+  he has access to security camera footage that would reveal when the
+  bolt fell into a bag (revealing which pallet the bolt is in).  How
+  much should the worker be willing to pay for this perfect
+  information?  Note that the ``units'' for the payment are in terms
+  of probabilities.
 \end{enumerate}
 
 \begin{solution}
-\bs
-Let $A$ be the event that Pablo is in forest A and let $B$ be the event
-that Pablo is in forest B. Also, let $F_A$ represent the event that Oscar
-finds Pablo in forest A (and similarly define $F_B$). We are given the
-following.
+  \bs Let $A$ be the event that the bolt is in pallet one and let $B$
+  be the event that the bolt is in pallet two. Also, let $F_A$
+  represent the event that the worker finds the bolt in pallet one
+  (and similarly define $F_B$). We are given the following.
 \begin{align*}
   P(F_A \mid A) = 0.5 &\qquad P(\overline{F}_A \mid A) = 0.5 \\
   P(F_B \mid B) = 0.8 &\qquad P(\overline{F}_B \mid B) = 0.2 \\
 \end{align*}
 
-Oscar's decision problem is
+The worker's decision problem is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
@@ -1222,23 +1234,23 @@ Oscar's decision problem is
 & & \multicolumn{2}{c}{Nature} \\
 & & $0.7$ & $0.3$ \\
 & & $A$ & $B$  \\ \cline{3-4}
-\multirow{2}{.9in}{Oscar} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
+\multirow{2}{.9in}{Worker} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
 & \gtcol{Look in B} & \gtcol{0} & \gtcol{.8} \\ \cline{3-4}
 \end{tabularx}
 \endgroup
 \vspace{.2in}
 
-Oscar's best option is to look in forest A. He will find the dog on the first
+The best option is to look in pallet one. He will find the bolt on the first
 day with probability $0.7 \times 0.5 = 0.35$.
 
-On the second day, Oscar's belief that Pablo is in forest A is updated to
+On the second day, the worker's belief that the bolt is in pallet one is updated to
 \begin{align*}
   P(A \mid \overline{F}_A) &= \frac{P(\overline{F}_A \mid A)P(A)}{P(\overline{F}_A \mid A)P(A) + P(\overline{F}_A \mid B)P(B)}\\
                            &= \frac{0.5 \times 0.7}{0.5 \times 0.7 + 1 \times 0.3} \\
                            &= 0.538
 \end{align*}
 which implies that $P(B \mid \overline{F}_A) = 1 - 0.538 = 0.462$. On day two,
-Oscar's decision problem is
+the worker's decision problem is
 
 \begingroup
 \setlength{\tabcolsep}{9pt}
@@ -1247,23 +1259,24 @@ Oscar's decision problem is
 & & \multicolumn{2}{c}{Nature} \\
 & & $0.538$ & $0.462$ \\
 & & $A$ & $B$  \\ \cline{3-4}
-\multirow{2}{.9in}{Oscar} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
+\multirow{2}{.9in}{Worker} & \gtcol{Look in A} & \gtcol{.5} & \gtcol{0} \\ \cline{3-4}
 & \gtcol{Look in B} & \gtcol{0} & \gtcol{.8} \\ \cline{3-4}
 \end{tabularx}
 \endgroup
 \vspace{.2in}
 
-and his best option is to look in forest B. Oscar will find Pablo with probability
+and his best option is to look in pallet two. The worker will find the bolt with probability
 \[ 0.462 \times 0.8 = 0.37\]
 
-With perfect information, but \emph{before} receiving the information, Oscar's
-expected value for the probability of finding Pablo is
+With perfect information, but \emph{before} receiving the information, the worker's
+expected value for the probability of finding the bolt is
 \[ 0.5 \times 0.538 + 0.8 \times 0.462 = 0.639 \]
-and in terms of probability ``units'', Oscar should be willing to pay
+and in terms of probability ``units'', he should be willing to pay
 \[ 0.639 - 0.37 = 0.269 \]
 for the information.
 
 \end{solution}
+
 
 % this problem is OK.
 \item \emph{Planting crops and the value of imperfect information.} A
@@ -2084,3 +2097,6 @@ interval scales, not for ratio scales.
 \end{solution}
 
 \end{enumerate}
+%%% Local Variables:
+%%% TeX-master: "main"
+%%% End:
