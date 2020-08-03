@@ -1382,29 +1382,45 @@ because total supply equals total demand.
 % hard when cold flows when heated) holds parts to be machined in
 % place. over a 4 week period the goo can be filtered or replaced
 % (with new.) ???
-\item \emph{Supplies for a multi-day event.}  An automobile
-  association is organizing a series of car races that will last for
-  four days. The organizers know that $r_j \geq 0$ special tires in
-  good condition will be required on each of the four successive days,
-  $j = 1, 2, 3, 4$. They can meet these needs either by buying new
-  tires at $P$ dollars per new tire or by reshaping used tires
-  (reshaping is a technique by which the grooves on the tire are
-  deepened, using a special profile-shaped tool). Two kinds of service
-  are available for reshaping: normal service, which requires one full
-  day at $N$ dollars per tire, and an overnight quick service, that
-  costs $Q$ dollars per tire. The association currently has zero
-  tires.
+\item \emph{A chemical solution for
+	manufacturing.}  A chemical solution is used in
+a
+manufacturing process to hold parts inside of a
+machine. The solution flows when heated and
+becomes solid when cooled. An industrial
+engineer must determine a method for maintaining
+the quality of the solution over a four-week
+period, while minimizing cost. The engineer knows
+that $r_j \geq 0$ pounds of quality solution
+will be required in each of the four weeks,
+$j = 1, 2, 3, 4$. This demand can be met by
+either purchasing more solution at cost $P$ dollars per
+pound or by filtering the current solution and
+reusing it.  Two options are available for
+filtering the solution: normal service, which
+requires 1 full week at a cost of $N$ dollars
+per pound, and expedited service, which allows
+solution used during one week to be filtered
+by the start of the next week, at a cost of
+$Q$ dollars per pound. Currently, the
+manufacturing company has zero pounds of
+solution.
 
 \begin{enumerate}
-\item  Formulate a network flow problem that will allow the association to
-  meet the requirements at minimal cost. You should draw a diagram of
-  the network to help you formulate the problem. Take into account the
-  fact that, at the end of day $j$, some used tires may not be sent to
-  reshaping.
-
-\item Now suppose that a tire may be reshaped only once. How does the
-  model change?
+	\item  Formulate a network flow problem that
+	will allow the company to maintain the solution
+	at minimal cost.  You should draw a diagram of
+	the network to help you formulate the problem.
+	Take into account the
+	fact that, at the end of week $j$, there may
+	be pounds of solution that will not be
+	filtered.
+	
+	\item Now suppose that a pound of solution may
+	be filtered only once. How does the model
+	change?
 \end{enumerate}
+
 
 % this problem needs a new context. but is a version of the well-known
 % "caterer's" problem. what is a modern day version? a hotel that uses
