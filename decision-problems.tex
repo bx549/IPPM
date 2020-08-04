@@ -1496,45 +1496,38 @@ will maximize your expected payoff.
 \end{center}
 \end{solution}
 
-% this problem needs a different context.
-% the idea is to use backward induction to find an optimal policy.
-\item \emph{An optimal strategy for a chess match.}  Alice is
-  preparing for a two--game chess match.  In each game Alice can
-  choose one of two strategies: timid play or bold play. The strategy
-  selected in the second game can differ from the strategy selected
-  in the first game. If Alice plays bold then she will win with
-  probability $p_w$ and lose with probability $1-p_w$. If Alice
-  chooses timid play then the match will result in a draw with probability
-  $p_d$ and she will lose the match with probability $1-p_d$. Note
-  that bold play results in a either a win or a loss, and that timid
-  play results in either a draw or a loss. At the conclusion of each
-  game, each player is awarded 1 point for a win, 1/2 point for a
-  draw, or zero points for a loss. If the score is tied at the of two
-  games, then the match goes into sudden death and the first person to
-  win a game wins the match.  Let $p_w=0.45$ and let $p_d=0.9$. Which
-  strategy should Alice select for the first game of the match, timid
-  or bold? What about the second game? In other words, what is the
-  strategy that will maximize Alice's expected payoff for the match?
-
-  Note that the payoff for Alice is the difference in scores. For
-  example, suppose that Alice plays timid in the first game resulting
-  in a draw and she plays bold in the second game resulting in a win.
-  Then the score for the match is Alice $1\frac{1}{2}$ points and her
-  opponent $\frac{1}{2}$ point. In that case the payoff for Alice is
-  $1\frac{1}{2} - \frac{1}{2} = 1$. Also consider that in the event of
-  a tied score at the end of two games Alice should play bold in
-  sudden death.  If she plays timid during sudden death then the best
-  that she could hope for is to drag out the match indefinitely. The
-  payoff for Alice for a tied score after two games is the expected
-  value of a lottery wherein she gets 1 point with probability $p_w$
-  and -1 point with probability $1-p_w$.
+% written by Emily
+\item \emph{An optimal strategy for a family visit.}  
+Parker's family is 
+coming to visit him for two days. He is going to plan an activity 
+for each day, and he must decide if it will be an indoor
+or outdoor activity. What he chooses the first day (indoor or
+outdoor) can differ from what he chooses the second day. He wants
+his family to enjoy whatever he chooses. There are many factors
+that determine if Parker's family enjoys an activity such as
+weather, how they are feeling, and their interest level.
+If Parker picks an outdoor activity, the probability that
+his family will enjoy the activity is $p_e$ and the probability
+that they do not enjoy the activity is $1-p_e$.
+If Parker picks an indoor activity, the probability that his family will 
+enjoy the activity is $p_h$ and the probability that they will not 
+is $1-p_h$. 
+To measure the success of the visit, Parker has come up with the 
+following scoring system: an outdoor activity that his family enjoys 
+is worth 2 points, an indoor activity that his family enjoys is worth 
+1 point, and any activity that his family does not enjoy is worth 
+zero points.
+Let $p_e=0.4$ and let $p_h=0.75$. 
+Which type of activity should Parker select for the first day
+of the visit, indoor or outdoor? What about the second day? 
+In other words, what is the
+plan that will maximize Parker's expected 
+payoff for the 2-day visit?
 
 \begin{solution}
-  \bs The optimal strategy for Alice, i.e. the strategy that maximizes
-  her expected payoff is to play timid in the first game. If she loses
-  the first game then play timid in the second game, otherwise if she
-  draws in the first game, then play bold in the second game.  Please
-  see the attached decision tree. 
+  \bs The optimal strategy for Parker is to plan an outdoor
+  activity for both days.
+  Please see the attached decision tree. 
 \end{solution}
 
 \subsubsection*{Games Against an Opponent}
