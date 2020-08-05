@@ -1677,43 +1677,36 @@ $y_i \in \{0,1\}$, and $i = 1,2,3$.
 % should probably be no more than about 100? could even be 50.
 % we need a solution in GAMS. I have place my AMPL solution on github
 % in the file "gambler.mod"
-\item \emph{A maxi-min problem.}  A gambler divides her money (\$500)
-  among four options.  There are three possible outcomes. The outcome
-  is determined by a random event A, B, or C, and the return for each
-  possible outcome per dollar invested is shown in the table
-  below. For example, if the gambler invests \$1 in option 1 and
-  outcome B occurs, then the gambler receives \$5. The gambler's
-  strategy is to maximize the minimum return. Provide an integer
-  programming formulation and obtain a solution.  \emph{Hint:} The
-  decision variables are the amounts to invest in each
-  option. Introduce another variable (say $w$) that represents the
-  minimum return. Then if $w$ is the minimum return, the actual return
-  for each possible outcome must be greater than or equal to $w$.)
+\item \emph{A maxi-min problem.} A college student has received a \$50 gift and is interested in investing in four different companies. One of three possible random events will occur in the next year that will impact the return on the investments. The return for each dollar invested in each of the four companies for each event is shown in the table below. For example, if the student invests \$1 in company 3 and event B occurs, the student will receive a return of \$7.  Investments must be made in increments of \$1. The student would like to maximize their minimum return when investing the \$50. Formulate an integer programming problem and obtain a solution.   \emph{Hint:} The
+decision variables are the amounts to invest in each
+company. Introduce another variable (say $w$) that represents the
+minimum return. Then if $w$ is the minimum return, the actual return
+for each possible outcome must be greater than or equal to $w$.)
 
 \begin{tabular}{r|rrr}
-& \multicolumn{3}{c}{outcome}\\
-option & A & B & C \\ \hline
-1 & -3 & 5 & 3 \\
-2 & 4 & -3 & -9 \\
-3 & -7 & 9 & 10 \\
-4 & 15 & 4 & -8
+	& \multicolumn{3}{c}{event}\\
+	company & A & B & C \\ \hline
+	1 & -4 & 6 & 5 \\
+	2 & 4 & -2 & -11 \\
+	3 & -5 & 7 & 12 \\
+	4 & 12 & 6 & -4
 \end{tabular}
 
 \begin{solution}
-  \bs Let the decision variables $x_i$ represent the amounts to invest
-in each option, where $i = 1,2,3,4$. Also, let $w$ represent
-the minimum return among the three options. Then the gambler wants to
-
-\[
-\begin{array}{lrrrrrrrrrrr}
-\textrm{maximize} & w & \multicolumn{10}{c}{} \\
-\textrm{subject to} & -3x_1 & + & 4x_2 & - & 7x_3 & + & 15x4 &-&500&\geq & w \\
-& 5x_1 & - & 3x_2 & + & 9x_3 & + & 4x4 &-&500&\geq & w \\
-& 3x_1 & - & 9x_2 & + & 10x_3 & - & 8x4 &-&500&\geq & w \\
-&  & & x_1 & + & x_2 & + & x_3 &+&x_4& = & 500 \\
-\end{array}
-\]
-where $x_i \geq 0$, and $w$ is unrestricted.
+	\bs Let the decision variables $x_i$ represent the amounts to invest
+	in each company, where $i = 1,2,3,4$. Also, let $w$ represent
+	the minimum return among the three events. Then the student wants to
+	
+	\[
+	\begin{array}{lrrrrrrrrrrr}
+	\textrm{maximize} & w & \multicolumn{10}{c}{} \\
+	\textrm{subject to} & -4x_1 & + & 4x_2 & - & 5x_3 & + & 12x4 &-&50&\geq & w \\
+	& 6x_1 & - & 2x_2 & + & 7x_3 & + & 6x4 &-&50&\geq & w \\
+	& 5x_1 & - & 11x_2 & + & 12x_3 & - & 4x4 &-&50&\geq & w \\
+	&  & & x_1 & + & x_2 & + & x_3 &+&x_4& = & 50 \\
+	\end{array}
+	\]
+	where $x_i \in \mathbb{Z}$-*, and $w$ is unrestricted.
 \end{solution}
 
 % re-written by hannah
