@@ -1683,24 +1683,24 @@ $y_i \in \{0,1\}$, and $i = 1,2,3$.
 
 % re-written by hannah
 \item \emph{A maxi-min problem.} A college student has received a \$50
-  gift and is interested in investing in four different companies. One
+  gift and is interested in four different investment options. One
   of three possible random events will occur in the next year that
   will impact the return on the investments. The return for each
-  dollar invested in each of the four companies for each event is
+  dollar invested in each of the four options for each event is
   shown in the table below. For example, if the student invests \$1 in
-  company 3 and event B occurs, the student will receive a return of
-  \$7.  Investments must be made in increments of \$1. The student
-  would like to maximize their minimum return when investing the
-  \$50. Formulate an integer programming problem and obtain a
+  option 3 and event B occurs, the student will receive a return of
+  \$7.  Investment amounts must be in increments of \$1. The student is
+risk-averse; his objective is to maximize the minimum return.
+  Formulate an integer programming problem and obtain a
   solution.  \emph{Hint:} The decision variables are the amounts to
-  invest in each company. Introduce another variable (say $w$) that
+  invest in each option. Introduce another variable (say $w$) that
   represents the minimum return. Then, if $w$ is the minimum return,
   the actual return for each possible outcome must be greater than or
   equal to $w$.)
 
 \begin{tabular}{c|rrr}
 	& \multicolumn{3}{c}{event}\\
-	company & A & B & C \\ \hline
+	option & A & B & C \\ \hline
 	1 & -4 & 6 & 5 \\
 	2 & 4 & -2 & -11 \\
 	3 & -5 & 7 & 12 \\
@@ -1710,7 +1710,7 @@ $y_i \in \{0,1\}$, and $i = 1,2,3$.
 
 \begin{solution}
 	\bs Let the decision variables $x_i$ represent the amounts to invest
-	in each company, where $i = 1,2,3,4$. Also, let $w$ represent
+	in each option, where $i = 1,2,3,4$. Also, let $w$ represent
 	the minimum return among the three events. The student wants to
 	
 	\[
@@ -1722,7 +1722,13 @@ $y_i \in \{0,1\}$, and $i = 1,2,3$.
 	&  & & x_1 & + & x_2 & + & x_3 &+&x_4& = & 50 \\
 	\end{array}
 	\]
-	where $x_i$ is integer-valued and non-negative, and $w$ is unrestricted.
+	where $x_i$ is integer-valued and non-negative, and $w$ is
+        unrestricted.  An implementation and solution is provided in
+        the files \texttt{maxi-min.gms} and \texttt{maxi-min.lst}. The
+        solution indicates that the student should invest \$24 in
+        option 3 and \$26 in option 4 for a guaranteed minimum return
+        of \$134.
+
 \end{solution}
 
 % re-written by hannah
