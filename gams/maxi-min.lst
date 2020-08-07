@@ -1,0 +1,205 @@
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/05/20 12:14:17 Page 1
+A maxi-min problem
+C o m p i l a t i o n
+
+
+   2  set i 'companies' /1,2,3,4/;
+   3  set j 'events' /A,B,C/;
+   4   
+   5  Table a(i,j) 'investment returns'
+   6    A  B  C
+   7  1 -4 6  5
+   8  2 4  -2 -11
+   9  3 -5 7  12
+  10  4 12 6  -4;
+  11   
+  12  scalar b 'total of investments' /50/;
+  13   
+  14  integer variable x(i) 'dollars to invest in company i';
+  15  free variable w 'minimum return among the three events';
+  16   
+  17  equations
+  18   amountinvest 'dollars to invest'
+  19   return(j) 'return for each event';
+  20   
+  21   
+  22  amountinvest.. sum(i,x(i)) =e= b;
+  23  return(j).. sum(i,x(i)*a(i,j)) - b =g= w;
+  24   
+  25  model investments /all/;
+  26  solve investments using MIP maximizing w;
+  27   
+  28   
+  29   
+  30   
+  31   
+  32   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/05/20 12:14:17 Page 2
+A maxi-min problem
+Equation Listing    SOLVE investments Using MIP From line 26
+
+
+---- amountinvest  =E=  dollars to invest
+
+amountinvest..  x(1) + x(2) + x(3) + x(4) =E= 50 ; (LHS = 0, INFES = 50 ****)
+     
+
+---- return  =G=  return for each event
+
+return(A)..  - 4*x(1) + 4*x(2) - 5*x(3) + 12*x(4) - w =G= 50 ;
+     
+      (LHS = 0, INFES = 50 ****)
+     
+return(B)..  6*x(1) - 2*x(2) + 7*x(3) + 6*x(4) - w =G= 50 ;
+     
+      (LHS = 0, INFES = 50 ****)
+     
+return(C)..  5*x(1) - 11*x(2) + 12*x(3) - 4*x(4) - w =G= 50 ;
+     
+      (LHS = 0, INFES = 50 ****)
+     
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/05/20 12:14:17 Page 3
+A maxi-min problem
+Column Listing      SOLVE investments Using MIP From line 26
+
+
+---- x  dollars to invest in company i
+
+x(1)
+                (.LO, .L, .UP, .M = 0, 0, 100, 0)
+        1       amountinvest
+       -4       return(A)
+        6       return(B)
+        5       return(C)
+
+x(2)
+                (.LO, .L, .UP, .M = 0, 0, 100, 0)
+        1       amountinvest
+        4       return(A)
+       -2       return(B)
+      -11       return(C)
+
+x(3)
+                (.LO, .L, .UP, .M = 0, 0, 100, 0)
+        1       amountinvest
+       -5       return(A)
+        7       return(B)
+       12       return(C)
+
+REMAINING ENTRY SKIPPED
+
+---- w  minimum return among the three events
+
+w
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+       -1       return(A)
+       -1       return(B)
+       -1       return(C)
+
+
+****
+****  4 Integer +INF Bounds have been reset to 100 (see Option IntVarUp)
+****
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/05/20 12:14:17 Page 4
+A maxi-min problem
+Model Statistics    SOLVE investments Using MIP From line 26
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           2     SINGLE EQUATIONS            4
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES            5
+NON ZERO ELEMENTS            19     DISCRETE VARIABLES          4
+
+
+GENERATION TIME      =        0.063 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+
+
+EXECUTION TIME       =        0.063 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/05/20 12:14:17 Page 5
+A maxi-min problem
+Solution Report     SOLVE investments Using MIP From line 26
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   investments         OBJECTIVE  w
+     TYPE    MIP                 DIRECTION  MAXIMIZE
+     SOLVER  CPLEX               FROM LINE  26
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      8 Integer Solution          
+**** OBJECTIVE VALUE              134.0000
+
+ RESOURCE USAGE, LIMIT          0.078      1000.000
+ ITERATION COUNT, LIMIT         3    2000000000
+
+IBM ILOG CPLEX   28.2.0 r750fa45 Released Aug 19, 2019 WEI x86 64bit/MS Window
+Cplex 12.9.0.0
+
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+MIP status(102): integer optimal, tolerance
+Cplex Time: 0.06sec (det. 0.05 ticks)
+Fixing integer variables, and solving final LP...
+Fixed MIP status(1): optimal
+Cplex Time: 0.02sec (det. 0.00 ticks)
+Solution satisfies tolerances.
+
+MIP Solution:          134.000000    (3 iterations, 0 nodes)
+Final Solve:           134.000000    (0 iterations)
+
+Best possible:         137.878788
+Absolute gap:            3.878788
+Relative gap:            0.028132
+
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- EQU amountinv~    50.000    50.000    50.000      .         
+
+  amountinvest  dollars to invest
+
+---- EQU return  return for each event
+
+     LOWER     LEVEL     UPPER    MARGINAL
+
+A    50.000    58.000     +INF       .         
+B    50.000   190.000     +INF       .         
+C    50.000    50.000     +INF     -1.000      
+
+---- VAR x  dollars to invest in company i
+
+     LOWER     LEVEL     UPPER    MARGINAL
+
+1      .         .      100.000     5.000      
+2      .         .      100.000   -11.000      
+3      .       24.000   100.000    12.000      
+4      .       26.000   100.000    -4.000      
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- VAR w              -INF    134.000     +INF       .         
+
+  w  minimum return among the three events
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.000 SECONDS      2 MB  28.2.0 r750fa45 WEX-WEI
+
+
+USER: GAMS Development Corporation, USA              G871201/0000CA-ANY
+      Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Hannah Kleist\Documents\gamsdir\projdir\maxi-min.gms
+Output     C:\Users\Hannah Kleist\Documents\gamsdir\projdir\maxi-min.lst
