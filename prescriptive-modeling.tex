@@ -1400,13 +1400,80 @@ they are being machined.
 \item Formulate a network flow problem that will allow the company to
   satisfy the demand for the work-holding material at minimal cost.
   You should draw a diagram of the network to help you formulate the
-  problem.
+  problem. Note that because the company can purchase new work-holding
+  material, used material can be discarded at the end of a week, if it
+  is economical to do so.
 	
 \item Now suppose that used material may be filtered and re-used only
   once. How does the model change?
 \end{enumerate}
 % this was the car races problem from Bradley AMP.
 % need to update the solution that is in car-races.pdf
+
+\begin{solution}
+  \bs Define the following variables.
+
+  \begin{tabular}{rl}
+    $x_{0j}$ & pounds (lbs) of new material purchased for the beginning of week $j$ \\
+$y_{ij}$ & lbs material for expedited filtering from end of week $i$ to beginning of week $j$ \\
+$z_{ij}$ & lbs material for normal filtering from end of week $i$ to beginning of week $j$ \\
+$w_{i5}$ & lbs material discarded at the end of week $i$
+  \end{tabular}
+
+The network flow can be depicted as follows. Node 0 represents the beginning of the
+four-week period. Nodes 1 through 4 represent weeks 1 through 4. Node 5 represents
+the sink node for discarded material.
+
+\begin{center}
+      \begin{tikzpicture}[>=latex]
+      \node[circle,draw](0) at (-1.5,3) {0};
+      \node[circle,draw](1) at (0,0) {1};
+      \node[circle,draw](2) at (3,0) {2};
+      \node[circle,draw](3) at (6,0) {3};
+      \node[circle,draw](4) at (9,0) {4};
+      \node[circle,draw](5) at (4.5,-3) {5};
+
+      \draw[->] (0) to [out=260,in=160]  node[left,pos=.5]{$x_{01}$} (1);
+      \draw[->] (0) to [out=290,in=140]  node[above,pos=.5]{$x_{02}$} (2);
+      \draw[->] (0) to [out=330,in=120]  node[above,pos=.5]{$x_{03}$} (3);
+      \draw[->] (0) to [out=0,in=100]  node[above,pos=.5]{$x_{04}$} (4);
+
+      \draw[->] (1) to [out=0,in=180]  node[above,pos=.5]{$y_{12}$} (2);
+      \draw[->] (2) to [out=0,in=180]  node[above,pos=.5]{$y_{23}$} (3);
+      \draw[->] (3) to [out=0,in=180]  node[above,pos=.5]{$y_{34}$} (4);
+
+      \draw[->] (1) to [out=300,in=240]  node[above,pos=.3]{$z_{13}$} (3);
+      \draw[->] (2) to [out=300,in=240]  node[above,pos=.7]{$z_{24}$} (4);
+
+      \draw[->] (1) to [out=270,in=180]  node[below,pos=.5]{$w_{15}$} (5);
+      \draw[->] (2) to [out=270,in=150]  node[left,pos=.75]{$w_{25}$} (5);
+      \draw[->] (3) to [out=270,in=30]  node[right,pos=.75]{$w_{35}$} (5);
+      \draw[->] (4) to [out=270,in=0]  node[below,pos=.5]{$w_{45}$} (5);
+      \end{tikzpicture}
+\end{center}
+The mathematical programming problem is to
+
+\[
+\begin{array}{lrrrrrrrrll}
+\textrm{minimize} & \multicolumn{10}{r}{P(x_{01} + x_{02} + x_{03} + x_{04}) + Q(y_{12}+y_{23}+y_{34}) +N(z_{13}+z_{24})} \\
+\textrm{subject to} & x_{01} & \geq & r_1 &&&&&&&(1)\\
+& x_{02}&+&y_{12}&\geq&r_2&&&&&(2)\\
+& x_{03}&+&y_{23}&+&z_{13}&\geq&r_3&&&(3)\\
+& x_{04}&+&y_{34}&+&z_{24}&\geq&r_4&&&(4)\\
+& x_{01}&=&w_{15}&+&y_{12}&+&z_{13}&&&(5)\\
+& x_{02}&+&y_{12}&=&w_{25}&+&y_{23}&+&z_{24}&(6) \\
+& x_{03}&+&y_{23}&+&z_{13}&=&w_{35}&+&y_{34}&(7) \\
+& x_{04}&+&y_{34}&+&z_{24}&=&w_{45}&&&(8)\\
+& \multicolumn{9}{r}{x_{ij},~y_{ij},~z_{ij},~w_{ij} \geq 0~\text{for each edge $i,j$ in the network.}}
+\end{array}
+\]
+
+Constraints 1 -- 4 pertain to the material requirements for weeks 1
+through 4.  Constraints 5 -- 8 are the flow balance constraints. They
+require that the material that enters the beginning of a week must
+exit at the end of the week.
+
+\end{solution}
 
 % re-written by hannah
 \item \emph{Laundering coveralls.} A medical device company uses a
