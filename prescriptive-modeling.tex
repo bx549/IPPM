@@ -1473,6 +1473,55 @@ through 4.  Constraints 5 -- 8 are the flow balance constraints. They
 require that the material that enters the beginning of a week must
 exit at the end of the week.
 
+If the work-holding material can be filtered only once, then we 
+require that all incoming flow on edges that represent filtering (i.e. $y_{ij}$ and
+$z_{ij}$) must be routed to node 5 (the discard node). To accomplish this, one idea
+is to split nodes 2 and 3 as depicted in the diagram below. All flow into nodes 2a
+and 3a must be discarded, but is allowed to help satisfy the demand requirements.
+
+\begin{center}
+      \begin{tikzpicture}[>=latex]
+      \node[circle,draw](0) at (-1.5,3) {0};
+      \node[circle,draw](1) at (-.5,0) {1};
+      \node[circle,draw](2a) at (2.55,0) {2a};
+      \node[circle,draw](2b) at (3.45,0) {2b};
+      \node[circle,draw](3a) at (5.55,0) {3a};
+      \node[circle,draw](3b) at (6.45,0) {3b};
+      \node[circle,draw](4) at (9.5,0) {4};
+      \node[circle,draw](5) at (4.5,-3) {5};
+
+      \draw[->] (0) to [out=260,in=160]  node[left,pos=.5]{$x_{01}$} (1);
+      \draw[->] (0) to [out=290,in=120]  node[above,pos=.5]{$x_{0,2b}$} (2b);
+      \draw[->] (0) to [out=330,in=120]  node[above,pos=.5]{$x_{0,3b}$} (3b);
+      \draw[->] (0) to [out=0,in=100]  node[above,pos=.5]{$x_{04}$} (4);
+
+      \draw[->] (1) to [out=0,in=180]  node[above,pos=.5]{$y_{1,2a}$} (2a);
+      \draw[->] (2b) to [out=0,in=180]  node[above,pos=.5]{$y_{2b,3a}$} (3a);
+      \draw[->] (3b) to [out=0,in=180]  node[above,pos=.5]{$y_{3b,4}$} (4);
+
+      \draw[->] (1) to [out=300,in=240]  node[above,pos=.3]{$z_{1,3a}$} (3a);
+      \draw[->] (2b) to [out=300,in=240]  node[above,pos=.7]{$z_{2b,4}$} (4);
+
+      \draw[->] (1) to [out=270,in=180]  node[below,pos=.5]{$w_{15}$} (5);
+      \draw[->] (2a) to [out=270,in=150]  node[left,pos=.75]{$w_{2a,5}$} (5);
+      \draw[->] (3a) to [out=270,in=30]  node[right,pos=.75]{$w_{3a,5}$} (5);
+      \draw[->] (4) to [out=270,in=0]  node[below,pos=.5]{$w_{45}$} (5);
+      \end{tikzpicture}
+\end{center}
+
+Now the objective function and demand requirements are
+\[
+\begin{array}{lrrrrrrrrll}
+\textrm{minimize} & \multicolumn{10}{r}{P(x_{01} + x_{0,2b} + x_{0,3b} + x_{04}) + Q(y_{1,2a}+y_{2b,3a}+y_{3b,4}) +N(z_{1,3a}+z_{2b,4})} \\
+\textrm{subject to} & x_{01} & \geq & r_1 &&&&&&&(1)\\
+& x_{02}&+&y_{1,2a}&\geq&r_2&&&&&(2)\\
+& x_{03}&+&y_{2b,3a}&+&z_{1,3a}&\geq&r_3&&&(3)\\
+& x_{04}&+&y_{3b,4}&+&z_{2b,4}&\geq&r_4&&&(4)\\
+\end{array}
+\]
+We also need flow balance constraints for nodes 1,2a,2b,3a,3b,4, and
+the non-negativity constraints.
+
 \end{solution}
 
 % re-written by hannah
