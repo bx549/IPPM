@@ -1,0 +1,249 @@
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 1
+Maximum flow problem
+C o m p i l a t i o n
+
+
+   2   
+   3  set node /s,1,2,3,4,t/;
+   4  alias(node,i,j);
+   5   
+   6  set edge(i,j) /s.1,s.2,1.3,1.4,2.1,2.4,3.t,4.3,4.t,t.s/;
+   7   
+   8  table c(node,node) 'pipe capacity'
+   9    s  1  2  3  4  t
+  10  s    4  6
+  11  1          6  2
+  12  2    4        4
+  13  3                6
+  14  4          1     2
+  15  t inf             ;
+  16   
+  17   
+  18  positive variable x(node,node);
+  19  free variable z ;
+  20   
+  21  equations
+  22   capacities(node,node) 'capacities of pipes'
+  23   flow 'objective function'
+  24   balances 'node s balance'
+  25   balance1 'node 1 balance'
+  26   balance2 'node 2 balance'
+  27   balance3 'node 3 balance'
+  28   balance4 'node 4 balance'
+  29   balancet 'node t balance';
+  30   
+  31  capacities(edge(i,j)).. x(edge) =l= c(edge) ;
+  32  flow.. z =e= x('t','s');
+  33  balances..x('s','1') + x('s','2') - x('t','s') =e= 0;
+  34  balance1..x('1','3') + x('1','4') - x('s','1') - x('2','1') =e= 0;
+  35  balance2..x('2','4') + x('2','1') - x('s','2') =e= 0;
+  36  balance3..x('3','t') - x('1','3') - x('4','3') =e= 0;
+  37  balance4..x('4','3') + x('4','t') - x('1','4') - x('2','4') =e= 0;
+  38  balancet..x('t','s') - x('3','t') - x('4','t') =e= 0;
+  39   
+  40  model maxflow /all/;
+  41  solve maxflow using lp maximizing z;
+  42   
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 2
+Maximum flow problem
+Equation Listing    SOLVE maxflow Using LP From line 41
+
+
+---- capacities  =L=  capacities of pipes
+
+capacities(s,1)..  x(s,1) =L= 4 ; (LHS = 0)
+     
+capacities(s,2)..  x(s,2) =L= 6 ; (LHS = 0)
+     
+capacities(1,3)..  x(1,3) =L= 6 ; (LHS = 0)
+     
+REMAINING 7 ENTRIES SKIPPED
+
+
+---- flow  =E=  objective function
+
+flow..  - x(t,s) + z =E= 0 ; (LHS = 0)
+     
+
+---- balances  =E=  node s balance
+
+balances..  x(s,1) + x(s,2) - x(t,s) =E= 0 ; (LHS = 0)
+     
+
+---- balance1  =E=  node 1 balance
+
+balance1..  - x(s,1) + x(1,3) + x(1,4) - x(2,1) =E= 0 ; (LHS = 0)
+     
+
+---- balance2  =E=  node 2 balance
+
+balance2..  - x(s,2) + x(2,1) + x(2,4) =E= 0 ; (LHS = 0)
+     
+
+---- balance3  =E=  node 3 balance
+
+balance3..  - x(1,3) + x(3,t) - x(4,3) =E= 0 ; (LHS = 0)
+     
+
+---- balance4  =E=  node 4 balance
+
+balance4..  - x(1,4) - x(2,4) + x(4,3) + x(4,t) =E= 0 ; (LHS = 0)
+     
+
+---- balancet  =E=  node t balance
+
+balancet..  - x(3,t) - x(4,t) + x(t,s) =E= 0 ; (LHS = 0)
+     
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 3
+Maximum flow problem
+Column Listing      SOLVE maxflow Using LP From line 41
+
+
+---- x  
+
+x(s,1)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       capacities(s,1)
+        1       balances
+       -1       balance1
+
+x(s,2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       capacities(s,2)
+        1       balances
+       -1       balance2
+
+x(1,3)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       capacities(1,3)
+        1       balance1
+       -1       balance3
+
+REMAINING 7 ENTRIES SKIPPED
+
+---- z  
+
+z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       flow
+
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 4
+Maximum flow problem
+Model Statistics    SOLVE maxflow Using LP From line 41
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS           8     SINGLE EQUATIONS           17
+BLOCKS OF VARIABLES           2     SINGLE VARIABLES           11
+NON ZERO ELEMENTS            32
+
+
+GENERATION TIME      =        0.094 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+
+
+EXECUTION TIME       =        0.094 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
+GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 5
+Maximum flow problem
+Solution Report     SOLVE maxflow Using LP From line 41
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   maxflow             OBJECTIVE  z
+     TYPE    LP                  DIRECTION  MAXIMIZE
+     SOLVER  MINOS               FROM LINE  41
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE                8.0000
+
+ RESOURCE USAGE, LIMIT          0.000      1000.000
+ ITERATION COUNT, LIMIT         5    2000000000
+
+GAMS/MINOS       28.2.0 r750fa45 Released Aug 19, 2019 WEI x86 64bit/MS Win
+M I N O S  5.6      (Jul 2016)
+
+    GAMS/MINOS 5.6, Large Scale Nonlinear Solver
+    B. A. Murtagh, University of New South Wales
+    P. E. Gill, University of California at San Diego,
+    W. Murray, M. A. Saunders, and M. H. Wright,
+    Systems Optimization Laboratory, Stanford University
+
+ Work space allocated           --     0.79 Mb
+
+ EXIT - Optimal Solution found, objective:        8.000000
+
+
+---- EQU capacities  capacities of pipes
+
+       LOWER     LEVEL     UPPER    MARGINAL
+
+s.1     -INF      4.000     4.000      EPS       
+s.2     -INF      4.000     6.000      .         
+1.3     -INF      6.000     6.000      EPS       
+1.4     -INF      2.000     2.000      EPS       
+2.1     -INF      4.000     4.000      .         
+2.4     -INF       .        4.000      .         
+3.t     -INF      6.000     6.000     1.000      
+4.3     -INF       .        1.000      .         
+4.t     -INF      2.000     2.000     1.000      
+t.s     -INF      8.000     +INF       .         
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- EQU flow            .         .         .        1.000      
+---- EQU balances        .         .         .         EPS       
+---- EQU balance1        .         .         .         .         
+---- EQU balance2        .         .         .         EPS       
+---- EQU balance3        .         .         .         EPS       
+---- EQU balance4        .         .         .         EPS       
+---- EQU balancet        .         .         .        1.000      
+
+  flow  objective function
+  balances  node s balance
+  balance1  node 1 balance
+  balance2  node 2 balance
+  balance3  node 3 balance
+  balance4  node 4 balance
+  balancet  node t balance
+
+---- VAR x  
+
+       LOWER     LEVEL     UPPER    MARGINAL
+
+s.1      .        4.000     +INF       .         
+s.2      .        4.000     +INF       .         
+1.3      .        6.000     +INF       .         
+1.4      .        2.000     +INF       .         
+2.1      .        4.000     +INF       .         
+2.4      .         .        +INF       .         
+3.t      .        6.000     +INF       .         
+4.3      .         .        +INF       .         
+4.t      .        2.000     +INF       .         
+t.s      .        8.000     +INF       .         
+
+                       LOWER     LEVEL     UPPER    MARGINAL
+
+---- VAR z              -INF      8.000     +INF       .         
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+
+
+EXECUTION TIME       =        0.000 SECONDS      2 MB  28.2.0 r750fa45 WEX-WEI
+
+
+USER: GAMS Development Corporation, USA              G871201/0000CA-ANY
+      Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+
+
+**** FILE SUMMARY
+
+Input      C:\Users\Hannah Kleist\Documents\gamsdir\projdir\maximum-flow.gms
+Output     C:\Users\Hannah Kleist\Documents\gamsdir\projdir\maximum-flow.lst
