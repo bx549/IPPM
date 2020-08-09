@@ -1,4 +1,4 @@
-GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 1
+GAMS 32.1.0  r75a5b5d Released Jul 31, 2020 LEX-LEG x86 64bit/Linux - 08/09/20 15:08:10 Page 1
 Maximum flow problem
 C o m p i l a t i o n
 
@@ -46,8 +46,8 @@ C o m p i l a t i o n
   42   
 
 
-COMPILATION TIME     =        0.000 SECONDS      3 MB  28.2.0 r750fa45 WEX-WEI
-GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 2
+COMPILATION TIME     =        0.035 SECONDS      3 MB  32.1.0 r75a5b5d LEX-LEG
+GAMS 32.1.0  r75a5b5d Released Jul 31, 2020 LEX-LEG x86 64bit/Linux - 08/09/20 15:08:10 Page 2
 Maximum flow problem
 Equation Listing    SOLVE maxflow Using LP From line 41
 
@@ -97,7 +97,7 @@ balance4..  - x(1,4) - x(2,4) + x(4,3) + x(4,t) =E= 0 ; (LHS = 0)
 
 balancet..  - x(3,t) - x(4,t) + x(t,s) =E= 0 ; (LHS = 0)
      
-GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 3
+GAMS 32.1.0  r75a5b5d Released Jul 31, 2020 LEX-LEG x86 64bit/Linux - 08/09/20 15:08:10 Page 3
 Maximum flow problem
 Column Listing      SOLVE maxflow Using LP From line 41
 
@@ -130,7 +130,7 @@ z
                 (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
         1       flow
 
-GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 4
+GAMS 32.1.0  r75a5b5d Released Jul 31, 2020 LEX-LEG x86 64bit/Linux - 08/09/20 15:08:10 Page 4
 Maximum flow problem
 Model Statistics    SOLVE maxflow Using LP From line 41
 
@@ -142,11 +142,8 @@ BLOCKS OF VARIABLES           2     SINGLE VARIABLES           11
 NON ZERO ELEMENTS            32
 
 
-GENERATION TIME      =        0.094 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
-
-
-EXECUTION TIME       =        0.094 SECONDS      4 MB  28.2.0 r750fa45 WEX-WEI
-GAMS 28.2.0  r750fa45 Released Aug 19, 2019 WEX-WEI x86 64bit/MS Windows 08/07/20 11:07:35 Page 5
+GENERATION TIME      =        0.147 SECONDS      4 MB  32.1.0 r75a5b5d LEX-LEG
+GAMS 32.1.0  r75a5b5d Released Jul 31, 2020 LEX-LEG x86 64bit/Linux - 08/09/20 15:08:10 Page 5
 Maximum flow problem
 Solution Report     SOLVE maxflow Using LP From line 41
 
@@ -155,53 +152,51 @@ Solution Report     SOLVE maxflow Using LP From line 41
 
      MODEL   maxflow             OBJECTIVE  z
      TYPE    LP                  DIRECTION  MAXIMIZE
-     SOLVER  MINOS               FROM LINE  41
+     SOLVER  CPLEX               FROM LINE  41
 
 **** SOLVER STATUS     1 Normal Completion         
 **** MODEL STATUS      1 Optimal                   
 **** OBJECTIVE VALUE                8.0000
 
- RESOURCE USAGE, LIMIT          0.000      1000.000
- ITERATION COUNT, LIMIT         5    2000000000
+ RESOURCE USAGE, LIMIT          0.246 10000000000.000
+ ITERATION COUNT, LIMIT         2    2147483647
 
-GAMS/MINOS       28.2.0 r750fa45 Released Aug 19, 2019 WEI x86 64bit/MS Win
-M I N O S  5.6      (Jul 2016)
+IBM ILOG CPLEX   32.1.0 r75a5b5d Released Jul 31, 2020 LEG x86 64bit/Linux    
+*** This solver runs with a demo license. No commercial use.
+Cplex 12.10.0.0
 
-    GAMS/MINOS 5.6, Large Scale Nonlinear Solver
-    B. A. Murtagh, University of New South Wales
-    P. E. Gill, University of California at San Diego,
-    W. Murray, M. A. Saunders, and M. H. Wright,
-    Systems Optimization Laboratory, Stanford University
-
- Work space allocated           --     0.79 Mb
-
- EXIT - Optimal Solution found, objective:        8.000000
+Space for names approximately 0.00 Mb
+Use option 'names no' to turn use of names off
+LP status(1): optimal
+Cplex Time: 0.03sec (det. 0.02 ticks)
+Optimal solution found.
+Objective :           8.000000
 
 
 ---- EQU capacities  capacities of pipes
 
-       LOWER     LEVEL     UPPER    MARGINAL
+           LOWER          LEVEL          UPPER         MARGINAL
 
-s.1     -INF      4.000     4.000      EPS       
-s.2     -INF      4.000     6.000      .         
-1.3     -INF      6.000     6.000      EPS       
-1.4     -INF      2.000     2.000      EPS       
-2.1     -INF      4.000     4.000      .         
-2.4     -INF       .        4.000      .         
-3.t     -INF      6.000     6.000     1.000      
-4.3     -INF       .        1.000      .         
-4.t     -INF      2.000     2.000     1.000      
-t.s     -INF      8.000     +INF       .         
+s.1        -INF            4.0000         4.0000         EPS         
+s.2        -INF            4.0000         6.0000          .          
+1.3        -INF            5.0000         6.0000          .          
+1.4        -INF             .             2.0000          .          
+2.1        -INF            1.0000         4.0000          .          
+2.4        -INF            3.0000         4.0000          .          
+3.t        -INF            6.0000         6.0000         1.0000      
+4.3        -INF            1.0000         1.0000         EPS         
+4.t        -INF            2.0000         2.0000         1.0000      
+t.s        -INF            8.0000        +INF             .          
 
-                       LOWER     LEVEL     UPPER    MARGINAL
+                           LOWER          LEVEL          UPPER         MARGINAL
 
----- EQU flow            .         .         .        1.000      
----- EQU balances        .         .         .         EPS       
----- EQU balance1        .         .         .         .         
----- EQU balance2        .         .         .         EPS       
----- EQU balance3        .         .         .         EPS       
----- EQU balance4        .         .         .         EPS       
----- EQU balancet        .         .         .        1.000      
+---- EQU flow                .              .              .             1.0000      
+---- EQU balances            .              .              .             EPS         
+---- EQU balance1            .              .              .             EPS         
+---- EQU balance2            .              .              .             EPS         
+---- EQU balance3            .              .              .             EPS         
+---- EQU balance4            .              .              .              .          
+---- EQU balancet            .              .              .             1.0000      
 
   flow  objective function
   balances  node s balance
@@ -213,22 +208,22 @@ t.s     -INF      8.000     +INF       .
 
 ---- VAR x  
 
-       LOWER     LEVEL     UPPER    MARGINAL
+           LOWER          LEVEL          UPPER         MARGINAL
 
-s.1      .        4.000     +INF       .         
-s.2      .        4.000     +INF       .         
-1.3      .        6.000     +INF       .         
-1.4      .        2.000     +INF       .         
-2.1      .        4.000     +INF       .         
-2.4      .         .        +INF       .         
-3.t      .        6.000     +INF       .         
-4.3      .         .        +INF       .         
-4.t      .        2.000     +INF       .         
-t.s      .        8.000     +INF       .         
+s.1          .             4.0000        +INF             .          
+s.2          .             4.0000        +INF             .          
+1.3          .             5.0000        +INF             .          
+1.4          .              .            +INF            EPS         
+2.1          .             1.0000        +INF             .          
+2.4          .             3.0000        +INF             .          
+3.t          .             6.0000        +INF             .          
+4.3          .             1.0000        +INF             .          
+4.t          .             2.0000        +INF             .          
+t.s          .             8.0000        +INF             .          
 
-                       LOWER     LEVEL     UPPER    MARGINAL
+                           LOWER          LEVEL          UPPER         MARGINAL
 
----- VAR z              -INF      8.000     +INF       .         
+---- VAR z                 -INF            8.0000        +INF             .          
 
 
 **** REPORT SUMMARY :        0     NONOPT
@@ -236,14 +231,14 @@ t.s      .        8.000     +INF       .
                              0  UNBOUNDED
 
 
-EXECUTION TIME       =        0.000 SECONDS      2 MB  28.2.0 r750fa45 WEX-WEI
+EXECUTION TIME       =        0.532 SECONDS      4 MB  32.1.0 r75a5b5d LEX-LEG
 
 
-USER: GAMS Development Corporation, USA              G871201/0000CA-ANY
-      Free Demo, +1 202-342-0180, support@gams.com, www.gams.com DC0000
+USER: GAMS Demo license for Darin England            G200514|0002CO-GEN
+      University of Minnesota Twin Cities, United States of AmeDL009821
 
 
 **** FILE SUMMARY
 
-Input      C:\Users\Hannah Kleist\Documents\gamsdir\projdir\maximum-flow.gms
-Output     C:\Users\Hannah Kleist\Documents\gamsdir\projdir\maximum-flow.lst
+Input      /home/darin/MEGA/IPPM/gams/maximum-flow.gms
+Output     /home/darin/MEGA/IPPM/gams/maximum-flow.lst
