@@ -1164,57 +1164,57 @@ per pound.
 
 \vspace{.2in}
 \begin{center}
-	\begin{tikzpicture}[>=latex]
-	
-	\node[circle,draw] (source) at (0,2) {$s$};
-	\node[circle,draw] (1) at (2,4) {1};
-	\node[circle,draw] (2) at (2,0) {2};
-	\node[circle,draw] (3) at (5,4) {3};
-	\node[circle,draw] (4) at (5,0) {4};
-	\node[circle,draw] (sink) at (7,2) {$t$};
-	
-	\draw[->] (source) -- (1) node[above=3pt,pos=.5]{4};
-	\draw[->] (source) -- (2) node[above=3pt,pos=.5]{6};
-	\draw[->] (2) -- (1) node[right,pos=.5]{4};
-	\draw[->] (1) -- (3) node[above,pos=.5]{6};
-	\draw[->] (1) -- (4) node[right=2pt,pos=.4]{2};
-	\draw[->] (2) -- (4) node[above,pos=.5]{4};
-	\draw[->] (3) -- (sink) node[right=2pt,pos=.5]{6};
-	\draw[->] (4) -- (sink) node[above=2pt,pos=.5]{2};
-	\draw[->] (4) -- (3) node[right,pos=.5]{1};
-	
-	\end{tikzpicture}
+\begin{tikzpicture}[>=latex]
+
+\node[circle,draw] (source) at (0,2) {$s$};
+\node[circle,draw] (1) at (2,4) {1};
+\node[circle,draw] (2) at (2,0) {2};
+\node[circle,draw] (3) at (5,4) {3};
+\node[circle,draw] (4) at (5,0) {4};
+\node[circle,draw] (sink) at (7,2) {$t$};
+
+\draw[->] (source) -- (1) node[above=3pt,pos=.5]{4};
+\draw[->] (source) -- (2) node[above=3pt,pos=.5]{6};
+\draw[->] (2) -- (1) node[right,pos=.5]{4};
+\draw[->] (1) -- (3) node[above,pos=.5]{6};
+\draw[->] (1) -- (4) node[right=2pt,pos=.4]{2};
+\draw[->] (2) -- (4) node[above,pos=.5]{4};
+\draw[->] (3) -- (sink) node[right=2pt,pos=.5]{6};
+\draw[->] (4) -- (sink) node[above=2pt,pos=.5]{2};
+\draw[->] (4) -- (3) node[right,pos=.5]{1};
+
+\end{tikzpicture}
 \end{center}
 
 \begin{solution}
-	\bs
-	Add an artificial edge from sink node $t$ to source node $s$ that
-	has unlimited capacity. Let $x_{ij}$ be the amount of flow from node
-	$i$ to node $j$ for each directed edge $i,j$ that exists in the network.
-	The problem formulation is
-	
-	\[
-	\begin{array}{lrrrrrrrrl}
-	\textrm{maximize}   & x_{ts} & & & & & & & \\
-	\textrm{subject to} & & & x_{s1} & + & x_{s2} & - & x_{ts} & = & 0 \\
-	& x_{13}&+ & x_{14} & - & x_{s1} & - & x_{21} & = & 0 \\
-	& & & x_{24} & + & x_{21} & - & x_{s2} & = & 0 \\
-	& & & x_{3t} & - & x_{13} & - & x_{43} & = & 0 \\
-	& x_{43} & + & x_{4t} & - & x_{14} & - & x_{24} & = & 0 \\
-	& & & x_{ts} & - & x_{3t} & - & x_{4t} & = & 0 \\
-	&&&&&&& x_{s1} & \leq & 4 \\
-	&&&&&&& x_{s2} & \leq & 6 \\
-	&&&&&&& x_{13} & \leq & 6 \\
-	&&&&&&& x_{21} & \leq & 4 \\
-	&&&&&&& x_{14} & \leq & 2 \\
-	&&&&&&& x_{24} & \leq & 4 \\
-	&&&&&&& x_{43} & \leq & 1 \\
-	&&&&&&& x_{4t} & \leq & 2 \\
-	&&&&&&& x_{3t} & \leq & 6 \\
-	\multicolumn{7}{r}{x_{ij}}&\geq & 0 & \text{for all edges $i,j$}
-	\end{array}
-	\]
-	
+\bs
+Add an artificial edge from sink node $t$ to source node $s$ that
+has unlimited capacity. Let $x_{ij}$ be the amount of flow from node
+$i$ to node $j$ for each directed edge $i,j$ that exists in the network.
+The problem formulation is
+
+\[
+\begin{array}{lrrrrrrrrl}
+\textrm{maximize}   & x_{ts} & & & & & & & \\
+\textrm{subject to} & & & x_{s1} & + & x_{s2} & - & x_{ts} & = & 0 \\
+& x_{13}&+ & x_{14} & - & x_{s1} & - & x_{21} & = & 0 \\
+& & & x_{24} & + & x_{21} & - & x_{s2} & = & 0 \\
+& & & x_{3t} & - & x_{13} & - & x_{43} & = & 0 \\
+& x_{43} & + & x_{4t} & - & x_{14} & - & x_{24} & = & 0 \\
+& & & x_{ts} & - & x_{3t} & - & x_{4t} & = & 0 \\
+&&&&&&& x_{s1} & \leq & 4 \\
+&&&&&&& x_{s2} & \leq & 6 \\
+&&&&&&& x_{13} & \leq & 6 \\
+&&&&&&& x_{21} & \leq & 4 \\
+&&&&&&& x_{14} & \leq & 2 \\
+&&&&&&& x_{24} & \leq & 4 \\
+&&&&&&& x_{43} & \leq & 1 \\
+&&&&&&& x_{4t} & \leq & 2 \\
+&&&&&&& x_{3t} & \leq & 6 \\
+\multicolumn{7}{r}{x_{ij}}&\geq & 0 & \text{for all edges $i,j$}
+\end{array}
+\]
+
 \end{solution}
 
 % re-written by Hannah
@@ -1337,25 +1337,25 @@ is the DC, node 4 is warehouse 1, and node 5 is warehouse 2.  Let
 $x_{ij}$ be the number of products shipped from node $i$ to node $j$.
 
 \begin{center}
-      \begin{tikzpicture}[>=latex]
-      \node[circle,draw](f1) at (0,2) {1};
-      \node[circle,draw](f2) at (0,0) {2};
-      \node[circle,draw](dc) at (3,1) {3};
-      \node[circle,draw](wh2) at (6,0) {5};
-      \node[circle,draw](wh1) at (6,2) {4};
+\begin{tikzpicture}[>=latex]
+\node[circle,draw](f1) at (0,2) {1};
+\node[circle,draw](f2) at (0,0) {2};
+\node[circle,draw](dc) at (3,1) {3};
+\node[circle,draw](wh2) at (6,0) {5};
+\node[circle,draw](wh1) at (6,2) {4};
 
-      \node[anchor=east] at (f1) {[80]~~~~};
-      \node[anchor=east] at (f2) {[70]~~~~};
-      \node[anchor=west] at (wh1) {~~~[-60]};
-      \node[anchor=west] at (wh2) {~~~[-90]};
+\node[anchor=east] at (f1) {[80]~~~~};
+\node[anchor=east] at (f2) {[70]~~~~};
+\node[anchor=west] at (wh1) {~~~[-60]};
+\node[anchor=west] at (wh2) {~~~[-90]};
 
-      \draw[->] (f1) to [out=20,in=160]  node[above,pos=.5]{7} (wh1);
-      \draw[->] (f2) to [out=340,in=200] node[below,pos=.5]{9} (wh2);
-      \draw[->] (f1) -- (dc) node[above,pos=.2]{3} node[above,pos=.7]{$\leq 50$};
-      \draw[->] (f2) -- (dc) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
-      \draw[->] (dc) -- (wh1) node[above,pos=.2]{2} node[above,pos=.7]{$\leq 50$};
-      \draw[->] (dc) -- (wh2) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
-      \end{tikzpicture}
+\draw[->] (f1) to [out=20,in=160]  node[above,pos=.5]{7} (wh1);
+\draw[->] (f2) to [out=340,in=200] node[below,pos=.5]{9} (wh2);
+\draw[->] (f1) -- (dc) node[above,pos=.2]{3} node[above,pos=.7]{$\leq 50$};
+\draw[->] (f2) -- (dc) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
+\draw[->] (dc) -- (wh1) node[above,pos=.2]{2} node[above,pos=.7]{$\leq 50$};
+\draw[->] (dc) -- (wh2) node[above,pos=.2]{4} node[above,pos=.7]{$\leq 50$};
+\end{tikzpicture}
 \end{center}
 
 \[
@@ -1408,7 +1408,6 @@ they are being machined.
   once. How does the model change?
 \end{enumerate}
 % this was the car races problem from Bradley AMP.
-% need to update the solution that is in car-races.pdf
 
 \begin{solution}
   \bs Define the following variables.
@@ -1425,31 +1424,31 @@ four-week period. Nodes 1 through 4 represent weeks 1 through 4. Node 5 represen
 the sink node for discarded material.
 
 \begin{center}
-      \begin{tikzpicture}[>=latex]
-      \node[circle,draw](0) at (-1.5,3) {0};
-      \node[circle,draw](1) at (0,0) {1};
-      \node[circle,draw](2) at (3,0) {2};
-      \node[circle,draw](3) at (6,0) {3};
-      \node[circle,draw](4) at (9,0) {4};
-      \node[circle,draw](5) at (4.5,-3) {5};
+\begin{tikzpicture}[>=latex]
+\node[circle,draw](0) at (-1.5,3) {0};
+\node[circle,draw](1) at (0,0) {1};
+\node[circle,draw](2) at (3,0) {2};
+\node[circle,draw](3) at (6,0) {3};
+\node[circle,draw](4) at (9,0) {4};
+\node[circle,draw](5) at (4.5,-3) {5};
 
-      \draw[->] (0) to [out=260,in=160]  node[left,pos=.5]{$x_{01}$} (1);
-      \draw[->] (0) to [out=290,in=140]  node[above,pos=.5]{$x_{02}$} (2);
-      \draw[->] (0) to [out=330,in=120]  node[above,pos=.5]{$x_{03}$} (3);
-      \draw[->] (0) to [out=0,in=100]  node[above,pos=.5]{$x_{04}$} (4);
+\draw[->] (0) to [out=260,in=160]  node[left,pos=.5]{$x_{01}$} (1);
+\draw[->] (0) to [out=290,in=140]  node[above,pos=.5]{$x_{02}$} (2);
+\draw[->] (0) to [out=330,in=120]  node[above,pos=.5]{$x_{03}$} (3);
+\draw[->] (0) to [out=0,in=100]  node[above,pos=.5]{$x_{04}$} (4);
 
-      \draw[->] (1) to [out=0,in=180]  node[above,pos=.5]{$y_{12}$} (2);
-      \draw[->] (2) to [out=0,in=180]  node[above,pos=.5]{$y_{23}$} (3);
-      \draw[->] (3) to [out=0,in=180]  node[above,pos=.5]{$y_{34}$} (4);
+\draw[->] (1) to [out=0,in=180]  node[above,pos=.5]{$y_{12}$} (2);
+\draw[->] (2) to [out=0,in=180]  node[above,pos=.5]{$y_{23}$} (3);
+\draw[->] (3) to [out=0,in=180]  node[above,pos=.5]{$y_{34}$} (4);
 
-      \draw[->] (1) to [out=300,in=240]  node[above,pos=.3]{$z_{13}$} (3);
-      \draw[->] (2) to [out=300,in=240]  node[above,pos=.7]{$z_{24}$} (4);
+\draw[->] (1) to [out=300,in=240]  node[above,pos=.3]{$z_{13}$} (3);
+\draw[->] (2) to [out=300,in=240]  node[above,pos=.7]{$z_{24}$} (4);
 
-      \draw[->] (1) to [out=270,in=180]  node[below,pos=.5]{$w_{15}$} (5);
-      \draw[->] (2) to [out=270,in=150]  node[left,pos=.75]{$w_{25}$} (5);
-      \draw[->] (3) to [out=270,in=30]  node[right,pos=.75]{$w_{35}$} (5);
-      \draw[->] (4) to [out=270,in=0]  node[below,pos=.5]{$w_{45}$} (5);
-      \end{tikzpicture}
+\draw[->] (1) to [out=270,in=180]  node[below,pos=.5]{$w_{15}$} (5);
+\draw[->] (2) to [out=270,in=150]  node[left,pos=.75]{$w_{25}$} (5);
+\draw[->] (3) to [out=270,in=30]  node[right,pos=.75]{$w_{35}$} (5);
+\draw[->] (4) to [out=270,in=0]  node[below,pos=.5]{$w_{45}$} (5);
+\end{tikzpicture}
 \end{center}
 The mathematical programming problem is to
 
@@ -1480,33 +1479,33 @@ is to split nodes 2 and 3 as depicted in the diagram below. All flow into nodes 
 and 3a must be discarded, but is allowed to help satisfy the demand requirements.
 
 \begin{center}
-      \begin{tikzpicture}[>=latex]
-      \node[circle,draw](0) at (-1.5,3) {0};
-      \node[circle,draw](1) at (-.5,0) {1};
-      \node[circle,draw](2a) at (2.55,0) {2a};
-      \node[circle,draw](2b) at (3.45,0) {2b};
-      \node[circle,draw](3a) at (5.55,0) {3a};
-      \node[circle,draw](3b) at (6.45,0) {3b};
-      \node[circle,draw](4) at (9.5,0) {4};
-      \node[circle,draw](5) at (4.5,-3) {5};
+\begin{tikzpicture}[>=latex]
+\node[circle,draw](0) at (-1.5,3) {0};
+\node[circle,draw](1) at (-.5,0) {1};
+\node[circle,draw](2a) at (2.55,0) {2a};
+\node[circle,draw](2b) at (3.45,0) {2b};
+\node[circle,draw](3a) at (5.55,0) {3a};
+\node[circle,draw](3b) at (6.45,0) {3b};
+\node[circle,draw](4) at (9.5,0) {4};
+\node[circle,draw](5) at (4.5,-3) {5};
 
-      \draw[->] (0) to [out=260,in=160]  node[left,pos=.5]{$x_{01}$} (1);
-      \draw[->] (0) to [out=290,in=120]  node[above,pos=.5]{$x_{0,2b}$} (2b);
-      \draw[->] (0) to [out=330,in=120]  node[above,pos=.5]{$x_{0,3b}$} (3b);
-      \draw[->] (0) to [out=0,in=100]  node[above,pos=.5]{$x_{04}$} (4);
+\draw[->] (0) to [out=260,in=160]  node[left,pos=.5]{$x_{01}$} (1);
+\draw[->] (0) to [out=290,in=120]  node[above,pos=.5]{$x_{0,2b}$} (2b);
+\draw[->] (0) to [out=330,in=120]  node[above,pos=.5]{$x_{0,3b}$} (3b);
+\draw[->] (0) to [out=0,in=100]  node[above,pos=.5]{$x_{04}$} (4);
 
-      \draw[->] (1) to [out=0,in=180]  node[above,pos=.5]{$y_{1,2a}$} (2a);
-      \draw[->] (2b) to [out=0,in=180]  node[above,pos=.5]{$y_{2b,3a}$} (3a);
-      \draw[->] (3b) to [out=0,in=180]  node[above,pos=.5]{$y_{3b,4}$} (4);
+\draw[->] (1) to [out=0,in=180]  node[above,pos=.5]{$y_{1,2a}$} (2a);
+\draw[->] (2b) to [out=0,in=180]  node[above,pos=.5]{$y_{2b,3a}$} (3a);
+\draw[->] (3b) to [out=0,in=180]  node[above,pos=.5]{$y_{3b,4}$} (4);
 
-      \draw[->] (1) to [out=300,in=240]  node[above,pos=.3]{$z_{1,3a}$} (3a);
-      \draw[->] (2b) to [out=300,in=240]  node[above,pos=.7]{$z_{2b,4}$} (4);
+\draw[->] (1) to [out=300,in=240]  node[above,pos=.3]{$z_{1,3a}$} (3a);
+\draw[->] (2b) to [out=300,in=240]  node[above,pos=.7]{$z_{2b,4}$} (4);
 
-      \draw[->] (1) to [out=270,in=180]  node[below,pos=.5]{$w_{15}$} (5);
-      \draw[->] (2a) to [out=270,in=150]  node[left,pos=.75]{$w_{2a,5}$} (5);
-      \draw[->] (3a) to [out=270,in=30]  node[right,pos=.75]{$w_{3a,5}$} (5);
-      \draw[->] (4) to [out=270,in=0]  node[below,pos=.5]{$w_{45}$} (5);
-      \end{tikzpicture}
+\draw[->] (1) to [out=270,in=180]  node[below,pos=.5]{$w_{15}$} (5);
+\draw[->] (2a) to [out=270,in=150]  node[left,pos=.75]{$w_{2a,5}$} (5);
+\draw[->] (3a) to [out=270,in=30]  node[right,pos=.75]{$w_{3a,5}$} (5);
+\draw[->] (4) to [out=270,in=0]  node[below,pos=.5]{$w_{45}$} (5);
+\end{tikzpicture}
 \end{center}
 
 Now the objective function and demand requirements are
@@ -1525,39 +1524,103 @@ the non-negativity constraints.
 \end{solution}
 
 % re-written by hannah
-\item \emph{Laundering coveralls.} A medical device company uses a
-  cleanroom to assemble and inspect many of its products. Because the
-  purpose of a cleanroom is to limit pollutants and contaminants,
-  there are strict guidelines that must be followed. At this company,
-  all employees and visitors who enter the cleanroom must wear a clean
-  pair of coveralls. As a result, there must be enough clean coveralls
-  at the beginning of each day for all employees or visitors who enter
-  the cleanroom. The company outsources coverall cleaning to an
-  laundry service. Normal laundry takes one full day at a cost
-  of \$1.20 per pair of coveralls, and rapid laundry can be performed
-  overnight at a cost of \$2.50 per pair of coveralls. Under normal
-  circumstances, the current coverall supply of 30 coveralls is
-  sufficient for complete dependence upon the normal laundry
-  service. However, the normal laundry service will not be sufficient
-  for the next three days because of a training program and audit that
-  will take place. It is known that the coverall requirements for the
-  next three days will be 25, 30, and 25, respectively. It is now
-  mid-afternoon on the day before the training program and audit. 15
-  pairs of coveralls are clean, and 15 pairs of coveralls are ready
-  for laundry. It is against standard operating procedure to have used
-  coveralls linger overnight. The cleanroom will be closed on the day
-  after the training program and audit, so all dirty coveralls on the
-  third day can be sent to normal laundry. An industrial engineer
-  wants to determine a plan for coverall laundering that will minimize
-  total cost, while ensuring that all coverall demand is fulfilled,
-  and all standard operating procedures are followed.
+\item \emph{Laundering clean-room garments.} A medical device company
+  uses a cleanroom to assemble and inspect many of its
+  products. Because the purpose of a cleanroom is to limit pollutants
+  and contaminants, there are strict guidelines that must be
+  followed. At this company, each employee and visitor who enters the
+  cleanroom must wear a clean lab coat. As a result, there must be
+  enough clean lab coats at the beginning of each day for all
+  employees and visitors who enter the cleanroom. The company
+  outsources cleaning to an laundry service. Normal laundry takes one
+  full day at a cost of \$2.25 per lab coat. Overnight laundry service
+  can be done at a cost of \$5 per lab coat. Under normal
+  circumstances, the current supply of 40 lab coats is sufficient for
+  complete dependence upon the normal laundry service. However, the
+  normal laundry service will not be sufficient for the next three
+  days due to a training program and audit that will take place. It is
+  known that the requirements for the next three days will be 25, 35,
+  and 30 lab coats. It is now mid-afternoon on the day before the
+  training program and audit. 15 lab coats are clean, and 25 are ready
+  for laundry. It is against clean-room protocol to have used lab
+  coats remain at the company overnight. The clean-room will be closed
+  on the day after the training program and audit, so all used lab
+  coats on the third day can be sent to normal laundry. An industrial
+  engineer wants to determine a plan for laundering that will minimize
+  total cost while satisfying demand and respecting the clean-room
+  protocol.
 
   Interpret this problem as one of network flow.  Draw the network and
   formulate the LP (i.e. the decision variables, the objective
   function, and the constraints.)
-% this was the egserk napkin laundering problem from AMP.
-% need to update the solution that is in napkin-laundering.pdf
+% this was the napkin laundering problem from AMP.
 
+\begin{solution}
+\bs Define the following variables.
+
+\begin{tabular}{rl}
+$x_i$ & number of garments sent to regular laundry at the end of day $i$ \\
+$y_i$ & number of garments sent to overnight service at the end of day $i$ \\
+$z_i$ & number of clean (unused) garments at the end of day $i$
+\end{tabular}
+
+The network flow diagram can be depicted as shown below. Node 0 represents the
+current day (before the three-day event). Nodes 1, 2, and 3 represent the next
+three days of the higher-than-usual demand. Node 4 represents the day following
+the three-day event. For example, the flow labeled $x_0$ represents the garments
+that are sent to the normal laundry service today. Those garments will be
+available at the beginning of day 2.
+
+\begin{center}
+\begin{tikzpicture}[>=latex]
+\node[circle,draw](0) at (-3,0) {0};
+\node[circle,draw](1) at (0,0) {1};
+\node[circle,draw](2) at (3,0) {2};
+\node[circle,draw](3) at (6,0) {3};
+\node[circle,draw](4) at (9,0) {4};
+
+\draw[->] (0) to [out=0,in=180]  node[above,pos=.5]{$z_0$} (1);
+\draw[->] (1) to [out=0,in=180]  node[above,pos=.5]{$z_1$} (2);
+\draw[->] (2) to [out=0,in=180]  node[above,pos=.5]{$z_2$} (3);
+\draw[->] (3) to [out=0,in=180]  node[above,pos=.5]{$z_3$} (4);
+
+\draw[->] (0) to [out=60,in=120]  node[above,pos=.5]{$y_0$} (1);
+\draw[->] (1) to [out=60,in=120]  node[above,pos=.5]{$y_1$} (2);
+\draw[->] (2) to [out=60,in=120]  node[above,pos=.5]{$y_2$} (3);
+
+\draw[->] (0) to [out=300,in=240]  node[below,pos=.5]{$x_0$} (2);
+\draw[->] (1) to [out=300,in=240]  node[below,pos=.5]{$x_1$} (3);
+\draw[->] (2) to [out=300,in=240]  node[below,pos=.5]{$x_2$} (4);
+\draw[->] (3) to [out=330,in=210]  node[below,pos=.5]{$x_3$} (4);
+\end{tikzpicture}
+\end{center}
+
+The formulation of the mathematical programming problem is
+\[
+\begin{array}{lrrrrrrrrrrll}
+\textrm{minimize} & \multicolumn{11}{r}{5\left(y_0+y_1+y_2\right) + 2.25\left(x_0+x_1+x_2+x_3\right)}&\\
+\textrm{subject to} & y_0&+&z_0&+&x_0&=&40&&&&&(1) \\
+& y_0&+&z_0&=&y_1&+&z_1&+&x_1&&&(2) \\
+& y_1&+&z_1&+&x_0&=&y_2&+&z_2&+&x_2&(3) \\
+& y_2&+&z_2&+&x_1&=&x_3&+&z_3&&&(4)\\
+& y_0&+&z_0&\geq&25&&&&&&&(5)\\
+&y_1&+&z_1&+&x_0&\geq&35&&&&&(6)\\
+&y_2&+&z_2&+&x_1&\geq&30&&&&&(7)\\
+&y_0&+&x_0&\geq&25&&&&&&&(8)\\
+&y_1&+&x_1&\geq&25&&&&&&&(9)\\
+&y_2&+&x_2&\geq&35&&&&&&&(10)\\
+&x_3&\geq&30&&&&&&&&&(11)\\
+&\multicolumn{11}{r}{x_i,y_i,z_i \geq 0}&
+\end{array}
+\]
+Constraints 1 -- 4 are flow balance constraints for nodes 0, 1, 2, and 3,
+respectively. Constraints 5, 6, and 7 are the requirements for the number
+of clean garments during the three-day event. Constraints 8 -- 11 model
+the clean-room protocol that used garments must be sent to a laundry service
+(either normal or overnight) at the end of the day. Note that at the end
+of day 3, it would not make sense to use the overnight laundry service.
+
+\end{solution}
 
 \subsubsection*{Integer Programming}
 % this problem is OK.
