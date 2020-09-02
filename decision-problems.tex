@@ -1493,43 +1493,94 @@ will maximize your expected payoff.
 % this is the chess match example from Bertsekas.
 % need to obtain permission.
 % the idea is to use backward induction to find an optimal policy.
-\item \emph{An optimal strategy for a chess match.}  Alice is
+\item \emph{Optimal play in a chess match.}  Alice is
   preparing for a two--game chess match.  In each game Alice can
   choose one of two strategies: timid play or bold play. The strategy
-  selected in the second game can differ from the strategy selected
-  in the first game. If Alice plays bold then she will win with
+  selected in the second game can differ from the strategy selected in
+  the first game. If Alice plays bold then she will win with
   probability $p_w$ and lose with probability $1-p_w$. If Alice
-  chooses timid play then the match will result in a draw with probability
-  $p_d$ and she will lose the match with probability $1-p_d$. Note
-  that bold play results in a either a win or a loss, and that timid
-  play results in either a draw or a loss. At the conclusion of each
-  game, each player is awarded 1 point for a win, 1/2 point for a
-  draw, or zero points for a loss. If the score is tied at the of two
-  games, then the match goes into sudden death and the first person to
-  win a game wins the match.  Let $p_w=0.45$ and let $p_d=0.9$. Which
-  strategy should Alice select for the first game of the match, timid
-  or bold? What about the second game? In other words, what is the
-  strategy that will maximize Alice's expected payoff for the match?
+  chooses timid play then the match will result in a draw with
+  probability $p_d$ and she will lose the match with probability
+  $1-p_d$. Note that bold play results in a either a win or a loss,
+  and that timid play results in either a draw or a loss. At the
+  conclusion of each game, each player is awarded 1 point for a win,
+  1/2 point for a draw, or zero points for a loss. If the score is
+  tied at the of two games, then the match goes into sudden death and
+  the first person to win a game wins the match.  Let $p_w=0.45$ and
+  let $p_d=0.9$. Which strategy should Alice select for the first game
+  of the match, timid or bold? What about the second game? In the
+  second game, Alice's play is conditional on the outcome of the first
+  game. Find the policy that will maximize Alice's probability of
+  winning the match. You may want to draw the a decision tree and use
+  backward induction.
 
-  Note that the payoff for Alice is the difference in scores. For
-  example, suppose that Alice plays timid in the first game resulting
-  in a draw and she plays bold in the second game resulting in a win.
-  Then the score for the match is Alice $1\frac{1}{2}$ points and her
-  opponent $\frac{1}{2}$ point. In that case the payoff for Alice is
-  $1\frac{1}{2} - \frac{1}{2} = 1$. Also consider that in the event of
-  a tied score at the end of two games Alice should play bold in
-  sudden death.  If she plays timid during sudden death then the best
-  that she could hope for is to drag out the match indefinitely. The
-  payoff for Alice for a tied score after two games is the expected
-  value of a lottery wherein she gets 1 point with probability $p_w$
-  and -1 point with probability $1-p_w$.
+  The payoff for Alice is the probability of winning the match.  This
+  means that at the end of two games, a score of 2--0 is just as
+  desirable as a score of 1.5--0.5 (where Alice's points are listed
+  first).  In both cases, Alice wins the match and the payoff is
+  one. Instead, suppose that in the first game Alice plays bold and
+  loses, and in the second game Alice plays timid and draws. Then the
+  final score is 0.5--1.5, and Alice loses the match for a payoff of
+  zero. Also, consider that in the event of a tied score at the end of
+  two games Alice should play bold in sudden death. If she plays timid
+  during sudden death then the best that she could hope for is to drag
+  out the match indefinitely. The payoff for Alice for a tied score
+  after two games is $p_w$.
 
 \begin{solution}
-  \bs The optimal strategy for Alice, i.e. the strategy that maximizes
-  her expected payoff is to play timid in the first game. If she loses
-  the first game then play timid in the second game, otherwise if she
-  draws in the first game, then play bold in the second game.  Please
-  see the attached decision tree. 
+  \bs The optimal policy for Alice is to play bold in the first
+  game. If she wins the first game, then she should play timid in the
+  second game.  If Alice loses the first game, then she should play
+  bold in the second game. In the diagram below, the the end of each
+  decision branch has been labeled with the (expected) probability of
+  winning the match (from the chance node onward). They were computed
+  by using backward induction and at each leaf node (i.e. after two
+  games) treating a win as one, a loss as zero, and a tie as $p_w$.
+  Notice that because Alice can adapt her playing style in the second
+  game (and her opponent cannot), Alice's overall (expected)
+  probability of winning the match is greater than 1/2 even though the
+  probability of winning any single game is less than 1/2.
+
+\begin{tikzpicture}
+\tikzstyle{level 1}=[sibling distance=65mm, level distance=20mm]
+\tikzstyle{level 2}=[sibling distance=30mm, level distance=20mm]
+\tikzstyle{level 3}=[sibling distance=15mm, level distance=25mm]
+\tikzstyle{level 4}=[sibling distance=7mm,  level distance=30mm]
+
+\node[rectangle,draw] {} [grow=right]
+child{ node[circle,draw,label=above:.5366] {} 
+  child{node[rectangle,draw] {}
+    child{ node[circle,draw,label=above:.6975] {} 
+      child{node {2--0} edge from parent node {win}}
+      child{node {1--1} edge from parent node {lose} } edge from parent node {bold} }
+    child{node[circle,draw,label=above:.945] {} 
+      child{node {1.5--.5} edge from parent node {draw}}
+      child{node {1--1} edge from parent node {lose}} edge from parent node {timid} } edge from parent node {win} }
+  child{node[rectangle,draw] {}
+    child{node[circle,draw,label=above:.2025] {} 
+      child{node {1--1} edge from parent node {win} }
+      child{node {0--2} edge from parent node {lose} } edge from parent node {bold} }
+    child{node[circle,draw,label=above:0] {} 
+      child{node {.5--1.5} edge from parent node {draw} }
+      child{node {0--2} edge from parent node {lose} } edge from parent node {timid} } edge from parent node {lose} } edge from parent node {bold}  }
+child{ node[circle,draw,label=above:.4253] {} 
+  child{node[rectangle,draw] {}
+    child{node[circle,draw,label=above:.45] {}
+      child{node {1.5--.5} edge from parent node {win}}
+      child{node {.5--1.5} edge from parent node {lose} } edge from parent node {bold} }
+    child{node[circle,draw,label=above:.405] {}
+      child{node {1--1} edge from parent node {draw}}
+      child{node {.5--1.5} edge from parent node {lose}} edge from parent node {timid} } edge from parent node {draw} }
+  child{node[rectangle,draw] {}
+    child{node[circle,draw,label=above:.2025] {}
+      child{node {1--1} edge from parent node {win} }
+      child{node {0--2} edge from parent node {lose} } edge from parent node {bold} }
+    child{node[circle,draw,label=above:0] {}
+      child{node {.5--1.5} edge from parent node {draw} }
+      child{node {0--2} edge from parent node {lose} } edge from parent node {timid} } edge from parent node {lose} } edge from parent node {timid} }
+;
+\end{tikzpicture}
+
 \end{solution}
 
 \subsubsection*{Games Against an Opponent}

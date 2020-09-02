@@ -1,137 +1,485 @@
 \chapter{Predictive Models}
+Predictive models help us summarize and understand data in order to
+\begin{inparaenum}[1)] \item
+make predictions about the future, and/or \item explain interesting
+relationships in the data. 
+\end{inparaenum}
+The ultimate purpose of a model can be for
+prediction or explanation, but we usually want some combination of
+both. In this chapter, I use the term ``predictive'' model, but you
+should also keep in mind the ``explanatory'' aspect.  Predictive
+models are broadly categorized into two types: regression and
+classification.  The difference is the nature of the response
+variable, i.e.  the ``thing'' that we are trying to predict or
+explain.  Regression indicates a numeric response, e.g. a stock price,
+population growth, or sales of a product. Classification means that
+the response is categorical, e.g. gender, category of an email, or
+presence/absence of a disease.
 
 \section{Regression}
 
-\subsubsection*{Statistical Models}
+\subsubsection*{Model Formulas}
 
-Statistical models are simplified descriptions of data that involve
-mathematical relationships. In addition to the data itself,
-a statistical model consists of \begin{inparaenum}[1)] \item a formula
-  that specifies the mathematical relationships among the variables,
-  and \item a description of how well the data agree with the model.
+Regression (and classification) models are simplified descriptions of
+data that involve mathematical relationships. In addition to the data
+itself, a model consists of \begin{inparaenum}[1)] \item a
+  formula that specifies the mathematical relationships among the
+  variables, and \item a description of how well the data agree with
+  the model.
   \end{inparaenum} 
   Let's start with an example of how model formulas are represented in
   the R programming language. Recall the data set from
-  Chapter~\ref{data-analysis} on speed, gender, and height for a
-  sample of college students. Do we really think that, on average,
-  males drive faster than females (or vice versa)? Similarly, is there
-  any relationship between height and speed? The model formula is
+  Chapter~\ref{data-analysis} on college students and driving speed.
+  This data contains \num{1325} observations on gender, height, and
+  the fastest speed ever driven (in mph) for a sample of college
+  students.  Do we really think that, on average, males drive faster
+  than females (or vice versa)? Similarly, is there any relationship
+  between height and speed? Consider the following model formula
+written in R.
 \begin{Verbatim}
 speed ~ height + gender
 \end{Verbatim}
-You should read the
-formula above as ``Speed is modeled as a linear function of height and gender''.
-The term to the left of the ``\mtilde'' is the
-response or dependent variable and the terms to the right of the ``\mtilde''
-that are separated by a ``\texttt{+}'' are the predictors or independent variables.
-Mathematically, the formula
-above specifies the model
-\[
-  speed_i = \beta_0 + \beta_1 height_i + \beta_2 gender_i + \epsilon_i
-\]
-where the coefficients $\beta_0,~\beta_1,~\beta_2$  along with the variance $\sigma_{\epsilon}^2$ of
-the error term $\epsilon$ are the parameters to be estimated from the data.
-The index $i$ refers to the $i$th observation in the data set.
-Notice that neither the coefficients nor the error term appear in the R formula.
-They are inferred and so we do not need to enter them. In particular
-the R formula does not include the intercept term $\beta_0$. It is there
-by default; this is usually what we want. The formula above is equivalent to
+You should read the formula above as ``Speed is modeled as a linear
+function of height and gender''.  The term to the left of the
+``\mtilde'' is the response (a.k.a dependent variable, output
+variable) and the terms to the right of the ``\mtilde'' that are
+separated by a ``\texttt{+}'' are the predictor variables (a.k.a
+explanatory variables, independent variables, features, input
+variables).  Mathematically, the formula specifies the following
+model.
+\begin{equation}
+  speed_i = \beta_0 + \beta_1 height_i + \beta_2 gender_i + \epsilon_i, \qquad i=1,\ldots,n
+\label{eq:speed-height-gender}
+\end{equation}
+
+The coefficients $\beta_0,~\beta_1,~\beta_2$ along with the variance
+$\sigma_{\epsilon}^2$ of the error term $\epsilon$ are the \emph{parameters}
+to be estimated from the data.  The index $i$ refers to the $i$th
+observation in the data set (in this case, the $i$th person). Notice
+that neither the coefficients nor the error term appear in the R
+formula.  They are inferred and so we do not need to enter them. In
+particular the R formula does not include the intercept term
+$\beta_0$. It is there by default; this is usually what we want. The R
+formula above is equivalent to
 \begin{Verbatim}
 speed ~ 1 + height + gender
 \end{Verbatim}
-If we do not want an intercept term in our model, say because we want to
+If we do not want an intercept term in our model, perhaps because we want to
 force the fit to go through the origin, then we need to explicitly remove
 the intercept, like this:
 \begin{Verbatim}
 speed ~ -1 + height + gender
 \end{Verbatim}
 
-Statistical modeling is a process that almost always involves iterating
-over the following steps~\cite{chambers:1992}.
-\begin{itemize}
-\item obtaining data 
-\item choosing a candidate model 
-\item fitting the model, i.e. using software to  estimate the model parameters
-\item interpretation of the fitted model parameters
-\item diagnostics to see in what ways the model \emph{fails} to fit the data
-\end{itemize}
+``Fitting'' a model means to obtain estimated values for the
+parameters (i.e. the coefficients) along with an indication of how
+well the data agrees with the fitted parameters. The data set on
+gender, height, and speed is from a sample of \num{1325} students.  If
+we obtained the same data on a different sample of students (but drawn
+from the population of college students with similar attributes), we
+would expect the fitted parameter values from the second model to be
+close to, but not exactly the same as, those from the original
+sample. Imagine obtaining such a data set and fitting the model many
+times.  For each coefficient, you would obtain a distribution of
+values. Usually, we are interested in whether this distribution of
+values could plausibly contain the value zero. If it does, then we say
+that there is no statistical relationship between the associated
+predictor variable and the response.
 
-\begin{comment}
+\subsubsection*{Understanding Regression Output}
 
-The automobile data is available as a data frame that comes with
-the \texttt{rpart} package. 
-If you don't already have this package installed, then
-\begin{Verbatim}
-install.packages(``rpart'')
-library(rpart)
-attach(car.test.frame)
+When fitting a model in the R programming language, the paradigm is to
+save the fitted model as an object. Then, we can extract explanatory
+information from the object and use that information to make
+inferences or predictions on future observations. For simplicity,
+let's ignore gender and fit a regression model with speed as the
+response and height as the only predictor.
+
+\begin{Verbatim}[numbers=left,xleftmargin=5mm]
+Speed <- read.csv("../data/speed-gender-height.csv")
+
+fm <- lm(speed ~ height, data = Speed)
+summary(fm)
 \end{Verbatim}
-Having the data and a candidate model, let's fit the model
-and plot \texttt{Mileage} against the values predicted by the model.
+
+The call to \texttt{lm()} on line 3 fits the model and stores the
+information about the fir in an object named \texttt{fm}\footnote{You
+  can name the object anything you like. I tend to use \texttt{fm} for
+  ``fitted model''. It's nice and short.}.  We then ask for summary
+information about the fit. The output from line 4 is shown in
+Figure~\ref{fig:regoutput1}.
+
+\begin{SaveVerbatim}{regoutput1}
+> 
+Call:
+lm(formula = speed ~ height, data = Speed)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-98.859  -8.248   1.673  11.635  81.992 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -0.7145     9.8671  -0.072    0.942    
+height        1.3830     0.1489   9.287   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 21.75 on 1300 degrees of freedom
+  (23 observations deleted due to missingness)
+Multiple R-squared:  0.06222,	Adjusted R-squared:  0.0615 
+F-statistic: 86.25 on 1 and 1300 DF,  p-value: < 2.2e-16
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{regoutput1}
+\caption{Summary regression output from R for the model with height
+  as the only predictor variable.}
+\label{fig:regoutput1}
+\end{minipage}
+}
+\end{figure}
+
+The model formula is repeated in the summary output. Recall that, mathematically,
+this model is
+\begin{equation}
+ speed_i = \beta_0 + \beta_1 height_i + \epsilon_i    \label{eq:reg1}
+\end{equation}
+ where
+$\epsilon_i$ is the error term, i.e. the difference between the
+model's fitted value of speed for observation $i$ and the actual value
+of speed for observation $i$.  This is also known as the residual. One
+assumption about linear regression models is that the residuals are
+Normally distributed with mean zero and some variance
+$\sigma_{\epsilon}^2$.
+\begin{equation}
+ \epsilon_i \sim \mathcal{N} \left( 0, \sigma_{\epsilon}^2 \right) 
+\label{eq:resid}
+\end{equation}
+The output section entitled \texttt{Residuals:} provides a rough idea
+of this distribution. If the residuals are distributed according
+to~\ref{eq:resid}, then we would expect the distribution to be
+symmetric, with median equal to zero and with first and third
+quartiles that are the same distance from zero. Of course, we are
+working with a sample of data, so we cannot expect perfect symmetry.
+The residuals for this particular model appear to be symmetric, or at
+least not too far from it.
+
+Model \ref{eq:reg1} has three parameters: the intercept $\beta_0$, the
+coefficient on height $\beta_1$ (a.k.a the slope), and the variance of
+the residuals $\sigma_{\epsilon}^2$.  All three parameters are
+estimated from the data. The output section entitled
+\texttt{Coefficients:} provides a table of information about the
+fitted coefficients. The table has four columns:
+
+\vspace{.1in}
+\begin{tabular}{ll}
+\texttt{Estimate}& the estimated value of the coefficient\\
+\texttt{Std. Error}& the uncertainty in the estimated value\\
+\texttt{t value} & the test statistic in the test for whether $\beta_j=0$\\
+\texttt{Pr(>|t|)}& the associated $p$-value\\
+\end{tabular}
+\vspace{.1in}
+
+Let's take the coefficient on height as an example. From the table,
+the estimate is $\hat{\beta}_1 = 1.383$. A regression coefficient is a 
+statistic; it is a summary of data. Because a regression coefficient
+can be written as the sum of random variables, the Central Limit Theorem
+tells us that $\hat{\beta}_1$ is Normally distributed with mean equal
+to its true value and with variance equal to $\sigma^2_{\beta_1}$, or equivalently
+with standard deviation equal to $\sigma_{\beta_1}$. The standard deviation
+of a statistic is called the standard error, and from the table we see
+that $\hat{\sigma}_{\beta_1} = 0.1489$.
+
+Recall that we are usually interested in whether $\beta_1=0$,
+i.e. whether there is a relationship between speed and height. The
+formal ``hypothesis test'' is
+\begin{align}
+\begin{split}
+  H_0 &: \beta_1 = 0 \\
+  H_A &: \beta_1 \neq 0
+\label{eq:hyp}
+\end{split}
+\end{align}
+where $H_0$ is called the null hypothesis, which is sort of like the default
+position. $H_A$ is called the alternative hypothesis. The question is whether
+the data provides enough evidence to reject the null hypothesis in favor
+of the alternative hypothesis. The test is set up so that if you reject
+the null hypothesis, then you have found something interesting to report
+(e.g. ``On average, taller people drive faster!'') The third column of the
+summary output reports the standardized value of $\beta_1$ when the null
+hypothesis is true. It is the test statistic for the hypothesis test
+\ref{eq:hyp}.
+\[ t_0 = \frac{\hat{\beta}_1 - 0}{\hat{\sigma}_{\beta_1}} =
+  \frac{1.383 - 0}{0.1489} = 9.288 \] If the null hypothesis is true,
+the test statistic $t_0$ has a $t$ distribution with degrees of
+freedom equal to the number of observations in the data set minus the
+number of estimated coefficients.  A value of 9.288 falls very far into
+the right tail of the $t$ distribution.  The area to the right of
+9.288 is called the $p$-value. It represents the probability that null
+hypothesis really is true, given this data set. This value is reported
+in the last column under \texttt{Pr(>|t|)}. In our case, the $p$-value
+for $\beta_1$ is extremely small, less than $2 \times 10^{-16}$.  What
+we conclude from all of this is that the data provides strong evidence
+of a statistical relationship between speed and height.
+
+The numeric interpretation of the value $\hat{\beta}_1 = 1.383 \neq 0$
+is that, on average, a one-unit increase in height corresponds to a
+1.383-unit increase in speed.  Here, we need to pay attention to the
+units in the data. Speed is reported in miles per hour and height is
+reported in inches. So, the data indicate that for each one inch
+increase in height, the fastest speed ever driven increases by 1.383
+miles per hour (again, this is ``on average''). Although the
+coefficient on height is statistically significant, is it
+\emph{practically} significant? Let's say that 3 inches represents a
+practical difference in height. Then our model tells us that (on
+average) the difference in speed is a $3 \times 1.383 \approx 4$ miles
+per hour.  The average ``fastest speed'' is about 91 miles per hour.
+So, while the effect is statistically significant, the magnitude of
+the effect is mediocre at best.
+
+The estimated value for $\sigma_{\epsilon}$ is provided in the
+last section of the output. We see that $\hat{\sigma}_{\epsilon} = 21.75$.
+It is reported as the residual standard error (i.e. standard deviation), 
+rather than as the variance
+of the residuals. Notice that R reports that this estimate is based on
+\num{1300} ``degrees of freedom''. We can think of the degrees of freedom
+as the effective size of the data set. In this case, we have \num{1325}
+observations in the data set, but 23 observations contain either a missing
+value for speed or a missing value for height. Also, we lose a 
+degree of freedom for each estimated coefficient. This leaves
+$\num{1325} - 23 - 2 = \num{1300}$ degrees of freedom.
+
+For completeness, the last two lines of the output show the values for
+$R^2$ and the $F$-statistic for the overall hypothesis test of whether
+there is a relationship between any of the predictor variables and the
+response.  Model~\ref{eq:reg1} has a single predictor variable. In
+this case, the overall hypothesis test is equivalent to the hypothesis
+test~\ref{eq:hyp}\footnote{In the case of a single predictor
+  variable, the $F$-statistic is equal to the squared value of the
+  $t$-statistic ($86.246 = 9.287^2$).  Also notice that the $p$-value
+  for the overall test matches the $p$-value for the coefficient on
+  height, the only predictor variable.}.  We can think of $R^2$ as the
+proportion of variation in the data that is explained by the
+model. To be specific, if the actual response values are $y_i$ and the fitted
+values from the model are $\hat{y}_i$, where $i=1,\ldots,n$, 
+then $R^2$ is computed as follows.
+\begin{align}
+\begin{split}
+TSS =& \sum_{i=1}^n \left( y_i - \bar{y} \right)^2\\
+RSS =& \sum_{i=1}^n \left( y_i - \hat{y}_i \right)^2\\
+R^2 =& 1 - RSS/TSS
+\end{split}
+\label{eq:R2}
+\end{align}
+where $\bar{y}$ is the sample mean of the response. $TSS$ represents
+the total sum of squares around the sample mean. It is the total
+variation in the response (if we were to simply use the sample mean to 
+make predictions). $RSS$ represents the sum of squares around the
+regression line.  The ratio $RSS/TSS$ is the proportion of (squared)
+variation that is \emph{unexplained} by the model.
+
+The reported value of $R^2 = 0.06222$ seems low, but this typical of
+real-world data sets. Figure~\ref{fig:speed-height} shows the data
+with the regression line from model~\ref{eq:reg1} over-layed.  There
+is a detectable slope in the data, but there is also a lot of
+variation around the regression line. The code to produce
+Figure~\ref{fig:speed-height} is
+
+\begin{Verbatim}[numbers=left,xleftmargin=5mm]
+ggplot(Speed, aes(x=height, y=speed)) +
+    geom_point() +
+    geom_smooth(method="lm", se=FALSE)
+\end{Verbatim}
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{speed-height.pdf}
+\caption{The fitted model \texttt{speed~\mtilde~height}. Height is the 
+single predictor variable. $R^2 \approx 0.062$.}
+\label{fig:speed-height}
+\end{center}
+\end{figure}
+
+Keep in mind that $R^2$ is not an indication of model
+``correctness''. Rather, it is a measure of the tightness of the
+data to the fitted model. Indeed, models with high values of $R^2$ are very
+often not all that interesting. Figure~\ref{fig:mpg-wt} shows the data
+and over-layed regression line for a model from the often-cited
+\texttt{mtcars} data set that is available in R. This data set
+contains 32 observations on various attributes of automobiles. The
+regression model with \texttt{mpg} (miles per gallon) as the response
+and \texttt{wt} (vehicle weight) as the only predictor variable
+provides an $R^2 \approx 0.75$, which is quite large for a regression
+model. The model may be useful when designing an automobile, but the
+result is unsurprising.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{mpg-wt.pdf}
+\caption{The model \texttt{mpg~\mtilde~wt} from the \texttt{mtcars} data set. 
+$R^2 \approx 0.75$.}
+\label{fig:mpg-wt}
+\end{center}
+\end{figure}
+
+\subsubsection*{Regression with a Categorical Predictor Variable}
+
+Is it possible to improve the fit of the model to predict fastest
+speed ever driven (and perhaps increase $R^2$)? Typically, two options
+are available to address this question:
+\begin{inparaenum}[1)] \item more (and/or better) predictor variables,
+  and \item a different model.\end{inparaenum}. The latter option is
+appropriate when, for example, we observe a nonlinear trend in the
+data. We would then want to create a model that could capture the
+nonlinear relationship, e.g., a nonlinear regression model, a
+tree-based model, or a neural network. Regarding the first option, the
+data set contains one other variable: \texttt{gender}. Let's add it as
+the second predictor variable.
+
+\begin{Verbatim}[numbers=left,xleftmargin=5mm,samepage=true]
+fm2 <- lm(speed ~ height + gender, data = Speed, na.action="na.exclude")
+summary(fm2)
+\end{Verbatim}
+
+Two changes are made to the call to \texttt{lm()}:
+\begin{inparaenum}[1)]
+\item we add gender to the model formula, and
+\item we explicitly exclude observations with missing values.
+\end{inparaenum}
+The output from the call to \texttt{summary()} is shown in
+Figure~\ref{fig:regoutput2}. The residuals still appear to be
+(roughly) symmetric about zero. Notice that the table of information
+on the coefficients now has a row for $\beta_2$, the coefficient on
+gender, and that the label for the coefficient is \texttt{gendermale}.
+Recall that gender is a categorical predictor variable. In R, the categories
+(i.e. male and female) are called \emph{levels}.
+
 \begin{Verbatim}[samepage=true]
-fm <- lm(Mileage ~ Weight + Disp.)
-plot(fitted(fm), Mileage)
-abline(0, 1, lty=2)
+> levels(Speed$gender)
+[1] "female" "male"  
 \end{Verbatim}
-\includegraphics[width=0.7\textwidth]{Mileage-vs-fitted.pdf}
 
-The dashed line in the plot represents a perfect fit. Qualitatively,
-the model is doing pretty well, except for cars with high gas mileage.
-Those points fall above the dashed line, an indication that the
-predictions are too low. Let's try two different ways to improve the model,
-1) by adding additional predictor variables to the model, and 2)
-by changing our concept of how the data generating process should
-be modeled. For example, let's suppose that we know something about
-the physics of internal combustion engines in automobiles. Consequently,
-we feel that fuel consumption is more natural than mileage as a
-variable to relate linearly to weight. Noting that \texttt{Mileage}
-is in units of miles per gallon, we can define fuel consumption in gallons per
-100 miles driven as
-\begin{Verbatim}
-Fuel <- 100/Mileage
+The levels are simply labels; however, the underlying mathematical
+model knows nothing about the labels.  In model
+\ref{eq:speed-height-gender}, which is repeated here, the categorical
+variable
+$gender_i$ is an indicator variable that takes the value 0 or 1.
+\begin{equation*}
+  speed_i = \beta_0 + \beta_1 height_i + \beta_2 gender_i + \epsilon_i, \qquad i=1,\ldots,n
+\tag{\ref{eq:speed-height-gender} revisited}
+\end{equation*}
+where $height_i$ is a numeric value in units of inches and
+\begin{equation*}
+  gender_i = \begin{cases}
+0 \quad \text{if person $i$ is female,}\\
+1 \quad \text{if person $i$ is male.}
+\end{cases}
+\end{equation*}
+
+For categorical variables, one level is called the ``reference
+level''. The effect of all other levels on the response are with
+respect to the reference level. In this case, the reference level is
+\texttt{female}. You can think of the variable $gender_i$ as a switch
+that gets flipped on if person $i$ is male. When $gender_i = 1$, the
+estimated value for $\beta_2$ is added to the response. In this way,
+we can interpret $\hat{\beta}_2 = 5.7276$ as the average difference
+between males and females for the fastest speed ever driven. Now, we
+are in a position to understand why R concatenates the non-reference
+level to the identifier for the coefficient for gender
+(i.e. \texttt{gendermale}).  The mnemonic is ``add 5.7276 to the
+predicted response if observation $i$ has \texttt{male} as the level
+for gender''.  For categorical variables with more than two levels,
+the \texttt{Coefficients:} table will contain an entry for each level
+except the reference level.
+
+\begin{SaveVerbatim}{regoutput2}
+>
+Call:
+lm(formula = speed ~ height + gender, data = Speed, na.action = "na.exclude")
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-100.234   -7.717    2.283   11.313   81.857 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  24.6755    12.1534   2.030 0.042525 *  
+height        0.9699     0.1885   5.145 3.09e-07 ***
+gendermale    5.7276     1.6142   3.548 0.000402 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 21.66 on 1299 degrees of freedom
+  (23 observations deleted due to missingness)
+Multiple R-squared:  0.07122,	Adjusted R-squared:  0.06979 
+F-statistic:  49.8 on 2 and 1299 DF,  p-value: < 2.2e-16
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{regoutput2}
+\caption{Summary regression output from R for the model with both
+height and gender as predictor variables.}
+\label{fig:regoutput2}
+\end{minipage}
+}
+\end{figure}
+
+In effect, the model~\ref{eq:speed-height-gender} contains two
+regression lines, one for males and one for females. The effect of
+height on speed (the slope) is assumed to be the same for both
+genders.  A plot of the fitted regression model is shown in
+Figure~\ref{fig:speed-height-gender}. The separation between the lines
+for male and female is the value $\hat{\beta}_2 = 5.7276$. If we have
+reason to believe that the effect of height on speed varies by gender,
+then we would add an interaction term to the model. The addition of
+interaction term may be warranted, but doing so complicates the
+interpretation of the model. This modification to the model is
+explored in Exercise~\ref{ex:interaction}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{speed-height-gender.pdf}
+\caption{The fitted model \texttt{speed~\mtilde~height + gender}. $R^2 \approx 0.071$.}
+\label{fig:speed-height-gender}
+\end{center}
+\end{figure}
+
+The code to produce Figure~\ref{fig:speed-height-gender} is shown
+below.  On line 1, we add the predicted (i.e. fitted) values from the
+model to the \texttt{Speed} data frame so that we can overlay the
+fitted regression lines for males and for females.  If we did not use
+the predicted values from the call to \texttt{predict()}, then the
+call to \texttt{geom\_smooth} would use height alone as the predictor
+(i.e. it would not include gender).  This is a work-around so that we
+can show the fit from the full model.
+
+\begin{Verbatim}[numbers=left,xleftmargin=5mm,samepage=true]
+Speed <- mutate(Speed, fit = predict(fm2, na.action=NULL))
+
+ggplot(Speed, aes(x=height, y=speed, color=gender)) +
+    geom_point() +
+    geom_smooth(method="lm", mapping=aes(y=fit))
 \end{Verbatim}
-In other words, we want to try using the inverse of mileage as the
-response variable.
 
-\begin{enumerate}
-\item Fit a model with \texttt{Mileage} as the response and
-  \texttt{Weight}, \texttt{Disp.}, and \texttt{Type} as predictors.
-  \texttt{Type} is a categorical variable with six levels: Compact,
-  Large, Medium, Small, Sporty, and Van.
-  Plot \texttt{Mileage} vs the fitted values. How does this model
-  compare to the initial model?
-\item Fit a model with \texttt{Fuel} as the response and
-  \texttt{Weight} and \texttt{Disp.} as the predictors.  Plot
-  \texttt{Fuel} vs the fitted values.  How does this model compare
-  to the initial model?
-\end{enumerate}
 
-\end{comment}
+\subsubsection*{The Modeling Process.}
+Regression modeling is a process that almost always involves iterating
+over the following steps~\cite{chambers:1992}.
+\begin{compactenum}
+\item obtaining data \label{s1}
+\item choosing a candidate model  \label{s2}
+\item fitting the model, i.e. using software to  estimate the model parameters \label{s3}
+\item interpretation of the fitted model parameters \label{s4}
+\item diagnostics to see in what ways the model \emph{fails} to fit the data \label{s5}
+\end{compactenum}
 
-% change this section into a discussion.
-% it will come later in the section.
-\subsubsection*{Transformations on Data}
-  Suppose that a variable $u$ is related to a variable $v$ as
-\[
-u = \gamma_0e^{\gamma_1v}
-\]
-where $\gamma_0$ and $\gamma_1$ are parameters to be estimated.  Even
-though the relationship between $u$ and $v$ is nonlinear, explain how
-you could use simple linear regression to find estimates for
-$\gamma_0$ and $\gamma_1$.
 
-We can transform the relationship into a linear one
-by taking logarithms.
-\[
-\text{ln}(u) = \text{ln}(\gamma_0) + \gamma_1v
-\]
-Then we have the form of a linear regression model with $\beta_0 = \text{ln}(\gamma_0)$
-and $\beta_1 = \gamma_1$. After fitting the linear model,
-\[
-\hat{\gamma_0}=e^{\hat{\beta_0}}, \qquad \hat{\gamma_1} = \hat{\beta_1}
-\]
-
-% possible example to use
 \begin{Verbatim}
 ## example of linear regression on the msleep data to
 ## notice that collinearity is present,
@@ -359,6 +707,57 @@ x_3 = \begin{cases} 0 \quad \text{if season is winter} \\
   part~\ref{bb} \label{cc}
 \end{enumerate}
 
+\item \emph{Computing $R^2$.} Refer to model~\ref{eq:reg1} and the 
+output shown in Figure~\ref{fig:regoutput1}. Using the equations
+\ref{eq:R2} as a guide, implement your own computation of $R^2$ for
+model \ref{eq:reg1}. In other words, using R as a calculator,
+compute $R^2$ on your own.
+
+\item \emph{Adding an interaction term to a regression model.}  Refer
+  to model \ref{eq:speed-height-gender} where we express the fastest
+  speed ever driven for a sample of college students as a function of
+  height and gender. \label{ex:interaction}
+
+\begin{equation*}
+  speed_i = \beta_0 + \beta_1 height_i + \beta_2 gender_i + \epsilon_i, \qquad i=1,\ldots,n
+\tag{\ref{eq:speed-height-gender} revisited}
+\end{equation*}
+
+The summary regression output is shown in Figure~\ref{fig:regoutput2}
+and the fitted model is plotted against the data in
+Figure~\ref{fig:speed-height-gender}. In this model, the effect
+of height on speed is the same for both genders. Now, we want to investigate the
+possibility that the effect of height differs by gender. In other words,
+we want to allow the slope for height to be different for males and
+females (if the data indicates so). To do this, we add an interaction 
+term to the model.
+
+\begin{equation}
+  speed_i = \beta_0 + \beta_1 height_i + \beta_2 gender_i + \beta_3 height_i gender_i + 
+\epsilon_i, \qquad i=1,\ldots,n
+\end{equation}
+
+Remember that in the mathematical model $height_i$ and $gender_i$ are both numeric.
+The term $\beta_3 height_i gender_i$ is literally the product of $beta_3$, $height_i$,
+and $gender_i$. The corresponding model formula in R is:
+\begin{Verbatim}[samepage=true]
+speed ~ height + gender + height*gender
+\end{Verbatim}
+
+\begin{enumerate}
+\item Fit this model in R. The summary output will contain an entry for the
+coefficent $\beta_3$ (the coefficient on the interaction term).
+\item Provide an interpretation for the effect of height on speed and also
+for the effect of gender on speed. \emph{Hint:} When an interaction term
+is present, we can no longer interpret the coefficients in isolation. For example,
+the effect of height on speed will involve both $\beta_1$ and $\beta_3$.
+\item Plot the fitted model against the data. Your plot will be
+  similar to Figure~\ref{fig:speed-height-gender} except the slopes
+  will differ by gender.
+\item Do you think that, at least statistically, the interaction term is
+  appropriate for this model?
+\end{enumerate}
+
 % I need to check if this problem needs to be re-written.  The data is
 % from harrell's book, but we may be able to use it. the idea is to
 % fit a logistic regression model with one numeric predictor and one
@@ -383,6 +782,30 @@ increase in age?
 \item Make a plot of the probability of response as a function
 of age, with one curve for females and one curve for males.
 \end{enumerate}
+
+\item \emph{Transformations on data.}
+  Suppose that a response variable $u$ is related to an explanatory variable $v$ as
+\[
+u = \gamma_0e^{\gamma_1v}
+\]
+where $\gamma_0$ and $\gamma_1$ are parameters to be estimated.  Even
+though the relationship between $u$ and $v$ is nonlinear, explain how
+you could use simple linear regression to find estimates for
+$\gamma_0$ and $\gamma_1$.
+
+\begin{solution}
+\bs
+We can transform the relationship into a linear one
+by taking logarithms.
+\[
+\text{ln}(u) = \text{ln}(\gamma_0) + \gamma_1v
+\]
+Then we have the form of a linear regression model with $\beta_0 = \text{ln}(\gamma_0)$
+and $\beta_1 = \gamma_1$. After fitting the linear model,
+\[
+\hat{\gamma}_0=e^{\hat{\beta}_0}, \qquad \hat{\gamma}_1 = \hat{\beta}_1
+\]
+\end{solution}
 
 \subsubsection*{Classification}
 

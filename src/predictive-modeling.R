@@ -1,46 +1,62 @@
-## this file is a scratchpad for code that goes into the notebook
+## this file is a scratchpad for code that goes into the notebook and
+## the chapter
 
 ## 1,302 UCLA students were asked to fill out
 ## a survey where they were asked about their height,
 ## fastest speed they have ever driven, and gender.
 
-dat <- read.csv("speed_gender_height.csv")
-attach(dat)
+Speed <- read.csv("../data/speed-gender-height.csv")
 
-## speed vs gender
-boxplot(speed ~ gender, ylab="speed")
+fm <- lm(speed ~ height, data = Speed)
+summary(fm)
 
-plot(height, speed, pch=as.integer(gender))
-legend("bottomright", levels(gender), pch=gender)
+ggplot(Speed, aes(x=height, y=speed)) +
+    geom_point() +
+    geom_smooth(method="lm", se=FALSE)
 
-## compare ANOVA output to regression output
-## for the same data
-fm1 <- aov(speed ~ gender)  ## ANOVA
-fm2 <- lm(speed ~ gender)   ## regression
+ggplot(mtcars, aes(x=wt, y=mpg)) +
+    geom_point() +
+    geom_smooth(method="lm", se=FALSE)
 
-# speed vs height
-fm2 <- lm(speed ~ height)
+fm2 <- lm(speed ~ height + gender, data = Speed,
+          na.action="na.exclude")
 summary(fm2)
 
-plot(height, speed)
-abline(fm2)
+Speed <- mutate(Speed, fit = predict(fm2, na.action=NULL))
 
-# speed vs gender and height
-fm3 <- lm(speed ~ gender + height)
+ggplot(Speed, aes(x=height, y=speed, color=gender)) +
+    geom_point() +
+    geom_smooth(method="lm", mapping=aes(y=fit))
+
+## ad an interaction term
+fm3 <- lm(speed ~ height + gender + height*gender, data = Speed,
+          na.action="na.exclude")
 summary(fm3)
 
-# plot the regression lines for males and females
-b0 <- coef(fm3)[1]
-b1 <- coef(fm3)[2]
-b2 <- coef(fm3)[3]
+Speed <- mutate(Speed, fit3 = predict(fm3, na.action=NULL))
 
-plot(height, speed, col=c("magenta","blue")[gender])
-curve(b0 + b2*x, add=TRUE, col="magenta")   # females
-curve(b0 + b1 + b2*x, add=TRUE, col="blue") # males
+ggplot(Speed, aes(x=height, y=speed, color=gender)) +
+    geom_point() +
+    geom_smooth(method="lm", mapping=aes(y=fit3))
 
-# check model fit
+## computing R^2
+Speed <- read.csv("../data/speed-gender-height.csv")
+Speed2 <- na.omit(Speed)  # its' easier with no missing values
+
+fm <- lm(speed ~ height, data = Speed2)
+summary(fm)
+
+y <- Speed2$speed
+y.hat <- predict(fm)
+
+TSS <- sum( (y - mean(y))^2)
+RSS <- sum( (y - y.hat)^2)
+1 - RSS/TSS   # R-squared
+
+
+## check model fit
 layout(matrix(c(1,2,3,4), nrow=2, ncol=2))
-plot(fm3)
+plot(fm)
 
 
 # add an interaction term for gender and height
