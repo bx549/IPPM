@@ -54,24 +54,26 @@ RSS <- sum( (y - y.hat)^2)
 1 - RSS/TSS   # R-squared
 
 
-## check model fit
-layout(matrix(c(1,2,3,4), nrow=2, ncol=2))
-plot(fm)
+## transformations on data
+attach(msleep)
 
+ggplot(msleep) +
+    geom_point(aes(x = brainwt, y = sleep_total))
 
-# add an interaction term for gender and height
-fm4 <- lm(speed ~ gender + height + gender*height)
-summary(fm4)
+ggplot(msleep, aes(x = log(brainwt), y = sleep_total)) +
+    geom_point() +
+    geom_smooth(method="lm", se=FALSE)
 
-b0 <- coef(fm4)[1]
-b1 <- coef(fm4)[2]
-b2 <- coef(fm4)[3]
-b3 <- coef(fm4)[4]
+fm <- lm(sleep_total ~ log(brainwt))
+summary(fm)
 
-# now the slopes differ by gender
-plot(height, speed, col=c("magenta","blue")[gender])
-curve(b0 + b2*x, add=TRUE, col="magenta")        # females
-curve(b0 + b1 + (b2+b3)*x, add=TRUE, col="blue") # males
+## a one-unit increase in log(brainwt) decreases
+## sleep time by about one hour (on avg).
+
+## for interpretation, plug in a few values to get an idea
+5.9474 -1.039*log(3)
+5.9474 -1.039*log(2)    
+
 
 
 ## exercise: linear regression with a single predictor

@@ -4,17 +4,30 @@ Predictive models help us summarize and understand data in order to
 make predictions about the future, and/or \item explain interesting
 relationships in the data. 
 \end{inparaenum}
-The ultimate purpose of a model can be for
-prediction or explanation, but we usually want some combination of
-both. In this chapter, I use the term ``predictive'' model, but you
-should also keep in mind the ``explanatory'' aspect.  Predictive
-models are broadly categorized into two types: regression and
-classification.  The difference is the nature of the response
+The ultimate purpose of a model can be for prediction or explanation,
+but we usually want some combination of both. In this chapter, the
+term ``predictive model'' includes the explanatory aspects.
+Predictive models are broadly categorized into two types: regression
+and classification.  The difference is in the nature of the response
 variable, i.e.  the ``thing'' that we are trying to predict or
 explain.  Regression indicates a numeric response, e.g. a stock price,
 population growth, or sales of a product. Classification means that
 the response is categorical, e.g. gender, category of an email, or
 presence/absence of a disease.
+
+Regardless of whether the model is one of regression or classification, 
+modeling is a process that almost always involves iterating
+over the following steps~\cite{chambers:1992}.
+\begin{compactenum}
+\item obtaining data \label{s1}
+\item choosing a candidate model  \label{s2}
+\item fitting the model, i.e. using software to  estimate the model parameters \label{s3}
+\item interpretation of the fitted model parameters \label{s4}
+\item diagnostics to see in what ways the model \emph{fails} to fit the data \label{s5}
+\end{compactenum}
+The wide availability of high-quality, open-source software for
+statistical computing has made step~\ref{s3} the easiest part. In this
+chapter, we concentrate on steps~\ref{s2}, \ref{s4}, and \ref{s5}.
 
 \section{Regression}
 
@@ -468,60 +481,134 @@ ggplot(Speed, aes(x=height, y=speed, color=gender)) +
 \end{Verbatim}
 
 
-\subsubsection*{The Modeling Process.}
-Regression modeling is a process that almost always involves iterating
-over the following steps~\cite{chambers:1992}.
-\begin{compactenum}
-\item obtaining data \label{s1}
-\item choosing a candidate model  \label{s2}
-\item fitting the model, i.e. using software to  estimate the model parameters \label{s3}
-\item interpretation of the fitted model parameters \label{s4}
-\item diagnostics to see in what ways the model \emph{fails} to fit the data \label{s5}
-\end{compactenum}
+\subsubsection*{Transformations on data.}
 
-
+Sometimes we can make a transformation on the data in order to model
+nonlinear relationships among variables. With a little experience, you
+will be able to recognize situations when this technique may be
+appropriate. As an example, the \texttt{msleep} data set is available
+in R as part of the \texttt{ggplot2} package.  This data set contains,
+among other things, the total hours of sleep per day for 83 species of
+mammals. To read about the data set, type
 \begin{Verbatim}
-## example of linear regression on the msleep data to
-## notice that collinearity is present,
-## choose variable transformation,
-## understand the reported p-values,
-## and understand the reported R-squared.
-attach(msleep)
+> ?msleep
+\end{Verbatim}
+at the R prompt. Suppose that an animal sciences researcher would like
+to explain the amount of sleep as function of brain weight. First, we
+plot total sleep in hours versus brain weight in kilograms.
 
-fm <- lm(sleep_total ~ brainwt + bodywt)
-summary(fm)
-## collinearity is present
-plot(brainwt, bodywt)
-plot(log(brainwt), log(bodywt))
+\begin{Verbatim}[samepage=true]
+ggplot(msleep) +
+    geom_point(aes(x = brainwt, y = sleep_total))
+\end{Verbatim}
+
+The plot is shown in Figure~\ref{fig:sleep-brainwt}. At first glance, the
+data does not appear promising for a linear model; however, just
+looking at the spread of the brain weight values along the $x$ axis,
+we notice that the small values are ``bunched up'' and the larger
+values are spread out.  This is an indication that a transformation
+may be appropriate. For mathematical (and biological) reasons, a
+logarithmic transformation is a common approach to make the data more amenable
+to the assumptions required by a linear regression model.  By taking the
+logarithms of the brain weights, we penalize (or shrink) the large values
+toward the smaller values (on the log scale). 
+
+\begin{Verbatim}[samepage=true]
+ggplot(msleep, aes(x = log(brainwt), y = sleep_total)) +
+    geom_point() +
+    geom_smooth(method="lm", se=FALSE)
+\end{Verbatim}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{sleep-brainwt.pdf}
+\caption{Total sleep in hours vs. brain weight in kg from the \texttt{msleep}
+data set.}
+\label{fig:sleep-brainwt}
+\end{center}
+\end{figure}
+
+Figure~\ref{fig:sleep-log-brainwt} shows total sleep versus the
+log-transformed brain weight along with a fitted regression line
+\footnote{When taking a logarithmic transforming of a predictor
+  variable, it's common to use the natural logarithm, but any
+  logarithmic transformation will have a similar effect.}. The pattern
+is now clear: on average, mammals with larger brains sleep
+less. Moreover, the residuals appear to be roughly symmetric about the
+regression line. For simplicity and reliability during the fitting
+process, we would like to use linear models whenever possible;
+however, the price we pay for transforming a predictor variable is
+increased complexity when we interpret the estimated parameters.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.7\columnwidth]{sleep-log-brainwt.pdf}
+\caption{Total sleep in hours vs. logarithm of brain weight in kg from the \texttt{msleep}
+data set.}
+\label{fig:sleep-log-brainwt}
+\end{center}
+\end{figure}
+
+Fitting the model in R is straightforward.
+\begin{Verbatim}[samepage=true]
 fm <- lm(sleep_total ~ log(brainwt))
 summary(fm)
-
-## a one-unit increase in log(brainwt) decreases
-## sleep time by about one hour (on avg).
-
-## for interpretation, plug in a few values to get an idea
-(x <- seq(from=0.5, to=5, by=0.5))
-y.hat <- predict(fm, newdata=data.frame(brainwt=x))
-plot(x, y.hat)
-
-## the hypothesis test for b1
-
-(t0 <- -1.0397/0.1914) # the t-statistic
-
-pt(-5.432, 54) * 2  # the p-value
-## should match the summary output
-
-## compute R-squared
-y.hat <- predict(fm)
-y <- sleep_total[ !is.na(sleep_total) & !is.na(brainwt) ]
-
-TSS <- sum( (y - mean(y))^2 )
-RSS <- sum( (y - y.hat)^2 )
-1 - RSS/TSS   # R-squared
-
-(F <- ((TSS-RSS)/1) / (RSS/(56-1-1))) # the F-statistic
-1 - pf(29.51, 1, 54)   # p-value for the F-test
 \end{Verbatim}
+Mathematically, this model is
+\begin{equation}
+  \label{eq:sleep-log-brainwt}
+  sleep\_total_i = \beta_0 + \beta_1 \ln brainwt_i + \epsilon_i
+\end{equation}
+
+The summary output is shown in Figure~\ref{fig:regoutput3}.  An
+understandable interpretation of $\hat{\beta}_1$, the coefficient on
+brain weight, is more difficult, but the basic linear relationship
+remains the same. A one-unit increase in the logarithm of brain weight
+corresponds to a decrease in total sleep time of about on hour (on
+average). Perhaps the easiest way to get an idea of the effect of
+brain weight on sleep time is to plug in some values and observe the
+difference. Suppose we are interested in comparing the difference in the 
+amount of sleep for two mammals, one with a brain weight of 2 kg
+and one with a brain weight of 3 kg. The average difference in sleep
+time is about 0.421 hours, or about 25 minutes.
+\begin{Verbatim}[samepage=true]
+> (5.9474 -1.039*log(2)) - (5.9474 -1.039*log(3))
+[1] 0.4212782
+\end{Verbatim}
+
+
+\begin{SaveVerbatim}{regoutput3}
+Call:
+lm(formula = sleep_total ~ log(brainwt))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-6.0734 -2.8483 -0.6479  2.4049  9.5395 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    5.9474     0.9135   6.510 2.57e-08 ***
+log(brainwt)  -1.0397     0.1914  -5.432 1.36e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.588 on 54 degrees of freedom
+  (27 observations deleted due to missingness)
+Multiple R-squared:  0.3534,	Adjusted R-squared:  0.3414 
+F-statistic: 29.51 on 1 and 54 DF,  p-value: 1.361e-06
+\end{SaveVerbatim}
+
+\begin{figure}
+\fbox{
+\begin{minipage}{\textwidth}
+\BUseVerbatim{regoutput3}
+\caption{Summary regression output from R for mammalian sleep in hours
+with log-transformed brain weight as the predictor variable.}
+\label{fig:regoutput3}
+\end{minipage}
+}
+\end{figure}
+
 
 \section{Classification}
 
@@ -707,12 +794,6 @@ x_3 = \begin{cases} 0 \quad \text{if season is winter} \\
   part~\ref{bb} \label{cc}
 \end{enumerate}
 
-\item \emph{Computing $R^2$.} Refer to model~\ref{eq:reg1} and the 
-output shown in Figure~\ref{fig:regoutput1}. Using the equations
-\ref{eq:R2} as a guide, implement your own computation of $R^2$ for
-model \ref{eq:reg1}. In other words, using R as a calculator,
-compute $R^2$ on your own.
-
 \item \emph{Adding an interaction term to a regression model.}  Refer
   to model \ref{eq:speed-height-gender} where we express the fastest
   speed ever driven for a sample of college students as a function of
@@ -757,6 +838,12 @@ the effect of height on speed will involve both $\beta_1$ and $\beta_3$.
 \item Do you think that, at least statistically, the interaction term is
   appropriate for this model?
 \end{enumerate}
+
+\item \emph{Computing $R^2$.} Refer to model~\ref{eq:reg1} and the 
+output shown in Figure~\ref{fig:regoutput1}. Using the equations
+\ref{eq:R2} as a guide, implement your own computation of $R^2$ for
+model \ref{eq:reg1}. In other words, using R as a calculator,
+compute $R^2$ on your own.
 
 % I need to check if this problem needs to be re-written.  The data is
 % from harrell's book, but we may be able to use it. the idea is to
