@@ -483,13 +483,13 @@ ggplot(Speed, aes(x=height, y=speed, color=gender)) +
 
 \subsubsection*{Transformations on data.}
 
-Sometimes we can make a transformation on the data in order to model
-nonlinear relationships among variables. With a little experience, you
-will be able to recognize situations when this technique may be
-appropriate. As an example, the \texttt{msleep} data set is available
-in R as part of the \texttt{ggplot2} package.  This data set contains,
-among other things, the total hours of sleep per day for 83 species of
-mammals. To read about the data set, type
+Sometimes we can transform the data in order to model nonlinear
+relationships among variables, but in the framework of a linear model.
+With experience, you will be able to recognize situations when this
+technique may be appropriate. As an example, the \texttt{msleep} data
+set is available in R as part of the \texttt{ggplot2} package.  This
+data set contains, among other things, the total hours of sleep per
+day for 83 species of mammals. To read about the data set, type
 \begin{Verbatim}
 > ?msleep
 \end{Verbatim}
@@ -551,7 +551,7 @@ data set.}
 
 Fitting the model in R is straightforward.
 \begin{Verbatim}[samepage=true]
-fm <- lm(sleep_total ~ log(brainwt))
+fm <- lm(sleep_total ~ log(brainwt), data=msleep)
 summary(fm)
 \end{Verbatim}
 Mathematically, this model is
@@ -579,7 +579,7 @@ time is about 0.421 hours, or about 25 minutes.
 
 \begin{SaveVerbatim}{regoutput3}
 Call:
-lm(formula = sleep_total ~ log(brainwt))
+lm(formula = sleep_total ~ log(brainwt), data = msleep)
 
 Residuals:
     Min      1Q  Median      3Q     Max 

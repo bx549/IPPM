@@ -29,7 +29,7 @@ ggplot(Speed, aes(x=height, y=speed, color=gender)) +
     geom_smooth(method="lm", mapping=aes(y=fit))
 
 ## ad an interaction term
-fm3 <- lm(speed ~ height + gender + height*gender, data = Speed,
+fm3 <- lm(speed ~ height + gender + height:gender, data = Speed,
           na.action="na.exclude")
 summary(fm3)
 
@@ -55,8 +55,6 @@ RSS <- sum( (y - y.hat)^2)
 
 
 ## transformations on data
-attach(msleep)
-
 ggplot(msleep) +
     geom_point(aes(x = brainwt, y = sleep_total))
 
@@ -64,15 +62,14 @@ ggplot(msleep, aes(x = log(brainwt), y = sleep_total)) +
     geom_point() +
     geom_smooth(method="lm", se=FALSE)
 
-fm <- lm(sleep_total ~ log(brainwt))
+fm <- lm(sleep_total ~ log(brainwt), data=msleep)
 summary(fm)
 
 ## a one-unit increase in log(brainwt) decreases
 ## sleep time by about one hour (on avg).
 
 ## for interpretation, plug in a few values to get an idea
-5.9474 -1.039*log(3)
-5.9474 -1.039*log(2)    
+(5.9474 -1.039*log(2)) - (5.9474 -1.039*log(3))
 
 
 
