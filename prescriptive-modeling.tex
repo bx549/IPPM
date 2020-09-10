@@ -1133,25 +1133,30 @@ cost-effective mixture of ingredients given the following guidelines:
 
 \begin{enumerate}
 \item Formulate an (algebraic) mathematical programming model using
-  the information above and generate a solution using software.
+  the information above and generate a solution using AMPL.  Your
+  problem formulation can be a model for the minimum-cost way to
+  produce one pound of dog food. We can consider that to be the
+  ``recipe'' that would then be scaled up for production purposes.
   \label{doga}
 
 \item Formulate an alternative (algebraic) mathematical programming
   model given the additional constraint that 80\% of the mixture must
   contain a combination of chicken and vegetables. Generate a solution
-  using software and determine the added cost due to the new
+  using AMPL and determine the added cost due to the new
   constraint. \label{dogb}
 \end{enumerate}
 
 \begin{solution}
-\bs For part \ref{doga}, a GAMS model is provided in the file \texttt{dog-fooda.gms}.
-The mixture should contain 55.7\% chicken, 10\% brown rice, 10\% vegetables, and 24.3\% corn meal for a cost of \$2.07 per pound.
+  \bs For part \ref{doga}, an AMPL model is provided in the file
+  \texttt{dog-fooda.mod}.  The mixture should contain 55.7\% chicken,
+  10\% brown rice, 10\% vegetables, and 24.3\% corn meal for a cost of
+  \$2.07 per pound.
 	
-For part \ref{dogb}, A GAMS model is provided in
-\texttt{dog-foodb.gms}. The added cost due to the additional
-constraint is \$0.20. The mixture should contain 58\% chicken, 10\%
-brown rice, 22\% vegetables, and 10\% corn meal for a cost of \$2.27
-per pound.
+  For part \ref{dogb}, An AMPL model is provided in
+  \texttt{dog-foodb.mod}. The added cost due to the additional
+  constraint is \$0.20. The mixture should contain 58\% chicken, 10\%
+  brown rice, 22\% vegetables, and 10\% corn meal for a cost of \$2.27
+  per pound.
 \end{solution}
 
 % re-written by hannah
