@@ -1384,23 +1384,21 @@ because total supply equals total demand.
 \end{solution}
 
 % re-written by hannah
-\item \emph{A work-holding material for manufacturing.}  A material
-compound
-   is used in a manufacturing process to hold parts while
-they are being machined.
-  a machine. The material flows when heated and becomes solid when
-  cooled. An industrial engineer must determine a method for
-  maintaining the quality of the material over a four-week period,
-  while minimizing cost. The engineer knows that $r_j \geq 0$ pounds
-  of the material will be required in each of the four weeks,
+\item \emph{A work-holding material for manufacturing.}  A
+  material compound is used in a manufacturing process to hold parts
+  while they are being machined.  The material flows when heated and
+  becomes solid when cooled. An industrial engineer must determine a
+  method for maintaining the quality of the material over a four-week
+  period, while minimizing cost. The engineer knows that $r_j \geq 0$
+  pounds of the material will be required in each of the four weeks,
   $j = 1, 2, 3, 4$. This demand can be met by either purchasing new
   material at cost $P$ dollars per pound or by filtering the old
   material and reusing it.  Two options are available for filtering:
-   normal service, which requires 1 full week at a cost
-  of $N$ dollars per pound, and expedited service, which allows
-  material used during one week to be filtered by the start of the
-  next week, at a cost of $Q$ dollars per pound. Currently, the
-  manufacturing company has no work-holding material available.
+  normal service, which requires 1 full week at a cost of $N$ dollars
+  per pound, and expedited service, which allows material used during
+  one week to be filtered by the start of the next week, at a cost of
+  $Q$ dollars per pound. Currently, the manufacturing company has no
+  work-holding material available.
 
 \begin{enumerate}
 \item Formulate a network flow problem that will allow the company to
@@ -1461,22 +1459,22 @@ The mathematical programming problem is to
 \[
 \begin{array}{lrrrrrrrrll}
 \textrm{minimize} & \multicolumn{10}{r}{P(x_{01} + x_{02} + x_{03} + x_{04}) + Q(y_{12}+y_{23}+y_{34}) +N(z_{13}+z_{24})} \\
-\textrm{subject to} & x_{01} & \geq & r_1 &&&&&&&(1)\\
-& x_{02}&+&y_{12}&\geq&r_2&&&&&(2)\\
-& x_{03}&+&y_{23}&+&z_{13}&\geq&r_3&&&(3)\\
-& x_{04}&+&y_{34}&+&z_{24}&\geq&r_4&&&(4)\\
-& x_{01}&=&w_{15}&+&y_{12}&+&z_{13}&&&(5)\\
-& x_{02}&+&y_{12}&=&w_{25}&+&y_{23}&+&z_{24}&(6) \\
-& x_{03}&+&y_{23}&+&z_{13}&=&w_{35}&+&y_{34}&(7) \\
-& x_{04}&+&y_{34}&+&z_{24}&=&w_{45}&&&(8)\\
+\textrm{subject to} & x_{01} & \geq & r_1 &&&&&&&\text{(week 1)}\\
+& x_{02}&+&y_{12}&\geq&r_2&&&&&\text{(week 2)}\\
+& x_{03}&+&y_{23}&+&z_{13}&\geq&r_3&&&\text{(week 3)}\\
+& x_{04}&+&y_{34}&+&z_{24}&\geq&r_4&&&\text{(week 4)}\\
+& x_{01}&=&w_{15}&+&y_{12}&+&z_{13}&&&\text{node 1}\\
+& x_{02}&+&y_{12}&=&w_{25}&+&y_{23}&+&z_{24}&\text{node 2} \\
+& x_{03}&+&y_{23}&+&z_{13}&=&w_{35}&+&y_{34}&\text{node 3} \\
+& x_{04}&+&y_{34}&+&z_{24}&=&w_{45}&&&\text{node 4}\\
 & \multicolumn{9}{r}{x_{ij},~y_{ij},~z_{ij},~w_{ij} \geq 0~\text{for each edge $i,j$ in the network.}}
 \end{array}
 \]
 
-Constraints 1 -- 4 pertain to the material requirements for weeks 1
-through 4.  Constraints 5 -- 8 are the flow balance constraints. They
-require that the material that enters the beginning of a week must
-exit at the end of the week.
+The first four constraints pertain to the material requirements for
+weeks 1 through 4.  The next four constraints are the flow balance
+constraints. They require that the material that enters the beginning
+of a week must exit at the end of the week.
 
 If the work-holding material can be filtered only once, then we 
 require that all incoming flow on edges that represent filtering (i.e. $y_{ij}$ and
@@ -1518,14 +1516,19 @@ Now the objective function and demand requirements are
 \[
 \begin{array}{lrrrrrrrrll}
 \textrm{minimize} & \multicolumn{10}{r}{P(x_{01} + x_{0,2b} + x_{0,3b} + x_{04}) + Q(y_{1,2a}+y_{2b,3a}+y_{3b,4}) +N(z_{1,3a}+z_{2b,4})} \\
-\textrm{subject to} & x_{01} & \geq & r_1 &&&&&&&(1)\\
-& x_{02}&+&y_{1,2a}&\geq&r_2&&&&&(2)\\
-& x_{03}&+&y_{2b,3a}&+&z_{1,3a}&\geq&r_3&&&(3)\\
-& x_{04}&+&y_{3b,4}&+&z_{2b,4}&\geq&r_4&&&(4)\\
+\textrm{subject to} & x_{01} & \geq & r_1 &&&&&&&\text{(week 1)}\\
+& x_{0,2b}&+&y_{1,2a}&\geq&r_2&&&&&\text{(week 2)}\\
+& x_{0,3b}&+&y_{2b,3a}&+&z_{1,3a}&\geq&r_3&&&\text{(week 3)}\\
+& x_{04}&+&y_{3b,4}&+&z_{2b,4}&\geq&r_4&&&\text{(week 4)}\\
+& x_{01}&=&w_{15}&+&y_{1,2a}&+&z_{1,3a}&&&\text{node 1}\\
+& &&y_{1,2a}&=&w_{2a,5}&&&&&\text{node 2a} \\
+& x_{0,2b}&&&=&&&y_{2b,3a}&+&z_{2b,4}&\text{node 2b} \\
+& &&y_{2b,3a}&+&z_{1,3a}&=&w_{3a,5}&&&\text{node 3a} \\
+& x_{0,3b}&&&&&=&&&y_{3b,4}&\text{node 3b} \\
+& x_{04}&+&y_{3b,4}&+&z_{2b,4}&=&w_{45}&&&\text{node 4}\\
+& \multicolumn{9}{r}{x_{ij},~y_{ij},~z_{ij},~w_{ij} \geq 0~\text{for each edge $i,j$ in the network.}}
 \end{array}
 \]
-We also need flow balance constraints for nodes 1,2a,2b,3a,3b,4, and
-the non-negativity constraints.
 
 \end{solution}
 
