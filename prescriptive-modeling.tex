@@ -1478,9 +1478,17 @@ of a week must exit at the end of the week.
 
 If the work-holding material can be filtered only once, then we 
 require that all incoming flow on edges that represent filtering (i.e. $y_{ij}$ and
-$z_{ij}$) must be routed to node 5 (the discard node). To accomplish this, one idea
-is to split nodes 2 and 3 as depicted in the diagram below. All flow into nodes 2a
-and 3a must be discarded, but is allowed to help satisfy the demand requirements.
+$z_{ij}$) must be routed to node 5 (the discard node). To accomplish this, we can
+add the following constraints to the existing model formulation.
+
+\begin{align*}
+w_{25} & \geq y_{12} \\
+w_{35} & \geq y_{23} + z_{13}
+\end{align*}
+
+Another idea is to split nodes 2 and 3 as depicted in the diagram
+below. All flow into nodes 2a and 3a must be discarded, but is allowed
+to help satisfy the demand requirements. 
 
 \begin{center}
 \begin{tikzpicture}[>=latex]
